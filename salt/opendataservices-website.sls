@@ -25,7 +25,7 @@ opendataservices.plan.io:
 
 git@opendataservices.plan.io:standardsupport-civic-data-standards.website.git:
   git.latest:
-    - rev: master
+    - rev: live
     - target: /home/{{ user }}/website/
     - user: {{ user }}
     - submodules: True
