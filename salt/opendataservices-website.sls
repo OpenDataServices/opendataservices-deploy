@@ -40,6 +40,7 @@ git@opendataservices.plan.io:standardsupport-civic-data-standards.website.git:
 /etc/apache2/sites-available/{{ conffile }}:
   file.managed:
     - source: salt://apache/{{ conffile }}
+    - template: jinja
 
 
 /etc/apache2/sites-enabled/{{ conffile }}:
