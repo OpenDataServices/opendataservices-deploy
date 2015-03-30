@@ -1,9 +1,8 @@
 {% set user = 'opencontracting' %}
 
-{{ user }}-user-exists:
-  user.present:
-    - name: {{ user }}
-    - home: /home/{{ user }}
+{% from 'lib.sls' import createuser %}
+
+{{ createuser(user) }}
 
 git:
   pkg.installed

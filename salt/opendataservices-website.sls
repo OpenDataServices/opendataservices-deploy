@@ -1,10 +1,8 @@
-# To deploy this state you will also need to 
 {% set user = 'opendataservices' %}
 
-{{ user }}-user-exists:
-  user.present:
-    - name: {{ user }}
-    - home: /home/{{ user }}
+{% from 'lib.sls' import createuser, apache %}
+
+{{ createuser(user) }}
 
 git:
   pkg.installed
@@ -33,26 +31,5 @@ git@opendataservices.plan.io:standardsupport-civic-data-standards.website.git:
       - pkg: git
 
 
+{{ apache('opendataservices-website.conf') }}
 
-## Apache
-
-{% set conffile = 'opendataservices-website.conf' %}
-/etc/apache2/sites-available/{{ conffile }}:
-  file.managed:
-    - source: salt://apache/{{ conffile }}
-    - template: jinja
-
-
-/etc/apache2/sites-enabled/{{ conffile }}:
-    file.symlink:
-        - target: /etc/apache2/sites-available/{{ conffile }}
-
-apache2:
-  pkg.installed:
-    -
-  service:
-    - running
-    - enable: True
-    - reload: True
-    - watch:
-      - file: /etc/apache2/sites-available/{{ conffile}}
