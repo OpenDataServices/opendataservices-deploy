@@ -1,3 +1,5 @@
+# This is the config for the salt-ssh master
+# Currently we define two different environments, base and dev, but they both look in the salt/ directory to define states
 file_roots:
   base:
     - salt/

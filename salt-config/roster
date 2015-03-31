@@ -1,1 +1,2 @@
+# This file defines the server names for use with the salt-ssh command
 live1: live1.default.opendataservices.uk0.bigv.io
