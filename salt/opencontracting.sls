@@ -3,12 +3,12 @@
 
 {% from 'lib.sls' import createuser, apache %}
 
+include:
+  - core
+
 # Create a user for this piece of work, see lib.sls for more info
 {% set user = 'opencontracting' %}
 {{ createuser(user) }}
-
-git:
-  pkg.installed
 
 opencontracting-deps:
     pkg.installed:

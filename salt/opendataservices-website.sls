@@ -3,6 +3,9 @@
 
 {% from 'lib.sls' import createuser, apache %}
 
+include:
+  - core
+
 # Create a user for this piece of work, see lib.sls for more info
 {% set user = 'opendataservices' %}
 {{ createuser(user) }}
@@ -15,11 +18,7 @@
     - source: salt://ssh/{{ file }}    
 {% endfor %}
 
-# Ensure that git is installed, and that we recognise the fingerprint of the
-# plan.io git server
-git:
-  pkg.installed
-
+# Ensure that we recognise the fingerprint of the plan.io git server
 opendataservices.plan.io:
   ssh_known_hosts:
     - present

@@ -32,15 +32,16 @@
 
 # Create a symlink from sites-enabled to enable the config
 /etc/apache2/sites-enabled/{{ conffile }}:
-    file.symlink:
-        - target: /etc/apache2/sites-available/{{ conffile }}
+  file.symlink:
+      - target: /etc/apache2/sites-available/{{ conffile }}
 
-# Ensure that  apache2 is installed and running, and reload apache
-# if the conffile changes.
-apache2:
+apache-{{ conffile }}:
+  # Ensure that  apache is installed
   pkg.installed:
-    - 
+    - name: apache2
+  # Ensure apache running, and reload if the conffile changes.
   service:
+    - name: apache2
     - running
     - enable: True
     - reload: True
