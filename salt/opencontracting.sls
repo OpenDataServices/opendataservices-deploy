@@ -1,7 +1,7 @@
 # This is a salt formula to set up the opendataservices website
 # ie. http://opendataservices.coop
 
-{% from 'lib.sls' import createuser %}
+{% from 'lib.sls' import createuser, apache %}
 
 # Create a user for this piece of work, see lib.sls for more info
 {% set user = 'opencontracting' %}
@@ -13,6 +13,7 @@ git:
 opencontracting-deps:
     pkg.installed:
         - pkgs:
+            - libapache2-mod-wsgi
             - python-pip
             - python-virtualenv
             - python-dev
@@ -20,7 +21,8 @@ opencontracting-deps:
             - libmysqlclient-dev 
             - libxml2-dev
             - libxslt1-dev
-            - mercurial # Required to install https://github.com/open-contracting/standard-collaborator/blob/df98c203217e7dd12f4b9787e12dac02c0d0ec61/deploy/pip_packages.txt#L29
+            - mercurial # Required to install django-registration, see
+            # https://github.com/open-contracting/standard-collaborator/blob/df98c203217e7dd12f4b9787e12dac02c0d0ec61/deploy/pip_packages.txt#L29
 
 # For each of the opencontracting python git repos:
 #   1) Check out the repo
@@ -34,10 +36,14 @@ https://github.com/open-contracting/{{ repo }}.git:
     - require:
       - pkg: git
 
-/home/{{ user }}/{{ repo }}/pyenv/:
+/home/{{ user }}/{{ repo }}/django/website/.ve/:
     virtualenv.managed:
         - system_site_packages: False
         - requirements: /home/{{ user }}/{{ repo }}/deploy/pip_packages.txt
+        - user: {{ user }}
         - require:
             - pkg: opencontracting-deps
 {% endfor %}
+
+# Set up the Apache config using macro
+{{ apache('opencontracting.conf') }}
