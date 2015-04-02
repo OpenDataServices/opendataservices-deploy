@@ -8,6 +8,7 @@ include:
 
 # Create a user for this piece of work, see lib.sls for more info
 {% set user = 'opencontracting' %}
+{% set apache_conffile = user + '.conf' %}
 {{ createuser(user) }}
 
 opencontracting-deps:
@@ -24,9 +25,16 @@ opencontracting-deps:
             - mercurial # Required to install django-registration, see
             # https://github.com/open-contracting/standard-collaborator/blob/df98c203217e7dd12f4b9787e12dac02c0d0ec61/deploy/pip_packages.txt#L29
 
+salt-deps:
+  pkg.installed:
+    - pkgs:
+      - python-mysqldb
+
 # For each of the opencontracting python git repos:
 #   1) Check out the repo
 #   2) Install the required python packages
+#   3) Create a database user and database table, and grant the appropirate permissions
+#   4) Run the relevant django commands for collecting static files and creating assets
 {% for repo in ['standard-collaborator', 'validator', 'opendatacomparison'] %}
 https://github.com/open-contracting/{{ repo }}.git:
   git.latest:
@@ -35,15 +43,70 @@ https://github.com/open-contracting/{{ repo }}.git:
     - user: {{ user }}
     - require:
       - pkg: git
+    - watch_in: apache-{{apache_conffile}}
 
-/home/{{ user }}/{{ repo }}/django/website/.ve/:
-    virtualenv.managed:
-        - system_site_packages: False
-        - requirements: /home/{{ user }}/{{ repo }}/deploy/pip_packages.txt
-        - user: {{ user }}
-        - require:
-            - pkg: opencontracting-deps
+{% set djangodir = '/home/' + user + '/' + repo + '/django/website' %}
+
+{{ djangodir }}/.ve/:
+  virtualenv.managed:
+    - system_site_packages: False
+    - requirements: /home/{{ user }}/{{ repo }}/deploy/pip_packages.txt
+    - user: {{ user }}
+    - require:
+        - pkg: opencontracting-deps
+    - watch_in: apache-{{apache_conffile}}
+
+{{ djangodir }}/private_settings.py:
+  file.managed:
+    - source: salt://django/private_settings.py
+    - template: jinja
+    - user: {{ user }}
+    - watch_in: apache-{{apache_conffile}}
+
+{{ djangodir }}/local_settings.py:
+  file.managed:
+    - source: salt://django/local_settings.py
+    - template: jinja
+    - user: {{ user }}
+    - watch_in: apache-{{apache_conffile}}
+
+mysql-user-{{ repo[:16] }}:
+  mysql_user.present:
+    - name: {{ repo[:16] }} # mysql usernames can only be 16 chracters long
+    - host: localhost
+    - password: c3fe7bf3944a49d43f7b014cf2545a871fbd9c5846a4b41a66ec06026f89aa15
+    - require:
+      - pkg: salt-deps
+
+mysql-database-{{ repo }}:
+ mysql_database.present:
+  - name: {{ repo }}
+ mysql_grants.present:
+  - grant: select,insert,update
+  - database: {{ repo }}.*
+  - user: {{ repo[:16] }}
+
+collectstatic-{{repo}}:
+  cmd.run:
+    - name: source .ve/bin/activate; python manage.py collectstatic --noinput
+    - user: {{ user }}
+    - bin_env: {{ djangodir }}/.ve/
+    - cwd: {{ djangodir }}
+    - require:
+      - virtualenv: {{ djangodir }}/.ve/
+
+{% if repo == 'standard-collaborator' %}
+assets-{{ repo }}:
+  cmd.run:
+    - name: source .ve/bin/activate; python manage.py assets build
+    - user: {{ user }}
+    - bin_env: {{ djangodir }}/.ve/
+    - cwd: {{ djangodir }}
+    - require:
+      - cmd: collectstatic-{{ repo }}
+{% endif %}
+
 {% endfor %}
 
 # Set up the Apache config using macro
-{{ apache('opencontracting.conf') }}
+{{ apache(apache_conffile) }}
