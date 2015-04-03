@@ -1,7 +1,18 @@
 # This is the config for the salt-ssh master
-# Currently we define two different environments, base and dev, but they both look in the salt/ directory to define states
+# Currently we have several environments environments.
+# But they all use the same directories (but are differentiated in the top.sls files)
 file_roots:
   base:
     - salt/
+  live:
+    - salt/
   dev:
     - salt/
+
+pillar_roots:
+  base:
+    - pillar/
+  live:
+    - pillar/
+  dev:
+    - pillar/

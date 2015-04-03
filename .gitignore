@@ -3,3 +3,4 @@ cache
 log
 salt-config/master.d
 salt-config/pki
+pillar/private

@@ -15,7 +15,7 @@ include:
 {% for file in ['id_rsa', 'id_rsa.pub'] %}
 /home/{{ user }}/.ssh/{{ file }}:
   file.managed:
-    - source: salt://ssh/{{ file }}    
+    - contents_pillar: {{ file.replace('.', '_') }}
 {% endfor %}
 
 # Ensure that we recognise the fingerprint of the plan.io git server
@@ -29,7 +29,7 @@ opendataservices.plan.io:
 # Download the repository (all static HTML)
 git@opendataservices.plan.io:standardsupport-co-op.website.git:
   git.latest:
-    - rev: live
+    - rev: {{ pillar.default_branch }}
     - target: /home/{{ user }}/website/
     - user: {{ user }}
     - submodules: True

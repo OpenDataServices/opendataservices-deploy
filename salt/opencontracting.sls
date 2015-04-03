@@ -65,6 +65,8 @@ https://github.com/open-contracting/{{ repo }}.git:
     - source: salt://django/private_settings.py
     - template: jinja
     - user: {{ user }}
+    - context:
+      repo: {{ repo }}
     - watch_in: apache-{{apache_conffile}}
 
 {{ djangodir }}/local_settings.py:
@@ -78,7 +80,7 @@ mysql-user-{{ repo[:16] }}:
   mysql_user.present:
     - name: {{ repo[:16] }} # mysql usernames can only be 16 chracters long
     - host: localhost
-    - password: c3fe7bf3944a49d43f7b014cf2545a871fbd9c5846a4b41a66ec06026f89aa15
+    - password: {{ pillar[repo].mysql_password }}
     - require:
       - pkg: salt-deps
 
