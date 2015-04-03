@@ -7,3 +7,5 @@ vim:
 git:
   pkg.installed
 
+tmux:
+  pkg.installed
