@@ -40,14 +40,15 @@ salt-deps:
 #   3) Create a database user and database table, and grant the appropirate permissions
 #   4) Run the relevant django commands for collecting static files and creating assets
 {% for repo in ['standard-collaborator', 'validator', 'opendatacomparison'] %}
-https://github.com/open-contracting/{{ repo }}.git:
+https://github.com/OpenDataServices/{{ repo }}.git:
   git.latest:
     - rev: master
     - target: /home/{{ user }}/{{ repo }}/
     - user: {{ user }}
     - require:
       - pkg: git
-    - watch_in: apache-{{apache_conffile}}
+    - watch_in:
+      - service: apache2
 
 {% set djangodir = '/home/' + user + '/' + repo + '/django/website' %}
 
@@ -57,8 +58,9 @@ https://github.com/open-contracting/{{ repo }}.git:
     - requirements: /home/{{ user }}/{{ repo }}/deploy/pip_packages.txt
     - user: {{ user }}
     - require:
-        - pkg: opencontracting-deps
-    - watch_in: apache-{{apache_conffile}}
+      - pkg: opencontracting-deps
+    - watch_in:
+      - service: apache2
 
 {{ djangodir }}/private_settings.py:
   file.managed:
@@ -67,14 +69,18 @@ https://github.com/open-contracting/{{ repo }}.git:
     - user: {{ user }}
     - context:
       repo: {{ repo }}
-    - watch_in: apache-{{apache_conffile}}
+    - watch_in:
+      - service: apache2
 
 {{ djangodir }}/local_settings.py:
   file.managed:
     - source: salt://django/local_settings.py
     - template: jinja
     - user: {{ user }}
-    - watch_in: apache-{{apache_conffile}}
+    - context:
+      repo: {{ repo }}
+    - watch_in:
+      - service: apache2
 
 mysql-user-{{ repo[:16] }}:
   mysql_user.present:
@@ -88,24 +94,39 @@ mysql-database-{{ repo }}:
  mysql_database.present:
   - name: {{ repo }}
  mysql_grants.present:
-  - grant: select,insert,update
+  - grant: all privileges
   - database: {{ repo }}.*
   - user: {{ repo[:16] }}
 
-# TODO: This state  still fails for opendatacomparison as it is expecting some variables
-# that are not yet present.
-{% if repo != 'opendatacomparison' %}
-collectstatic-{{repo}}:
+syncdb-{{repo}}:
   cmd.run:
-    - name: source .ve/bin/activate; python manage.py collectstatic --noinput
+    - name: source .ve/bin/activate; python manage.py syncdb --noinput
     - user: {{ user }}
-    - bin_env: {{ djangodir }}/.ve/
     - cwd: {{ djangodir }}
     - require:
       - virtualenv: {{ djangodir }}/.ve/
     - onlyif:
       - git: https://github.com/open-contracting/{{ repo }}.git
-{% endif %}
+
+migrate-{{repo}}:
+  cmd.run:
+    - name: source .ve/bin/activate; python manage.py migrate --noinput
+    - user: {{ user }}
+    - cwd: {{ djangodir }}
+    - require:
+      - virtualenv: {{ djangodir }}/.ve/
+    - onlyif:
+      - git: syncdb-{{ repo }}.git
+
+collectstatic-{{repo}}:
+  cmd.run:
+    - name: source .ve/bin/activate; python manage.py collectstatic --noinput
+    - user: {{ user }}
+    - cwd: {{ djangodir }}
+    - require:
+      - virtualenv: {{ djangodir }}/.ve/
+    - onlyif:
+      - git: https://github.com/open-contracting/{{ repo }}.git
 
 {% if repo == 'standard-collaborator' %}
 assets-{{ repo }}:
