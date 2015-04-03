@@ -27,7 +27,7 @@ opendataservices.plan.io:
     - fingerprint: 77:d1:54:d7:33:7e:38:43:40:70:ca:2d:3a:24:05:22
 
 # Download the repository (all static HTML)
-git@opendataservices.plan.io:standardsupport-civic-data-standards.website.git:
+git@opendataservices.plan.io:standardsupport-co-op.website.git:
   git.latest:
     - rev: live
     - target: /home/{{ user }}/website/
