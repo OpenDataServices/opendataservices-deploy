@@ -1,7 +1,7 @@
-Open Data Services Co-Op deployment git repository
-==================================================
+Open Data Services Co-Operative deployment git repository
+=========================================================
 
-This repository is used to track files relating to deploying code etc. to  Open Data Services' servers.
+This repository is used to track files relating to deploying code etc. to Open Data Services Co-operative's servers.
 
 Mostly it contains files designed for use with the salt deployment tool. http://saltstack.com/
 
