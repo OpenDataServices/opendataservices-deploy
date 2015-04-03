@@ -5,6 +5,7 @@
 
 include:
   - core
+  - apache
 
 # Create a user for this piece of work, see lib.sls for more info
 {% set user = 'opencontracting' %}
@@ -29,6 +30,9 @@ salt-deps:
   pkg.installed:
     - pkgs:
       - python-mysqldb
+
+
+
 
 # For each of the opencontracting python git repos:
 #   1) Check out the repo
@@ -86,6 +90,9 @@ mysql-database-{{ repo }}:
   - database: {{ repo }}.*
   - user: {{ repo[:16] }}
 
+# TODO: This state  still fails for opendatacomparison as it is expecting some variables
+# that are not yet present.
+{% if repo != 'opendatacomparison' %}
 collectstatic-{{repo}}:
   cmd.run:
     - name: source .ve/bin/activate; python manage.py collectstatic --noinput
@@ -94,6 +101,9 @@ collectstatic-{{repo}}:
     - cwd: {{ djangodir }}
     - require:
       - virtualenv: {{ djangodir }}/.ve/
+    - onlyif:
+      - git: https://github.com/open-contracting/{{ repo }}.git
+{% endif %}
 
 {% if repo == 'standard-collaborator' %}
 assets-{{ repo }}:
@@ -104,9 +114,35 @@ assets-{{ repo }}:
     - cwd: {{ djangodir }}
     - require:
       - cmd: collectstatic-{{ repo }}
+    - onlyif:
+      - cmd: collectstatic-{{ repo }}
 {% endif %}
 
 {% endfor %}
+
+
+
+
+# For standard-collaborator we need to create some directories...
+{% set standard_workingdir = '/home/'+user+'/standard-collaborator/django/website/working' %}
+{% for dirname in ['html', 'exports'] %}
+{{ standard_workingdir }}/{{ dirname }}:
+  file.directory:
+    - makedirs: True
+    - user: {{ user }}
+{% endfor %}
+
+# ... and check out the standard git repository
+https://github.com/open-contracting/standard.git:
+  git.latest:
+    - rev: master
+    - target: {{ standard_workingdir }}/repo
+    - user: {{ user }}
+    - require:
+      - pkg: git
+
+
+
 
 # Set up the Apache config using macro
 {{ apache(apache_conffile) }}

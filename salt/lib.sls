@@ -23,7 +23,6 @@
 
 # Install the named conf file in the apache dir onto the server.
 {% macro apache(conffile) %}
-
 # Render the file with jinja and place it in sites-available
 /etc/apache2/sites-available/{{ conffile }}:
   file.managed:
@@ -33,19 +32,7 @@
 # Create a symlink from sites-enabled to enable the config
 /etc/apache2/sites-enabled/{{ conffile }}:
   file.symlink:
-      - target: /etc/apache2/sites-available/{{ conffile }}
-
-apache-{{ conffile }}:
-  # Ensure that  apache is installed
-  pkg.installed:
-    - name: apache2
-  # Ensure apache running, and reload if the conffile changes.
-  service:
-    - name: apache2
-    - running
-    - enable: True
-    - reload: True
-    - watch:
-      - file: /etc/apache2/sites-available/{{ conffile}}
-
+    - target: /etc/apache2/sites-available/{{ conffile }}
+    - require:
+      - file: /etc/apache2/sites-available/{{ conffile }}
 {% endmacro %}
