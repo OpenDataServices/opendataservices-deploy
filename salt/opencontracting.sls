@@ -105,7 +105,7 @@ syncdb-{{repo}}:
     - cwd: {{ djangodir }}
     - require:
       - virtualenv: {{ djangodir }}/.ve/
-    - onlyif:
+    - onchanges:
       - git: https://github.com/open-contracting/{{ repo }}.git
 
 migrate-{{repo}}:
@@ -115,7 +115,7 @@ migrate-{{repo}}:
     - cwd: {{ djangodir }}
     - require:
       - virtualenv: {{ djangodir }}/.ve/
-    - onlyif:
+    - onchanges:
       - git: syncdb-{{ repo }}.git
 
 collectstatic-{{repo}}:
@@ -125,7 +125,7 @@ collectstatic-{{repo}}:
     - cwd: {{ djangodir }}
     - require:
       - virtualenv: {{ djangodir }}/.ve/
-    - onlyif:
+    - onchanges:
       - git: https://github.com/open-contracting/{{ repo }}.git
 
 {% if repo == 'standard-collaborator' %}
@@ -135,9 +135,7 @@ assets-{{ repo }}:
     - user: {{ user }}
     - bin_env: {{ djangodir }}/.ve/
     - cwd: {{ djangodir }}
-    - require:
-      - cmd: collectstatic-{{ repo }}
-    - onlyif:
+    - onchanges:
       - cmd: collectstatic-{{ repo }}
 {% endif %}
 
