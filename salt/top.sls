@@ -10,3 +10,9 @@ live:
   'live1':
     - opencontracting
     - opendataservices-website
+
+development:
+  # A development server
+  'dev1':
+    - opencontracting
+    - opendataservices-website
