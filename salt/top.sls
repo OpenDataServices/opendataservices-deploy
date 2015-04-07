@@ -11,7 +11,7 @@ live:
     - opencontracting
     - opendataservices-website
 
-development:
+dev:
   # A development server
   'dev1':
     - opencontracting
