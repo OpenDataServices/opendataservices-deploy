@@ -40,7 +40,8 @@ salt-deps:
 #   3) Create a database user and database table, and grant the appropirate permissions
 #   4) Run the relevant django commands for collecting static files and creating assets
 {% for repo in ['standard-collaborator', 'validator', 'opendatacomparison'] %}
-https://github.com/OpenDataServices/{{ repo }}.git:
+{% set giturl = 'https://github.com/OpenDataServices/'+repo~'.git' %}
+{{ giturl }}:
   git.latest:
     - rev: master
     - target: /home/{{ user }}/{{ repo }}/
@@ -106,7 +107,7 @@ syncdb-{{repo}}:
     - require:
       - virtualenv: {{ djangodir }}/.ve/
     - onchanges:
-      - git: https://github.com/open-contracting/{{ repo }}.git
+      - git: {{ giturl }}
 
 migrate-{{repo}}:
   cmd.run:
@@ -116,7 +117,7 @@ migrate-{{repo}}:
     - require:
       - virtualenv: {{ djangodir }}/.ve/
     - onchanges:
-      - git: syncdb-{{ repo }}.git
+      - cmd: syncdb-{{ repo }}
 
 collectstatic-{{repo}}:
   cmd.run:
@@ -126,7 +127,7 @@ collectstatic-{{repo}}:
     - require:
       - virtualenv: {{ djangodir }}/.ve/
     - onchanges:
-      - git: https://github.com/open-contracting/{{ repo }}.git
+      - git: {{ giturl }}
 
 {% if repo == 'standard-collaborator' %}
 assets-{{ repo }}:
