@@ -5,13 +5,11 @@ base:
   # Install our core sls onto all servers
   '*':
     - core
-live:
   # Our main live server
   'live1':
     - opencontracting
     - opendataservices-website
 
-dev:
   # A development server
   'dev1':
     - opencontracting

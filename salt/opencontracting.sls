@@ -4,7 +4,7 @@
 {% from 'lib.sls' import createuser, apache %}
 
 include:
-  - base: core
+  - core
   - apache
 
 # Create a user for this piece of work, see lib.sls for more info
