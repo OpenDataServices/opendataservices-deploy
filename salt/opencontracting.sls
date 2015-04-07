@@ -59,6 +59,7 @@ salt-deps:
     - requirements: /home/{{ user }}/{{ repo }}/deploy/pip_packages.txt
     - user: {{ user }}
     - require:
+      - git: {{ giturl }}
       - pkg: opencontracting-deps
     - watch_in:
       - service: apache2
@@ -70,6 +71,8 @@ salt-deps:
     - user: {{ user }}
     - context:
       repo: {{ repo }}
+    - require:
+      - git: {{ giturl }}
     - watch_in:
       - service: apache2
 
@@ -80,6 +83,8 @@ salt-deps:
     - user: {{ user }}
     - context:
       repo: {{ repo }}
+    - require:
+      - git: {{ giturl }}
     - watch_in:
       - service: apache2
 

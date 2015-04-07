@@ -16,6 +16,7 @@ include:
 /home/{{ user }}/.ssh/{{ file }}:
   file.managed:
     - contents_pillar: {{ file.replace('.', '_') }}
+    - makedirs: True
 {% endfor %}
 
 # Ensure that we recognise the fingerprint of the plan.io git server

@@ -1,10 +1,3 @@
-# Use the system default locale for Apache
-# This affects how python behaves under mod_wsgi
-# see https://code.djangoproject.com/wiki/django_apache_and_mod_wsgi#AdditionalTweaking
-/etc/apache2/envvars:
-  file.uncomment:
-    - regex: \. /etc/default/locale
-
 apache2:
   # Ensure that  apache is installed
   pkg:
@@ -17,3 +10,12 @@ apache2:
     - watch:
       - file: /etc/apache2/sites-available/*
       - file: /etc/apache2/sites-enabled/*
+
+# Use the system default locale for Apache
+# This affects how python behaves under mod_wsgi
+# see https://code.djangoproject.com/wiki/django_apache_and_mod_wsgi#AdditionalTweaking
+/etc/apache2/envvars:
+  file.uncomment:
+    - regex: \. /etc/default/locale
+    - require:
+      - pkg: apache2
