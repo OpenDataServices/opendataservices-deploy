@@ -14,6 +14,7 @@
   user.present:
     - name: {{ user }}
     - home: /home/{{ user }}
+    - order: 1
 
 {% endmacro %}
 
