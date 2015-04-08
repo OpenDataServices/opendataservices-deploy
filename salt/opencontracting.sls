@@ -4,7 +4,7 @@
 {% from 'lib.sls' import createuser, apache %}
 
 include:
-  - base: core
+  - core
   - apache
 
 # Create a user for this piece of work, see lib.sls for more info
@@ -59,6 +59,7 @@ salt-deps:
     - requirements: /home/{{ user }}/{{ repo }}/deploy/pip_packages.txt
     - user: {{ user }}
     - require:
+      - git: {{ giturl }}
       - pkg: opencontracting-deps
     - watch_in:
       - service: apache2
@@ -70,6 +71,8 @@ salt-deps:
     - user: {{ user }}
     - context:
       repo: {{ repo }}
+    - require:
+      - git: {{ giturl }}
     - watch_in:
       - service: apache2
 
@@ -80,6 +83,8 @@ salt-deps:
     - user: {{ user }}
     - context:
       repo: {{ repo }}
+    - require:
+      - git: {{ giturl }}
     - watch_in:
       - service: apache2
 

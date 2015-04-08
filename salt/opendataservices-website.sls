@@ -4,7 +4,7 @@
 {% from 'lib.sls' import createuser, apache %}
 
 include:
-  - base: core
+  - core
 
 # Create a user for this piece of work, see lib.sls for more info
 {% set user = 'opendataservices' %}
@@ -16,6 +16,7 @@ include:
 /home/{{ user }}/.ssh/{{ file }}:
   file.managed:
     - contents_pillar: {{ file.replace('.', '_') }}
+    - makedirs: True
 {% endfor %}
 
 # Ensure that we recognise the fingerprint of the plan.io git server

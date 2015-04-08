@@ -30,7 +30,7 @@ ADMINS = (
 ALLOWED_HOSTS = [
     '.',
     'www.',
-    'ocds.opendataservices.coop',
+    '{{ pillar.domain_prefix }}ocds.opendataservices.coop',
     'ocds.open-contracting.org',
 ]
 

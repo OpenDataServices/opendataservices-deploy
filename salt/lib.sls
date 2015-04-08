@@ -14,6 +14,7 @@
   user.present:
     - name: {{ user }}
     - home: /home/{{ user }}
+    - order: 1
 
 {% endmacro %}
 
@@ -28,6 +29,7 @@
   file.managed:
     - source: salt://apache/{{ conffile }}
     - template: jinja
+    - makedirs: True
 
 # Create a symlink from sites-enabled to enable the config
 /etc/apache2/sites-enabled/{{ conffile }}:
@@ -35,4 +37,5 @@
     - target: /etc/apache2/sites-available/{{ conffile }}
     - require:
       - file: /etc/apache2/sites-available/{{ conffile }}
+    - makedirs: True
 {% endmacro %}
