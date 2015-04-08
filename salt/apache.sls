@@ -19,3 +19,11 @@ apache2:
     - regex: \. /etc/default/locale
     - require:
       - pkg: apache2
+
+# Set up a htpasswd file if its in the pillar
+{% if 'htpasswd' in pillar %}
+/etc/apache2/htpasswd:
+  file.managed:
+    - contents_pillar: htpasswd
+    - makedirs: True
+{% endif %}
