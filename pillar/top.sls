@@ -8,3 +8,6 @@ base:
   '*live*':
      - live_pillar
      - private.live_pillar
+  '*dev*':
+     - dev_pillar
+     - private.dev_pillar
