@@ -18,3 +18,4 @@ base:
   # Our monitoring server
   'mon':
     - icinga2
+    - piwik
