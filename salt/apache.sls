@@ -7,9 +7,6 @@ apache2:
     - running
     - enable: True
     - reload: True
-    - watch:
-      - file: /etc/apache2/sites-available/*
-      - file: /etc/apache2/sites-enabled/*
 
 # Use the system default locale for Apache
 # This affects how python behaves under mod_wsgi

@@ -11,3 +11,6 @@ base:
   '*dev*':
      - dev_pillar
      - private.dev_pillar
+  'mon*':
+     - mon_pillar
+     - private.mon_pillar

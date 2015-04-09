@@ -14,3 +14,7 @@ base:
   'dev1':
     - opencontracting
     - opendataservices-website
+
+  # Our monitoring server
+  'mon':
+    - icinga2

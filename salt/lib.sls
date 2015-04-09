@@ -30,6 +30,7 @@
     - source: salt://apache/{{ conffile }}
     - template: jinja
     - makedirs: True
+    - watch_in: apache2
 
 # Create a symlink from sites-enabled to enable the config
 /etc/apache2/sites-enabled/{{ conffile }}:
@@ -38,4 +39,5 @@
     - require:
       - file: /etc/apache2/sites-available/{{ conffile }}
     - makedirs: True
+    - watch_in: apache2
 {% endmacro %}
