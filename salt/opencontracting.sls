@@ -57,7 +57,6 @@ salt-deps:
   virtualenv.managed:
     - system_site_packages: False
     - requirements: /home/{{ user }}/{{ repo }}/deploy/pip_packages.txt
-    - user: {{ user }}
     - require:
       - git: {{ giturl }}
       - pkg: opencontracting-deps
