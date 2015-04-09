@@ -1,5 +1,4 @@
-# This is a salt formula to set up the opendataservices website
-# ie. http://opendataservices.coop
+# This is a salt formula to set up the opencontracting python code
 
 {% from 'lib.sls' import createuser, apache %}
 
