@@ -41,9 +41,9 @@ ssh:
 # Set up unattended upgrades
 unattended-upgrades:
   pkg.installed:
-    - pks:
-      - unattended-upgrades
-      - mailutils
+    - pkgs:
+      - unattended-upgrades # this perform unattended upgrades
+      - update-notifier-common # this checks whether a restart is required
 
 /etc/apt/apt.conf.d/50unattended-upgrades:
   file.managed:
