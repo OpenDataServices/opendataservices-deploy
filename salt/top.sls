@@ -19,3 +19,7 @@ base:
   'mon':
     - icinga2
     - piwik
+    - logserver
+
+  'dev2':
+    - dev2
