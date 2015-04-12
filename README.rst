@@ -51,6 +51,13 @@ state.sls
 
         salt-ssh <servername> state.sls <statename> [<environment name>]
 
+pkg.list_upgrade
+    list what packages can be upgraded on the servers. Use refresh=True to ensure the package list is refreshed (ie. apt-get update), e.g.
+
+    .. code-block::
+
+        salt-ssh '*' pkg.list_upgrades refresh=True
+
 pkg.upgrade
     to update the packages on the server. This is equivalent to sshing in and running apt-get/aptitude update/upgrade manually.
 
