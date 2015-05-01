@@ -1,11 +1,28 @@
 # Salt formula for installing piwik
+#
+include:
+  - apache
+  - php
 
 # Download Piwik from the git repository but pick a tag for a stable release
 https://github.com/piwik/piwik.git:
   git.latest:
-    - rev: 2.12.1
+    - rev: 2.13.0
     - target: /var/www/html/piwik/
     - submodules: True
+
+php5-cli:
+  pkg.installed
+
+php5-mysql:
+  pkg.installed:
+    - watch_in:
+      - service: apache2
+
+php5-gd:
+  pkg.installed:
+    - watch_in:
+      - service: apache2
 
 # Install composer (PHP package manager),
 # see http://docs.saltstack.com/en/latest/ref/states/all/salt.states.composer.html
@@ -14,6 +31,8 @@ get-composer:
     - name: 'CURL=`which curl`; $CURL -sS https://getcomposer.org/installer | php'
     - unless: test -f /usr/local/bin/composer
     - cwd: /root/
+    - require:
+      - pkg: php5-cli
 
 install-composer:
   cmd.wait:
