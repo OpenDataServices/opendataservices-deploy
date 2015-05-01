@@ -13,17 +13,19 @@ include:
 
 opencontracting-deps:
     pkg.installed:
-        - pkgs:
-            - libapache2-mod-wsgi
-            - python-pip
-            - python-virtualenv
-            - python-dev
-            - mysql-server
-            - libmysqlclient-dev 
-            - libxml2-dev
-            - libxslt1-dev
-            - mercurial # Required to install django-registration, see
-            # https://github.com/open-contracting/standard-collaborator/blob/df98c203217e7dd12f4b9787e12dac02c0d0ec61/deploy/pip_packages.txt#L29
+      - pkgs:
+        - libapache2-mod-wsgi
+        - python-pip
+        - python-virtualenv
+        - python-dev
+        - mysql-server
+        - libmysqlclient-dev 
+        - libxml2-dev
+        - libxslt1-dev
+        - mercurial # Required to install django-registration, see
+        # https://github.com/open-contracting/standard-collaborator/blob/df98c203217e7dd12f4b9787e12dac02c0d0ec61/deploy/pip_packages.txt#L29
+      - watch_in:
+        - service: apache2
 
 salt-deps:
   pkg.installed:

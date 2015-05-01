@@ -13,7 +13,7 @@ base:
   # A development server
   'dev1':
     - opencontracting
-    - opencontracting-dev
+    - cove
     - opendataservices-website
 
   # Our monitoring server

@@ -44,6 +44,27 @@
       - service: apache2
 {% endmacro %}
 
+{% macro uwsgi(conffile) %}
+# Render the file with jinja and place it in apps-available
+/etc/uwsgi/apps-available/{{ conffile }}:
+  file.managed:
+    - source: salt://uwsgi/{{ conffile }}
+    - template: jinja
+    - makedirs: True
+    - watch_in:
+      - service: uwsgi
+
+# Create a symlink from apps-enabled to enable the config
+/etc/uwsgi/apps-enabled/{{ conffile }}:
+  file.symlink:
+    - target: /etc/uwsgi/apps-available/{{ conffile }}
+    - require:
+      - file: /etc/uwsgi/apps-available/{{ conffile }}
+    - makedirs: True
+    - watch_in:
+      - service: uwsgi
+{% endmacro %}
+
 
 
 
