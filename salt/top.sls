@@ -13,10 +13,11 @@ base:
   # A development server
   'dev1':
     - opencontracting
+    - opencontracting-dev
     - opendataservices-website
 
   # Our monitoring server
-  'mon':
+  'mon*':
     - icinga2
     - piwik
     - logserver

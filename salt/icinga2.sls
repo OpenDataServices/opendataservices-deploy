@@ -13,6 +13,7 @@
 
 include:
   - apache
+  - php
 
 icinga2:
   pkgrepo.managed:
@@ -39,6 +40,8 @@ icinga2:
   file.append:
     - text: date.timezone = Europe/London
     - watch_in: apache2
+    - require:
+      - pkg: libapache2-mod-php5
 
 postgresql:
   service:
