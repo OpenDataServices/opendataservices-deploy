@@ -5,6 +5,7 @@
 
 include:
   - core
+  - apache
 
 # Create a user for this piece of work, see lib.sls for more info
 {% set user = 'opendataservices' %}

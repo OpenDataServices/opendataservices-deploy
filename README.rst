@@ -49,7 +49,7 @@ state.sls
 
     .. code-block::
 
-        salt-ssh <servername> state.sls <statename> [<environment name>]
+        salt-ssh <servername> state.sls <statename>
 
 pkg.list_upgrade
     list what packages can be upgraded on the servers. Use refresh=True to ensure the package list is refreshed (ie. apt-get update), e.g.
