@@ -49,7 +49,7 @@ cove-deps:
     - require:
       - pkg: git
     - watch_in:
-      - service: apache2
+      - service: uwsgi
 
 set_lc_all:
   file.append:
