@@ -21,6 +21,7 @@ icinga2-master:
     - pkgs:
       - postgresql
       - icinga2-ido-pgsql
+      - mailutils
       # PHP Dependencies for icingaweb2
       - php5-ldap
       - php5-intl
@@ -40,6 +41,12 @@ icinga2-master:
 /etc/icinga2/constants.conf:
   file.managed:
     - source: salt://icinga/constants.conf
+    - watch_in:
+      - service: icinga2
+
+/etc/icinga2/conf.d/users.conf:
+  file.managed:
+    - source: salt://icinga/users.conf
     - watch_in:
       - service: icinga2
 
