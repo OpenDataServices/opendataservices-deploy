@@ -65,20 +65,20 @@ https://github.com/Icinga/icingaweb2.git:
     - rev: v2.0.0-beta3
     - target: /usr/share/icingaweb2/
 
-# FIXME!!
-# This is broken because the setup module gets removed after setup is complete
-./bin/icingacli setup config webserver apache --document-root /usr/share/icingaweb2/public > /etc/apache2/conf-available/icingaweb2.conf:
-  cmd.run:
-    - cwd: /usr/share/icingaweb2
-    - onchanges:
-      - git: https://github.com/Icinga/icingaweb2.git
-    - watch_in: apache2
+rewrite:
+  apache_module.enable
 
-# Remove symlink untill above problem is fixed
-#/etc/apache2/conf-enabled/icingaweb2.conf:
-#  file.symlink:
-#    - target: /etc/apache2/conf-available/icingaweb2.conf
-#    - watch_in: apache2
+/etc/apache2/conf-available/icingaweb2.conf:
+  file.managed:
+    - source: salt://icinga/icingaweb2.conf
+    - watch_in:
+      service: apache2
+
+/etc/apache2/conf-enabled/icingaweb2.conf:
+  file.symlink:
+    - target: /etc/apache2/conf-available/icingaweb2.conf
+    - watch_in:
+      service: apache2
 
 /etc/icinga2/features-available/ido-pgsql.conf:
   file.managed:
