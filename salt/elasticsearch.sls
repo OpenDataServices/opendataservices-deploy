@@ -19,7 +19,9 @@ elasticsearch-base:
     - watch:
       - file: /etc/elasticsearch/*
 
-  # Ensure elasticsearch only listens on localhost
+  # Ensure elasticsearch only listens on localhost, doesn't multicast
   file.append:
     - name: /etc/elasticsearch/elasticsearch.yml
-    - text: "network.bind_host: 127.0.0.1"
+    - text: |
+      network.host: 127.0.0.1
+      discovery.zen.ping.multicast.enabled: false
