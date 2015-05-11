@@ -9,18 +9,21 @@ base:
   'live1':
     - opencontracting
     - opendataservices-website
+    - icinga2-satellite
 
   # A development server
   'dev1':
     - opencontracting
     - cove
     - opendataservices-website
+    - icinga2-satellite
 
   # Our monitoring server
   'mon*':
-    - icinga2
+    - icinga2-master
     - piwik
     - logserver
 
   'dev2':
     - dev2
+    - icinga2-satellite

@@ -14,16 +14,11 @@
 include:
   - apache
   - php
+  - icinga2-base
 
-icinga2:
-  pkgrepo.managed:
-    - ppa: formorer/icinga
-    - require_in:
-      pkg: icinga2
+icinga2-master:
   pkg.installed:
     - pkgs:
-      - icinga2
-      - nagios-plugins
       - postgresql
       - icinga2-ido-pgsql
       # PHP Dependencies for icingaweb2
@@ -31,13 +26,22 @@ icinga2:
       - php5-intl
       - php5-imagick
       - php5-pgsql
-    - refresh: True
+    - require:
+      - pkg: icinga2
     - watch_in:
-      service: apache2
-  service:
-    - running
-    - enable: True
-    - reload: True
+      - service: apache2
+
+/etc/icinga2/zones.conf:
+  file.managed:
+    - source: salt://icinga/zone-master.conf
+    - watch_in:
+      - service: icinga2
+
+/etc/icinga2/constants.conf:
+  file.managed:
+    - source: salt://icinga/constants.conf
+    - watch_in:
+      - service: icinga2
 
 /etc/php5/apache2/php.ini:
   file.append:
