@@ -32,6 +32,16 @@
     - makedirs: True
     - watch_in:
       - service: apache2
+    {% if 'banner_message' in pillar %}
+    - context:
+      banner: |
+        # Inflate and deflate here to ensure that the message it not
+        # compressed when we do the substitution, but is afterwards.
+        # I think this may be adding some extra overhead, but for our
+        # dev site this shouldn't be noticeable.
+        AddOutputFilterByType INFLATE;SUBSTITUTE;DEFLATE text/html
+        Substitute "s|<body([^>]*)>|<body$1><div style=\"background-color:red; color: black; width: 100%; text-align: center; font-weight: bold;\">{{ pillar.banner_message }}</div>|i"
+    {% endif %}
 
 # Create a symlink from sites-enabled to enable the config
 /etc/apache2/sites-enabled/{{ conffile }}:

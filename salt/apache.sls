@@ -17,6 +17,11 @@ apache2:
     - require:
       - pkg: apache2
 
+{% if 'banner_message' in pillar %}
+substitute:
+  apache_module.enable
+{% endif %}
+
 # Set up a htpasswd file if its in the pillar
 {% if 'htpasswd' in pillar %}
 /etc/apache2/htpasswd:
