@@ -1,5 +1,9 @@
 # Salt formula for installing piwik
 #
+# This state requires some database setup. Either copy the database from an
+# existing instance, or use the install wizard at:
+# http://mon.opendataservices.coop/piwik/
+
 include:
   - apache
   - php

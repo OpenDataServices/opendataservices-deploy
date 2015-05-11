@@ -1,15 +1,15 @@
 # Salt formula for installing and setting up icinga2 and icingaweb2
 
-# TODO:
-# Currently in addition to running this state these commands need to be run
-# manually, and then the setup at
-# http://mon.default.opendataservices.uk0.bigv.io/icingaweb2/ needs to be
-# followed.
-#
+# This state requires some database setup. Either copy the database from an
+# existing instance, or run:
+# 
 # psql --username=icinga_ido -d icinga_ido --host=127.0.0.1 <  /usr/share/icinga2-ido-pgsql/schema/pgsql.sql
 # (prompts for password)
 # /usr/share/icingaweb2/bin/icingacli setup config directory --group icingaweb2;
 # /usr/share/icingaweb2/bin/icingacli setup token create;
+#
+# An then follow the setup at
+# http://mon.default.opendataservices.uk0.bigv.io/icingaweb2/ needs to be
 
 include:
   - apache
@@ -30,7 +30,10 @@ icinga2:
       - php5-ldap
       - php5-intl
       - php5-imagick
+      - php5-pgsql
     - refresh: True
+    - watch_in:
+      service: apache2
   service:
     - running
     - enable: True
@@ -64,6 +67,16 @@ https://github.com/Icinga/icingaweb2.git:
   git.latest:
     - rev: v2.0.0-beta3
     - target: /usr/share/icingaweb2/
+
+/etc/icingaweb2/:
+  file.recurse:
+    - source: salt://icingaweb2
+    - template: jinja
+
+/etc/icingaweb2/enabledModules/monitoring:
+  file.symlink:
+    - target: /usr/share/icingaweb2/modules/monitoring
+    - makedirs: True
 
 rewrite:
   apache_module.enable
