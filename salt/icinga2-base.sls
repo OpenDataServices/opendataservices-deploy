@@ -16,3 +16,11 @@ icinga2:
     - reload: True
     - require:
       - pkg: icinga2
+
+{% for confname in ['apt'] %}
+/etc/icinga2/conf.d/{{ confname }}.conf:
+  file.managed:
+    - source: salt://icinga/{{ confname }}.conf
+    - watch_in:
+      - service: icinga2
+{% endfor %}

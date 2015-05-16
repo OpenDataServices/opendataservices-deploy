@@ -10,6 +10,10 @@
 #
 # An then follow the setup at
 # http://mon.default.opendataservices.uk0.bigv.io/icingaweb2/ needs to be
+# 
+#
+# New icingaweb2 users must be created via the database, see:
+# https://github.com/Icinga/icingaweb2/blob/master/doc/authentication.md#-database-setup
 
 include:
   - apache
@@ -44,11 +48,15 @@ icinga2-master:
     - watch_in:
       - service: icinga2
 
-/etc/icinga2/conf.d/users.conf:
+# These are the config files that only need changing for the master
+# Those that need changing for all hosts are in icinga-base.sls
+{% for confname in ['users', 'notifications'] %}
+/etc/icinga2/conf.d/{{ confname }}.conf:
   file.managed:
-    - source: salt://icinga/users.conf
+    - source: salt://icinga/{{ confname }}.conf
     - watch_in:
       - service: icinga2
+{% endfor %}
 
 /etc/php5/apache2/php.ini:
   file.append:

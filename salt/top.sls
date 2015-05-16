@@ -22,7 +22,7 @@ base:
   'mon*':
     - icinga2-master
     - piwik
-    - logserver
+    #- logserver
 
   'dev2':
     - dev2
