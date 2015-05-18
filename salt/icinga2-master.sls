@@ -9,7 +9,7 @@
 # /usr/share/icingaweb2/bin/icingacli setup token create;
 #
 # An then follow the setup at
-# http://mon.default.opendataservices.uk0.bigv.io/icingaweb2/ needs to be
+# http://mon.default.opendataservices.uk0.bigv.io/icingaweb2/
 # 
 #
 # New icingaweb2 users must be created via the database, see:
