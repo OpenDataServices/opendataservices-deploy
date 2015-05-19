@@ -7,7 +7,7 @@
 #  (and the ticket which you generate on the master using the command given)
 # Then:
 #   service icinga2 restart
-# And on the master:
+# Wait approximately 1 minute, then, on the master:
 #   icinga2 node update-config
 #   service icinga2 restart
 
