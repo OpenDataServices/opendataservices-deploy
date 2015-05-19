@@ -14,3 +14,5 @@ base:
   'mon*':
      - mon_pillar
      - private.mon_pillar
+  'nrgi-dev':
+     - private.nrgi_dev_pillar
