@@ -1,0 +1,13 @@
+[Unit]
+Description={{ name }} container
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+ExecStart=/usr/bin/docker run --name {{ name }} {{extraargs}} {{ image }}
+ExecStop=/usr/bin/docker stop {{ name }}
+ExecStop=/usr/bin/docker rm {{ name }}
+
+[Install]
+WantedBy=local.target

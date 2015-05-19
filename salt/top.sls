@@ -27,3 +27,7 @@ base:
   'dev2':
     - dev2
     - icinga2-satellite
+
+  'nrgi-dev':
+    - icinga2-satellite
+    - resource-projects

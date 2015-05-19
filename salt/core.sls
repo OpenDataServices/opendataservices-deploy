@@ -4,6 +4,8 @@
 # Core packages that almost all our software will depend on
 git:
   pkg.installed
+python-apt: # required for salt to interact with apt
+  pkg.installed
 
 # Useful commands for people logging into the servers
 useful-shell-commands:
