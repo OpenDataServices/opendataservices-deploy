@@ -24,7 +24,10 @@ bjwebb/ontowiki.docker:
     - context:
         image: caprenter/automated-build-virtuoso
         name: virtuoso
-        extraargs: -p 127.0.0.1:8890:8890
+        extraargs: -p 127.0.0.1:8890:8890 --volumes-from virtuoso-data
+        after: docker
+    - watch_in:
+      - service: docker-virtuoso
 
 /etc/systemd/system/docker-ontowiki.service:
   file.managed:
@@ -34,6 +37,9 @@ bjwebb/ontowiki.docker:
         image: bjwebb/ontowiki.docker
         name: ontowiki
         extraargs: -p 127.0.0.1:8000:80 --link virtuoso:virtuoso
+        after: docker-virtuoso
+    - watch_in:
+      - service: docker-ontowiki
 
 systemctl daemon-reload:
   cmd.run:
@@ -53,3 +59,9 @@ docker-ontowiki:
     - require:
       - cmd: systemctl daemon-reload
       - docker: bjwebb/ontowiki.docker
+
+# Should be able to use salt's docker.installed here, but I kept getting
+# various python errors
+docker create --name virtuoso-data -v /usr/local/var/lib/virtuoso/db caprenter/automated-build-virtuoso:
+  cmd.run:
+    - unless: docker inspect virtuoso-data
