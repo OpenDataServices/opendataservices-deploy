@@ -31,3 +31,6 @@ base:
   'nrgi-dev':
     - icinga2-satellite
     - resource-projects
+
+  'snapshotter':
+    - icinga2-satellite
