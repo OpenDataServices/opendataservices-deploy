@@ -97,3 +97,10 @@ collectstatic-{{repo}}:
       - virtualenv: {{ djangodir }}.ve/
     - onchanges:
       - git: {{ giturl }}
+
+cd {{ djangodir }}; source .ve/bin/activate; python manage.py expire_files:
+  cron.present:
+    - identifier: COVE_EXPIRE_FILES
+    - user: cove
+    - minute: 0
+    - hour: 0
