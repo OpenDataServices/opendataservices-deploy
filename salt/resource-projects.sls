@@ -63,7 +63,7 @@ bjwebb/lodspeakr-docker:
     - context:
         image: bjwebb/lodspeakr-docker
         name: lodspeakr
-        extraargs: -p 127.0.0.1:8080:80 --link virtuoso:virtuoso
+        extraargs: -p 127.0.0.1:8080:80 --link virtuoso:virtuoso -e BASE_URL=http://lodspeakr.nrgi-dev.default.opendataservices.uk0.bigv.io/
         after: docker-virtuoso
     - watch_in:
       - service: docker-lodspeakr
