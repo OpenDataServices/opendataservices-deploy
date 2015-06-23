@@ -23,8 +23,9 @@ DATABASES = {
     }
 }
 
+# Commented out now that we're using raven/sentry instead
 ADMINS = (
-    ('Ben Webb', 'ben.webb@opendataservices.coop'),
+#    ('Ben Webb', 'ben.webb@opendataservices.coop'),
 )
 
 ALLOWED_HOSTS = [

@@ -7,6 +7,9 @@ SECRET_KEY = '{{ pillar[repo].secret_key }}'
 SENDGRID_PASSWORD = ''
 SENDGRID_USERNAME = ''
 SITE_UNIQUE_ID = ''
+RAVEN_CONFIG = {
+    'dsn': '{{ pillar[repo].sentry_dsn }}'
+}
 {% if repo == 'opendatacomparison' %}
 SOCIAL_AUTH_TWITTER_KEY = '{{pillar.opendatacomparison.social_auth.twitter.key}}'
 SOCIAL_AUTH_TWITTER_SECRET = '{{pillar.opendatacomparison.social_auth.twitter.secret}}' 
