@@ -27,6 +27,7 @@ base:
   'dev2':
     - dev2
     - icinga2-satellite
+    - dkan-script
 
   'nrgi-dev':
     - icinga2-satellite
