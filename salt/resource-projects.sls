@@ -23,7 +23,7 @@ bjwebb/ontowiki.docker:
     - watch_in:
       - service: docker-ontowiki
 
-bjwebb/lodspeakr-docker:
+bjwebb/resourceprojects.org-frontend:
   docker.pulled:
     - tag: latest
     - require:
@@ -61,7 +61,7 @@ bjwebb/lodspeakr-docker:
     - source: salt://systemd/docker-run.service
     - template: jinja
     - context:
-        image: bjwebb/lodspeakr-docker
+        image: bjwebb/resourceprojects.org-frontend
         name: lodspeakr
         extraargs: -p 127.0.0.1:8080:80 --link virtuoso:virtuoso -e BASE_URL=http://lodspeakr.nrgi-dev.default.opendataservices.uk0.bigv.io/
         after: docker-virtuoso
@@ -71,7 +71,11 @@ bjwebb/lodspeakr-docker:
 systemctl daemon-reload:
   cmd.run:
     - onchanges:
-      - file: /etc/systemd/system/*
+      - file: /etc/systemd/system/docker-virtuoso.service
+    - onchanges:
+      - file: /etc/systemd/system/docker-ontowiki.service
+    - onchanges:
+      - file: /etc/systemd/system/docker-lodspeakr.service
 
 docker-virtuoso:
   service.running:
@@ -92,7 +96,7 @@ docker-lodspeakr:
     - enable: True
     - require:
       - cmd: systemctl daemon-reload
-      - docker: bjwebb/lodspeakr-docker
+      - docker: bjwebb/resourceprojects.org-frontend
 
 # Should be able to use salt's docker.installed here, but I kept getting
 # various python errors
