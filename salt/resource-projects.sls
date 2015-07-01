@@ -5,98 +5,77 @@ include:
 {% from 'lib.sls' import apache %}
 {{ apache('resource-projects.conf') }}
 
-caprenter/automated-build-virtuoso:
+{% set dockers = {
+  'virtuoso': 'caprenter/automated-build-virtuoso',
+  'ontowiki': 'bjwebb/ontowiki.docker',
+  'lodspeakr': 'bjwebb/resourceprojects.org-frontend'
+} %}
+
+{% for container, repo in dockers.items() %}
+{{ repo }}:
   docker.pulled:
     - tag: latest
     - require:
       - sls: docker
     - force: True
     - watch_in:
-      - service: docker-virtuoso
+      - service: docker-{{ container }}
+{% endfor %}
 
-bjwebb/ontowiki.docker:
-  docker.pulled:
-    - tag: latest
-    - require:
-      - sls: docker
-    - force: True
-    - watch_in:
-      - service: docker-ontowiki
-
-bjwebb/resourceprojects.org-frontend:
-  docker.pulled:
-    - tag: latest
-    - require:
-      - sls: docker
-    - force: True
-    - watch_in:
-      - service: docker-lodspeakr
-
+{% set container = 'virtuoso' %}
 /etc/systemd/system/docker-virtuoso.service:
   file.managed:
     - source: salt://systemd/docker-run.service
     - template: jinja
     - context:
         image: caprenter/automated-build-virtuoso
-        name: virtuoso
+        name: {{ container }}
         extraargs: -p 127.0.0.1:8890:8890 --volumes-from virtuoso-data
         after: docker
     - watch_in:
-      - service: docker-virtuoso
+      - service: docker-{{ container }}
 
+{% set container = 'ontowiki' %}
 /etc/systemd/system/docker-ontowiki.service:
   file.managed:
     - source: salt://systemd/docker-run.service
     - template: jinja
     - context:
         image: bjwebb/ontowiki.docker
-        name: ontowiki
+        name: {{ container }}
         extraargs: -p 127.0.0.1:8000:80 --link virtuoso:virtuoso
         after: docker-virtuoso
     - watch_in:
-      - service: docker-ontowiki
+      - service: docker-{{ container }}
 
+{% set container = 'lodspeakr' %}
 /etc/systemd/system/docker-lodspeakr.service:
   file.managed:
     - source: salt://systemd/docker-run.service
     - template: jinja
     - context:
         image: bjwebb/resourceprojects.org-frontend
-        name: lodspeakr
+        name: {{ container }}
         extraargs: -p 127.0.0.1:8080:80 --link virtuoso:virtuoso -e BASE_URL=http://lodspeakr.nrgi-dev.default.opendataservices.uk0.bigv.io/
         after: docker-virtuoso
     - watch_in:
-      - service: docker-lodspeakr
+      - service: docker-{{ container }}
 
 systemctl daemon-reload:
   cmd.run:
+    {% for container in dockers %}
     - onchanges:
-      - file: /etc/systemd/system/docker-virtuoso.service
-    - onchanges:
-      - file: /etc/systemd/system/docker-ontowiki.service
-    - onchanges:
-      - file: /etc/systemd/system/docker-lodspeakr.service
+      - file: /etc/systemd/system/docker-{{ container }}.service
+    {% endfor %}
 
-docker-virtuoso:
+{% for container, repo in dockers.items() %}
+docker-{{ container }}:
   service.running:
     - enable: True
     - require:
       - cmd: systemctl daemon-reload
-      - docker: caprenter/automated-build-virtuoso
-
-docker-ontowiki:
-  service.running:
-    - enable: True
-    - require:
-      - cmd: systemctl daemon-reload
-      - docker: bjwebb/ontowiki.docker
-
-docker-lodspeakr:
-  service.running:
-    - enable: True
-    - require:
-      - cmd: systemctl daemon-reload
-      - docker: bjwebb/resourceprojects.org-frontend
+      - docker: {{ repo }}
+{% endfor %}
 
 # Should be able to use salt's docker.installed here, but I kept getting
 # various python errors
