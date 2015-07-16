@@ -54,3 +54,19 @@ unattended-upgrades:
 /etc/apt/apt.conf.d/10periodic:
   file.managed:
     - source: salt://apt/10periodic
+
+{% if grains['lsb_distrib_release']=='14.04' %}
+# Special config for 14.04 because it uses grub legacy, which doesn't install
+# the new kernel using unatteneded upgades out of the box.
+
+debconf-utils:
+  pkg.installed
+
+grub-debconf:
+  debconf.set:
+    - name: grub
+    - data:
+        'grub/update_grub_changeprompt_threeway': {'type': 'string', 'value': 'install_new'}
+    - require:
+      - pkg: debconf-utils 
+{% endif %}
