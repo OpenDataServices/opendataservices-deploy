@@ -10,10 +10,8 @@
 #
 # An then follow the setup at
 # http://mon.default.opendataservices.uk0.bigv.io/icingaweb2/
-# 
 #
-# New icingaweb2 users must be created via the database, see:
-# https://github.com/Icinga/icingaweb2/blob/master/doc/authentication.md#-database-setup
+# As of icingaweb2.0-rc1, New users can be added through the web interface.
 
 include:
   - apache
@@ -84,7 +82,7 @@ icingaweb2:
 
 https://github.com/Icinga/icingaweb2.git:
   git.latest:
-    - rev: v2.0.0-beta3
+    - rev: v2.0.0-rc1
     - target: /usr/share/icingaweb2/
 
 /etc/icingaweb2/:
@@ -119,11 +117,13 @@ rewrite:
     - watch_in:
       service: icinga2
 
-/etc/icinga2/features-enabled/ido-pgsql.conf:
+{% for feature in ['ido-pgsql', 'command'] %}
+/etc/icinga2/features-enabled/{{ feature }}.conf:
   file.symlink:
-    - target: /etc/icinga2/features-available/ido-pgsql.conf
+    - target: /etc/icinga2/features-available/{{ feature }}.conf
     - watch_in:
-      service: icinga2
+      - service: icinga2
+{% endfor %}
 
 {% for name in ['icingaweb', 'icinga_ido'] %}
 {{ name }}:
