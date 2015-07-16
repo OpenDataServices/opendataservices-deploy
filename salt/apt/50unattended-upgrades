@@ -1,5 +1,5 @@
 Unattended-Upgrade::Allowed-Origins {
-        "Ubuntu trusty-security";
-//      "Ubuntu trusty-updates";
+        "Ubuntu {{ grains.oscodename }}-security";
+//      "Ubuntu {{ grains.oscodename }}-updates";
 };
 Unattended-Upgrade::Mail "code@opendataservices.coop";

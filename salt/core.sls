@@ -50,6 +50,7 @@ unattended-upgrades:
 /etc/apt/apt.conf.d/50unattended-upgrades:
   file.managed:
     - source: salt://apt/50unattended-upgrades
+    - template: jinja
 
 /etc/apt/apt.conf.d/10periodic:
   file.managed:
