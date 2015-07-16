@@ -44,7 +44,7 @@ salt-deps:
 {% set giturl = 'https://github.com/OpenDataServices/'+repo~'.git' %}
 {{ giturl }}:
   git.latest:
-    - rev: master
+    - rev: {{ pillar.default_branch }}
     - target: /home/{{ user }}/{{ repo }}/
     - user: {{ user }}
     - require:
