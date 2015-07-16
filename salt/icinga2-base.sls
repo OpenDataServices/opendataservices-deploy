@@ -7,6 +7,7 @@ icinga2:
     - pkgs:
       - icinga2
       - nagios-plugins
+      - nagios-plugins-contrib
     - refresh: True
     - require:
       - pkgrepo: icinga2
@@ -17,8 +18,16 @@ icinga2:
     - require:
       - pkg: icinga2
 
-{% for confname in ['apt'] %}
+{% for confname in ['apt', 'services'] %}
 /etc/icinga2/conf.d/{{ confname }}.conf:
+  file.managed:
+    - source: salt://icinga/{{ confname }}.conf
+    - watch_in:
+      - service: icinga2
+{% endfor %}
+
+{% for confname in ['icinga2'] %}
+/etc/icinga2/{{ confname }}.conf:
   file.managed:
     - source: salt://icinga/{{ confname }}.conf
     - watch_in:

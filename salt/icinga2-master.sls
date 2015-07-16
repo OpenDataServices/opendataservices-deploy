@@ -43,6 +43,7 @@ icinga2-master:
 /etc/icinga2/constants.conf:
   file.managed:
     - source: salt://icinga/constants.conf
+    - template: jinja
     - watch_in:
       - service: icinga2
 
