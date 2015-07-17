@@ -8,6 +8,7 @@ base:
   # Our main live server
   'live1':
     - opencontracting
+    - cove
     - opendataservices-website
     - icinga2-satellite
 

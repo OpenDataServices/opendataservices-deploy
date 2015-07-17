@@ -37,13 +37,14 @@ cove-deps:
       - pkgs:
         - libapache2-mod-proxy-uwsgi
         - uwsgi-plugin-python3
+        - gettext
       - watch_in:
         - service: apache2
         - service: uwsgi
 
 {{ giturl }}:
   git.latest:
-    - rev: master
+    - rev: {{ pillar.default_branch }}
     - target: /home/{{ user }}/{{ repo }}/
     - user: {{ user }}
     - require:
