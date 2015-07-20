@@ -40,7 +40,8 @@ salt-deps:
 #   2) Install the required python packages
 #   3) Create a database user and database table, and grant the appropirate permissions
 #   4) Run the relevant django commands for collecting static files and creating assets
-{% for repo in ['standard-collaborator', 'validator', 'opendatacomparison'] %}
+# If a repo name ends with -archive, just do step 1)
+{% for repo in ['standard-collaborator', 'validator', 'opendatacomparison-archive'] %}
 {% set giturl = 'https://github.com/OpenDataServices/'+repo~'.git' %}
 {{ giturl }}:
   git.latest:
@@ -52,6 +53,7 @@ salt-deps:
     - watch_in:
       - service: apache2
 
+{% if not repo.endswith('-archive') %}
 {% set djangodir = '/home/' + user + '/' + repo + '/django/website' %}
 
 {{ djangodir }}/.ve/:
@@ -133,6 +135,7 @@ collectstatic-{{repo}}:
       - virtualenv: {{ djangodir }}/.ve/
     - onchanges:
       - git: {{ giturl }}
+{% endif %}
 
 {% if repo == 'standard-collaborator' %}
 assets-{{ repo }}:
