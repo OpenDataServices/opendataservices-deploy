@@ -23,7 +23,7 @@ include:
 {% endfor %}
 
 {% set container = 'virtuoso' %}
-/etc/systemd/system/docker-virtuoso.service:
+/etc/systemd/system/docker-{{ container }}.service:
   file.managed:
     - source: salt://systemd/docker-run.service
     - template: jinja
@@ -36,7 +36,7 @@ include:
       - service: docker-{{ container }}
 
 {% set container = 'ontowiki' %}
-/etc/systemd/system/docker-ontowiki.service:
+/etc/systemd/system/docker-{{ container }}.service:
   file.managed:
     - source: salt://systemd/docker-run.service
     - template: jinja
@@ -49,31 +49,35 @@ include:
       - service: docker-{{ container }}
 
 {% set container = 'lodspeakr' %}
-/etc/systemd/system/docker-lodspeakr.service:
+/etc/systemd/system/docker-{{ container }}.service:
   file.managed:
     - source: salt://systemd/docker-run.service
     - template: jinja
     - context:
         image: bjwebb/resourceprojects.org-frontend
         name: {{ container }}
-        extraargs: -p 127.0.0.1:8080:80 --link virtuoso:virtuoso -e BASE_URL=http://lodspeakr.nrgi-dev.default.opendataservices.uk0.bigv.io/ -e DEBUG=true
+        extraargs: -p 127.0.0.1:8080:80 --link virtuoso:virtuoso -e BASE_URL=http://lodspeakr.nrgi-dev.default.opendataservices.uk0.bigv.io/
         after: docker-virtuoso
     - watch_in:
       - service: docker-{{ container }}
 
-systemctl daemon-reload:
+{% for container in dockers %}
+# Until the fix for https://github.com/saltstack/salt/pull/24703 is released we
+# must have a seperate reload command for each container. Otherwise the
+# onchanges would only be called if all changed.
+daemon-reload-{{ container }}:
   cmd.run:
-    {% for container in dockers %}
+    - name: systemctl daemon-reload
     - onchanges:
       - file: /etc/systemd/system/docker-{{ container }}.service
-    {% endfor %}
+{% endfor %}
 
 {% for container, repo in dockers.items() %}
 docker-{{ container }}:
   service.running:
     - enable: True
     - require:
-      - cmd: systemctl daemon-reload
+      - cmd: daemon-reload-{{ container }}
       - docker: {{ repo }}
 {% endfor %}
 
