@@ -56,7 +56,7 @@ include:
     - context:
         image: bjwebb/resourceprojects.org-frontend
         name: {{ container }}
-        extraargs: -p 127.0.0.1:8080:80 --link virtuoso:virtuoso -e BASE_URL=http://lodspeakr.nrgi-dev.default.opendataservices.uk0.bigv.io/
+        extraargs: -p 127.0.0.1:8080:80 --link virtuoso:virtuoso -e BASE_URL=http://alpha.resourceprojects.org/
         after: docker-virtuoso
     - watch_in:
       - service: docker-{{ container }}
