@@ -43,7 +43,7 @@ include:
     - context:
         image: bjwebb/ontowiki.docker
         name: {{ container }}
-        extraargs: -p 127.0.0.1:8000:80 --link virtuoso:virtuoso
+        extraargs: -p 127.0.0.1:8000:80 --link virtuoso:virtuoso -e "VIRTUOSO_PASSWORD={{ pillar.virtuoso.password }}"
         after: docker-virtuoso
     - watch_in:
       - service: docker-{{ container }}
