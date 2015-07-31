@@ -6,3 +6,4 @@ cove:
   piwik:
     url: '//mon.opendataservices.coop/piwik/'
     site_id: '1' 
+automatic_reboot: 'true'

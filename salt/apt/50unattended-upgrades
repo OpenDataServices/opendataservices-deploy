@@ -3,3 +3,5 @@ Unattended-Upgrade::Allowed-Origins {
 //      "Ubuntu {{ grains.oscodename }}-updates";
 };
 Unattended-Upgrade::Mail "code@opendataservices.coop";
+Unattended-Upgrade::MailOnlyOnError "true";
+Unattended-Upgrade::Automatic-Reboot "{{pillar.automatic_reboot}}";
