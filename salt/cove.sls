@@ -2,11 +2,7 @@
 
 {% set user = 'cove' %}
 {{ createuser(user) }}
-{% set apache_conffile = user + '.conf' %}
-{{ apache(apache_conffile) }}
 
-{% set repo = 'cove' %}
-{% set djangodir = '/home/'+user+'/'+repo+'/' %}
 {% set giturl = 'https://github.com/OpenDataServices/cove.git' %}
 
 # libapache2-mod-wsgi-py3
@@ -26,8 +22,6 @@ uwsgi:
     - enable: True
     - reload: True
 
-{{ uwsgi(user+'.ini') }}
-
 cove-deps:
     apache_module.enable:
       - name: proxy
@@ -42,34 +36,53 @@ cove-deps:
         - service: apache2
         - service: uwsgi
 
-{{ giturl }}:
+set_lc_all:
+  file.append:
+    - text: 'LC_ALL="en_GB.UTF-8"'
+    - name: /etc/default/locale
+
+
+{% macro cove(name, giturl, branch, djangodir, user, uwsgi_port) %}
+
+{% set extracontext %}
+djangodir: {{ djangodir }}
+uwsgi_port: {{ uwsgi_port }}
+branch: {{ branch }}
+{% endset %}
+
+{{ apache(user+'.conf',
+    name=name+'.conf',
+    extracontext=extracontext) }}
+
+{{ uwsgi(user+'.ini',
+    name=name+'.ini',
+    djangodir=djangodir,
+    port=uwsgi_port) }}
+
+{{ giturl }}{{ djangodir }}:
   git.latest:
-    - rev: {{ pillar.default_branch }}
-    - target: /home/{{ user }}/{{ repo }}/
+    - name: {{ giturl }}
+    - rev: {{ branch }}
+    - target: {{ djangodir }}
     - user: {{ user }}
     - require:
       - pkg: git
     - watch_in:
       - service: uwsgi
 
-set_lc_all:
-  file.append:
-    - text: 'LC_ALL="en_GB.UTF-8"'
-    - name: /etc/default/locale
-
 {{ djangodir }}.ve/:
   virtualenv.managed:
     - python: /usr/bin/python3
     - user: {{ user }}
     - system_site_packages: False
-    - requirements: /home/{{ user }}/{{ repo }}/requirements.txt
+    - requirements: {{ djangodir }}requirements.txt
     - require:
-      - git: {{ giturl }}
+      - git: {{ giturl }}{{ djangodir }}
       - file: set_lc_all # required to avoid unicode errors for the "schema" library
     - watch_in:
       - service: apache2
 
-migrate-{{repo}}:
+migrate-{{name}}:
   cmd.run:
     - name: source .ve/bin/activate; python manage.py migrate --noinput
     - user: {{ user }}
@@ -77,9 +90,9 @@ migrate-{{repo}}:
     - require:
       - virtualenv: {{ djangodir }}.ve/
     - onchanges:
-      - git: {{ giturl }}
+      - git: {{ giturl }}{{ djangodir }}
 
-compilemessages-{{repo}}:
+compilemessages-{{name}}:
   cmd.run:
     - name: source .ve/bin/activate; python manage.py compilemessages
     - user: {{ user }}
@@ -87,9 +100,9 @@ compilemessages-{{repo}}:
     - require:
       - virtualenv: {{ djangodir }}.ve/
     - onchanges:
-      - git: {{ giturl }}
+      - git: {{ giturl }}{{ djangodir }}
 
-collectstatic-{{repo}}:
+collectstatic-{{name}}:
   cmd.run:
     - name: source .ve/bin/activate; python manage.py collectstatic --noinput
     - user: {{ user }}
@@ -97,11 +110,30 @@ collectstatic-{{repo}}:
     - require:
       - virtualenv: {{ djangodir }}.ve/
     - onchanges:
-      - git: {{ giturl }}
+      - git: {{ giturl }}{{ djangodir }}
 
 cd {{ djangodir }}; source .ve/bin/activate; python manage.py expire_files:
   cron.present:
     - identifier: COVE_EXPIRE_FILES
     - user: cove
-    - minute: 0
+    - minute: random
     - hour: 0
+{% endmacro %}
+
+{{ cove(
+    name='cove',
+    giturl=giturl,
+    branch=pillar.default_branch,
+    djangodir='/home/'+user+'/cove/',
+    uwsgi_port=3031,
+    user=user) }}
+
+{% for branch in pillar.extra_cove_branches %}
+{{ cove(
+    name='cove-'+branch.name,
+    giturl=giturl,
+    branch=branch.name,
+    djangodir='/home/'+user+'/cove-'+branch.name+'/',
+    uwsgi_port=branch.uwsgi_port,
+    user=user) }}
+{% endfor %}

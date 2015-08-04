@@ -23,9 +23,12 @@
 
 
 # Install the named conf file in the apache dir onto the server.
-{% macro apache(conffile) %}
+{% macro apache(conffile, name='', extracontext='') %}
+{% if name == '' %}
+{% set name=conffile %}
+{% endif %}
 # Render the file with jinja and place it in sites-available
-/etc/apache2/sites-available/{{ conffile }}:
+/etc/apache2/sites-available/{{ name }}:
   file.managed:
     - source: salt://apache/{{ conffile }}
     - template: jinja
@@ -34,44 +37,48 @@
       - service: apache2
     - context:
       {% if 'banner_message' in pillar %}
-      banner: |
-        # Inflate and deflate here to ensure that the message it not
-        # compressed when we do the substitution, but is afterwards.
-        # I think this may be adding some extra overhead, but for our
-        # dev site this shouldn't be noticeable.
-        AddOutputFilterByType INFLATE;SUBSTITUTE;DEFLATE text/html
-        Substitute "s|<body([^>]*)>|<body$1><div style=\"background-color:red; color: black; width: 100%; text-align: center; font-weight: bold; position: fixed; right: 0; left: 0; z-index: 1031\">{{ pillar.banner_message }}</div>|i"
-      {% else %}
-      banner: ''
+        banner: |
+          # Inflate and deflate here to ensure that the message it not
+          # compressed when we do the substitution, but is afterwards.
+          # I think this may be adding some extra overhead, but for our
+          # dev site this shouldn't be noticeable.
+          AddOutputFilterByType INFLATE;SUBSTITUTE;DEFLATE text/html
+          Substitute "s|<body([^>]*)>|<body$1><div style=\"background-color:red; color: black; width: 100%; text-align: center; font-weight: bold; position: fixed; right: 0; left: 0; z-index: 1031\">{{ pillar.banner_message }}</div>|i"
+        {% else %}
+        banner: ''
       {% endif %}
+        {{ extracontext | indent(8) }}
 
 # Create a symlink from sites-enabled to enable the config
-/etc/apache2/sites-enabled/{{ conffile }}:
+/etc/apache2/sites-enabled/{{ name }}:
   file.symlink:
-    - target: /etc/apache2/sites-available/{{ conffile }}
+    - target: /etc/apache2/sites-available/{{ name }}
     - require:
-      - file: /etc/apache2/sites-available/{{ conffile }}
+      - file: /etc/apache2/sites-available/{{ name }}
     - makedirs: True
     - watch_in:
       - service: apache2
 {% endmacro %}
 
-{% macro uwsgi(conffile) %}
+{% macro uwsgi(conffile, name, djangodir, port) %}
 # Render the file with jinja and place it in apps-available
-/etc/uwsgi/apps-available/{{ conffile }}:
+/etc/uwsgi/apps-available/{{ name }}:
   file.managed:
     - source: salt://uwsgi/{{ conffile }}
     - template: jinja
     - makedirs: True
     - watch_in:
       - service: uwsgi
+    - context:
+        djangodir: {{ djangodir }}
+        port: {{ port }}
 
 # Create a symlink from apps-enabled to enable the config
-/etc/uwsgi/apps-enabled/{{ conffile }}:
+/etc/uwsgi/apps-enabled/{{ name }}:
   file.symlink:
-    - target: /etc/uwsgi/apps-available/{{ conffile }}
+    - target: /etc/uwsgi/apps-available/{{ name }}
     - require:
-      - file: /etc/uwsgi/apps-available/{{ conffile }}
+      - file: /etc/uwsgi/apps-available/{{ name }}
     - makedirs: True
     - watch_in:
       - service: uwsgi
