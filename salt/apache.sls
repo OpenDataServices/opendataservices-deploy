@@ -13,6 +13,7 @@ apache2:
 # see https://code.djangoproject.com/wiki/django_apache_and_mod_wsgi#AdditionalTweaking
 /etc/apache2/envvars:
   file.uncomment:
+    # Note due to https://github.com/saltstack/salt/issues/24907 you may need to apply this change manually.
     - regex: \. /etc/default/locale
     - require:
       - pkg: apache2

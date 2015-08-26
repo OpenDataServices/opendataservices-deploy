@@ -30,6 +30,8 @@ cove-deps:
     pkg.installed:
       - pkgs:
         - libapache2-mod-proxy-uwsgi
+        - python-pip
+        - python-virtualenv
         - uwsgi-plugin-python3
         - gettext
       - watch_in:
@@ -77,6 +79,7 @@ branch: {{ branch }}
     - system_site_packages: False
     - requirements: {{ djangodir }}requirements.txt
     - require:
+      - pkg: cove-deps
       - git: {{ giturl }}{{ djangodir }}
       - file: set_lc_all # required to avoid unicode errors for the "schema" library
     - watch_in:
