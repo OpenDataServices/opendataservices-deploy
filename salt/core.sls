@@ -71,3 +71,15 @@ grub-debconf:
     - require:
       - pkg: debconf-utils 
 {% endif %}
+
+# Swap file
+
+create_swapfile:
+  cmd.run:
+    - name: dd if=/dev/zero of=/swapfile bs=10M count=100; chmod 600 /swapfile; mkswap /swapfile
+    - creates: /swapfile
+
+/swapfile:
+  mount.swap:
+    - require:
+      - cmd: create_swapfile
