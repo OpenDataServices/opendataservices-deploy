@@ -39,3 +39,7 @@ base:
 
   'snapshotter':
     - icinga2-satellite
+
+  'backups':
+    - icinga2-satellite
+    - backups

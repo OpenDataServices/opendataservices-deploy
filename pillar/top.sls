@@ -16,3 +16,5 @@ base:
      - private.mon_pillar
   'nrgi-dev':
      - private.nrgi_dev_pillar
+  'backups':
+     - backups_pillar

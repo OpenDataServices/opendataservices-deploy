@@ -1,0 +1,2 @@
+automatic_reboot: 'true'
+
