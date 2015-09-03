@@ -12,7 +12,7 @@ extra_cove_branches:
 # Currently adding a new port number requires a manual uwsgi restart (ie. the
 # reload in highstate will fail, so you will need to ssh and run "service uwsgi
 # restart" instead)
-  - name: minor-live-improvements
+  - name: resourceprojects-wireframe
     uwsgi_port: 3032
   - name: stevens-fixes
     uwsgi_port: 3033
