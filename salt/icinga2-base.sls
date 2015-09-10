@@ -24,6 +24,7 @@ icinga2:
     - source: salt://icinga/{{ confname }}.conf
     - watch_in:
       - service: icinga2
+    - template: jinja
 {% endfor %}
 
 {% for confname in ['icinga2'] %}
