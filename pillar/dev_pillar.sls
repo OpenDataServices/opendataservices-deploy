@@ -18,3 +18,5 @@ extra_cove_branches:
     uwsgi_port: 3033
   - name: 43-catch-conversion-errors
     uwsgi_port: 3034
+  - name: resourceprojects-etl
+    uwsgi_port: 3035

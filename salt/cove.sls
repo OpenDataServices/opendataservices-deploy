@@ -33,6 +33,7 @@ cove-deps:
         - python-pip
         - python-virtualenv
         - uwsgi-plugin-python3
+        - python3-dev
         - gettext
       - watch_in:
         - service: apache2

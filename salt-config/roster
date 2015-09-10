@@ -6,4 +6,5 @@ dev2: dev2.default.opendataservices.uk0.bigv.io
 mon-2: mon-2.default.opendataservices.uk0.bigv.io
 snapshotter: snapshotter.default.opendataservices.uk0.bigv.io
 nrgi-dev: nrgi-dev.default.opendataservices.uk0.bigv.io
+nrgi-dev2: nrgi-dev2.default.opendataservices.uk0.bigv.io
 backups: backups.backups.opendataservices.uk0.bigv.io
