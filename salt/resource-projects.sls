@@ -8,8 +8,8 @@ include:
 {% set dockers = {
   'virtuoso': 'caprenter/automated-build-virtuoso',
   'ontowiki': 'bjwebb/ontowiki.docker',
-  'lodspeakr': 'bjwebb/resourceprojects.org-frontend',
-  'etl': 'bjwebb/rp-etl',
+  'lodspeakr': 'opendataservices/resourceprojects.org-frontend:master',
+  'etl': 'opendataservices/resource-projects-etl:cove-etl',
 } %}
 
 {% for container, repo in dockers.items() %}
