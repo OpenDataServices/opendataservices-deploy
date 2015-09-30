@@ -9,6 +9,7 @@ include:
   'virtuoso': 'caprenter/automated-build-virtuoso',
   'ontowiki': 'bjwebb/ontowiki.docker',
   'lodspeakr': 'opendataservices/resourceprojects.org-frontend:master',
+  'lodspeakr-16-country-page-template': 'opendataservices/resourceprojects.org-frontend:16-country-page-template',
   'etl': 'opendataservices/resource-projects-etl:cove-etl',
 } %}
 
@@ -83,6 +84,19 @@ include:
         image: {{ dockers[container] }}
         name: {{ container }}-staging
         extraargs: -p 127.0.0.1:8081:80 --link virtuoso:virtuoso-staging -e BASE_URL=http://lodspeakr-staging.nrgi-dev2.default.opendataservices.uk0.bigv.io/  -e SPARQL_ENDPOINT=http://virtuoso-staging:8890/sparql
+        after: docker-virtuoso
+    - watch_in:
+      - service: docker-{{ container }}
+
+{% set container = 'lodspeakr-16-country-page-template' %}
+/etc/systemd/system/docker-{{ container }}.service:
+  file.managed:
+    - source: salt://systemd/docker-run.service
+    - template: jinja
+    - context:
+        image: {{ dockers[container] }}
+        name: {{ container }}
+        extraargs: -p 127.0.0.1:8082:80 --link virtuoso:virtuoso-live -e BASE_URL=http://16-country-page-template.lodspeakr-live.nrgi-dev2.default.opendataservices.uk0.bigv.io/  -e SPARQL_ENDPOINT=http://virtuoso-live:8890/sparql
         after: docker-virtuoso
     - watch_in:
       - service: docker-{{ container }}
