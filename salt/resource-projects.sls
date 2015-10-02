@@ -45,7 +45,7 @@ include:
     - context:
         image: {{ dockers[container] }} gunicorn cove.wsgi -b 0.0.0.0:80 --timeout 600
         name: {{ container }}
-        extraargs: -p 127.0.0.1:8001:80 --link virtuoso:virtuoso -e "DBA_PASS={{ pillar.virtuoso.password}}"
+        extraargs: -p 127.0.0.1:8001:80 --link virtuoso:virtuoso -e "DBA_PASS={{ pillar.virtuoso.password}}" --volumes-from etl-data
         after: docker-virtuoso
     - watch_in:
       - service: docker-{{ container }}
@@ -132,6 +132,11 @@ docker-{{ container }}-staging:
 
 # Should be able to use salt's docker.installed here, but I kept getting
 # various python errors
-docker create --name virtuoso-data -v /usr/local/var/lib/virtuoso/db caprenter/automated-build-virtuoso:
+docker create --name virtuoso-data -v /usr/local/var/lib/virtuoso/db {{ dockers.virtuoso }}:
   cmd.run:
     - unless: docker inspect virtuoso-data
+
+docker create --name etl-data -v /usr/src/resource-projects-etl/db/ {{ dockers.etl }}:
+  cmd.run:
+    - unless: docker inspect etl-data
+
