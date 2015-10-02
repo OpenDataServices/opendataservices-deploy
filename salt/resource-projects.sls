@@ -10,7 +10,7 @@ include:
   'ontowiki': 'bjwebb/ontowiki.docker',
   'lodspeakr': 'opendataservices/resourceprojects.org-frontend:master',
   'lodspeakr-16-country-page-template': 'opendataservices/resourceprojects.org-frontend:16-country-page-template',
-  'etl': 'opendataservices/resource-projects-etl:cove-etl',
+  'etl': 'opendataservices/resource-projects-etl:master',
 } %}
 
 {% for container, repo in dockers.items() %}
