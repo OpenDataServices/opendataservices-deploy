@@ -43,7 +43,7 @@ include:
     - source: salt://systemd/docker-run.service
     - template: jinja
     - context:
-        image: {{ dockers[container] }} gunicorn cove.wsgi -b 0.0.0.0:80 --timeout 600
+        image: {{ dockers[container] }}
         name: {{ container }}
         extraargs: -p 127.0.0.1:8001:80 --link virtuoso:virtuoso -e "DBA_PASS={{ pillar.virtuoso.password}}" --volumes-from etl-data
         after: docker-virtuoso
