@@ -136,7 +136,7 @@ docker create --name virtuoso-data -v /usr/local/var/lib/virtuoso/db {{ dockers.
   cmd.run:
     - unless: docker inspect virtuoso-data
 
-docker create --name etl-data -v /usr/src/resource-projects-etl/db/ {{ dockers.etl }}:
+docker create --name etl-data -v /usr/src/resource-projects-etl/db/ -v /usr/src/resource-projects-etl/src/cove/media {{ dockers.etl }}:
   cmd.run:
     - unless: docker inspect etl-data
 
