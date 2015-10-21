@@ -6,10 +6,11 @@ include:
 {{ apache('resource-projects.conf') }}
 
 {% set dockers = {
-  'virtuoso': 'caprenter/automated-build-virtuoso',
+  'virtuoso': 'opendataservices/virtuoso',
   'ontowiki': 'bjwebb/ontowiki.docker',
   'lodspeakr': 'opendataservices/resourceprojects.org-frontend:master',
-  'lodspeakr-16-country-page-template': 'opendataservices/resourceprojects.org-frontend:16-country-page-template',
+  'lodspeakr-feature-projects-map': 'opendataservices/resourceprojects.org-frontend:feature-projects-map',
+  'lodspeakr-sources': 'opendataservices/resourceprojects.org-frontend:sources',
   'etl': 'opendataservices/resource-projects-etl:master',
 } %}
 
@@ -88,7 +89,7 @@ include:
     - watch_in:
       - service: docker-{{ container }}
 
-{% set container = 'lodspeakr-16-country-page-template' %}
+{% set container = 'lodspeakr-feature-projects-map' %}
 /etc/systemd/system/docker-{{ container }}.service:
   file.managed:
     - source: salt://systemd/docker-run.service
@@ -96,7 +97,20 @@ include:
     - context:
         image: {{ dockers[container] }}
         name: {{ container }}
-        extraargs: -p 127.0.0.1:8082:80 --link virtuoso:virtuoso-live -e BASE_URL=http://16-country-page-template.lodspeakr-live.nrgi-dev2.default.opendataservices.uk0.bigv.io/  -e SPARQL_ENDPOINT=http://virtuoso-live:8890/sparql
+        extraargs: -p 127.0.0.1:8082:80 --link virtuoso:virtuoso-live -e BASE_URL=http://feature-projects-map.lodspeakr-live.nrgi-dev2.default.opendataservices.uk0.bigv.io/  -e SPARQL_ENDPOINT=http://virtuoso-live:8890/sparql
+        after: docker-virtuoso
+    - watch_in:
+      - service: docker-{{ container }}
+
+{% set container = 'lodspeakr-sources' %}
+/etc/systemd/system/docker-{{ container }}.service:
+  file.managed:
+    - source: salt://systemd/docker-run.service
+    - template: jinja
+    - context:
+        image: {{ dockers[container] }}
+        name: {{ container }}
+        extraargs: -p 127.0.0.1:8083:80 --link virtuoso:virtuoso-live -e BASE_URL=http://sources.lodspeakr-live.nrgi-dev2.default.opendataservices.uk0.bigv.io/  -e SPARQL_ENDPOINT=http://virtuoso-live:8890/sparql
         after: docker-virtuoso
     - watch_in:
       - service: docker-{{ container }}
