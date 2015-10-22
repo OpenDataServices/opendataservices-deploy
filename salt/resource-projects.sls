@@ -7,8 +7,9 @@ include:
 
 {% set dockers = pillar.dockers %}
 {% for container, repo in dockers.items() %}
-{{ repo }}:
+docker-pull-{{ container }}:
   docker.pulled:
+    - name: {{ repo }}
     - tag: latest
     - require:
       - sls: docker
@@ -18,6 +19,7 @@ include:
 {% endfor %}
 
 {% set container = 'virtuoso' %}
+{% if container in dockers %}
 /etc/systemd/system/docker-{{ container }}.service:
   file.managed:
     - source: salt://systemd/docker-run.service
@@ -29,8 +31,10 @@ include:
         after: docker
     - watch_in:
       - service: docker-{{ container }}
+{% endif %}
 
 {% set container = 'etl' %}
+{% if container in dockers %}
 /etc/systemd/system/docker-{{ container }}.service:
   file.managed:
     - source: salt://systemd/docker-run.service
@@ -42,8 +46,10 @@ include:
         after: docker-virtuoso
     - watch_in:
       - service: docker-{{ container }}
+{% endif %}
 
 {% set container = 'ontowiki' %}
+{% if container in dockers %}
 /etc/systemd/system/docker-{{ container }}.service:
   file.managed:
     - source: salt://systemd/docker-run.service
@@ -55,8 +61,10 @@ include:
         after: docker-virtuoso
     - watch_in:
       - service: docker-{{ container }}
+{% endif %}
 
 {% set container = 'lodspeakr' %}
+{% if container in dockers %}
 /etc/systemd/system/docker-{{ container }}.service:
   file.managed:
     - source: salt://systemd/docker-run.service
@@ -68,20 +76,25 @@ include:
         after: docker-virtuoso
     - watch_in:
       - service: docker-{{ container }}
+{% endif %}
 
-/etc/systemd/system/docker-{{ container }}-staging.service:
+{% set container = 'lodspeakr-staging' %}
+{% if container in dockers %}
+/etc/systemd/system/docker-{{ container }}.service:
   file.managed:
     - source: salt://systemd/docker-run.service
     - template: jinja
     - context:
         image: {{ dockers[container] }}
-        name: {{ container }}-staging
+        name: {{ container }}
         extraargs: -p 127.0.0.1:8081:80 --link virtuoso:virtuoso-staging -e BASE_URL=http://lodspeakr-staging.nrgi-dev2.default.opendataservices.uk0.bigv.io/ -e DEFAULT_GRAPH_URI=http://staging.resourceprojects.org/data/ -e SPARQL_ENDPOINT=http://virtuoso-staging:8890/sparql
         after: docker-virtuoso
     - watch_in:
-      - service: docker-{{ container }}-staging
+      - service: docker-{{ container }}
+{% endif %}
 
 {% set container = 'lodspeakr-feature-projects-map' %}
+{% if container in dockers %}
 /etc/systemd/system/docker-{{ container }}.service:
   file.managed:
     - source: salt://systemd/docker-run.service
@@ -93,8 +106,10 @@ include:
         after: docker-virtuoso
     - watch_in:
       - service: docker-{{ container }}
+{% endif %}
 
 {% set container = 'lodspeakr-sources' %}
+{% if container in dockers %}
 /etc/systemd/system/docker-{{ container }}.service:
   file.managed:
     - source: salt://systemd/docker-run.service
@@ -106,6 +121,7 @@ include:
         after: docker-virtuoso
     - watch_in:
       - service: docker-{{ container }}
+{% endif %}
 
 {% for container in dockers %}
 # Until the fix for https://github.com/saltstack/salt/pull/24703 is released we
@@ -126,15 +142,6 @@ docker-{{ container }}:
       - cmd: daemon-reload-{{ container }}
       - docker: {{ repo }}
 {% endfor %}
-
-{% set container = 'lodspeakr' %}
-{% set repo = dockers[container] %}
-docker-{{ container }}-staging:
-  service.running:
-    - enable: True
-    - require:
-      - cmd: daemon-reload-{{ container }}
-      - docker: {{ repo }}
 
 # Should be able to use salt's docker.installed here, but I kept getting
 # various python errors
