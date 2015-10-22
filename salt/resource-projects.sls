@@ -5,15 +5,7 @@ include:
 {% from 'lib.sls' import apache %}
 {{ apache('resource-projects.conf') }}
 
-{% set dockers = {
-  'virtuoso': 'opendataservices/virtuoso',
-  'ontowiki': 'bjwebb/ontowiki.docker',
-  'lodspeakr': 'opendataservices/resourceprojects.org-frontend:master',
-  'lodspeakr-feature-projects-map': 'opendataservices/resourceprojects.org-frontend:feature-projects-map',
-  'lodspeakr-sources': 'opendataservices/resourceprojects.org-frontend:sources',
-  'etl': 'opendataservices/resource-projects-etl:master',
-} %}
-
+{% set dockers = pillar.dockers %}
 {% for container, repo in dockers.items() %}
 {{ repo }}:
   docker.pulled:
