@@ -72,7 +72,7 @@ docker-pull-{{ container }}:
     - context:
         image: {{ dockers[container] }}
         name: {{ container }}
-        extraargs: -p 127.0.0.1:8080:80 --link virtuoso:virtuoso-live -e BASE_URL=http://lodspeakr-live.nrgi-dev2.default.opendataservices.uk0.bigv.io/ -e DEFAULT_GRAPH_URI=http://resourceprojects.org/data/  -e SPARQL_ENDPOINT=http://virtuoso-live:8890/sparql
+        extraargs: -p 127.0.0.1:8080:80 --link virtuoso:virtuoso-live -e BASE_URL={{ pillar.frontend_live_url }} -e DEFAULT_GRAPH_URI=http://resourceprojects.org/data/  -e SPARQL_ENDPOINT=http://virtuoso-live:8890/sparql
         after: docker-virtuoso
     - watch_in:
       - service: docker-{{ container }}
@@ -87,7 +87,7 @@ docker-pull-{{ container }}:
     - context:
         image: {{ dockers[container] }}
         name: {{ container }}
-        extraargs: -p 127.0.0.1:8081:80 --link virtuoso:virtuoso-staging -e BASE_URL=http://lodspeakr-staging.nrgi-dev2.default.opendataservices.uk0.bigv.io/ -e DEFAULT_GRAPH_URI=http://staging.resourceprojects.org/data/ -e SPARQL_ENDPOINT=http://virtuoso-staging:8890/sparql
+        extraargs: -p 127.0.0.1:8081:80 --link virtuoso:virtuoso-staging -e BASE_URL={{ pillar.frontend_staging_url }} -e DEFAULT_GRAPH_URI=http://staging.resourceprojects.org/data/ -e SPARQL_ENDPOINT=http://virtuoso-staging:8890/sparql
         after: docker-virtuoso
     - watch_in:
       - service: docker-{{ container }}

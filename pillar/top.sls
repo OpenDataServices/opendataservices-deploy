@@ -14,11 +14,11 @@ base:
   'mon*':
      - mon_pillar
      - private.mon_pillar
-  'nrgi-dev*':
-     - private.nrgi_dev_pillar
   'nrgi-dev':
-     - nrgi_dev_only
+     - private.nrgi_dev_pillar
+     - nrgi_dev_pillar
   'nrgi-dev2':
-     - nrgi_dev2_only
+     - private.nrgi_dev2_pillar
+     - nrgi_dev2_pillar
   'backups':
      - backups_pillar

@@ -6,3 +6,6 @@ dockers:
   'lodspeakr-feature-projects-map': 'opendataservices/resourceprojects.org-frontend:feature-projects-map'
   'lodspeakr-sources': 'opendataservices/resourceprojects.org-frontend:sources'
   'etl': 'opendataservices/resource-projects-etl:master'
+
+frontend_live_url: 'http://lodspeakr-live.nrgi-dev2.default.opendataservices.uk0.bigv.io/'
+frontend_staging_url: 'http://lodspeakr-staging.nrgi-dev2.default.opendataservices.uk0.bigv.io/'
