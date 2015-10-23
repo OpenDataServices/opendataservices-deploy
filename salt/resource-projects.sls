@@ -51,7 +51,7 @@ docker-pull-{{ container }}:
     - context:
         image: {{ dockers[container] }}
         name: {{ container }}
-        extraargs: -p 127.0.0.1:8001:80 --link virtuoso:virtuoso -e "DBA_PASS={{ pillar.virtuoso.password}}" --volumes-from etl-data
+        extraargs: -p 127.0.0.1:8001:80 --link virtuoso:virtuoso -e "DBA_PASS={{ pillar.virtuoso.password}}" -e FRONTEND_LIVE_URL={{ pillar.frontend_live_url }} -e FRONTEND_STAGING_URL={{ pillar.frontend_staging_url }} --volumes-from etl-data
         after: docker-virtuoso
     - watch_in:
       - service: docker-{{ container }}
