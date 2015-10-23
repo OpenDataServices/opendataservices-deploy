@@ -3,7 +3,7 @@ dockers:
   'ontowiki': 'bjwebb/ontowiki.docker'
   'lodspeakr': 'opendataservices/resourceprojects.org-frontend:master'
   'lodspeakr-staging': 'opendataservices/resourceprojects.org-frontend:master'
-  'lodspeakr-feature-projects-map': 'opendataservices/resourceprojects.org-frontend:feature-projects-map'
+  'lodspeakr-235-speed-up-country-page': 'opendataservices/resourceprojects.org-frontend:235-speed-up-country-page'
   'lodspeakr-sources': 'opendataservices/resourceprojects.org-frontend:sources'
   'lodspeakr-ontology': 'opendataservices/resourceprojects.org-frontend:ontology-viewer'
   'etl': 'opendataservices/resource-projects-etl:master'
