@@ -123,6 +123,21 @@ docker-pull-{{ container }}:
       - service: docker-{{ container }}
 {% endif %}
 
+{% set container = 'lodspeakr-214-company-group-page' %}
+{% if container in dockers %}
+/etc/systemd/system/docker-{{ container }}.service:
+  file.managed:
+    - source: salt://systemd/docker-run.service
+    - template: jinja
+    - context:
+        image: {{ dockers[container] }}
+        name: {{ container }}
+        extraargs: -p 127.0.0.1:8084:80 --link virtuoso:virtuoso-live -e BASE_URL=http://214-company-group-page.lodspeakr-live.nrgi-dev2.default.opendataservices.uk0.bigv.io/  -e SPARQL_ENDPOINT=http://virtuoso-live:8890/sparql
+        after: docker-virtuoso
+    - watch_in:
+      - service: docker-{{ container }}
+{% endif %}
+
 {% for container in dockers %}
 # Until the fix for https://github.com/saltstack/salt/pull/24703 is released we
 # must have a seperate reload command for each container. Otherwise the
