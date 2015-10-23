@@ -7,6 +7,10 @@ include:
 
 {% set dockers = pillar.dockers %}
 {% for container, repo in dockers.items() %}
+# Temporary workaround to make sure watch for -staging works correctly
+# Because otherwise staging has nothing new to pull, and therefore doesn't
+# trigger watched state
+{% if container != 'lodspeakr-staging' %}
 docker-pull-{{ container }}:
   docker.pulled:
     - name: {{ repo }}
@@ -16,6 +20,11 @@ docker-pull-{{ container }}:
     - force: True
     - watch_in:
       - service: docker-{{ container }}
+      # See above comment
+      {% if container == 'lodspeakr' %}
+      - service: docker-lodspeakr-staging
+      {% endif %}
+{% endif %}
 {% endfor %}
 
 {% set container = 'virtuoso' %}
