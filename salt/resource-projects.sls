@@ -123,7 +123,7 @@ docker-pull-{{ container }}:
       - service: docker-{{ container }}
 {% endif %}
 
-{% set container = 'lodspeakr-214-company-group-page' %}
+{% set container = 'lodspeakr-ontology' %}
 {% if container in dockers %}
 /etc/systemd/system/docker-{{ container }}.service:
   file.managed:
@@ -132,7 +132,7 @@ docker-pull-{{ container }}:
     - context:
         image: {{ dockers[container] }}
         name: {{ container }}
-        extraargs: -p 127.0.0.1:8084:80 --link virtuoso:virtuoso-live -e BASE_URL=http://214-company-group-page.lodspeakr-live.nrgi-dev2.default.opendataservices.uk0.bigv.io/  -e SPARQL_ENDPOINT=http://virtuoso-live:8890/sparql
+        extraargs: -p 127.0.0.1:8084:80 --link virtuoso:virtuoso-live -e BASE_URL=http://ontology.lodspeakr-live.nrgi-dev2.default.opendataservices.uk0.bigv.io/  -e SPARQL_ENDPOINT=http://virtuoso-live:8890/sparql
         after: docker-virtuoso
     - watch_in:
       - service: docker-{{ container }}
