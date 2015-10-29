@@ -50,7 +50,7 @@ state.highstate
 
         salt-ssh <servername> state.highstate
 
-	to better control the amount of output, specify ``--state-output=mixed`` , e.g.
+    to better control the amount of output, specify ``--state-output=mixed`` , e.g.
 
     .. code-block::
 
