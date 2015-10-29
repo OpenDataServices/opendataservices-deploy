@@ -18,6 +18,12 @@ Note: the instructions here assume a recent version of Salt. Although many linux
 
 Server names are defined in ``salt-config/roster``. If you want to define your own roster, you can use the ``--roster-file``  argument.
 
+If this is the very first time you are connecting to a server on a new IP address, you can specify ``-i`` to avoid warnings from ssh, e.g.
+
+.. code-block::
+
+    salt-ssh -i --priv ~/.ssh/id_rsa <server name> <salt function>
+
 Salt functions are grouped into "execution modules". e.g. the ``state.sls`` function is in the ``state`` module. The full list of modules can be found at http://docs.saltstack.com/en/latest/ref/modules/all/, and a shorter list of particularly useful functions can be found below.
 
 Running as a non-root user
@@ -44,6 +50,12 @@ state.highstate
 
         salt-ssh <servername> state.highstate
 
+	to better control the amount of output, specify ``--state-output=mixed`` , e.g.
+
+    .. code-block::
+
+        salt-ssh <servername> --state-output=mixed state.highstate
+
 state.sls
     this can be used to specify a single SLS formula file explicitly, e.g.
 
@@ -51,7 +63,7 @@ state.sls
 
         salt-ssh <servername> state.sls <statename>
 
-pkg.list_upgrade
+pkg.list_upgrades
     list what packages can be upgraded on the servers. Use refresh=True to ensure the package list is refreshed (ie. apt-get update), e.g.
 
     .. code-block::
