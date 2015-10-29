@@ -14,9 +14,13 @@ Using salt-ssh
 
 Note: the instructions here assume a recent version of Salt. Although many Linux distributions now package salt in the default repositories, the packages are likely to be out of date. It's recommended to install the most recent version of salt from http://docs.saltstack.com/en/latest/topics/installation/
 
+This repository contains a `Saltfile` which ensures that salt-ssh files from this directory will pick up the config in `salt-config`. Any extra configuration you want to do should be done in this directory, and not `/etc/salt`. Also, to make use of this, all salt commands must be run from the root directory of this repository.
+
+You will need to add your SSH key to `salt-config/pki/ssh`. The script `setup_for_non_root.sh` contains an example of this.
+
 .. code-block::
 
-    salt-ssh --priv ~/.ssh/id_rsa <server name> <salt function>
+    salt-ssh <server name> <salt function>
 
 Server names are defined in ``salt-config/roster``. If you want to define your own roster, you can use the ``--roster-file``  argument. You can also use globs as a server name, e.g. `'*'` (needs quoting to avoid being interpreted as a shell glob), and `-L` to supply a commma separated list of server names, e.g.
 
@@ -28,7 +32,7 @@ If this is the very first time you are connecting to a server on a new IP addres
 
 .. code-block::
 
-    salt-ssh -i --priv ~/.ssh/id_rsa <server name> <salt function>
+    salt-ssh -i <server name> <salt function>
 
 Salt functions are grouped into "execution modules". e.g. the ``state.sls`` function is in the ``state`` module. The full list of modules can be found at http://docs.saltstack.com/en/latest/ref/modules/all/, and a shorter list of particularly useful functions can be found below.
 
