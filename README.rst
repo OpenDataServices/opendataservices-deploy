@@ -1,22 +1,24 @@
 Open Data Services Co-Operative deployment git repository
 =========================================================
 
-This repository is used to track files relating to deploying code etc. to Open Data Services Co-operative's servers.
+This repository is used to track files relating to deploying code etc. to Open Data Services Co-operative's servers. More general information about our development and deployment approach can be found in our developer docs at https://github.com/OpenDataServices/developer-docs
 
 Mostly it contains files designed for use with the salt deployment tool. http://saltstack.com/
 
-Currently we use ``salt-ssh``, which eliminates the need to set up master/minion daemons. (The downside is that it does not scale so well, but this is unlikely to be a problem for us for the forseeable future.)
+Currently we use ``salt-ssh``, which eliminates the need to set up master/minion daemons. (The downside is that it does not scale so well, but this is unlikely to be a problem for us for the foreseeable future.)
+
+This repository is public, but some salt states rely on private information e.g. passwords to be set up in the `pillar/private` directory. Internally we have instructions for setting up our own private information at https://opendataservices.plan.io/projects/co-op/wiki/Servers#Getting-Started.
 
 Using salt-ssh
 --------------
 
-Note: the instructions here assume a recent version of Salt. Although many linux distributions now package salt in the default repositories, the packages are likely to be out of date. It's recommended to install the most recent version of salt from http://docs.saltstack.com/en/latest/topics/installation/
+Note: the instructions here assume a recent version of Salt. Although many Linux distributions now package salt in the default repositories, the packages are likely to be out of date. It's recommended to install the most recent version of salt from http://docs.saltstack.com/en/latest/topics/installation/
 
 .. code-block::
 
     salt-ssh --priv ~/.ssh/id_rsa <server name> <salt function>
 
-Server names are defined in ``salt-config/roster``. If you want to define your own roster, you can use the ``--roster-file``  argument. You can also use globs as a server name, e.g. `'*'` (needs quoting to avoid being interpreted as a shell glob), and `-L` to supply a commma seperated list of server names, e.g.
+Server names are defined in ``salt-config/roster``. If you want to define your own roster, you can use the ``--roster-file``  argument. You can also use globs as a server name, e.g. `'*'` (needs quoting to avoid being interpreted as a shell glob), and `-L` to supply a commma separated list of server names, e.g.
 
 .. code-block::
 
