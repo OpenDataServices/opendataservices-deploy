@@ -16,7 +16,11 @@ Note: the instructions here assume a recent version of Salt. Although many linux
 
     salt-ssh --priv ~/.ssh/id_rsa <server name> <salt function>
 
-Server names are defined in ``salt-config/roster``. If you want to define your own roster, you can use the ``--roster-file``  argument.
+Server names are defined in ``salt-config/roster``. If you want to define your own roster, you can use the ``--roster-file``  argument. You can also use globs as a server name, e.g. `'*'` (needs quoting to avoid being interpreted as a shell glob), and `-L` to supply a commma seperated list of server names, e.g.
+
+.. code-block::
+
+    salt-ssh -L server1,server2 <server name> <salt function>
 
 If this is the very first time you are connecting to a server on a new IP address, you can specify ``-i`` to avoid warnings from ssh, e.g.
 
@@ -36,8 +40,6 @@ Useful salt functions
 
 test.ping
     check that servers are there, and set up correctly.
-
-    As with any salt command, we can use a glob to run this against all servers.
 
     .. code-block::
 
