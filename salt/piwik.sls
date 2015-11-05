@@ -11,9 +11,11 @@ include:
 # Download Piwik from the git repository but pick a tag for a stable release
 https://github.com/piwik/piwik.git:
   git.latest:
-    - rev: 2.14.3
+    - rev: 2.15.0
     - target: /var/www/html/piwik/
     - submodules: True
+# Uncomment 'force_fetch: True' if/when any branches won't fast forward:
+#   - force_fetch: True
 
 php5-cli:
   pkg.installed
