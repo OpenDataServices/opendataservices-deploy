@@ -57,21 +57,6 @@ docker-pull-{{ container }}:
       - service: docker-{{ container }}
 {% endif %}
 
-{% set container = 'ontowiki' %}
-{% if container in dockers %}
-/etc/systemd/system/docker-{{ container }}.service:
-  file.managed:
-    - source: salt://systemd/docker-run.service
-    - template: jinja
-    - context:
-        image: {{ dockers[container] }}
-        name: {{ container }}
-        extraargs: -p 127.0.0.1:8000:80 --link virtuoso:virtuoso -e "VIRTUOSO_PASSWORD={{ pillar.virtuoso.password }}"
-        after: docker-virtuoso
-    - watch_in:
-      - service: docker-{{ container }}
-{% endif %}
-
 {% set container = 'lodspeakr' %}
 {% if container in dockers %}
 /etc/systemd/system/docker-{{ container }}.service:

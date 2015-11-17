@@ -1,6 +1,5 @@
 dockers:
   'virtuoso': 'opendataservices/virtuoso'
-  'ontowiki': 'bjwebb/ontowiki.docker'
   'lodspeakr': 'opendataservices/resourceprojects.org-frontend:master'
   'lodspeakr-staging': 'opendataservices/resourceprojects.org-frontend:master'
   'lodspeakr-235-speed-up-country-page': 'opendataservices/resourceprojects.org-frontend:235-speed-up-country-page'
