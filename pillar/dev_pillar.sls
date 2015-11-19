@@ -8,13 +8,17 @@ cove:
     site_id: '1' 
 automatic_reboot: 'true'
 extra_cove_branches:
+  - name: 46-validation-errors
+    uwsgi_port: 3032
 # Add a new branch with the name of the branch, and increment the port number.
 # Currently adding a new port number requires a manual uwsgi restart (ie. the
 # reload in highstate will fail, so you will need to ssh and run "service uwsgi
 # restart" instead)
-  - name: resourceprojects-wireframe
-    uwsgi_port: 3032
-  - name: stevens-fixes
-    uwsgi_port: 3033
-  - name: 43-catch-conversion-errors
-    uwsgi_port: 3034
+#
+# To set these up from scratch (e.g. if you've
+# removed one) you can run these commands on the
+# server: (and then the salt state)
+# $ rm /etc/uwsgi/apps-enabled/cove-*.ini
+# $ rm /etc/apache2/sites-available/cove-*.conf
+# $ rm /etc/apache2/sites-enabled/cove-*.conf
+# $ killall uwsgi
