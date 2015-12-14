@@ -14,5 +14,18 @@ include:
     - require:
       - pkg: elasticsearch-base
 
-{% from 'lib.sls' import apache %}
+{% from 'lib.sls' import createuser, apache %}
 {{ apache('dev2.conf') }}
+
+
+
+{% set user = 'tmp-prototype-ocds-docs' %}
+{{ createuser(user) }}
+
+/home/{{ user }}/web/:
+  file.directory:
+    - user: {{ user }}
+    - makedirs: True
+    - mode: 755
+
+{{ apache('tmp-prototype-ocds-docs.conf') }}
