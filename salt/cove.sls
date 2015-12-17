@@ -116,6 +116,15 @@ collectstatic-{{name}}:
     - onchanges:
       - git: {{ giturl }}{{ djangodir }}
 
+{{ djangodir }}static/:
+  file.directory:
+    - file_mode: 644
+    - dir_mode: 755
+    - recurse:
+      - mode
+    - require:
+      - cmd: collectstatic-{{name}}
+
 cd {{ djangodir }}; source .ve/bin/activate; python manage.py expire_files:
   cron.present:
     - identifier: COVE_EXPIRE_FILES
