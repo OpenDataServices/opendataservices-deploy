@@ -125,6 +125,12 @@ collectstatic-{{name}}:
     - require:
       - cmd: collectstatic-{{name}}
 
+{{ djangodir }}:
+  file.directory:
+    - dir_mode: 755
+    - require:
+      - cmd: collectstatic-{{name}}
+
 cd {{ djangodir }}; source .ve/bin/activate; python manage.py expire_files:
   cron.present:
     - identifier: COVE_EXPIRE_FILES
