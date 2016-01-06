@@ -134,7 +134,7 @@ collectstatic-{{name}}:
 
 cd {{ djangodir }}; source .ve/bin/activate; python manage.py expire_files:
   cron.present:
-    - identifier: COVE_EXPIRE_FILES
+    - identifier: COVE_EXPIRE_FILES{% if name != 'cove' %}_{{ name }}{% endif %}
     - user: cove
     - minute: random
     - hour: 0
