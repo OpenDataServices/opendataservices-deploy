@@ -68,6 +68,7 @@ branch: {{ branch }}
     - target: {{ djangodir }}
     - user: {{ user }}
     - force_fetch: True
+    - force_reset: True
     - require:
       - pkg: git
     - watch_in:
