@@ -5,7 +5,7 @@ elasticsearch-base:
 
   pkgrepo.managed:
     - humanname: Elasticsearch
-    - name: deb http://packages.elasticsearch.org/elasticsearch/1.4/debian stable main
+    - name: deb http://packages.elasticsearch.org/elasticsearch/2.x/debian stable main
     - file: /etc/apt/sources.list.d/elasticsearch.list
 
   pkg.installed:
@@ -23,5 +23,5 @@ elasticsearch-base:
   file.append:
     - name: /etc/elasticsearch/elasticsearch.yml
     - text: |
-      network.host: 127.0.0.1
-      discovery.zen.ping.multicast.enabled: false
+        network.host: 127.0.0.1
+        discovery.zen.ping.multicast.enabled: false
