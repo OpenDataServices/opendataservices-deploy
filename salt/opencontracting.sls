@@ -108,7 +108,7 @@ mysql-database-{{ repo }}:
 
 syncdb-{{repo}}:
   cmd.run:
-    - name: source .ve/bin/activate; python manage.py syncdb --noinput
+    - name: . .ve/bin/activate; python manage.py syncdb --noinput
     - user: {{ user }}
     - cwd: {{ djangodir }}
     - require:
@@ -118,7 +118,7 @@ syncdb-{{repo}}:
 
 migrate-{{repo}}:
   cmd.run:
-    - name: source .ve/bin/activate; python manage.py migrate --noinput
+    - name: . .ve/bin/activate; python manage.py migrate --noinput
     - user: {{ user }}
     - cwd: {{ djangodir }}
     - require:
@@ -128,7 +128,7 @@ migrate-{{repo}}:
 
 collectstatic-{{repo}}:
   cmd.run:
-    - name: source .ve/bin/activate; python manage.py collectstatic --noinput
+    - name: . .ve/bin/activate; python manage.py collectstatic --noinput
     - user: {{ user }}
     - cwd: {{ djangodir }}
     - require:
@@ -140,7 +140,7 @@ collectstatic-{{repo}}:
 {% if repo == 'standard-collaborator' %}
 assets-{{ repo }}:
   cmd.run:
-    - name: source .ve/bin/activate; python manage.py assets build
+    - name: . .ve/bin/activate; python manage.py assets build
     - user: {{ user }}
     - bin_env: {{ djangodir }}/.ve/
     - cwd: {{ djangodir }}
