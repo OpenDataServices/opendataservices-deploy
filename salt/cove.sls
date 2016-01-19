@@ -89,7 +89,7 @@ branch: {{ branch }}
 
 migrate-{{name}}:
   cmd.run:
-    - name: source .ve/bin/activate; python manage.py migrate --noinput
+    - name: . .ve/bin/activate; python manage.py migrate --noinput
     - user: {{ user }}
     - cwd: {{ djangodir }}
     - require:
@@ -99,7 +99,7 @@ migrate-{{name}}:
 
 compilemessages-{{name}}:
   cmd.run:
-    - name: source .ve/bin/activate; python manage.py compilemessages
+    - name: . .ve/bin/activate; python manage.py compilemessages
     - user: {{ user }}
     - cwd: {{ djangodir }}
     - require:
@@ -109,7 +109,7 @@ compilemessages-{{name}}:
 
 collectstatic-{{name}}:
   cmd.run:
-    - name: source .ve/bin/activate; python manage.py collectstatic --noinput
+    - name: . .ve/bin/activate; python manage.py collectstatic --noinput
     - user: {{ user }}
     - cwd: {{ djangodir }}
     - require:
@@ -132,7 +132,7 @@ collectstatic-{{name}}:
     - require:
       - cmd: collectstatic-{{name}}
 
-cd {{ djangodir }}; source .ve/bin/activate; python manage.py expire_files:
+cd {{ djangodir }}; . .ve/bin/activate; python manage.py expire_files:
   cron.present:
     - identifier: COVE_EXPIRE_FILES{% if name != 'cove' %}_{{ name }}{% endif %}
     - user: cove
