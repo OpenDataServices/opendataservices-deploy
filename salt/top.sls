@@ -37,6 +37,10 @@ base:
     - dev3
     - icinga2-satellite
 
+  'grantnav-dev':
+    - grantnav-dev
+    - icinga2-satellite
+
   'snapshotter':
     - icinga2-satellite
 
