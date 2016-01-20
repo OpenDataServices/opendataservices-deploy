@@ -33,10 +33,6 @@ base:
     - icinga2-satellite
     - dkan-script
 
-  'nrgi-dev*':
-    - icinga2-satellite
-    - resource-projects
-
   'snapshotter':
     - icinga2-satellite
 
