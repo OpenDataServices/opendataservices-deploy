@@ -33,6 +33,10 @@ base:
     - icinga2-satellite
     - dkan-script
 
+  'dev3':
+    - dev3
+    - icinga2-satellite
+
   'snapshotter':
     - icinga2-satellite
 
