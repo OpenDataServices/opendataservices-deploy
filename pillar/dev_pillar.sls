@@ -7,11 +7,9 @@ cove:
     url: '//mon.opendataservices.coop/piwik/'
     site_id: '1' 
 automatic_reboot: 'true'
-extra_cove_branches:
-  - name: 46-validation-errors
-    uwsgi_port: 3032
-  - name: 213-ocds-explore
-    uwsgi_port: 3033
+extra_cove_branches: [] # remove thee [] (empty list) if you re-add some values below
+#  - name: 46-validation-errors
+#    uwsgi_port: 3032
 # Add a new branch with the name of the branch, and increment the port number.
 # Currently adding a new port number requires a manual uwsgi restart (ie. the
 # reload in highstate will fail, so you will need to ssh and run "service uwsgi
