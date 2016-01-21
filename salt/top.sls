@@ -29,7 +29,6 @@ base:
     #- logserver
 
   'dev2':
-    - dev2
     - icinga2-satellite
     - dkan-script
 
