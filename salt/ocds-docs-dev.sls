@@ -1,18 +1,7 @@
+# This is the dev sls for ocds-docs which doesn't include reverse proxying,
+
 include:
-  - apache-proxy
+  - ocds-docs-common
 
-{% from 'lib.sls' import createuser, apache %}
+{% from 'lib.sls' import apache %}
 {{ apache('ocds-docs-dev.conf') }}
-
-
-
-{% set user = 'ocds-docs' %}
-{{ createuser(user) }}
-
-/home/{{ user }}/web/:
-  file.directory:
-    - user: {{ user }}
-    - makedirs: True
-    - mode: 755
-
-{{ apache('ocds-docs.conf') }}
