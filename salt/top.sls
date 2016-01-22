@@ -33,7 +33,7 @@ base:
     - dkan-script
 
   'dev3':
-    - dev3
+    - ocds-docs-dev
     - icinga2-satellite
 
   'grantnav-dev':

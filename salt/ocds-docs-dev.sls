@@ -2,7 +2,7 @@ include:
   - apache-proxy
 
 {% from 'lib.sls' import createuser, apache %}
-{{ apache('dev3.conf') }}
+{{ apache('ocds-docs-dev.conf') }}
 
 
 
