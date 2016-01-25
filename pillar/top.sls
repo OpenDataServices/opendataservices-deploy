@@ -16,3 +16,5 @@ base:
      - private.mon_pillar
   'backups':
      - backups_pillar
+  '*live-ocds*':
+     - ocds_live_pillar

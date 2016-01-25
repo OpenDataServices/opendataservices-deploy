@@ -19,6 +19,10 @@ base:
     - cove
     - icinga2-satellite
 
+  'cove-live-ocds':
+    - cove
+    - icinga2-satellite
+
   # A development server
   'dev1':
     - opencontracting
