@@ -1,5 +1,12 @@
+# Create private key from environment variable
 echo "$PRIVATE_KEY" | tr '#' '\n' | tr '_' ' ' > id_rsa
 chmod 600 id_rsa
-echo '|1|FkTASz83nlFnGSnvrDpt8jGNYko=|iuezK/A43QOIAZied/7LNZ30LGA= ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOiwQfg1hM1fcXxtssbgfmrnj2iSNounLWkgeWjU9Fr+slHUpcSt0Gk8o3jihTIXqR3z/KgSPqKmaDv3GIEzwBo=' >> ~/.ssh/known_hosts
-rsync -e 'ssh -i id_rsa' -av --delete build/ tmp-prototype-ocds-docs@dev2.default.opendataservices.uk0.bigv.io:~/web/$TRAVIS_BRANCH
-
+# Add host key for relevant server
+echo 'dev3.default.opendataservices.uk0.bigv.io ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDVUnT1C1bqxOqSwGIRQGbM0KTFDRzG5XeBDosei7I6GCg/9WcsMQ9rjYnOC5YN1j6FoB04S9JU/lzFCnENVTLKvl1mua5Wd209H01QzEV6OL2tC3KbXAMvWtsQSuwPZ0sIYr3PrRBA1eQz6Kd8OaU7+7GdoAUNXJDtgjodmd8yOfE0JQ1dy9XSY6jVUbJ2up+sfexFSO3DR7WlNA3AEi5KBmjqm9R4fI0dnEN/yBKagrAstvg2ojh1KFdjZAZKRRniA2CjkvyhNpiOIWbaPqPNuUhyK3soyCRLZTxcrXafUQ6bdA3wT6RU0QPOxsJJukKHAjBugIH8Fl5DSWODNB53' >> ~/.ssh/known_hosts
+# Get lftp binary
+wget "https://raw.githubusercontent.com/OpenDataServices/opendataservices-deploy/master/lftp"
+chmod a+x ./lftp
+# Make a test ssh connection, as lftp doesn't output key errors so well
+# ssh -i id_rsa ocds-docs@dev3.default.opendataservices.uk0.bigv.io
+# Copy the files to the server
+./lftp -c "set sftp:connect-program \"ssh -i id_rsa\"; connect sftp://ocds-docs:xxx@dev3.default.opendataservices.uk0.bigv.io; mirror -R build web/$TRAVIS_BRANCH"
