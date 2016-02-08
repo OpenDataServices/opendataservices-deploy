@@ -11,7 +11,15 @@ base:
     - opendataservices-website
     - icinga2-satellite
 
+  'live2':
+    - ocds-docs-live
+    - icinga2-satellite
+
   'cove-live':
+    - cove
+    - icinga2-satellite
+
+  'cove-live-ocds':
     - cove
     - icinga2-satellite
 
@@ -29,13 +37,16 @@ base:
     #- logserver
 
   'dev2':
-    - dev2
     - icinga2-satellite
     - dkan-script
 
-  'nrgi-dev*':
+  'dev3':
+    - ocds-docs-dev
     - icinga2-satellite
-    - resource-projects
+
+  'grantnav-dev':
+    - grantnav-dev
+    - icinga2-satellite
 
   'snapshotter':
     - icinga2-satellite

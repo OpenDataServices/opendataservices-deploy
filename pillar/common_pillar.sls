@@ -2,3 +2,6 @@
 domain_prefix: ''
 automatic_reboot: 'false'
 extra_cove_branches: []
+cove:
+  allowedhosts: '.cove.opendataservices.coop'
+  prefixmap: ''
