@@ -8,13 +8,15 @@ base:
   '*live*':
      - live_pillar
      - private.live_pillar
+  '*live-ocds*':
+     - ocds_live_pillar
   '*dev*':
      - dev_pillar
      - private.dev_pillar
+  'grantnav-dev':
+     - grantnav_dev_pillar
   'mon*':
      - mon_pillar
      - private.mon_pillar
   'backups':
      - backups_pillar
-  '*live-ocds*':
-     - ocds_live_pillar
