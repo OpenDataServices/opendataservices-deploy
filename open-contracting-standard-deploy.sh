@@ -1,4 +1,6 @@
 # Create private key from environment variable
+# (with a couple of character substitutions so that Travis will handle it
+# properly)
 echo "$PRIVATE_KEY" | tr '#' '\n' | tr '_' ' ' > id_rsa
 chmod 600 id_rsa
 # Add host key for relevant server
