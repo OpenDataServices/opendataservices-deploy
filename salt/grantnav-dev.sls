@@ -32,6 +32,10 @@ uwsgi:
     - enable: True
     - reload: True
 
+unzip:
+  pkg:
+    - installed
+
 grantnav-deps:
     apache_module.enable:
       - name: proxy
@@ -54,22 +58,27 @@ set_lc_all:
     - name: /etc/default/locale
 
 
-{% macro grantnav(name, giturl, branch, djangodir, user, uwsgi_port) %}
+{% macro grantnav(name, giturl, branch, djangodir, user, uwsgi_port, index_suffix='') %}
 
-{% set extracontext %}
+{% set apache_extracontext %}
 djangodir: {{ djangodir }}
 uwsgi_port: {{ uwsgi_port }}
-branch: {{ branch }}
+subdomain: {{ name }}
 {% endset %}
 
 {{ apache(user+'.conf',
     name=name+'.conf',
-    extracontext=extracontext) }}
+    extracontext=apache_extracontext) }}
+
+{% set uwsgi_extracontext %}
+es_index: threesixtygiving{% if index_suffix %}_{{ index_suffix }}{% endif %}
+{% endset %}
 
 {{ uwsgi(user+'.ini',
     name=name+'.ini',
     djangodir=djangodir,
-    port=uwsgi_port) }}
+    port=uwsgi_port,
+    extracontext=uwsgi_extracontext) }}
 
 {{ giturl }}{{ djangodir }}:
   git.latest:
@@ -131,3 +140,16 @@ collectstatic-{{name}}:
     djangodir='/home/'+user+'/grantnav/',
     uwsgi_port=3031,
     user=user) }}
+
+# If you cause a new uwsgi port to be used, uwsgi will need restarting manually
+# (See also dev_pillar.sls for the Cove equivalent).
+{% for index_suffix in [ 'validdata' ] %}
+{{ grantnav(
+    name='grantnav-'+index_suffix,
+    index_suffix=index_suffix,
+    giturl=giturl,
+    branch=pillar.default_branch,
+    djangodir='/home/'+user+'/grantnav-'+index_suffix+'/',
+    uwsgi_port=3031+loop.index,
+    user=user) }}
+{% endfor %}

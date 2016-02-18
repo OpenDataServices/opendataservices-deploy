@@ -60,7 +60,7 @@
       - service: apache2
 {% endmacro %}
 
-{% macro uwsgi(conffile, name, djangodir, port) %}
+{% macro uwsgi(conffile, name, djangodir, port, extracontext='') %}
 # Render the file with jinja and place it in apps-available
 /etc/uwsgi/apps-available/{{ name }}:
   file.managed:
@@ -72,6 +72,7 @@
     - context:
         djangodir: {{ djangodir }}
         port: {{ port }}
+        {{ extracontext | indent(8) }}
 
 # Create a symlink from apps-enabled to enable the config
 /etc/uwsgi/apps-enabled/{{ name }}:
