@@ -13,6 +13,7 @@ base:
 
   'live2':
     - ocds-docs-live
+    - threesixtygiving_data
     - icinga2-satellite
 
   'cove-live':
