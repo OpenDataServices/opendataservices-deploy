@@ -6,6 +6,9 @@
 # that we don't have to make deployment changes to every single branch we might
 # want to build).
 # https://github.com/OpenDataServices/opendataservices-deploy/blob/master/open-contracting-standard-deploy.sh
+# 
+# Note that this means that anyone with push access to the open-contracting
+# GitHub repo can cause files to be copied to this server.
 
 include:
   - ocds-docs-common
