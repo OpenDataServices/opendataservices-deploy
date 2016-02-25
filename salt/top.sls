@@ -5,15 +5,17 @@ base:
   # Install our core sls onto all servers
   '*':
     - core
-  # Our main live server
+
+  # LIVE
+
   'live1':
     - opencontracting
-    - opendataservices-website
     - icinga2-satellite
 
   'live2':
     - ocds-docs-live
     - threesixtygiving_data
+    - opendataservices-website
     - icinga2-satellite
 
   'cove-live':
@@ -24,18 +26,12 @@ base:
     - cove
     - icinga2-satellite
 
-  # A development server
+  # DEVELOPMENT
+
   'dev1':
     - opencontracting
     - cove
-    - opendataservices-website
     - icinga2-satellite
-
-  # Our monitoring server
-  'mon*':
-    - icinga2-master
-    - piwik
-    #- logserver
 
   'dev2':
     - icinga2-satellite
@@ -43,11 +39,21 @@ base:
 
   'dev3':
     - ocds-docs-dev
+    - opendataservices-website
     - icinga2-satellite
 
   'grantnav-dev':
     - grantnav-dev
     - icinga2-satellite
+
+  # MONITORING
+
+  'mon*':
+    - icinga2-master
+    - piwik
+    #- logserver
+
+  # OTHERS
 
   'snapshotter':
     - icinga2-satellite
