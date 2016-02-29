@@ -181,3 +181,11 @@ collectstatic-{{djangodir}}:
     user=user) }}
 {% endif %}
 {% endfor %}
+
+{% for subdomain, htpasswd in pillar.htpasswd_by_subdomain.items() %}
+/etc/apache2/htpasswd-{{ subdomain }}:
+  file.managed:
+    - contents_pillar: htpasswd_by_subdomain:{{ subdomain }}
+    - makedirs: True
+{% endfor %}
+
