@@ -58,7 +58,10 @@ set_lc_all:
     - name: /etc/default/locale
 
 
-{% macro grantnav(name, giturl, branch, djangodir, user, uwsgi_port, index_suffix='') %}
+# Macro for grantnav uswgi and apache configs
+# Having this seperate to grantnav_files is useful to have different indexes
+# for the same code files on disk
+{% macro grantnav_uwsgi_apache(name, djangodir, user, uwsgi_port, index_suffix='') %}
 
 {% set apache_extracontext %}
 djangodir: {{ djangodir }}
@@ -79,6 +82,12 @@ es_index: threesixtygiving{% if index_suffix %}_{{ index_suffix }}{% endif %}
     djangodir=djangodir,
     port=uwsgi_port,
     extracontext=uwsgi_extracontext) }}
+
+{% endmacro %}
+
+
+# Macro for grantnav code files on disk
+{% macro grantnav_files(giturl, branch, djangodir, user) %}
 
 {{ giturl }}{{ djangodir }}:
   git.latest:
@@ -106,7 +115,7 @@ es_index: threesixtygiving{% if index_suffix %}_{{ index_suffix }}{% endif %}
     - watch_in:
       - service: apache2
 
-collectstatic-{{name}}:
+collectstatic-{{djangodir}}:
   cmd.run:
     - name: . .ve/bin/activate; python manage.py collectstatic --noinput
     - user: {{ user }}
@@ -123,33 +132,52 @@ collectstatic-{{name}}:
     - recurse:
       - mode
     - require:
-      - cmd: collectstatic-{{name}}
+      - cmd: collectstatic-{{djangodir}}
 
 {{ djangodir }}:
   file.directory:
     - dir_mode: 755
     - require:
-      - cmd: collectstatic-{{name}}
+      - cmd: collectstatic-{{djangodir}}
 
 {% endmacro %}
 
-{{ grantnav(
+# Main copy of grantnav at http://grantnav.grantnav-dev.default.opendataservices.uk0.bigv.io/
+{{ grantnav_uwsgi_apache(
     name='grantnav',
-    giturl=giturl,
-    branch=pillar.default_branch,
     djangodir='/home/'+user+'/grantnav/',
     uwsgi_port=3031,
     user=user) }}
+{{ grantnav_files(
+    giturl=giturl,
+    branch='iteration01',
+    djangodir='/home/'+user+'/grantnav/',
+    user=user) }}
 
+# Extra copies of grantnav for specific branches and/or index suffix
+# 
 # If you cause a new uwsgi port to be used, uwsgi will need restarting manually
 # (See also dev_pillar.sls for the Cove equivalent).
-{% for index_suffix in [ 'validdata' ] %}
-{{ grantnav(
+{% for branch, index_suffix in [
+  ('', 'validdata'),
+  ('master', 'iteration2'),
+  ] %}
+{% if branch %}
+  {% set djangodir='/home/'+user+'/grantnav-'+branch+'/' %}
+{% else %}
+  {% set djangodir='/home/'+user+'/grantnav/' %}
+{% endif %}
+{{ grantnav_uwsgi_apache(
     name='grantnav-'+index_suffix,
     index_suffix=index_suffix,
-    giturl=giturl,
-    branch=pillar.default_branch,
-    djangodir='/home/'+user+'/grantnav-'+index_suffix+'/',
+    djangodir=djangodir,
     uwsgi_port=3031+loop.index,
     user=user) }}
+{% if branch %}
+{{ grantnav_files(
+    giturl=giturl,
+    branch=branch,
+    djangodir=djangodir,
+    user=user) }}
+{% endif %}
 {% endfor %}
