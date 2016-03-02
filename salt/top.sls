@@ -42,6 +42,10 @@ base:
     - opendataservices-website
     - icinga2-satellite
 
+  'cove-dev':
+    - cove
+    - icinga2-satellite
+
   'grantnav-dev':
     - grantnav-dev
     - icinga2-satellite
