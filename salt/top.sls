@@ -56,7 +56,6 @@ base:
   'mon*':
     - icinga2-master
     - piwik
-    #- logserver
 
   # OTHERS
 
