@@ -1,9 +1,7 @@
 # This file defines the server names for use with the salt-ssh command
-live1: live1.default.opendataservices.uk0.bigv.io
 live2: live2.default.opendataservices.uk0.bigv.io
 cove-live: cove-live.default.opendataservices.uk0.bigv.io
 cove-dev: cove-dev.default.opendataservices.uk0.bigv.io
-dev1: dev1.default.opendataservices.uk0.bigv.io
 dev2: dev2.default.opendataservices.uk0.bigv.io
 mon-2: mon-2.default.opendataservices.uk0.bigv.io
 snapshotter: snapshotter.default.opendataservices.uk0.bigv.io
