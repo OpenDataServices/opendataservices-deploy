@@ -46,3 +46,7 @@ https://github.com/open-contracting/standard-legacy-staticsites.git:
   file.managed:
     - source: salt://ocds-docs/robots_live.txt
     - user: ocds-docs
+
+rewrite:
+  apache_module.enable
+
