@@ -10,3 +10,12 @@ include:
     - user: {{ user }}
     - makedirs: True
     - mode: 755
+
+/home/ocds-docs/web/includes/:
+  file.recurse:
+    - source: salt://ocds-docs/includes
+    - user: ocds-docs
+
+mod_include:
+  apache_module.enable:
+    - name: include

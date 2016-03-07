@@ -41,7 +41,3 @@ https://github.com/open-contracting/standard-legacy-staticsites.git:
     - user: ocds-docs
     - force_fetch: True
     - force_reset: True
-
-mod_include:
-  apache_module.enable:
-    - name: include
