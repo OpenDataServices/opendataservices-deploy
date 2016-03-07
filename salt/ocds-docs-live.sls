@@ -41,3 +41,8 @@ https://github.com/open-contracting/standard-legacy-staticsites.git:
     - user: ocds-docs
     - force_fetch: True
     - force_reset: True
+
+/home/ocds-docs/web/robots.txt:
+  file.managed:
+    - source: salt://ocds-docs/robots_live.txt
+    - user: ocds-docs
