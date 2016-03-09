@@ -19,3 +19,7 @@ include:
 mod_include:
   apache_module.enable:
     - name: include
+
+rewrite:
+  apache_module.enable
+
