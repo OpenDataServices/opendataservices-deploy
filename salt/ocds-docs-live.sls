@@ -5,7 +5,7 @@
 #
 # How to make a new live release:
 #
-# Merge onto 1.0 in git (in GitHub interface, of locally with a no-ff merge).
+# Merge onto 1.0 in git (in GitHub interface, or locally with a no-ff merge).
 #
 # Initiate a build on travis (either pushing new commit, or if it's just theme
 # changes, hitting rebuild on the old one). Once this is done, check the
