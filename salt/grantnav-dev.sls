@@ -150,7 +150,7 @@ collectstatic-{{djangodir}}:
     user=user) }}
 {{ grantnav_files(
     giturl=giturl,
-    branch='iteration01',
+    branch='master',
     djangodir='/home/'+user+'/grantnav/',
     user=user) }}
 
