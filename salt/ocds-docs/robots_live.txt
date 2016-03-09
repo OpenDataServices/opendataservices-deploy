@@ -16,3 +16,6 @@ Allow: /latest/en
 Allow: /validator
 Allow: /$
 Disallow: /
+
+User-Agent: LinkChecker
+Allow: /
