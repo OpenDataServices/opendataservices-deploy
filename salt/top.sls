@@ -8,10 +8,6 @@ base:
 
   # LIVE
 
-  'live1':
-    - opencontracting
-    - icinga2-satellite
-
   'live2':
     - ocds-docs-live
     - ocds-legacy
@@ -28,11 +24,6 @@ base:
     - icinga2-satellite
 
   # DEVELOPMENT
-
-  'dev1':
-    - opencontracting
-    - cove
-    - icinga2-satellite
 
   'dev2':
     - icinga2-satellite
@@ -56,7 +47,6 @@ base:
   'mon*':
     - icinga2-master
     - piwik
-    #- logserver
 
   # OTHERS
 
