@@ -12,12 +12,12 @@
 # staging site:
 # http://ocds-standard.dev3.default.opendataservices.uk0.bigv.io/1.0/en/
 # 
-# Copy the files: scp -r
-# root@dev3.default.opendataservices.uk0.bigv.io:/home/ocds-docs/web/1.0
-# 1.0-`date +%F`-1 scp -r 1.0-`date +%F`-1
-# root@live2.default.opendataservices.uk0.bigv.io:/home/ocds-docs/web/
+# Copy the files:
+# scp -r root@dev3.default.opendataservices.uk0.bigv.io:/home/ocds-docs/web/1.0 1.0-`date +%F`-1
+# scp -r 1.0-`date +%F`-1 root@live2.default.opendataservices.uk0.bigv.io:/home/ocds-docs/web/
 # 
-# ssh root@live2.default.opendataservices.uk0.bigv.io cd /home/ocds-docs/web/
+# ssh root@live2.default.opendataservices.uk0.bigv.io
+# cd /home/ocds-docs/web/
 # rm 1.0; ln -s 1.0-`date +%F`-1 1.0
 # 
 # To deploy again on the same day, increment the -1 (e.g. -2 etc.)

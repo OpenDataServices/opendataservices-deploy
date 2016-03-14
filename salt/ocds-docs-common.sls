@@ -23,3 +23,7 @@ mod_include:
 rewrite:
   apache_module.enable
 
+mod_substitute:
+  apache_module.enable:
+    - name: substitute
+
