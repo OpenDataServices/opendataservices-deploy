@@ -20,6 +20,8 @@ extra_cove_branches: # [] # remove the [] (empty list) if you re-add some values
     uwsgi_port: 3034
   - name: 234-validate-uri
     uwsgi_port: 3035
+  - name: 90-error-contact-details
+    uwsgi_port: 3036
 # Add a new branch with the name of the branch, and increment the port number.
 # Currently adding a new port number requires a manual uwsgi restart (ie. the
 # reload in highstate will fail, so you will need to ssh and run "service uwsgi
