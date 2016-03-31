@@ -7,3 +7,4 @@ cove:
   allowedhosts: '.default.opendataservices.uk0.bigv.io,.standard.open-contracting.org'
   prefixmap: 'ocds=validator/'
   ocds_redirect: False
+  google_analytics_id: 'UA-35677147-1'
