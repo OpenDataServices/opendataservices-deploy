@@ -6,3 +6,4 @@ cove:
     site_id: '5'
   allowedhosts: '.default.opendataservices.uk0.bigv.io,.standard.open-contracting.org'
   prefixmap: 'ocds=validator/'
+  ocds_redirect: False
