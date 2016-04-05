@@ -10,6 +10,7 @@ cove:
   piwik:
     url: '//mon.opendataservices.coop/piwik/'
     site_id: '1' 
+  ocds_redirect: False
 automatic_reboot: 'true'
 extra_cove_branches: # [] # remove the [] (empty list) if you re-add some values below
   - name: flatten-tool-updates
