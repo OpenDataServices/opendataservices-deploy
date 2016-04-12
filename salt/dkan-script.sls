@@ -45,3 +45,10 @@ cd /home/threesixty/data-conversion/scripts/ && ./generate_report.sh > /home/thr
     - user: threesixty
     - minute: 3
     - hour: 1
+
+#Set a cron job to run every two hours to refresh the data at 360 Giving website
+wget -O - http://threesixtygiving.org/get-involved/data/ >/dev/null 2>&1
+  cron.present:
+    - identifier: 360DKANCRON
+    - user: threesixty
+    - minute: '*/15'
