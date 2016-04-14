@@ -23,6 +23,12 @@ base:
     - cove
     - icinga2-satellite
 
+  # STAGING
+
+  'cove-staging':
+    - cove
+    - icinga2-satellite
+
   # DEVELOPMENT
 
   'dev2':
