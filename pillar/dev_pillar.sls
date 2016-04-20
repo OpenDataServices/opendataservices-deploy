@@ -13,16 +13,8 @@ cove:
   ocds_redirect: False
 automatic_reboot: 'true'
 extra_cove_branches: # [] # remove the [] (empty list) if you re-add some values below
-  - name: flatten-tool-updates
+  - name: release-201604
     uwsgi_port: 3032
-  - name: release-201602
-    uwsgi_port: 3033
-  - name: 292-dev-schema
-    uwsgi_port: 3034
-  - name: 234-validate-uri
-    uwsgi_port: 3035
-  - name: 90-error-contact-details
-    uwsgi_port: 3036
   - name: release-201603
     uwsgi_port: 3037
 # Add a new branch with the name of the branch, and increment the port number.
