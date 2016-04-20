@@ -189,3 +189,15 @@ collectstatic-{{djangodir}}:
     - makedirs: True
 {% endfor %}
 
+/root/reload_data.sh:
+  file.managed:
+    - contents:
+      - '#!/bin/bash'
+      - set -i
+      - su grantnav -c /home/grantnav/reload_data.sh
+    - mode: 755
+
+/home/grantnav/reload_data.sh:
+  file.managed:
+    - source: salt://grantnav/reload_data.sh
+    - mode: 755
