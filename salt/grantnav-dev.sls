@@ -160,6 +160,7 @@ collectstatic-{{djangodir}}:
 # (See also dev_pillar.sls for the Cove equivalent).
 {% for branch, index_suffix in [
   ('master', 'dev'),
+  ('update-flattentool', 'updateflattentool'),
   ] %}
 {% if branch %}
   {% set djangodir='/home/'+user+'/grantnav-'+branch+'/' %}
