@@ -159,8 +159,8 @@ collectstatic-{{djangodir}}:
 # If you cause a new uwsgi port to be used, uwsgi will need restarting manually
 # (See also dev_pillar.sls for the Cove equivalent).
 {% for branch, index_suffix in [
-  ('master', 'dev'),
-  ('update-flattentool', 'updateflattentool'),
+  ('master_before_updateflattentool', 'dev'),
+  ('master', 'updateflattentool'),
   ] %}
 {% if branch %}
   {% set djangodir='/home/'+user+'/grantnav-'+branch+'/' %}
