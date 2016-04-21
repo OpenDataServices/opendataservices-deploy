@@ -11,7 +11,7 @@ include:
 # Download Piwik from the git repository but pick a tag for a stable release
 https://github.com/piwik/piwik.git:
   git.latest:
-    - rev: 2.16.0
+    - rev: 2.16.1
     - target: /var/www/html/piwik/
     - submodules: True
 # Upstream piwik routinely rewrites history in their git repo, so we'll set
