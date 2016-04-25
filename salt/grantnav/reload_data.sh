@@ -1,14 +1,15 @@
 #!/bin/bash
 set -e
-curl -XDELETE 'http://localhost:9200/_all'
+#curl -XDELETE 'http://localhost:9200/_all'
 cd ~/grantnav
 rm -r Valid\ Data/ || true
+#unzip Valid_Data-2016-04-25.zip;
 unzip Valid_Data-$(date +%F).zip;
 source .ve/bin/activate
 cd Valid\ Data
 ES_INDEX=threesixtygiving python ../dataload/import_to_elasticsearch.py --clean *
 deactivate
-source ../../grantnav-master_before_updateflattentool/.ve/bin/activate
-ES_INDEX=threesixtygiving_dev python ../../grantnav-master_before_updateflattentool/dataload/import_to_elasticsearch.py --clean *
 source ../../grantnav-master/.ve/bin/activate
-ES_INDEX=threesixtygiving_updateflattentool python ../../grantnav-master/dataload/import_to_elasticsearch.py --clean *
+ES_INDEX=threesixtygiving_dev python ../../grantnav-master/dataload/import_to_elasticsearch.py --clean *
+source ../../grantnav-iteration03-before-theming/.ve/bin/activate
+ES_INDEX=threesixtygiving_notheme python ../../grantnav-iteration03-before-theming/dataload/import_to_elasticsearch.py --clean *
