@@ -158,9 +158,10 @@ collectstatic-{{djangodir}}:
 # 
 # If you cause a new uwsgi port to be used, uwsgi will need restarting manually
 # (See also dev_pillar.sls for the Cove equivalent).
-{% for branch, index_suffix in [
-  ('master', 'dev'),
-  ('iteration03-before-theming', 'notheme'),
+{% for branch, index_suffix, create_files in [
+  ('master', 'dev', True),
+  ('master', 'big', False),
+  ('iteration03-before-theming', 'notheme', True),
   ] %}
 {% if branch %}
   {% set djangodir='/home/'+user+'/grantnav-'+branch+'/' %}
@@ -173,7 +174,7 @@ collectstatic-{{djangodir}}:
     djangodir=djangodir,
     uwsgi_port=3031+loop.index,
     user=user) }}
-{% if branch %}
+{% if branch and create_files %}
 {{ grantnav_files(
     giturl=giturl,
     branch=branch,
