@@ -3,7 +3,6 @@ live2: live2.default.opendataservices.uk0.bigv.io
 cove-live: cove-live.default.opendataservices.uk0.bigv.io
 cove-staging: cove-staging.default.opendataservices.uk0.bigv.io
 cove-dev: cove-dev.default.opendataservices.uk0.bigv.io
-dev2: dev2.default.opendataservices.uk0.bigv.io
 mon-2: mon-2.default.opendataservices.uk0.bigv.io
 snapshotter: snapshotter.default.opendataservices.uk0.bigv.io
 backups: backups.backups.opendataservices.uk0.bigv.io

@@ -31,10 +31,6 @@ base:
 
   # DEVELOPMENT
 
-  'dev2':
-    - icinga2-satellite
-    - dkan-script
-
   'dev3':
     - ocds-docs-dev
     - opendataservices-website
