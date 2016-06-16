@@ -140,6 +140,11 @@ cd {{ djangodir }}; . .ve/bin/activate; python manage.py expire_files:
     - hour: 0
 {% endmacro %}
 
+MAILTO:
+  cron.env_present:
+    - value: code@opendataservices.coop
+    - user: cove
+
 {{ cove(
     name='cove',
     giturl=giturl,
