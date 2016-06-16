@@ -5,11 +5,12 @@ banner_message: 'This is a development site with experimental features. Do not r
 grantnav:
   piwik:
     url: '//mon.opendataservices.coop/piwik/'
-    site_id: '1'
+    site_id: '6'
 cove:
   piwik:
     url: '//mon.opendataservices.coop/piwik/'
     site_id: '1' 
+    dimension_map: 'file_type=2,page_type=3,form_name=4,language=5,exit_language=6'
   ocds_redirect: False
 automatic_reboot: 'true'
 extra_cove_branches: # [] # remove the [] (empty list) if you re-add some values below
