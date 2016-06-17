@@ -132,7 +132,7 @@ collectstatic-{{name}}:
     - require:
       - cmd: collectstatic-{{name}}
 
-cd {{ djangodir }}; . .ve/bin/activate; python manage.py expire_files:
+cd {{ djangodir }}; . .ve/bin/activate; SECRET_KEY="{{pillar.cove.secret_key}}" python manage.py expire_files:
   cron.present:
     - identifier: COVE_EXPIRE_FILES{% if name != 'cove' %}_{{ name }}{% endif %}
     - user: cove
