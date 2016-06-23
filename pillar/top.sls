@@ -27,3 +27,6 @@ base:
      - private.mon_pillar
   'backups':
      - backups_pillar
+  'involve':
+     - involve_pillar
+     - private.involve_pillar
