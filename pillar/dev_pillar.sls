@@ -12,6 +12,8 @@ cove:
     site_id: '1' 
     dimension_map: 'file_type=2,page_type=3,form_name=4,language=5,exit_language=6'
   ocds_redirect: False
+  larger_uwsgi_limits: True
+  uwsgi_as_limit: 1500
 automatic_reboot: 'true'
 extra_cove_branches: # [] # remove the [] (empty list) if you re-add some values below
   - name: release-201604
