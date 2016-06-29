@@ -1,0 +1,12 @@
+{% for branch in pillar.grantnav.branches %}
+<h3>branch {{branch}}</h3>
+<ul>
+{% for dataselection in pillar.grantnav.dataselections %}
+<li>
+<a href="http://{{pillar.htpasswd_user}}:{{pillar.htpasswd_password}}@{{dataselection.replace('_', '-')}}.{{branch}}.grantnav-dev.default.opendataservices.uk0.bigv.io/">
+{{dataselection.replace('_', '-')}}
+</a>
+</li>
+{% endfor %}
+</ul>
+{% endfor %}

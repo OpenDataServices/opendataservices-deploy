@@ -187,3 +187,10 @@ es_index: {{ es_index }}
 {{ apache('grantnav_default.conf',
     name='000-default.conf') }}
 
+{{ apache('grantnav_list.conf') }}
+
+/home/grantnav/list/index.html:
+  file.managed:
+    - source: salt://grantnav/list.html
+    - template: jinja
+    - makedirs: True
