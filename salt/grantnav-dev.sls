@@ -131,10 +131,7 @@ collectstatic-{{djangodir}}:
 # If you cause a new uwsgi port to be used, uwsgi will need restarting manually
 # (See also dev_pillar.sls for the Cove equivalent).
 
-{% set branches = 'master', 'iteration03' %}
-{% set dataselections = 'all', 'acceptable_license', 'acceptable_license_valid' %}
-
-{% for branch in branches %}
+{% for branch in pillar.grantnav.branches %}
 {% set djangodir='/home/'+user+'/grantnav-'+branch+'/' %}
 {{ grantnav_files(
     giturl=giturl,
@@ -142,7 +139,7 @@ collectstatic-{{djangodir}}:
     djangodir=djangodir,
     user=user) }}
 
-{% for dataselection in dataselections %}
+{% for dataselection in pillar.grantnav.dataselections %}
 {% set es_index = 'grantnav_' + dataselection + '_' + branch %}
 {% set apache_extracontext %}
 djangodir: {{ djangodir }}
@@ -155,7 +152,7 @@ subdomain: {{ dataselection }}.{{ branch }}
     extracontext=apache_extracontext) }}
 
 {% set uwsgi_extracontext %}
-es_index: _{{ es_index }}
+es_index: {{ es_index }}
 {% endset %}
 
 {{ uwsgi(user+'.ini',
@@ -184,10 +181,8 @@ es_index: _{{ es_index }}
 /home/grantnav/reload_data.sh:
   file.managed:
     - source: salt://grantnav/reload_data.sh
+    - template: jinja
     - mode: 755
-    - context:
-        branches: branches
-        dataselections: dataselections
 
 {{ apache('grantnav_default.conf',
     name='000-default.conf') }}

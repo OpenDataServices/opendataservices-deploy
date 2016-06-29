@@ -1,15 +1,15 @@
 #!/bin/bash
 set -e
+# This command deletes all data, from ALL elasticsearch indices:
 #curl -XDELETE 'http://localhost:9200/_all'
-cd ~/grantnav
-rm -r Valid\ Data/ || true
-#unzip Valid_Data-2016-04-25.zip;
-unzip Valid_Data-$(date +%F).zip;
+{% for branch in pillar.grantnav.branches %}
+cd ~/grantnav-{{ branch }}/
 source .ve/bin/activate
-cd Valid\ Data
-ES_INDEX=threesixtygiving python ../dataload/import_to_elasticsearch.py --clean *
+
+{% for dataselection in pillar.grantnav.dataselections %}
+cd ~/data/json_{{ dataselection }}
+ES_INDEX=grantnav_{{ dataselection }}_{{ branch }} python ~/grantnav-{{ branch }}/dataload/import_to_elasticsearch.py --clean *
+{% endfor %}
+
 deactivate
-source ../../grantnav-master/.ve/bin/activate
-ES_INDEX=threesixtygiving_dev python ../../grantnav-master/dataload/import_to_elasticsearch.py --clean *
-source ../../grantnav-iteration03-before-theming/.ve/bin/activate
-ES_INDEX=threesixtygiving_notheme python ../../grantnav-iteration03-before-theming/dataload/import_to_elasticsearch.py --clean *
+{% endfor %}
