@@ -1,3 +1,12 @@
+# Warning: This currently requires apache from trusty backports, run:
+# sudo aptitude install apache2/trusty-backports apache2-bin/trusty-backports apache2-data/trusty-backports
+# (This is because we now use unix sockets instead of port numbers to
+# communicate between apache and uwsgi).
+#
+# To reload this from scratch, do
+# rm -r /etc/apache2/sites-*/* /etc/uwsgi/apps-*/ /home/grantnav/grantnav* /tmp/*.sock /etc/apache2/htpasswd*
+# and then run highstate.
+
 {% from 'lib.sls' import createuser, apache, uwsgi %}
 
 {% set user = 'grantnav' %}
@@ -58,32 +67,6 @@ set_lc_all:
     - name: /etc/default/locale
 
 
-# Macro for grantnav uswgi and apache configs
-# Having this seperate to grantnav_files is useful to have different indexes
-# for the same code files on disk
-{% macro grantnav_uwsgi_apache(name, djangodir, user, uwsgi_port, index_suffix='') %}
-
-{% set apache_extracontext %}
-djangodir: {{ djangodir }}
-uwsgi_port: {{ uwsgi_port }}
-subdomain: {{ name }}
-{% endset %}
-
-{{ apache(user+'.conf',
-    name=name+'.conf',
-    extracontext=apache_extracontext) }}
-
-{% set uwsgi_extracontext %}
-es_index: threesixtygiving{% if index_suffix %}_{{ index_suffix }}{% endif %}
-{% endset %}
-
-{{ uwsgi(user+'.ini',
-    name=name+'.ini',
-    djangodir=djangodir,
-    port=uwsgi_port,
-    extracontext=uwsgi_extracontext) }}
-
-{% endmacro %}
 
 
 # Macro for grantnav code files on disk
@@ -142,53 +125,53 @@ collectstatic-{{djangodir}}:
 
 {% endmacro %}
 
-# Main copy of grantnav at http://grantnav.grantnav-dev.default.opendataservices.uk0.bigv.io/
-{{ grantnav_uwsgi_apache(
-    name='grantnav',
-    djangodir='/home/'+user+'/grantnav/',
-    uwsgi_port=3031,
-    user=user) }}
-{{ grantnav_files(
-    giturl=giturl,
-    branch='iteration03',
-    djangodir='/home/'+user+'/grantnav/',
-    user=user) }}
 
-# Extra copies of grantnav for specific branches and/or index suffix
+# Deploy multiple copies of grantnav for specific branches and/or index suffix
 # 
 # If you cause a new uwsgi port to be used, uwsgi will need restarting manually
 # (See also dev_pillar.sls for the Cove equivalent).
-{% for branch, index_suffix, create_files in [
-  ('master', 'dev', True),
-  ('master', 'big', False),
-  ('iteration03-before-theming', 'notheme', True),
-  ] %}
-{% if branch %}
-  {% set djangodir='/home/'+user+'/grantnav-'+branch+'/' %}
-{% else %}
-  {% set djangodir='/home/'+user+'/grantnav/' %}
-{% endif %}
-{{ grantnav_uwsgi_apache(
-    name='grantnav-'+index_suffix,
-    index_suffix=index_suffix,
-    djangodir=djangodir,
-    uwsgi_port=3031+loop.index,
-    user=user) }}
-{% if branch and create_files %}
+
+{% set branches = 'master', 'iteration03' %}
+{% set dataselections = 'all', 'acceptable_license', 'acceptable_license_valid' %}
+
+{% for branch in branches %}
+{% set djangodir='/home/'+user+'/grantnav-'+branch+'/' %}
 {{ grantnav_files(
     giturl=giturl,
     branch=branch,
     djangodir=djangodir,
     user=user) }}
-{% endif %}
+
+{% for dataselection in dataselections %}
+{% set es_index = 'grantnav_' + dataselection + '_' + branch %}
+{% set apache_extracontext %}
+djangodir: {{ djangodir }}
+subdomain: {{ dataselection }}.{{ branch }}
+{% endset %}
+
+{{ apache(user+'.conf',
+    name=es_index+'.conf',
+    socket_name=es_index,
+    extracontext=apache_extracontext) }}
+
+{% set uwsgi_extracontext %}
+es_index: _{{ es_index }}
+{% endset %}
+
+{{ uwsgi(user+'.ini',
+    name=es_index+'.ini',
+    socket_name=es_index,
+    djangodir=djangodir,
+    extracontext=uwsgi_extracontext) }}
+{% endfor %}
 {% endfor %}
 
-{% for subdomain, htpasswd in pillar.htpasswd_by_subdomain.items() %}
-/etc/apache2/htpasswd-{{ subdomain }}:
-  file.managed:
-    - contents_pillar: htpasswd_by_subdomain:{{ subdomain }}
-    - makedirs: True
-{% endfor %}
+#{% for subdomain, htpasswd in pillar.htpasswd_by_subdomain.items() %}
+#/etc/apache2/htpasswd-{{ subdomain }}:
+#  file.managed:
+#    - contents_pillar: htpasswd_by_subdomain:{{ subdomain }}
+#    - makedirs: True
+#{% endfor %}
 
 /root/reload_data.sh:
   file.managed:
@@ -202,3 +185,10 @@ collectstatic-{{djangodir}}:
   file.managed:
     - source: salt://grantnav/reload_data.sh
     - mode: 755
+    - context:
+        branches: branches
+        dataselections: dataselections
+
+{{ apache('grantnav_default.conf',
+    name='000-default.conf') }}
+

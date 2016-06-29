@@ -23,7 +23,7 @@
 
 
 # Install the named conf file in the apache dir onto the server.
-{% macro apache(conffile, name='', extracontext='') %}
+{% macro apache(conffile, name='', extracontext='', socket_name='') %}
 {% if name == '' %}
 {% set name=conffile %}
 {% endif %}
@@ -36,6 +36,7 @@
     - watch_in:
       - service: apache2
     - context:
+        socket_name: {{ socket_name }}
       {% if 'banner_message' in pillar %}
         banner: |
           # Inflate and deflate here to ensure that the message it not
@@ -60,7 +61,7 @@
       - service: apache2
 {% endmacro %}
 
-{% macro uwsgi(conffile, name, djangodir, port, extracontext='') %}
+{% macro uwsgi(conffile, name, djangodir, port='', socket_name='', extracontext='') %}
 # Render the file with jinja and place it in apps-available
 /etc/uwsgi/apps-available/{{ name }}:
   file.managed:
@@ -70,6 +71,7 @@
     - watch_in:
       - service: uwsgi
     - context:
+        socket_name: {{ socket_name }}
         djangodir: {{ djangodir }}
         port: {{ port }}
         {{ extracontext | indent(8) }}
