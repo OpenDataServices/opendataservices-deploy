@@ -23,6 +23,10 @@ base:
     - cove
     - icinga2-satellite
 
+  'grantnav-live':
+    - grantnav-live
+    - icinga2-satellite
+
   # STAGING
 
   'cove-staging':
