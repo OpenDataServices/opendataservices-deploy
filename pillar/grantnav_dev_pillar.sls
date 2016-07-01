@@ -4,7 +4,11 @@ grantnav:
   branches:
     - master
     - iteration03
+    - iteration03-nobugfix
+    - 127-download-button
+    - 166-publisher-pages
   dataselections:
     - all
     - acceptable_license
     - acceptable_license_valid
+    - valid
