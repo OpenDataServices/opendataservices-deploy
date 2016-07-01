@@ -23,6 +23,10 @@ base:
     - cove
     - icinga2-satellite
 
+  'grantnav-live':
+    - grantnav
+    - icinga2-satellite
+
   # STAGING
 
   'cove-staging':
@@ -41,7 +45,7 @@ base:
     - icinga2-satellite
 
   'grantnav-dev':
-    - grantnav-dev
+    - grantnav
     - icinga2-satellite
 
   # MONITORING

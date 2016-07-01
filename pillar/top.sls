@@ -19,6 +19,9 @@ base:
   'grantnav-dev':
      - grantnav_dev_pillar
      - private.grantnav_dev_pillar
+  'grantnav-live':
+     - grantnav_live_pillar
+     - private.grantnav_live_pillar
   'mon*':
      - mon_pillar
      - private.mon_pillar

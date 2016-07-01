@@ -27,7 +27,7 @@ include:
 /etc/elasticsearch/elasticsearch.yml:
   file.append:
     - text: |
-        cluster.name: grantnav-dev
+        cluster.name: {{ grains.host }}
     - require:
       - pkg: elasticsearch-base
 
