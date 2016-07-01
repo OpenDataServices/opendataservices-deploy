@@ -3,7 +3,7 @@
 <ul>
 {% for dataselection in pillar.grantnav.dataselections %}
 <li>
-<a href="http://{{pillar.htpasswd_user}}:{{pillar.htpasswd_password}}@{{dataselection.replace('_', '-')}}.{{branch}}.grantnav-dev.default.opendataservices.uk0.bigv.io/">
+<a href="http://{{pillar.htpasswd_user}}:{{pillar.htpasswd_password}}@{{dataselection.replace('_', '-')}}.{{branch}}.{{grains.fqdn}}/">
 {{dataselection.replace('_', '-')}}
 </a>
 </li>

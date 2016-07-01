@@ -24,7 +24,7 @@ base:
     - icinga2-satellite
 
   'grantnav-live':
-    - grantnav-live
+    - grantnav
     - icinga2-satellite
 
   # STAGING
@@ -45,7 +45,7 @@ base:
     - icinga2-satellite
 
   'grantnav-dev':
-    - grantnav-dev
+    - grantnav
     - icinga2-satellite
 
   # MONITORING

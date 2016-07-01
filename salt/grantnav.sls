@@ -27,7 +27,7 @@ include:
 /etc/elasticsearch/elasticsearch.yml:
   file.append:
     - text: |
-        cluster.name: grantnav-live
+        cluster.name: {{ grains.host }}
     - require:
       - pkg: elasticsearch-base
 
@@ -184,10 +184,10 @@ es_index: {{ es_index }}
     - template: jinja
     - mode: 755
 
-{{ apache('grantnav_default_live.conf',
+{{ apache('grantnav_default.conf',
     name='000-default.conf') }}
 
-{{ apache('grantnav_list_live.conf') }}
+{{ apache('grantnav_list.conf') }}
 
 /home/grantnav/list/index.html:
   file.managed:
