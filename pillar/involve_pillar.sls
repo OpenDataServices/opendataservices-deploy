@@ -1,6 +1,6 @@
 # Values used only on the involve server's dev instance
 
-default_branch: 'ogpsurvey-salt'
+default_branch: 'ogpsurvey'
 
 # Please don't include '://'
 protocol: 'http'
@@ -8,6 +8,6 @@ protocol: 'http'
 # If non-null, please include a trailing '.'
 subdomain: ''
 
-domain: 'ogpreview.org'
+domain: 'survey.ogpreview.org'
 
 username: 'stlive'

@@ -10,26 +10,32 @@ include:
   - core
   - apache
 
-# Set up the Apache config using macro
+# Apache and PHP setup
+
 {{ apache('survey-tool.conf') }}
 
-# php setup
-# we won't use php.sls, as that explicitly uses php5 and we're on 16.04 php7 here :p
-
+# Don't use php.sls, it explicitly uses php5 and we're on 16.04 php7 here :p
 php:
   pkg.installed
 
-libapache2-mod-php:
-  pkg.installed
-
-#### TODO: For some reason this also needs 'a2enmod rewrite'
-
-/etc/php/7.0/apache2/php.ini:
-  file.append:
-    - text: date.timezone = Europe/London
-    - watch_in: apache2
+survey_tool_apache_php_modules:
+  pkg.installed:
+    - pkgs:
+      - libapache2-mod-php
+      - php7.0-xml
+      - php7.0-sqlite3
+      - php7.0-curl
     - require:
-      - pkg: libapache2-mod-php
+      - pkg: php
+      - pkg: apache2
+  cmd.run:
+    - name: a2enmod rewrite
+    - unless: test -f /etc/apache2/mods-enabled/rewrite.load
+  file.append:
+    - name: /etc/php/7.0/apache2/php.ini
+    - text: date.timezone = Europe/London
+    - watch_in:
+      - service: apache2
 
 # Get the .p12 blob (Google service account key) out of the private pillar and into the home dir
 
@@ -56,12 +62,16 @@ libapache2-mod-php:
 {% set giturl = 'https://github.com/OpenDataServices/survey-tool.git' %}
 {% set gitdest = '/home/'+user+'/survey-tool/' %}
 
+# Don't believe "force_checkout", it's a lie :(
 {{ giturl }}:
+  cmd.run:
+    - name: cd {{ gitdest }}; git checkout -f
   git.latest:
     - rev: {{ pillar.default_branch }}
-    - force_fetch: True;
-    - force_checkout: True;
-    - force_reset: True;
+    - branch: {{ pillar.default_branch }}
+    - force_fetch: True
+    - force_checkout: True
+    - force_reset: True
     - target: {{ gitdest }}
     - user: {{ user }}
     - require:
@@ -70,14 +80,15 @@ libapache2-mod-php:
       - service: apache2
 
 # File substitutions
-# No, beloved Salt devs, we can't use your precious managed file templates
-# because this stuff all lives in its own git repo :(
+# We can't use managed file templates because this stuff all lives in a separate git repo.
+# Don't keep backups to avoid spaffing git with untracked files.
 
 replace_master_key:
   file.replace:
     - name: {{ gitdest }}/js/w3f-survey.js
     - pattern: '%MASTER_KEY%'
     - repl: {{ pillar.master_key }}
+    - backup: False
     - require:
       - git: {{ giturl }}
 
@@ -86,6 +97,7 @@ replace_client_id:
     - name: {{ gitdest }}/js/w3f-survey.js
     - pattern: '%CLIENT_ID%'
     - repl: {{ pillar.client_id }}
+    - backup: False
     - require:
       - git: {{ giturl }}
 
@@ -94,6 +106,7 @@ replace_service_account_w3f-survey:
     - name: {{ gitdest }}/js/w3f-survey.js
     - pattern: '%SERVICE_ACCOUNT%'
     - repl: {{ pillar.service_account }}
+    - backup: False
     - require:
       - git: {{ giturl }}
 
@@ -102,6 +115,7 @@ replace_service_account_survey-config:
     - name: {{ gitdest }}/survey-config.php
     - pattern: '%SERVICE_ACCOUNT%'
     - repl: {{ pillar.service_account }}
+    - backup: False
     - require:
       - git: {{ giturl }}
 
@@ -110,6 +124,7 @@ replace_key_file_location:
     - name: {{ gitdest }}/survey-config.php
     - pattern: '%KEY_FILE_LOCATION%'
     - repl: {{ p12path }}
+    - backup: False
     - require:
       - git: {{ giturl }}
 
@@ -118,6 +133,7 @@ replace_protocol_proxy:
     - name: {{ gitdest }}/proxy/proxy.config
     - pattern: '%PROTOCOL%'
     - repl: {{ pillar.protocol }}
+    - backup: False
     - require:
       - git: {{ giturl }}
 
@@ -126,6 +142,7 @@ replace_domain_proxy:
     - name: {{ gitdest }}/proxy/proxy.config
     - pattern: '%DOMAIN%'
     - repl: {{ pillar.subdomain }}{{ pillar.domain }}
+    - backup: False
     - require:
       - git: {{ giturl }}
 
@@ -134,6 +151,7 @@ replace_protocol_w3f-angular:
     - name: {{ gitdest }}/js/w3f-angular-spreadsheets.js
     - pattern: '%PROTOCOL%'
     - repl: {{ pillar.protocol }}
+    - backup: False
     - require:
       - git: {{ giturl }}
 
@@ -142,5 +160,6 @@ replace_domain_w3f-angular:
     - name: {{ gitdest }}/js/w3f-angular-spreadsheets.js
     - pattern: '%DOMAIN%'
     - repl: {{ pillar.subdomain }}{{ pillar.domain }}
+    - backup: False
     - require:
       - git: {{ giturl }}
