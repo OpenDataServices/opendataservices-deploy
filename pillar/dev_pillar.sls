@@ -16,10 +16,10 @@ cove:
   uwsgi_as_limit: 1800
 automatic_reboot: 'true'
 extra_cove_branches: # [] # remove the [] (empty list) if you re-add some values below
-  - name: release-201604
-    uwsgi_port: 3032
   - name: release-201606
     uwsgi_port: 3038
+  - name: release-201607
+    uwsgi_port: 3039
 # Add a new branch with the name of the branch, and increment the port number.
 # Currently adding a new port number requires a manual uwsgi restart (ie. the
 # reload in highstate will fail, so you will need to ssh and run "service uwsgi
