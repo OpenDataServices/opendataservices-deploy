@@ -3,9 +3,9 @@ grantnav:
   allowedhosts: '.default.opendataservices.uk0.bigv.io'
   branches:
     - master
+    - iteration05
     - iteration03
     - iteration03-nobugfix
-    - 127-download-button
     - 166-publisher-pages
   dataselections:
     - all
