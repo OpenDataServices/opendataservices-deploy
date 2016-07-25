@@ -25,6 +25,9 @@ base:
 
   'grantnav-live':
     - grantnav
+
+  'involve':
+    - survey-tool-live
     - icinga2-satellite
 
   # STAGING
