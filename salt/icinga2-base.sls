@@ -34,3 +34,11 @@ icinga2:
     - watch_in:
       - service: icinga2
 {% endfor %}
+
+# bugfix: planio#5476
+{% if grains['osrelease'] == '16.04' %}
+/usr/lib/nagios/plugins/check_memory:
+  file.patch:
+    - source: salt://icinga/check_memory_new_free_output.patch
+    - hash: md5=d7f464052b3114f90948c0488df30b25
+{% endif %}

@@ -1,0 +1,38 @@
+--- check_memory.orig	2015-08-18 18:17:21.000000000 +0200
++++ check_memory	2015-11-29 15:14:07.493644046 +0100
+@@ -104,12 +104,23 @@
+   or $np->nagios_exit('CRITICAL', "Could not run $FREECMD");
+ 
+ warn("Output from $FREECMD:\n") if ($verbose > 1);
+-my ($used, $free);
++my $new_format = 0;
++my ($total, $used, $free);
+ while (<RESULT>) {
+   warn("  $_") if ($verbose > 1);
+-  next unless (m#^\-/\+\ buffers/cache:\s*(\d+)\s+(\d+)#);
+-  $used = $1;
+-  $free = $2;
++  # New `free` output from procps doesn't provide "buffers/cache" anymore, but
++  # provides a better estimate of available memory ("available" column).
++  $new_format = 1 if m{^\s+total\s+used\s+free\s+shared\s+buff/cache\s+available$};
++
++  if ($new_format and /^Mem:\s+(\d+)\s+\d+\s+\d+\s+\d+\s+\d+\s+(\d+)$/) {
++    $total = $1;
++    $free = $2; # available column
++    $used = $total - $free; # used is everything which is not available
++  } elsif (m#^\-/\+\ buffers/cache:\s*(\d+)\s+(\d+)#) {
++    $used = $1;
++    $free = $2;
++    $total = $used + $free;
++  }
+ }
+ 
+ close(RESULT);
+@@ -117,7 +128,6 @@
+ 
+ $np->nagios_exit('CRITICAL', "Unable to interpret $FREECMD output") if (!defined($free));
+ 
+-my $total = $used + $free;
+ if (defined($warning) && $warning =~ /^\d+%$/) {
+   if ($warning) {
+     $warning =~ s/%//;
