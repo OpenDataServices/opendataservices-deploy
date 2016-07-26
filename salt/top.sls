@@ -41,6 +41,7 @@ base:
   'dev3':
     - ocds-docs-dev
     - opendataservices-website
+    - temp
     - icinga2-satellite
 
   'cove-dev':
