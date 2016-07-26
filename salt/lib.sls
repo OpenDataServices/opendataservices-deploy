@@ -10,14 +10,46 @@
 # Therefore, most of our main salt formulas will begin by defining a user.
 {% macro createuser(user) %}
 
-{{ user }}-user-exists:
+{{ user }}_user_exists:
   user.present:
     - name: {{ user }}
     - home: /home/{{ user }}
     - order: 1
 
-{% endmacro %}
+{%if user+'_authorized_keys' in pillar %}
 
+# Install authorized SSH public keys.  Keys will be installed from both
+# pillar.<user>_authorized_keys and pillar.authorized_keys
+
+user_ssh_dir:
+  file.directory:
+    - name: /home/{{ user }}/.ssh
+    - user: {{ user }}
+    - group: users
+    - mode: 700
+    - require:
+      - user: {{ user }}_user_exists
+
+user_ssh_userkeys:
+  file.managed:
+    - name: /home/{{ user }}/.ssh/authorized_keys
+    - contents_pillar: {{ user }}_authorized_keys
+    - user: {{ user }}
+    - group: users
+    - mode: 644
+    - require:
+      - file: user_ssh_dir
+
+user_ssh_rootkeys:
+  file.append:
+    - name: /home/{{ user }}/.ssh/authorized_keys
+    - text: {{ salt['pillar.get']('authorized_keys') | yaml_encode }}
+    - require:
+      - file: user_ssh_userkeys
+
+{% endif %}
+
+{% endmacro %}
 
 
 

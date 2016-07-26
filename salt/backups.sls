@@ -3,6 +3,9 @@
 {% set user = 'automated' %}
 {{ createuser(user) }}
 
+{% set user = 'coop' %}
+{{ createuser(user) }}
+
 acl:
   pkg.installed
 
