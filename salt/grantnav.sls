@@ -153,6 +153,7 @@ subdomain: {{ dataselection }}.{{ branch }}
 
 {% set uwsgi_extracontext %}
 es_index: {{ es_index }}
+dataselection: {{ dataselection }}
 {% endset %}
 
 {{ uwsgi(user+'.ini',
