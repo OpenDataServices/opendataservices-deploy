@@ -50,6 +50,7 @@ base:
 
   'grantnav-dev':
     - grantnav
+    - djangodebug
     - icinga2-satellite
 
   # MONITORING
