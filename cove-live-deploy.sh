@@ -9,6 +9,7 @@ set -e
 salt-ssh --state-output=mixed 'cove-live' state.highstate  
 pushd ../cove
 git checkout live
+git pull
 source .ve/bin/activate
 pip install --upgrade -r requirements_dev.txt
 CUSTOM_SERVER_URL=http://cove.opendataservices.coop/ PREFIX_360=/360/ py.test fts
