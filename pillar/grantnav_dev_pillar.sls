@@ -7,6 +7,7 @@ grantnav:
     - iteration03
     - iteration03-nobugfix
     - 166-publisher-pages
+    - 207-search-specific-fields
   dataselections:
     - all
     - acceptable_license
