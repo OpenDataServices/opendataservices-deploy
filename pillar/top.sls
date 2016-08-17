@@ -16,12 +16,6 @@ base:
   '*dev*':
      - dev_pillar
      - private.dev_pillar
-  'grantnav-dev':
-     - grantnav_dev_pillar
-     - private.grantnav_dev_pillar
-  'grantnav-live':
-     - grantnav_live_pillar
-     - private.grantnav_live_pillar
   'mon*':
      - mon_pillar
      - private.mon_pillar
@@ -30,3 +24,18 @@ base:
   'involve':
      - involve_pillar
      - private.involve_pillar
+
+  'g-dev*':
+     - grantnav_dev_pillar
+     - private.grantnav_dev_pillar
+  'g-live*':
+     - grantnav_live_pillar
+     - private.grantnav_live_pillar
+
+# Remove these when ready:
+  'grantnav-dev':
+     - grantnav_dev_pillar
+     - private.grantnav_dev_pillar
+  'grantnav-live':
+     - grantnav_live_pillar
+     - private.grantnav_live_pillar

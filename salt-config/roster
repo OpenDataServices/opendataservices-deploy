@@ -1,4 +1,6 @@
 # This file defines the server names for use with the salt-ssh command
+
+# opendataservices boxes
 live2: live2.default.opendataservices.uk0.bigv.io
 cove-live: cove-live.default.opendataservices.uk0.bigv.io
 cove-dev: cove-dev.default.opendataservices.uk0.bigv.io
@@ -10,3 +12,8 @@ grantnav-dev: grantnav-dev.default.opendataservices.uk0.bigv.io
 grantnav-live: grantnav-live.default.opendataservices.uk0.bigv.io
 cove-live-ocds: cove-live-ocds.default.opendataservices.uk0.bigv.io
 involve: involve.default.opendataservices.uk0.bigv.io
+
+# threesixtygiving boxes
+g-dev:        grantnav-dev.default.threesixtygiving.uk0.bigv.io
+g-live-blue:  grantnav-blue.live.threesixtygiving.uk0.bigv.io
+g-live-green: grantnav-green.live.threesixtygiving.uk0.bigv.io
