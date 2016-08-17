@@ -26,6 +26,10 @@ base:
   'grantnav-live':
     - grantnav
 
+  'g-live*':
+    - grantnav
+    - icinga2-satellite
+
   'involve':
     - survey-tool-live
     - icinga2-satellite
@@ -52,6 +56,12 @@ base:
     - grantnav
     - djangodebug
     - icinga2-satellite
+
+  'g-dev*':
+    - grantnav
+    - djangodebug
+    - icinga2-satellite
+
 
   # MONITORING
 
