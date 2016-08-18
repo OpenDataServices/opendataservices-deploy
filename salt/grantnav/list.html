@@ -1,12 +1,15 @@
+{% for deploy in pillar.grantnav.deploys %}
+<h2>{{deploy}}</h2>
 {% for branch in pillar.grantnav.branches %}
 <h3>branch {{branch}}</h3>
 <ul>
 {% for dataselection in pillar.grantnav.dataselections %}
 <li>
-<a href="http://{{pillar.htpasswd_user}}:{{pillar.htpasswd_password}}@{{dataselection.replace('_', '-')}}.{{branch}}.{{grains.fqdn}}/">
+<a href="http://{{pillar.htpasswd_user}}:{{pillar.htpasswd_password}}@{{deploy}}.{{dataselection.replace('_', '-')}}.{{branch}}.{{grains.fqdn}}/">
 {{dataselection.replace('_', '-')}}
 </a>
 </li>
 {% endfor %}
 </ul>
+{% endfor %}
 {% endfor %}

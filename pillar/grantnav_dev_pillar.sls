@@ -1,16 +1,18 @@
 # grantnav development
 grantnav:
-  allowedhosts: '.default.opendataservices.uk0.bigv.io'
+  allowedhosts: '.default.threesixtygiving.uk0.bigv.io'
   branches:
     - master
-    - iteration05
-    - iteration03
-    - iteration03-nobugfix
+    - iteration06
   dataselections:
     - all
-    - acceptable_license
     - acceptable_license_valid
     - valid
-  suffix:
-    view: 'a'
-    dataload: 'b'
+  deploy_mode: matrix
+  deploys:
+    new:
+      datadate: '2016-08-16'
+    current:
+      datadate: '2016-08-16'
+    old:
+      datadate: '2016-08-16'

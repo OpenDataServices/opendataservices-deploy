@@ -1,8 +1,3 @@
-# Warning: This currently requires apache from trusty backports, run:
-# sudo aptitude install apache2/trusty-backports apache2-bin/trusty-backports apache2-data/trusty-backports
-# (This is because we now use unix sockets instead of port numbers to
-# communicate between apache and uwsgi).
-#
 # To reload this from scratch, do
 # rm -r /etc/apache2/sites-*/* /etc/uwsgi/apps-*/ /home/grantnav/grantnav* /tmp/*.sock /etc/apache2/htpasswd*
 # and then run highstate.
@@ -60,6 +55,17 @@ grantnav-deps:
       - watch_in:
         - service: apache2
         - service: uwsgi
+
+# Currently we require apache from trusty backports
+# (This is because we now use unix sockets instead of port numbers to
+# communicate between apache and uwsgi).
+grantnav-backports-deps:
+    pkg.installed:
+      - fromrepo: trusty-backports
+      - pkgs:
+        - apache2
+        - apache2-bin
+        - apache2-data
 
 set_lc_all:
   file.append:
@@ -131,6 +137,10 @@ collectstatic-{{djangodir}}:
 # If you cause a new uwsgi port to be used, uwsgi will need restarting manually
 # (See also dev_pillar.sls for the Cove equivalent).
 
+{% if pillar.grantnav.deploy_mode == 'matrix' %}
+
+
+
 {% for branch in pillar.grantnav.branches %}
 {% set djangodir='/home/'+user+'/grantnav-'+branch+'/' %}
 {{ grantnav_files(
@@ -139,12 +149,14 @@ collectstatic-{{djangodir}}:
     djangodir=djangodir,
     user=user) }}
 
+{% for deploy, deploy_info in pillar.grantnav.deploys.items() %}
 {% for dataselection in pillar.grantnav.dataselections %}
-{% set deployment_name = 'grantnav_' + dataselection + '_' + branch %}
-{% set es_index = deployment_name + '_' + pillar.grantnav.suffix.view %}
+{% set deployment_base_name = 'grantnav_' + dataselection + '_' + branch %}
+{% set es_index = deployment_base_name + '_' + deploy_info.datadate %}
+{% set deployment_name = deployment_base_name + '_' + deploy %}
 {% set apache_extracontext %}
-djangodir: {{ djangodir }}
-subdomain: {{ dataselection }}.{{ branch }}
+djangodir: '{{ djangodir }}'
+subdomain: '{{ deploy }}.{{ dataselection }}.{{ branch }}'
 {% endset %}
 
 {{ apache(user+'.conf',
@@ -153,8 +165,9 @@ subdomain: {{ dataselection }}.{{ branch }}
     extracontext=apache_extracontext) }}
 
 {% set uwsgi_extracontext %}
-es_index: {{ es_index }}
-dataselection: {{ dataselection }}
+es_index: '{{ es_index }}'
+dataselection: '{{ dataselection }}'
+datadate: '{{ deploy_info.datadate }}'
 {% endset %}
 
 {{ uwsgi(user+'.ini',
@@ -164,6 +177,16 @@ dataselection: {{ dataselection }}
     extracontext=uwsgi_extracontext) }}
 {% endfor %}
 {% endfor %}
+{% endfor %}
+
+
+
+{% else %}
+
+
+
+
+{% endif %}
 
 #{% for subdomain, htpasswd in pillar.htpasswd_by_subdomain.items() %}
 #/etc/apache2/htpasswd-{{ subdomain }}:
