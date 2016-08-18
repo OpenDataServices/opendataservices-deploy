@@ -181,9 +181,62 @@ datadate: '{{ deploy_info.datadate }}'
 
 
 
+{{ apache('grantnav_list.conf') }}
+
+/home/grantnav/list/index.html:
+  file.managed:
+    - source: salt://grantnav/list.html
+    - template: jinja
+    - makedirs: True
+
+
 {% else %}
 
 
+{% set branches = [] %}
+
+{% for deploy, deploy_info in pillar.grantnav.deploys.items() %}
+{% set branch = deploy_info.branch %}
+{% set djangodir='/home/'+user+'/grantnav-'+branch+'/' %}
+
+{% if not branch in branches %}
+{% do branches.append(branch) %}
+{% endif %}
+
+{% set deployment_base_name = 'grantnav' %}
+{% set es_index = deployment_base_name + '_' + deploy_info.datadate %}
+{% set deployment_name = deployment_base_name + '_' + deploy %}
+{% set apache_extracontext %}
+djangodir: '{{ djangodir }}'
+subdomain: '{{ deploy }}'
+{% endset %}
+
+{{ apache(user+'.conf',
+    name=deployment_name+'.conf',
+    socket_name=deployment_name,
+    extracontext=apache_extracontext) }}
+
+{% set uwsgi_extracontext %}
+es_index: '{{ es_index }}'
+dataselection: '{{ deploy_info.dataselection }}'
+datadate: '{{ deploy_info.datadate }}'
+{% endset %}
+
+{{ uwsgi(user+'.ini',
+    name=deployment_name+'.ini',
+    socket_name=deployment_name,
+    djangodir=djangodir,
+    extracontext=uwsgi_extracontext) }}
+{% endfor %}
+
+{% for branch in branches %}
+{% set djangodir='/home/'+user+'/grantnav-'+branch+'/' %}
+{{ grantnav_files(
+    giturl=giturl,
+    branch=branch,
+    djangodir=djangodir,
+    user=user) }}
+{% endfor %}
 
 
 {% endif %}
@@ -212,10 +265,3 @@ datadate: '{{ deploy_info.datadate }}'
 {{ apache('grantnav_default.conf',
     name='000-default.conf') }}
 
-{{ apache('grantnav_list.conf') }}
-
-/home/grantnav/list/index.html:
-  file.managed:
-    - source: salt://grantnav/list.html
-    - template: jinja
-    - makedirs: True

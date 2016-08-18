@@ -1,6 +1,6 @@
 # grantnav live
 grantnav:
-  allowedhosts: '.default.threesixtygiving.uk0.bigv.io'
+  allowedhosts: '.live.threesixtygiving.uk0.bigv.io'
   deploy_mode: list
   deploys:
     new:
