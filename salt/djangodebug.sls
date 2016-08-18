@@ -9,4 +9,7 @@ apache_mods:
       - watch_in:
         - service: apache2
 
+python3-dev:
+  pkg.installed
+
 {{ apache(user+'.conf') }}

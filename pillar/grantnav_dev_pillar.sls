@@ -6,10 +6,11 @@ grantnav:
     - iteration05
     - iteration03
     - iteration03-nobugfix
-    - 166-publisher-pages
-    - 207-search-specific-fields
   dataselections:
     - all
     - acceptable_license
     - acceptable_license_valid
     - valid
+  suffix:
+    view: 'a'
+    dataload: 'b'

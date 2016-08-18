@@ -140,15 +140,16 @@ collectstatic-{{djangodir}}:
     user=user) }}
 
 {% for dataselection in pillar.grantnav.dataselections %}
-{% set es_index = 'grantnav_' + dataselection + '_' + branch %}
+{% set deployment_name = 'grantnav_' + dataselection + '_' + branch %}
+{% set es_index = deployment_name + '_' + pillar.grantnav.suffix.view %}
 {% set apache_extracontext %}
 djangodir: {{ djangodir }}
 subdomain: {{ dataselection }}.{{ branch }}
 {% endset %}
 
 {{ apache(user+'.conf',
-    name=es_index+'.conf',
-    socket_name=es_index,
+    name=deployment_name+'.conf',
+    socket_name=deployment_name,
     extracontext=apache_extracontext) }}
 
 {% set uwsgi_extracontext %}
@@ -157,8 +158,8 @@ dataselection: {{ dataselection }}
 {% endset %}
 
 {{ uwsgi(user+'.ini',
-    name=es_index+'.ini',
-    socket_name=es_index,
+    name=deployment_name+'.ini',
+    socket_name=deployment_name,
     djangodir=djangodir,
     extracontext=uwsgi_extracontext) }}
 {% endfor %}
