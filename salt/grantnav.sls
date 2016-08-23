@@ -52,6 +52,8 @@ grantnav-deps:
         - python-virtualenv
         - uwsgi-plugin-python3
         - gettext
+        - zlib1g-dev
+        - libjpeg8-dev
       - watch_in:
         - service: apache2
         - service: uwsgi
