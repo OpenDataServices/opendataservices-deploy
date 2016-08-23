@@ -11,11 +11,11 @@ include:
 # Download Piwik from the git repository but pick a tag for a stable release
 https://github.com/piwik/piwik.git:
   git.latest:
-    - rev: 2.16.1
+    - rev: 2.16.2
     - target: /var/www/html/piwik/
     - submodules: True
 # Upstream piwik routinely rewrites history in their git repo, so we'll set
-# this permanantly
+# this permanently
     - force_fetch: True
 
 php5-cli:
