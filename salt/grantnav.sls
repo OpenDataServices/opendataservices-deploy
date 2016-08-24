@@ -52,8 +52,6 @@ grantnav-deps:
         - python-virtualenv
         - uwsgi-plugin-python3
         - gettext
-        - zlib1g-dev
-        - libjpeg8-dev
       - watch_in:
         - service: apache2
         - service: uwsgi
@@ -93,6 +91,19 @@ set_lc_all:
     - watch_in:
       - service: uwsgi
 
+# Install the latest version of pip first
+{{ djangodir }}.ve/-pip:
+  virtualenv.managed:
+    - name: {{ djangodir }}.ve/
+    - python: /usr/bin/python3
+    - user: {{ user }}
+    - system_site_packages: False
+    - pip_pkgs: pip==8.1.2
+    - require:
+      - pkg: grantnav-deps
+      - git: {{ giturl }}{{ djangodir }}
+
+# Then install the rest of our requirements
 {{ djangodir }}.ve/:
   virtualenv.managed:
     - python: /usr/bin/python3
@@ -100,8 +111,7 @@ set_lc_all:
     - system_site_packages: False
     - requirements: {{ djangodir }}requirements.txt
     - require:
-      - pkg: grantnav-deps
-      - git: {{ giturl }}{{ djangodir }}
+      - virtualenv: {{ djangodir }}.ve/-pip
       - file: set_lc_all # required to avoid unicode errors for the "schema" library
     - watch_in:
       - service: apache2

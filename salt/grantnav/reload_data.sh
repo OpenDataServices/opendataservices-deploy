@@ -14,7 +14,8 @@ cd ~/grantnav-{{ branch }}/
 source .ve/bin/activate
 cd ~/data_{{ suffix }}/json_{{ dataselection }}
 mkdir -p ~/dataload_logs
-ES_INDEX={{ es_index }} python -u ~/grantnav-{{ branch }}/dataload/import_to_elasticsearch.py --clean * &> ~/dataload_logs/{{ dataselection }}_{{ branch }}_{{ suffix }}.log
+{% set logfile = '/home/grantnav/dataload_logs/{{ dataselection }}_{{ branch }}_{{ suffix }}.log' %}
+ES_INDEX={{ es_index }} python -u ~/grantnav-{{ branch }}/dataload/import_to_elasticsearch.py --clean * &> {{ logfile }} || echo "Data loading failed for branch {{ branch }} with dataselection {{ dataselection }}, see {{ logfile }} for more information."
 deactivate
 {% endmacro %}
 
