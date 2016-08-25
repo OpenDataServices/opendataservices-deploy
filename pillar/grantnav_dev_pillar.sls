@@ -13,6 +13,6 @@ grantnav:
     new:
       datadate: '2016-08-22'
     current:
-      datadate: '2016-08-16'
+      datadate: '2016-08-22'
     old:
       datadate: '2016-08-16'
