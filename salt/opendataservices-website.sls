@@ -20,6 +20,7 @@ git@opendataservices.plan.io:standardsupport-co-op.website.git:
     - target: /home/{{ user }}/website/
     - user: {{ user }}
     - submodules: True
+    - force_reset: True
     - require:
       - pkg: git
       - ssh_known_hosts: {{ user }}-opendataservices.plan.io
