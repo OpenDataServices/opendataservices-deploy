@@ -16,3 +16,6 @@ grantnav:
       datadate: '2016-08-22'
     old:
       datadate: '2016-08-16'
+  piwik:
+    url: '//mon.opendataservices.coop/piwik/'
+    site_id: '6'

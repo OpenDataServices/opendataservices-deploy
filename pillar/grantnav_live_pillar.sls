@@ -5,7 +5,7 @@ grantnav:
   deploys:
     new:
       datadate: '2016-08-31'
-      branch: 'iteration07'
+      branch: 'iteration07.1'
       dataselection: acceptable_license_valid
     current:
       datadate: '2016-08-22'
@@ -15,3 +15,6 @@ grantnav:
       datadate: '2016-08-16'
       branch: 'iteration06'
       dataselection: acceptable_license_valid
+  piwik:
+    url: '//mon.opendataservices.coop/piwik/'
+    site_id: '9'
