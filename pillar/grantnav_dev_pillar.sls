@@ -11,7 +11,7 @@ grantnav:
   deploy_mode: matrix
   deploys:
     new:
-      datadate: '2016-08-22'
+      datadate: '2016-08-31'
     current:
       datadate: '2016-08-22'
     old:
