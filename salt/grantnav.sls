@@ -260,19 +260,22 @@ datadate: '{{ deploy_info.datadate }}'
 #    - makedirs: True
 #{% endfor %}
 
-/root/reload_data.sh:
-  file.managed:
-    - contents:
-      - '#!/bin/bash'
-      - set -i
-      - su grantnav -c /home/grantnav/reload_data.sh
-    - mode: 755
-
-/home/grantnav/reload_data.sh:
+{% for deploy in pillar.grantnav.deploys %}
+/home/grantnav/reload_{{ deploy }}_data.sh:
   file.managed:
     - source: salt://grantnav/reload_data.sh
     - template: jinja
     - mode: 755
+    - deploy: {{ deploy }}
+
+/root/reload_{{ deploy }}_data.sh:
+  file.managed:
+    - contents:
+      - '#!/bin/bash'
+      - set -i
+      - su grantnav -c /home/grantnav/reload_{{ deploy }}_data.sh
+    - mode: 755
+{% endfor %}
 
 {{ apache('grantnav_default.conf',
     name='000-default.conf') }}
