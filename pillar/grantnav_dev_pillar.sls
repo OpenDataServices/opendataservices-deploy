@@ -13,7 +13,7 @@ grantnav:
     new:
       datadate: '2016-08-31'
     current:
-      datadate: '2016-08-22'
+      datadate: '2016-08-31'
     old:
       datadate: '2016-08-16'
   piwik:
