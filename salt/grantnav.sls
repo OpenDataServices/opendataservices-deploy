@@ -92,6 +92,7 @@ set_lc_all:
       - service: uwsgi
 
 # Install the latest version of pip first
+# This is necessary to download linux wheels, which avoids building C code
 {{ djangodir }}.ve/-pip:
   virtualenv.managed:
     - name: {{ djangodir }}.ve/
