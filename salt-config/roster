@@ -8,8 +8,6 @@ mon-2: mon-2.default.opendataservices.uk0.bigv.io
 snapshotter: snapshotter.default.opendataservices.uk0.bigv.io
 backups: backups.backups.opendataservices.uk0.bigv.io
 dev3: dev3.default.opendataservices.uk0.bigv.io
-grantnav-dev: grantnav-dev.default.opendataservices.uk0.bigv.io
-grantnav-live: grantnav-live.default.opendataservices.uk0.bigv.io
 cove-live-ocds: cove-live-ocds.default.opendataservices.uk0.bigv.io
 involve: involve.default.opendataservices.uk0.bigv.io
 
