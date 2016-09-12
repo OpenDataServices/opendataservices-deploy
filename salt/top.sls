@@ -23,9 +23,6 @@ base:
     - cove
     - icinga2-satellite
 
-  'grantnav-live':
-    - grantnav
-
   'g-live*':
     - grantnav
     - icinga2-satellite
@@ -53,14 +50,12 @@ base:
     - cove
     - icinga2-satellite
 
-  'grantnav-dev':
+  'g-dev*':
     - grantnav
     - djangodebug
     - icinga2-satellite
 
-  'g-dev*':
-    - grantnav
-    - djangodebug
+  'lne-dev':
     - icinga2-satellite
 
 

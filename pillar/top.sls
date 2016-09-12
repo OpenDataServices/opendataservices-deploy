@@ -31,11 +31,3 @@ base:
   'g-live*':
      - grantnav_live_pillar
      - private.grantnav_live_pillar
-
-# Remove these when ready:
-  'grantnav-dev':
-     - grantnav_dev_pillar
-     - private.grantnav_dev_pillar
-  'grantnav-live':
-     - grantnav_live_pillar
-     - private.grantnav_live_pillar
