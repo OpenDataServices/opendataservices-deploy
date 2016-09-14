@@ -11,6 +11,7 @@ dev3: dev3.default.opendataservices.uk0.bigv.io
 cove-live-ocds: cove-live-ocds.default.opendataservices.uk0.bigv.io
 involve: involve.default.opendataservices.uk0.bigv.io
 lne-dev: lne-dev.default.opendataservices.uk0.bigv.io
+lne-tmp: lne-tmp.default.opendataservices.uk0.bigv.io
 
 # threesixtygiving boxes
 g-dev:        grantnav-dev.default.threesixtygiving.uk0.bigv.io
