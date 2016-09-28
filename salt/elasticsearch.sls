@@ -25,3 +25,7 @@ elasticsearch-base:
     - text: |
         network.host: 127.0.0.1
         discovery.zen.ping.multicast.enabled: false
+
+/etc/default/elasticsearch:
+  file.managed:
+    - source: salt://etc-default/elasticsearch

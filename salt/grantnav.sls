@@ -233,6 +233,7 @@ subdomain: '{{ deploy }}'
 es_index: '{{ es_index }}'
 dataselection: '{{ deploy_info.dataselection }}'
 datadate: '{{ deploy_info.datadate }}'
+subdomain: '{{ deploy }}'
 {% endset %}
 
 {{ uwsgi(user+'.ini',
@@ -281,3 +282,7 @@ datadate: '{{ deploy_info.datadate }}'
 {{ apache('grantnav_default.conf',
     name='000-default.conf') }}
 
+
+/etc/apache2/mods-available/mpm_event.conf:
+  file.managed:
+    - source: salt://apache/grantnav_mpm_event.conf
