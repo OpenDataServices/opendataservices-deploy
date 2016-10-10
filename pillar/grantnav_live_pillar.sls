@@ -4,8 +4,8 @@ grantnav:
   deploy_mode: list
   deploys:
     new:
-      datadate: '2016-09-14.1_biglottery_nominet_removed'
-      branch: 'iteration07.2'
+      datadate: '2016-10-07'
+      branch: 'iteration07.3'
       dataselection: acceptable_license_valid
     current:
       datadate: '2016-09-14.1_biglottery_nominet_removed'
