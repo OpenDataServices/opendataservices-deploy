@@ -55,9 +55,6 @@ base:
     - djangodebug
     - icinga2-satellite
 
-  'lne-dev':
-    - icinga2-satellite
-
 
   # MONITORING
 
