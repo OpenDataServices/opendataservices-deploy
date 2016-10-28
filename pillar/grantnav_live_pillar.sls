@@ -8,12 +8,12 @@ grantnav:
       branch: 'iteration07.3'
       dataselection: acceptable_license_valid
     current:
-      datadate: '2016-10-07'
+      datadate: '2016-10-25'
       branch: 'iteration07.3'
       dataselection: acceptable_license_valid
     old:
-      datadate: '2016-09-14.1_biglottery_nominet_removed'
-      branch: 'iteration07.2'
+      datadate: '2016-10-07'
+      branch: 'iteration07.3'
       dataselection: acceptable_license_valid
   piwik:
     url: '//mon.opendataservices.coop/piwik/'
