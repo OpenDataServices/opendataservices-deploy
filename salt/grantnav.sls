@@ -18,6 +18,7 @@ include:
   # don't use it anywhere else, so I'm sticking with Apache for increased
   # consistency across our servers.
   - apache-proxy
+  - uwsgi
 
 /etc/elasticsearch/elasticsearch.yml:
   file.append:
@@ -25,16 +26,6 @@ include:
         cluster.name: {{ grains.host }}
     - require:
       - pkg: elasticsearch-base
-
-uwsgi:
-  # Ensure that uwsgi is installed
-  pkg:
-    - installed
-  # Ensure uwsgi running, and reload if any of the conf files change
-  service:
-    - running
-    - enable: True
-    - reload: True
 
 unzip:
   pkg:
