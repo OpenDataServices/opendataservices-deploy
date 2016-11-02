@@ -15,9 +15,23 @@ useful-shell-commands:
       - tmux
 
 ## Security
+
 # Install fail2ban
 fail2ban:
-  pkg.installed
+  pkg.installed:
+    - pkgs:
+      - fail2ban
+      - mailutils
+  service:
+    - running
+    - enable: True
+    - reload: True
+
+# Additional fail2ban config: setup email alerts when bans are triggered
+# (enabled only if the jail has an appropriate action: uwsgi does, but ssh doesn't)
+/etc/fail2ban/action.d/mail-whois.local:
+  file.managed:
+    - source: salt://fail2ban/action.d/mail-whois.local
 
 # Disable SSH password login (use keys instead)
 /etc/ssh/sshd_config:
@@ -58,7 +72,7 @@ unattended-upgrades:
 
 {% if grains['lsb_distrib_release']=='14.04' %}
 # Special config for 14.04 because it uses grub legacy, which doesn't install
-# the new kernel using unatteneded upgades out of the box.
+# the new kernel using unattended upgrades out of the box.
 
 debconf-utils:
   pkg.installed
