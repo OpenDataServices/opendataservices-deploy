@@ -31,3 +31,7 @@ base:
   'g-live*':
      - grantnav_live_pillar
      - private.grantnav_live_pillar
+
+  'tmp2':
+     - dev_pillar
+     - private.dev_pillar

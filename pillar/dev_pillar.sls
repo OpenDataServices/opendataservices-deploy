@@ -1,5 +1,7 @@
 # Values used only on the dev servers
 default_branch: 'master'
+# URL that OCDS /validator proxies to
+ocds_cove_backend: http://cove.cove-dev.default.opendataservices.uk0.bigv.io
 domain_prefix: 'dev.'
 banner_message: 'This is a development site with experimental features. Do not rely on it.'
 cove:
@@ -10,6 +12,7 @@ cove:
   ocds_redirect: False
   larger_uwsgi_limits: True
   uwsgi_as_limit: 1800
+cove_url: http://cove.cove-live-ocds.default.opendataservices.uk0.bigv.io/
 automatic_reboot: 'true'
 extra_cove_branches: # [] # remove the [] (empty list) if you re-add some values below
   - name: release-201606

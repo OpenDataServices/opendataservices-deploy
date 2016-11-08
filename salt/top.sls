@@ -39,6 +39,14 @@ base:
 
   # DEVELOPMENT
 
+  'tmp2':
+    - ocds-docs-live
+    - ocds-legacy
+    - threesixtygiving_data
+    - opendataservices-website
+    - icinga2-satellite
+
+
   'dev3':
     - ocds-docs-dev
     - opendataservices-website
