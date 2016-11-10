@@ -29,6 +29,11 @@ cove-deps:
         - service: apache2
         - service: uwsgi
 
+remoteip:
+    apache_module.enable:
+      - watch_in:
+        - service: apache2
+
 set_lc_all:
   file.append:
     - text: 'LC_ALL="en_GB.UTF-8"'
