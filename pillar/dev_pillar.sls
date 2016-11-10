@@ -28,4 +28,5 @@ extra_cove_branches: # [] # remove the [] (empty list) if you re-add some values
 # $ rm /etc/uwsgi/apps-enabled/cove-*.ini
 # $ rm /etc/apache2/sites-available/cove-*.conf
 # $ rm /etc/apache2/sites-enabled/cove-*.conf
+# $ rm /etc/fail2ban/jail.d/uwsgi-cove-*.conf
 # $ killall uwsgi
