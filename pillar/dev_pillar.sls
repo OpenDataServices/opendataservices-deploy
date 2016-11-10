@@ -15,8 +15,6 @@ cove:
 cove_url: http://cove.cove-live-ocds.default.opendataservices.uk0.bigv.io/
 automatic_reboot: 'true'
 extra_cove_branches: # [] # remove the [] (empty list) if you re-add some values below
-  - name: release-201606
-    uwsgi_port: 3038
   - name: release-201607
     uwsgi_port: 3039
 # Add a new branch with the name of the branch, and increment the port number.
