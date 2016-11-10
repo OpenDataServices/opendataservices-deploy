@@ -1,0 +1,16 @@
+[Definition]
+
+actionstart = 
+actionstop = 
+actioncheck = 
+actionban = printf %%b "Hello Lifeforms,\n
+            The IP <ip> has had
+            <failures> errors accessing <name>.\n\n
+            Here is more information about <ip>:\n
+            `whois <ip>`\n
+            Regards,\n
+            Fail2Ban"|mail -s "[Fail2Ban] <name>: alert from `uname -n` regarding <ip>" <dest>
+actionunban = 
+
+[Init]
+dest = security@opendataservices.coop
