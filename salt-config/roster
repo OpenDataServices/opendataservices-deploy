@@ -13,6 +13,6 @@ cove-live-ocds: cove-live-ocds.default.opendataservices.uk0.bigv.io
 involve: involve.default.opendataservices.uk0.bigv.io
 
 # threesixtygiving boxes
-g-dev:        grantnav-dev.default.threesixtygiving.uk0.bigv.io
-g-live-blue:  grantnav-blue.live.threesixtygiving.uk0.bigv.io
-g-live-green: grantnav-green.live.threesixtygiving.uk0.bigv.io
+grantnav-dev:        grantnav-dev.default.threesixtygiving.uk0.bigv.io
+grantnav-live-blue:  grantnav-blue.live.threesixtygiving.uk0.bigv.io
+grantnav-live-green: grantnav-green.live.threesixtygiving.uk0.bigv.io
