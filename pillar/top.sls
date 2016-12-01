@@ -25,10 +25,10 @@ base:
      - involve_pillar
      - private.involve_pillar
 
-  'g-dev*':
+  'grantnav-dev*':
      - grantnav_dev_pillar
      - private.grantnav_dev_pillar
-  'g-live*':
+  'grantnav-live*':
      - grantnav_live_pillar
      - private.grantnav_live_pillar
 
