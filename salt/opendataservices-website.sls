@@ -6,12 +6,12 @@
 include:
   - core
   - apache
+  - certbot
 
 # Create a user for this piece of work, see lib.sls for more info
 {% set user = 'opendataservices' %}
 {{ createuser(user) }}
 {{ planio_keys(user) }}
-
 
 # Download the repository (all static HTML)
 git@opendataservices.plan.io:standardsupport-co-op.website.git:
@@ -19,12 +19,15 @@ git@opendataservices.plan.io:standardsupport-co-op.website.git:
     - rev: {{ pillar.default_branch }}
     - target: /home/{{ user }}/website/
     - user: {{ user }}
-    - submodules: True
-    - force_reset: True
+    - submodules: False
+    - force_reset: False
     - require:
       - pkg: git
       - ssh_known_hosts: {{ user }}-opendataservices.plan.io
 
 # Set up the Apache config using macro
-{{ apache('opendataservices-website.conf') }}
-
+{% set servername = pillar.domain_prefix+'opendataservices.coop' %}
+{{ apache('opendataservices-website.conf',
+          servername = servername,
+          serveraliases = [ 'www.'+servername ],
+          https='yes') }}

@@ -1,5 +1,6 @@
 include:
   - apache-proxy
+  - certbot
 
 {% from 'lib.sls' import createuser %}
 {% set user = 'ocds-docs' %}

@@ -14,4 +14,9 @@ include:
   - ocds-docs-common
 
 {% from 'lib.sls' import apache %}
-{{ apache('ocds-docs-dev.conf') }}
+
+{% set servername = 'standard.open-contracting.org' %}
+{{ apache('ocds-docs-dev.conf',
+          servername = 'ocds-standard.'+grains.fqdn,
+          serveraliases = [ '*.standard.open-contracting.org' ],
+          https='no') }}

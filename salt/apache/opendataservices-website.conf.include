@@ -1,0 +1,22 @@
+# vi: ft=apache
+
+        {{ banner }}
+
+        {% set documentroot = '/home/opendataservices/website/_site/' %}
+        DocumentRoot {{ documentroot }}
+        DirectoryIndex index.html
+
+        <Directory {{ documentroot }}>
+            {% if 'htpasswd' in pillar %}
+            AuthType Basic
+            AuthName "Authentication Required"
+            AuthUserFile "/etc/apache2/htpasswd"
+            Require valid-user
+            {% else %}
+            Require all granted
+            {% endif %}
+
+            Options Indexes FollowSymLinks
+            RedirectMatch 404 .git
+        </Directory>
+

@@ -42,9 +42,13 @@ uwsgi_port: {{ uwsgi_port }}
 branch: {{ branch }}
 {% endset %}
 
+{% set servername = pillar.domain_prefix+'org.prefix.codes' %}
 {{ apache(user+'.conf',
     name=name+'.conf',
-    extracontext=extracontext) }}
+    extracontext=extracontext,
+    servername = servername,
+    serveraliases = [ 'www.'+servername ],
+    https='yes') }}
 
 {{ uwsgi(user+'.ini',
     name=name+'.ini',

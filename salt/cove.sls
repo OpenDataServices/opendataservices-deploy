@@ -42,6 +42,14 @@ set_lc_all:
 
 {% macro cove(name, giturl, branch, djangodir, user, uwsgi_port) %}
 
+{% set mydomain = 'cove.opendataservices.coop' %}
+{% if branch == pillar.default_branch %}
+  {% set servername = pillar.domain_prefix+mydomain %}
+{% else %}
+  {% set servername = branch+'.'+pillar.domain_prefix+mydomain %}
+{% endif %}
+{% set serveraliases = [ 'cove.*.default.opendataservices.uk0.bigv.io', '*.standard.open-contracting.org', 'standard.open-contracting.org' ] %}
+
 {% set extracontext %}
 djangodir: {{ djangodir }}
 uwsgi_port: {{ uwsgi_port }}
@@ -50,7 +58,10 @@ branch: {{ branch }}
 
 {{ apache(user+'.conf',
     name=name+'.conf',
-    extracontext=extracontext) }}
+    extracontext=extracontext,
+    servername=servername,
+    serveraliases=serveraliases,
+    https='no') }}
 
 {{ uwsgi(user+'.ini',
     name=name+'.ini',

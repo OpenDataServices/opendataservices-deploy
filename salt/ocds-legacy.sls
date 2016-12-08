@@ -4,7 +4,6 @@
 #
 {% from 'lib.sls' import createuser, apache %}
 
-
 {% set user = 'opencontracting' %}
 {{ createuser(user) }}
 
@@ -20,4 +19,7 @@
     - watch_in:
       - service: apache2
 
-{{ apache('ocds-legacy.conf') }}
+{{ apache('ocds-legacy.conf',
+          servername='ocds.open-contracting.org',
+          serveraliases=[ pillar.domain_prefix+'ocds.opendataservices.coop' ],
+          https='no') }}

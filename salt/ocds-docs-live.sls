@@ -32,7 +32,11 @@ include:
   - ocds-docs-common
 
 {% from 'lib.sls' import apache %}
-{{ apache('ocds-docs-live.conf') }}
+
+{{ apache( 'ocds-docs-live.conf',
+           servername = 'standard.open-contracting.org',
+           serveraliases = [ 'ocds-standard.'+grains.fqdn, '*.standard.open-contracting.org' ],
+           https='no') }}
 
 https://github.com/open-contracting/standard-legacy-staticsites.git:
   git.latest:

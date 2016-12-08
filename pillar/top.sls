@@ -36,7 +36,7 @@ base:
      - private.grantnav_live_pillar
 
   'tmp2':
-     - dev_pillar
+     - tmp_pillar
      - private.dev_pillar
 
 

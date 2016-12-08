@@ -12,7 +12,11 @@ include:
 
 # Apache and PHP setup
 
-{{ apache('survey-tool.conf') }}
+{% set servername=pillar.subdomain+pillar.domain %}
+{{ apache('survey-tool.conf',
+          servername = servername,
+          serveraliases = [ 'www.'+servername ],
+          https='no') }}
 
 # Don't use php.sls, it explicitly uses php5 and we're on 16.04 php7 here :p
 php:
