@@ -172,6 +172,7 @@ subdomain: '{{ deploy }}.{{ dataselection }}.{{ branch }}'
 es_index: '{{ es_index }}'
 dataselection: '{{ dataselection }}'
 datadate: '{{ deploy_info.datadate }}'
+subdomain: '{{ deploy }}.{{ dataselection }}.{{ branch }}'
 {% endset %}
 
 {{ uwsgi(user+'.ini',
@@ -265,7 +266,7 @@ subdomain: '{{ deploy }}'
   file.managed:
     - contents:
       - '#!/bin/bash'
-      - set -i
+      - set -e
       - su grantnav -c /home/grantnav/reload_{{ deploy }}_data.sh
     - mode: 755
 {% endfor %}

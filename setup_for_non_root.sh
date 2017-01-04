@@ -8,6 +8,7 @@ ln -s ~/.ssh/id_rsa.pub $SSH_KEY_DIR/salt-ssh.rsa.pub
 mkdir salt-config/master.d
 pwd=`pwd`
 echo "cachedir: $pwd/cache/
-log_file: $pwd/log/
+log_file: $pwd/log
+ssh_log_file: $pwd/ssh_log
 pki_dir: $pwd/salt-config/pki/
 user: $USER" > salt-config/master.d/localuser.conf

@@ -29,3 +29,4 @@ elasticsearch-base:
 /etc/default/elasticsearch:
   file.managed:
     - source: salt://etc-default/elasticsearch
+    - template: jinja
