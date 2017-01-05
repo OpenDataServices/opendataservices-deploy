@@ -25,23 +25,11 @@ base:
      - involve_pillar
      - private.involve_pillar
 
-  'grantnav-dev':
+  'grantnav-dev*':
      - grantnav_dev_pillar
      - private.grantnav_dev_pillar
 
-  'grantnav-live-green':
-     - common_pillar
-     - private.common_pillar
-     - live_pillar
-     - private.live_pillar
-     - grantnav_live_pillar
-     - private.grantnav_live_pillar
-
-  'grantnav-live-blue':
-     - common_pillar
-     - private.common_pillar
-     - live_pillar
-     - private.live_pillar
+  'grantnav-live*':
      - grantnav_live_pillar
      - private.grantnav_live_pillar
 

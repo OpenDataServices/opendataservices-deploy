@@ -4,7 +4,7 @@ grantnav:
   server_size: small
   branches:
     - master
-    - update-pillow
+    - iteration07.5
   dataselections:
     - all
     - acceptable_license_valid
