@@ -6,6 +6,7 @@ tmp2: tmp2.default.opendataservices.uk0.bigv.io
 cove-live: cove-live.default.opendataservices.uk0.bigv.io
 cove-dev: cove-dev.default.opendataservices.uk0.bigv.io
 mon-2: mon-2.default.opendataservices.uk0.bigv.io
+mon-3: mon-3.default.opendataservices.uk0.bigv.io
 snapshotter: snapshotter.default.opendataservices.uk0.bigv.io
 backups: backups.backups.opendataservices.uk0.bigv.io
 dev3: dev3.default.opendataservices.uk0.bigv.io
