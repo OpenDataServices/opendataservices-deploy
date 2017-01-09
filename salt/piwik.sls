@@ -8,6 +8,7 @@ include:
   - apache
   - php
 
+
 # Download Piwik from the git repository but pick a tag for a stable release
 https://github.com/piwik/piwik.git:
   git.latest:
@@ -18,28 +19,43 @@ https://github.com/piwik/piwik.git:
 # this permanently
     - force_fetch: True
 
-php5-cli:
+
+# PHP deps
+
+{% if grains['lsb_distrib_release']=='14.04' %}
+  {% set phpver='5' %}
+{% else %}
+  {% set phpver='7.0' %}
+{% endif %}
+
+php{{ phpver }}-cli:
   pkg.installed
 
-php5-mysql:
+php{{ phpver }}-mysql:
   pkg.installed:
     - watch_in:
       - service: apache2
 
-php5-gd:
+php{{ phpver }}-gd:
   pkg.installed:
     - watch_in:
       - service: apache2
+
 
 # Install composer (PHP package manager),
 # see http://docs.saltstack.com/en/latest/ref/states/all/salt.states.composer.html
+
+curl:
+  pkg.installed
+
 get-composer:
   cmd.run:
-    - name: 'CURL=`which curl`; $CURL -sS https://getcomposer.org/installer | php'
+    - name: 'curl -s -S https://getcomposer.org/installer | php'
     - unless: test -f /usr/local/bin/composer
     - cwd: /root/
     - require:
-      - pkg: php5-cli
+      - pkg: php{{ phpver }}-cli
+      - pkg: curl
 
 install-composer:
   cmd.wait:
