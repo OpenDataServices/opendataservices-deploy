@@ -54,7 +54,7 @@ base:
     - org-ids
     - icinga2-satellite
 
-  'cove-dev':
+  'cove*dev':
     - cove
     - icinga2-satellite
 
