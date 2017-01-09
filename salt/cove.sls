@@ -115,6 +115,7 @@ collectstatic-{{name}}:
 
 {{ djangodir }}static/:
   file.directory:
+    - user: {{ user }}
     - file_mode: 644
     - dir_mode: 755
     - recurse:
