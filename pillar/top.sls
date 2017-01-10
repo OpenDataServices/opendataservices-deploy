@@ -24,6 +24,8 @@ base:
   'involve':
      - involve_pillar
      - private.involve_pillar
+  '*360*':
+     - 360_pillar
 
   'grantnav-dev*':
      - grantnav_dev_pillar
@@ -36,3 +38,5 @@ base:
   'tmp2':
      - dev_pillar
      - private.dev_pillar
+
+

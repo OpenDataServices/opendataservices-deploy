@@ -1,0 +1,2 @@
+cove:
+  prefixmap: '360=^/?'
