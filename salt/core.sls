@@ -13,6 +13,7 @@ useful-shell-commands:
     - pkgs:
       - vim
       - tmux
+      - man
 
 ## Security
 
