@@ -13,10 +13,31 @@
 #
 # As of icingaweb2.0-rc1, New users can be added through the web interface.
 
+
 include:
   - apache
   - php
   - icinga2-base
+
+
+# YaY for the bloody idiot who churned up all the php package names between
+# 14.04 and 16.04.  This is bad enough ...
+{% if grains['lsb_distrib_release']=='14.04' %}
+  {% set phpver='5' %}
+{% else %}
+  {% set phpver='7.0' %}
+{% endif %}
+# ... but as you will see, there are special cases ...
+
+# ... and here's your first special case.
+{% if grains['lsb_distrib_release']=='14.04' %}
+php-imagick:
+  pkg.installed:
+    - name: php5-imagick
+{% else %}
+php-imagick:
+  pkg.installed
+{% endif %}
 
 icinga2-master:
   pkg.installed:
@@ -25,12 +46,12 @@ icinga2-master:
       - icinga2-ido-pgsql
       - mailutils
       # PHP Dependencies for icingaweb2
-      - php5-ldap
-      - php5-intl
-      - php5-imagick
-      - php5-pgsql
+      - php{{ phpver }}-ldap
+      - php{{ phpver }}-intl
+      - php{{ phpver }}-pgsql
     - require:
       - pkg: icinga2
+      - pkg: php-imagick
     - watch_in:
       - service: apache2
 
@@ -57,12 +78,28 @@ icinga2-master:
       - service: icinga2
 {% endfor %}
 
+
+
+{% if grains['lsb_distrib_release']=='14.04' %}
+
 /etc/php5/apache2/php.ini:
   file.append:
     - text: date.timezone = Europe/London
     - watch_in: apache2
     - require:
-      - pkg: libapache2-mod-php5
+      - pkg: libapache2-mod-php{{ phpver }}
+
+{% else %}
+
+/etc/php/7.0/apache2/php.ini:
+  file.append:
+    - text: date.timezone = Europe/London
+    - watch_in: apache2
+    - require:
+      - pkg: libapache2-mod-php{{ phpver }}
+
+{% endif %}
+
 
 postgresql:
   service:
@@ -70,7 +107,13 @@ postgresql:
     - enable: True
     - reload: True
 
-/etc/postgresql/9.3/main/postgresql.conf:
+{% if grains['lsb_distrib_release']=='14.04' %}
+  {% set pgver='9.3' %}
+{% else %}
+  {% set pgver='9.5' %}
+{% endif %}
+
+/etc/postgresql/{{ pgver }}/main/postgresql.conf:
   file.uncomment:
     - regex: listen_addresses = 'localhost'
     - watch_in: postgresql
@@ -83,7 +126,7 @@ icingaweb2:
 
 https://github.com/Icinga/icingaweb2.git:
   git.latest:
-    - rev: v2.0.0
+    - rev: v2.4.0
     - target: /usr/share/icingaweb2/
 
 /etc/icingaweb2/:
