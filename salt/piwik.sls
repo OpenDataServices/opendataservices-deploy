@@ -4,9 +4,12 @@
 # existing instance, or use the install wizard at:
 # http://mon.opendataservices.coop/piwik/
 
+{% from 'lib.sls' import letsencrypt %}
+
 include:
   - apache
   - php
+  - letsencrypt
 
 
 # Download Piwik from the git repository but pick a tag for a stable release
@@ -114,3 +117,6 @@ piwik:
     - require:
       - pkg: mysql-server
       - pkg: salt-deps
+
+# Acquire certs
+{{ letsencrypt('omnomnom.opendataservices.coop', []) }}

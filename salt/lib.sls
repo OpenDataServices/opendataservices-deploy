@@ -56,11 +56,11 @@
 
 
 #-----------------------------------------------------------------------
-# certbot
+# letsencrypt
 # Automatically obtain and install a Letsencrypt certificate
 #-----------------------------------------------------------------------
 
-{% macro certbot(servername, serveraliases) %}
+{% macro letsencrypt(servername, serveraliases) %}
 
 {% set domainargs="-d "+servername %}
 {% for alias in serveraliases %}
@@ -69,14 +69,14 @@
 
 {{ servername }}_acquire_certs:
   cmd.run:
-    - name: /root/certbot-auto certonly --non-interactive --no-self-upgrade --expand --allow-subset-of-names --email code@opendataservices.coop --agree-tos --webroot --webroot-path /var/www/html/ {{ domainargs }}
+    - name: letsencrypt certonly --non-interactive --no-self-upgrade --expand --email code@opendataservices.coop --agree-tos --webroot --webroot-path /var/www/html/ {{ domainargs }}
     - creates:
       - /etc/letsencrypt/live/{{ servername }}/cert.pem
       - /etc/letsencrypt/live/{{ servername }}/chain.pem
       - /etc/letsencrypt/live/{{ servername }}/fullchain.pem
       - /etc/letsencrypt/live/{{ servername }}/privkey.pem
     - require:
-      - cmd: certbot-initialise
+      - pkg: letsencrypt
 
 {% endmacro %}
 
@@ -98,7 +98,7 @@
 
 {% if https == 'yes' or https == 'force' %}
 
-{{ certbot(servername, serveraliases) }}
+{{ letsencrypt(servername, serveraliases) }}
 
 # https-enabled config has two files: the main .conf file is just
 # boilerplate from _common.conf, the service-specific config is in an
