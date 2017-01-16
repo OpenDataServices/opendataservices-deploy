@@ -12,6 +12,7 @@ include:
   - core
   - apache
   - uwsgi
+  - letsencrypt
 
 cove-deps:
     apache_module.enable:
@@ -42,13 +43,8 @@ set_lc_all:
 
 {% macro cove(name, giturl, branch, djangodir, user, uwsgi_port) %}
 
-{% set mydomain = 'cove.opendataservices.coop' %}
-{% if branch == pillar.default_branch %}
-  {% set servername = pillar.domain_prefix+mydomain %}
-{% else %}
-  {% set servername = branch+'.'+pillar.domain_prefix+mydomain %}
-{% endif %}
-{% set serveraliases = [ 'cove.*.default.opendataservices.uk0.bigv.io', '*.standard.open-contracting.org', 'standard.open-contracting.org' ] %}
+{% set servername = 'cove.cove-360-dev.default.threesixtygiving.uk0.bigv.io' %}
+{% set serveraliases = [] %}
 
 {% set extracontext %}
 djangodir: {{ djangodir }}
@@ -61,7 +57,7 @@ branch: {{ branch }}
     extracontext=extracontext,
     servername=servername,
     serveraliases=serveraliases,
-    https='no') }}
+    https='yes') }}
 
 {{ uwsgi(user+'.ini',
     name=name+'.ini',
