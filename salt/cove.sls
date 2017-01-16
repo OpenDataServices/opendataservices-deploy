@@ -57,7 +57,7 @@ branch: {{ branch }}
     extracontext=extracontext,
     servername=servername,
     serveraliases=serveraliases,
-    https='yes') }}
+    https='force') }}
 
 {{ uwsgi(user+'.ini',
     name=name+'.ini',
