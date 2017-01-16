@@ -1,0 +1,53 @@
+# vi: ft=apache
+
+        DocumentRoot {{ djangodir }} 
+
+        ErrorDocument 500 "<h2>Sorry, something went wrong.</h2> <p>Sometimes this happens because the input file is too big - maybe try again with a smaller sample.</p><p>Please file a <a href=\"https://github.com/OpenDataServices/cove/issues/new\">GitHub issue</a> or email <a href=\"mailto:code@opendataservices.coop\">code@opendataservices.coop</a> if this problem persists.</p>"
+
+        RemoteIPHeader X-Forwarded-For
+        # Truest Proxies:
+        # tmp2
+        RemoteIPTrustedProxy 46.43.3.132
+        RemoteIPTrustedProxy 2001:41c9:1:420::132
+        # live2
+        RemoteIPTrustedProxy 46.43.2.168
+        RemoteIPTrustedProxy 2001:41c9:1:41f::168 
+
+        {{ banner }}
+
+        <Location "/">
+                {% if pillar.cove.ocds_redirect %}
+                Redirect /ocds http://standard.open-contracting.org/validator
+                {% endif %}
+                ProxyPass uwsgi://127.0.0.1:{{ uwsgi_port }}/
+        </Location>
+
+        # Static content needed by Django
+        Alias /static "{{ djangodir }}static/"
+        <Location "/static">
+                ProxyPass !
+                Order allow,deny
+                Allow from all
+                SetHandler None
+        </Location>
+
+        # Static content uploaded by users
+        Alias /media "{{ djangodir }}media/"
+        <Location "/media">
+                ProxyPass !
+                Order allow,deny
+                Allow from all
+                SetHandler None
+                # Serve json with utf-8 media type
+                # https://bugs.chromium.org/p/chromium/issues/detail?id=438464
+                # https://github.com/OpenDataServices/cove/issues/478
+                AddType "application/json;charset=utf-8" .json
+        </Location>
+
+        <Directory {{ djangodir }}>
+                Require all granted
+        </Directory>
+
+        <Location "/.well-known/acme-challenge">
+                ProxyPass !
+        </Location>
