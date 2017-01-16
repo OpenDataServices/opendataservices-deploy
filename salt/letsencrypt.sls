@@ -25,7 +25,7 @@ letsencrypt:
 cron-letsencrypt-renew:
   cron.present:
     - identifier: letsencrypt-renew
-    - name: letsencrypt renew --quiet --no-self-upgrade
+    - name: letsencrypt renew --no-self-upgrade > /dev/null
     - user: root
     - minute: random
     - hour: 7
