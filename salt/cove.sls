@@ -12,7 +12,7 @@ include:
   - core
   - apache
   - uwsgi
-  - letsencrypt
+{% if 'https' in pillar.cove %}  - letsencrypt{% endif %}
 
 cove-deps:
     apache_module.enable:
@@ -43,8 +43,6 @@ set_lc_all:
 
 {% macro cove(name, giturl, branch, djangodir, user, uwsgi_port) %}
 
-{% set servername = 'cove.cove-360-dev.default.threesixtygiving.uk0.bigv.io' %}
-{% set serveraliases = [] %}
 
 {% set extracontext %}
 djangodir: {{ djangodir }}
@@ -52,12 +50,18 @@ uwsgi_port: {{ uwsgi_port }}
 branch: {{ branch }}
 {% endset %}
 
+{% if 'https' in pillar.cove %}
 {{ apache(user+'.conf',
     name=name+'.conf',
     extracontext=extracontext,
-    servername=servername,
-    serveraliases=serveraliases,
-    https='force') }}
+    servername=pillar.cove.servername,
+    serveraliases=pillar.cove.serveraliases,
+    https=pillar.cove.https) }}
+{% else %}
+{{ apache(user+'.conf',
+    name=name+'.conf',
+    extracontext=extracontext) }}
+{% endif %}
 
 {{ uwsgi(user+'.ini',
     name=name+'.ini',
