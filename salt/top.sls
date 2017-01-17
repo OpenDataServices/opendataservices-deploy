@@ -15,11 +15,7 @@ base:
     - opendataservices-website
     - icinga2-satellite
 
-  'cove-live':
-    - cove
-    - icinga2-satellite
-
-  'cove-live-ocds':
+  'cove*live*':
     - cove
     - icinga2-satellite
 

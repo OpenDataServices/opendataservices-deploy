@@ -62,9 +62,9 @@
 
 {% macro letsencrypt(servername, serveraliases) %}
 
-{% set domainargs="-d "+servername %}
+{% set domainargs= "-d "+servername %}
 {% for alias in serveraliases %}
-{% set domainargs=domainargs+" -d "+alias %}
+{% set domainargs=domainargs+ " -d "+alias %}
 {% endfor %}
 
 {{ servername }}_acquire_certs:
@@ -77,6 +77,9 @@
       - /etc/letsencrypt/live/{{ servername }}/privkey.pem
     - require:
       - pkg: letsencrypt
+      - service: extra_reload_{{ servername }}
+    - watch_in:
+      - service: apache2
 
 {% endmacro %}
 
@@ -145,6 +148,26 @@
       {% endif %}
         {{ extracontext | indent(8) }}
 
+# For HTTPS we reload apache again after getting certificates 
+extra_reload_{{ servername }}:
+  # Ensure apache running, and reload if any of the conf files change
+  service:
+    - name: apache2
+    - running
+    - enable: True
+    - reload: True
+
+# Create a symlink from sites-enabled to enable the config
+/etc/apache2/sites-enabled/{{ name }}:
+  file.symlink:
+    - target: /etc/apache2/sites-available/{{ name }}
+    - require:
+      - file: /etc/apache2/sites-available/{{ name }}
+      - service: extra_reload_{{ servername }}
+    - makedirs: True
+    - watch_in:
+      - service: apache2
+
 {% else %}
 
 # Render the config files (common and include) with jinja and place them in sites-available
@@ -173,8 +196,6 @@
       {% endif %}
         {{ extracontext | indent(8) }}
 
-{% endif %}
-
 # Create a symlink from sites-enabled to enable the config
 /etc/apache2/sites-enabled/{{ name }}:
   file.symlink:
@@ -184,6 +205,9 @@
     - makedirs: True
     - watch_in:
       - service: apache2
+
+{% endif %}
+
 {% endmacro %}
 
 

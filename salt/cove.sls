@@ -54,8 +54,8 @@ branch: {{ branch }}
 {{ apache(user+'.conf',
     name=name+'.conf',
     extracontext=extracontext,
-    servername=pillar.cove.servername,
-    serveraliases=pillar.cove.serveraliases,
+    servername=branch+'.'+grains.fqdn,
+    serveraliases=[],
     https=pillar.cove.https) }}
 {% else %}
 {{ apache(user+'.conf',
