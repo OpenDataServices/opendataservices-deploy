@@ -62,10 +62,7 @@
 
 {% macro letsencrypt(servername, serveraliases) %}
 
-{% set domainargs= "-d "+servername %}
-{% for alias in serveraliases %}
-{% set domainargs=domainargs+ " -d "+alias %}
-{% endfor %}
+{% set domainargs= "-d "+ " -d ".join([ servername ] + serveraliases ) %}
 
 {{ servername }}_acquire_certs:
   cmd.run:
