@@ -116,7 +116,7 @@
       - service: apache2
     - context:
         socket_name: {{ socket_name }}
-        includefile: {{ conffile }}.include
+        includefile: {{ name }}.include
         servername: {{ servername }}
         serveraliases: {{ serveraliases }}
         https: "{{ https }}"
