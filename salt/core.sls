@@ -98,3 +98,9 @@ create_swapfile:
   mount.swap:
     - require:
       - cmd: create_swapfile
+
+MAILTO_root:
+  cron.env_present:
+    - name: MAILTO
+    - value: code@opendataservices.coop
+    - user: root

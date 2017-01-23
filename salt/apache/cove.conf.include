@@ -1,12 +1,5 @@
 # vi: ft=apache
 
-<VirtualHost *:80>
-        ServerName {% if branch != pillar.default_branch %}{{ branch }}.{% endif %}{{ pillar.domain_prefix }}cove.opendataservices.coop
-        ServerAdmin code@opendataservices.coop
-        ServerAlias cove.opendataservices.coop
-        ServerAlias {% if branch != pillar.default_branch %}{{ branch }}.{% endif %}cove.*.default.opendataservices.uk0.bigv.io
-        ServerAlias {% if branch != pillar.default_branch %}{{ branch }}.{% endif %}cove.*.default.threesixtygiving.uk0.bigv.io
-        ServerAlias *.standard.open-contracting.org standard.open-contracting.org
         DocumentRoot {{ djangodir }} 
 
         ErrorDocument 500 "<h2>Sorry, something went wrong.</h2> <p>Sometimes this happens because the input file is too big - maybe try again with a smaller sample.</p><p>Please file a <a href=\"https://github.com/OpenDataServices/cove/issues/new\">GitHub issue</a> or email <a href=\"mailto:code@opendataservices.coop\">code@opendataservices.coop</a> if this problem persists.</p>"
@@ -54,4 +47,7 @@
         <Directory {{ djangodir }}>
                 Require all granted
         </Directory>
-</VirtualHost>
+
+        <Location "/.well-known/acme-challenge">
+                ProxyPass !
+        </Location>

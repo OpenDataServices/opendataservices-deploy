@@ -12,6 +12,7 @@ include:
   - core
   - apache
   - uwsgi
+{% if 'https' in pillar.cove %}  - letsencrypt{% endif %}
 
 cove-deps:
     apache_module.enable:
@@ -40,7 +41,8 @@ set_lc_all:
     - name: /etc/default/locale
 
 
-{% macro cove(name, giturl, branch, djangodir, user, uwsgi_port) %}
+{% macro cove(name, giturl, branch, djangodir, user, uwsgi_port, servername=None) %}
+
 
 {% set extracontext %}
 djangodir: {{ djangodir }}
@@ -48,9 +50,18 @@ uwsgi_port: {{ uwsgi_port }}
 branch: {{ branch }}
 {% endset %}
 
+{% if 'https' in pillar.cove %}
+{{ apache(user+'.conf',
+    name=name+'.conf',
+    extracontext=extracontext,
+    servername=servername if servername else branch+'.'+grains.fqdn,
+    serveraliases=[ branch+'.'+grains.fqdn ] if servername else [],
+    https=pillar.cove.https) }}
+{% else %}
 {{ apache(user+'.conf',
     name=name+'.conf',
     extracontext=extracontext) }}
+{% endif %}
 
 {{ uwsgi(user+'.ini',
     name=name+'.ini',
@@ -148,6 +159,7 @@ MAILTO:
     branch=pillar.default_branch,
     djangodir='/home/'+user+'/cove/',
     uwsgi_port=3031,
+    servername=pillar.cove.servername if 'servername' in pillar.cove else None,
     user=user) }}
 
 {% for branch in pillar.extra_cove_branches %}
@@ -157,5 +169,6 @@ MAILTO:
     branch=branch.name,
     djangodir='/home/'+user+'/cove-'+branch.name+'/',
     uwsgi_port=branch.uwsgi_port,
+    servername=branch.servername if 'servername' in branch else None,
     user=user) }}
 {% endfor %}

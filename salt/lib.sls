@@ -1,13 +1,15 @@
 # This file defines various common macros.
 
 
-
-
-# Create a user
-# Our deployment policy is to run as much as possible as unpriviledged users.
+#-----------------------------------------------------------------------
+# createuser
+#
+# Our deployment policy is to run as much as possible as unprivileged users.
 # Ideally each piece of work we do (which probably maps to a separate salt
 # forumula) should have its own user defined.
 # Therefore, most of our main salt formulas will begin by defining a user.
+#-----------------------------------------------------------------------
+
 {% macro createuser(user) %}
 
 {{ user }}_user_exists:
@@ -16,12 +18,12 @@
     - home: /home/{{ user }}
     - order: 1
 
-{%if user+'_authorized_keys' in pillar %}
+{% if user+'_authorized_keys' in pillar %}
 
 # Install authorized SSH public keys.  Keys will be installed from both
 # pillar.<user>_authorized_keys and pillar.authorized_keys
 
-user_ssh_dir:
+{{ user }}_user_ssh_dir:
   file.directory:
     - name: /home/{{ user }}/.ssh
     - user: {{ user }}
@@ -30,7 +32,7 @@ user_ssh_dir:
     - require:
       - user: {{ user }}_user_exists
 
-user_ssh_userkeys:
+{{ user }}_user_ssh_userkeys:
   file.managed:
     - name: /home/{{ user }}/.ssh/authorized_keys
     - contents_pillar: {{ user }}_authorized_keys
@@ -40,7 +42,7 @@ user_ssh_userkeys:
     - require:
       - file: user_ssh_dir
 
-user_ssh_rootkeys:
+{{ user }}_user_ssh_rootkeys:
   file.append:
     - name: /home/{{ user }}/.ssh/authorized_keys
     - text: {{ salt['pillar.get']('authorized_keys') | yaml_encode }}
@@ -53,13 +55,119 @@ user_ssh_rootkeys:
 
 
 
+#-----------------------------------------------------------------------
+# letsencrypt
+# Automatically obtain and install a Letsencrypt certificate
+#-----------------------------------------------------------------------
 
+{% macro letsencrypt(servername, serveraliases) %}
+
+{% set domainargs= "-d "+ " -d ".join([ servername ] + serveraliases ) %}
+
+{{ servername }}_acquire_certs:
+  cmd.run:
+    - name: letsencrypt certonly --non-interactive --no-self-upgrade --expand --email code@opendataservices.coop --agree-tos --webroot --webroot-path /var/www/html/ {{ domainargs }}
+    - creates:
+      - /etc/letsencrypt/live/{{ servername }}/cert.pem
+      - /etc/letsencrypt/live/{{ servername }}/chain.pem
+      - /etc/letsencrypt/live/{{ servername }}/fullchain.pem
+      - /etc/letsencrypt/live/{{ servername }}/privkey.pem
+    - require:
+      - pkg: letsencrypt
+      - service: extra_reload_{{ servername }}
+    - watch_in:
+      - service: apache2
+
+{% endmacro %}
+
+
+
+#-----------------------------------------------------------------------
+# apache
 # Install the named conf file in the apache dir onto the server.
-{% macro apache(conffile, name='', extracontext='', socket_name='') %}
+#-----------------------------------------------------------------------
+
+{% macro apache(conffile, name='', extracontext='', socket_name='', servername='', serveraliases=[], https='') %}
+
 {% if name == '' %}
 {% set name=conffile %}
 {% endif %}
-# Render the file with jinja and place it in sites-available
+{% if servername == '' %}
+{% set servername=grains.fqdn %}
+{% endif %}
+
+{% if https == 'yes' or https == 'force' %}
+
+{{ letsencrypt(servername, serveraliases) }}
+
+# https-enabled config has two files: the main .conf file is just
+# boilerplate from _common.conf, the service-specific config is in an
+# Apache-included file <name>.conf.include.
+#   Note 1, the include does not get linked into sites-enabled.
+#   Note 2, ideally we would use a Jinja include to create a proper
+#           standalone conf file, but that doesn't work in salt-ssh.
+
+/etc/apache2/sites-available/{{ name }}:
+  file.managed:
+    - source: salt://apache/_common.conf
+    - template: jinja
+    - makedirs: True
+    - watch_in:
+      - service: apache2
+    - context:
+        socket_name: {{ socket_name }}
+        includefile: {{ name }}.include
+        servername: {{ servername }}
+        serveraliases: {{ serveraliases }}
+        https: "{{ https }}"
+        {{ extracontext | indent(8) }}
+
+/etc/apache2/sites-available/{{ name }}.include:
+  file.managed:
+    - source: salt://apache/{{ conffile }}.include
+    - template: jinja
+    - makedirs: True
+    - watch_in:
+      - service: apache2
+    - context:
+        socket_name: {{ socket_name }}
+        https: "{{ https }}"
+      {% if 'banner_message' in pillar %}
+        banner: |
+          # Inflate and deflate here to ensure that the message is not
+          # compressed when we do the substitution, but is afterwards.
+          # I think this may be adding some extra overhead, but for our
+          # dev site this shouldn't be noticeable.
+          AddOutputFilterByType INFLATE;SUBSTITUTE;DEFLATE text/html
+          Substitute "s|<body([^>]*)>|<body$1><div style=\"background-color:red; color: black; width: 100%; text-align: center; font-weight: bold; position: fixed; right: 0; left: 0; z-index: 1031\">{{ pillar.banner_message }}</div>|i"
+        {% else %}
+        banner: ''
+      {% endif %}
+        {{ extracontext | indent(8) }}
+
+# For HTTPS we reload apache again after getting certificates 
+extra_reload_{{ servername }}:
+  # Ensure apache running, and reload if any of the conf files change
+  service:
+    - name: apache2
+    - running
+    - enable: True
+    - reload: True
+
+# Create a symlink from sites-enabled to enable the config
+/etc/apache2/sites-enabled/{{ name }}:
+  file.symlink:
+    - target: /etc/apache2/sites-available/{{ name }}
+    - require:
+      - file: /etc/apache2/sites-available/{{ name }}
+      - service: extra_reload_{{ servername }}
+    - makedirs: True
+    - watch_in:
+      - service: apache2
+
+{% else %}
+
+# Render the config files (common and include) with jinja and place them in sites-available
 /etc/apache2/sites-available/{{ name }}:
   file.managed:
     - source: salt://apache/{{ conffile }}
@@ -69,15 +177,18 @@ user_ssh_rootkeys:
       - service: apache2
     - context:
         socket_name: {{ socket_name }}
+        servername: {{ servername }}
+        serveraliases: {{ serveraliases }}
+        https: "{{ https }}"
       {% if 'banner_message' in pillar %}
         banner: |
-          # Inflate and deflate here to ensure that the message it not
+          # Inflate and deflate here to ensure that the message is not
           # compressed when we do the substitution, but is afterwards.
           # I think this may be adding some extra overhead, but for our
           # dev site this shouldn't be noticeable.
           AddOutputFilterByType INFLATE;SUBSTITUTE;DEFLATE text/html
           Substitute "s|<body([^>]*)>|<body$1><div style=\"background-color:red; color: black; width: 100%; text-align: center; font-weight: bold; position: fixed; right: 0; left: 0; z-index: 1031\">{{ pillar.banner_message }}</div>|i"
-        {% else %}
+      {% else %}
         banner: ''
       {% endif %}
         {{ extracontext | indent(8) }}
@@ -91,7 +202,16 @@ user_ssh_rootkeys:
     - makedirs: True
     - watch_in:
       - service: apache2
+
+{% endif %}
+
 {% endmacro %}
+
+
+
+#-----------------------------------------------------------------------
+# uwsgi
+#-----------------------------------------------------------------------
 
 {% macro uwsgi(conffile, name, djangodir, port='', socket_name='', extracontext='') %}
 # Render the file with jinja and place it in apps-available
@@ -134,10 +254,13 @@ user_ssh_rootkeys:
 
 
 
-
-{% macro planio_keys(user) %}
+#-----------------------------------------------------------------------
+# planio_keys
 # Add a public and private key to this server, so that it can authenticate
 # against plan.io
+#-----------------------------------------------------------------------
+
+{% macro planio_keys(user) %}
 {% for file in ['id_rsa', 'id_rsa.pub'] %}
 /home/{{ user }}/.ssh/{{ file }}:
   file.managed:

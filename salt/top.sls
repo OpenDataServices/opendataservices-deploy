@@ -15,11 +15,10 @@ base:
     - opendataservices-website
     - icinga2-satellite
 
-  'cove-live':
-    - cove
+  'live3':
     - icinga2-satellite
 
-  'cove-live-ocds':
+  'cove*live*':
     - cove
     - icinga2-satellite
 
@@ -38,14 +37,6 @@ base:
     - icinga2-satellite
 
   # DEVELOPMENT
-
-  'tmp2':
-    - ocds-docs-live
-    - ocds-legacy
-    - threesixtygiving_data
-    - opendataservices-website
-    - icinga2-satellite
-
 
   'dev3':
     - ocds-docs-dev
