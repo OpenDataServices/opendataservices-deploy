@@ -2,7 +2,7 @@
 
 # opendataservices boxes
 live2: live2.default.opendataservices.uk0.bigv.io
-tmp2: tmp2.default.opendataservices.uk0.bigv.io
+live3: live3.default.opendataservices.uk0.bigv.io
 cove-live: cove-live.default.opendataservices.uk0.bigv.io
 cove-dev: cove-dev.default.opendataservices.uk0.bigv.io
 mon-2: mon-2.default.opendataservices.uk0.bigv.io

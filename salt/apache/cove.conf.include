@@ -5,8 +5,8 @@
         ErrorDocument 500 "<h2>Sorry, something went wrong.</h2> <p>Sometimes this happens because the input file is too big - maybe try again with a smaller sample.</p><p>Please file a <a href=\"https://github.com/OpenDataServices/cove/issues/new\">GitHub issue</a> or email <a href=\"mailto:code@opendataservices.coop\">code@opendataservices.coop</a> if this problem persists.</p>"
 
         RemoteIPHeader X-Forwarded-For
-        # Truest Proxies:
-        # tmp2
+        # Trust Proxies:
+        # live3
         RemoteIPTrustedProxy 46.43.3.132
         RemoteIPTrustedProxy 2001:41c9:1:420::132
         # live2

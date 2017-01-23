@@ -1,4 +1,6 @@
-# Values used only on the tmp2 server
+# Values used only on the tmp2 server (which does not currently exist)
+# This pillar is retained as a template for the next time we need a temporary server
+
 default_branch: 'master'
 # URL that OCDS /validator proxies to
 ocds_cove_backend: http://cove.cove-dev.default.opendataservices.uk0.bigv.io
