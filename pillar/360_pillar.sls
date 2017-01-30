@@ -7,5 +7,3 @@ cove:
 extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values below
   - name: release-201611
     uwsgi_port: 3040
-  - name: 504-rearange-boxes
-    uwsgi_port: 3041

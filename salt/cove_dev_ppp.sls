@@ -7,7 +7,7 @@ include:
 {{ cove(
     name='cove-ppp',
     giturl=giturl,
-    branch='master',
+    branch='544-ppp',
     djangodir='/home/'+user+'/cove-ppp/',
     uwsgi_port=3139,
     schema_url_ocds='http://standard.open-contracting.org/ppp-extension/en/',
