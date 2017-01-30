@@ -49,6 +49,9 @@ base:
     - cove
     - icinga2-satellite
 
+  'cove-dev':
+     - cove_dev_ppp
+
   'grantnav-dev*':
     - grantnav
     - djangodebug

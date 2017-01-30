@@ -158,28 +158,24 @@ collectstatic-{{djangodir}}:
 {% set deployment_base_name = 'grantnav_' + dataselection + '_' + branch %}
 {% set es_index = deployment_base_name + '_' + deploy_info.datadate %}
 {% set deployment_name = deployment_base_name + '_' + deploy %}
-{% set apache_extracontext %}
+{% set extracontext %}
 djangodir: '{{ djangodir }}'
-subdomain: '{{ deploy }}.{{ dataselection }}.{{ branch }}'
-{% endset %}
-
-{{ apache(user+'.conf',
-    name=deployment_name+'.conf',
-    socket_name=deployment_name,
-    extracontext=apache_extracontext) }}
-
-{% set uwsgi_extracontext %}
 es_index: '{{ es_index }}'
 dataselection: '{{ dataselection }}'
 datadate: '{{ deploy_info.datadate }}'
 subdomain: '{{ deploy }}.{{ dataselection }}.{{ branch }}'
 {% endset %}
 
+
+{{ apache(user+'.conf',
+    name=deployment_name+'.conf',
+    socket_name=deployment_name,
+    extracontext=extracontext) }}
+
 {{ uwsgi(user+'.ini',
     name=deployment_name+'.ini',
     socket_name=deployment_name,
-    djangodir=djangodir,
-    extracontext=uwsgi_extracontext) }}
+    extracontext=extracontext) }}
 {% endfor %}
 {% endfor %}
 {% endfor %}

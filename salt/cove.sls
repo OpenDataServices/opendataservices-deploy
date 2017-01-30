@@ -41,13 +41,14 @@ set_lc_all:
     - name: /etc/default/locale
 
 
-{% macro cove(name, giturl, branch, djangodir, user, uwsgi_port, servername=None) %}
+{% macro cove(name, giturl, branch, djangodir, user, uwsgi_port, servername=None, schema_url_ocds=None) %}
 
 
 {% set extracontext %}
 djangodir: {{ djangodir }}
 uwsgi_port: {{ uwsgi_port }}
 branch: {{ branch }}
+schema_url_ocds: {{ schema_url_ocds }}
 {% endset %}
 
 {% if 'https' in pillar.cove %}
@@ -65,7 +66,7 @@ branch: {{ branch }}
 
 {{ uwsgi(user+'.ini',
     name=name+'.ini',
-    djangodir=djangodir,
+    extracontext=extracontext,
     port=uwsgi_port) }}
 
 {{ giturl }}{{ djangodir }}:

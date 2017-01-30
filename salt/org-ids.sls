@@ -48,7 +48,7 @@ branch: {{ branch }}
 
 {{ uwsgi(user+'.ini',
     name=name+'.ini',
-    djangodir=djangodir,
+    extracontext=extracontext,
     port=uwsgi_port) }}
 
 {{ giturl }}{{ djangodir }}:

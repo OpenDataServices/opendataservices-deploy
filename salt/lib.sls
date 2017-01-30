@@ -224,7 +224,6 @@ extra_reload_{{ servername }}:
       - service: uwsgi
     - context:
         socket_name: {{ socket_name }}
-        djangodir: {{ djangodir }}
         port: {{ port }}
         {{ extracontext | indent(8) }}
 
