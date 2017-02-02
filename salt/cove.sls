@@ -48,7 +48,11 @@ set_lc_all:
 djangodir: {{ djangodir }}
 uwsgi_port: {{ uwsgi_port }}
 branch: {{ branch }}
+{% if schema_url_ocds %}
 schema_url_ocds: {{ schema_url_ocds }}
+{% else %}
+schema_url_ocds: null
+{% endif %}
 {% endset %}
 
 {% if 'https' in pillar.cove %}
