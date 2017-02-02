@@ -50,7 +50,7 @@ base:
     - icinga2-satellite
 
   'cove-dev':
-     - cove_dev_ppp
+     - cove_dev_other_schemas
 
   'grantnav-dev*':
     - grantnav
