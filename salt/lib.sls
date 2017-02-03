@@ -213,7 +213,7 @@ extra_reload_{{ servername }}:
 # uwsgi
 #-----------------------------------------------------------------------
 
-{% macro uwsgi(conffile, name, djangodir, port='', socket_name='', extracontext='') %}
+{% macro uwsgi(conffile, name, port='', socket_name='', extracontext='') %}
 # Render the file with jinja and place it in apps-available
 /etc/uwsgi/apps-available/{{ name }}:
   file.managed:

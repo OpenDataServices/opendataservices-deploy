@@ -5,6 +5,7 @@ grantnav:
   branches:
     - master
     - iteration07.5
+    #- 352-remove-start-over
   dataselections:
     - all
     - acceptable_license_valid
@@ -12,11 +13,11 @@ grantnav:
   deploy_mode: matrix
   deploys:
     new:
-      datadate: '2016-12-01_2'
+      datadate: '2017-02-03'
     current:
-      datadate: '2016-12-01_2'
+      datadate: '2017-01-10'
     old:
-      datadate: '2016-10-25'
+      datadate: '2016-12-01_2'
   piwik:
     url: '//mon.opendataservices.coop/piwik/'
     site_id: '6'

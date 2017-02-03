@@ -218,6 +218,7 @@ subdomain: '{{ deploy }}'
     extracontext=apache_extracontext) }}
 
 {% set uwsgi_extracontext %}
+djangodir: '{{ djangodir }}'
 es_index: '{{ es_index }}'
 dataselection: '{{ deploy_info.dataselection }}'
 datadate: '{{ deploy_info.datadate }}'
@@ -227,7 +228,6 @@ subdomain: '{{ deploy }}'
 {{ uwsgi(user+'.ini',
     name=deployment_name+'.ini',
     socket_name=deployment_name,
-    djangodir=djangodir,
     extracontext=uwsgi_extracontext) }}
 {% endfor %}
 
