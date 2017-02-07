@@ -6,7 +6,7 @@ grantnav:
   deploys:
     new:
       datadate: '2017-02-03'
-      branch: 'master'
+      branch: 'iteration07.6'
       dataselection: acceptable_license_valid
     current:
       datadate: '2017-01-10'
