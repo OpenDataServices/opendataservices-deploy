@@ -21,6 +21,10 @@ extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values 
     uwsgi_port: 3041
   - name: 553-more-information-box-is-blank
     uwsgi_port: 3042
+  - name: 572-number-array
+    uwsgi_port: 3043
+  - name: 511-conversion-errors
+    uwsgi_port: 3044
 # Add a new branch with the name of the branch, and increment the port number.
 # Currently adding a new port number requires a manual uwsgi restart (ie. the
 # reload in highstate will fail, so you will need to ssh and run "service uwsgi
