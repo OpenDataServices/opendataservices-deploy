@@ -13,7 +13,7 @@ useful-shell-commands:
     - pkgs:
       - vim
       - tmux
-      - man
+      - man-db
 
 ## Security
 
@@ -23,10 +23,15 @@ fail2ban:
     - pkgs:
       - fail2ban
       - mailutils
+
+f2b-startup:
   service:
+    - name: fail2ban
     - running
     - enable: True
     - reload: True
+  require:
+    - pkg: fail2ban
 
 # Additional fail2ban config: setup email alerts when bans are triggered
 # (enabled only if the jail has an appropriate action: uwsgi does, but ssh doesn't)

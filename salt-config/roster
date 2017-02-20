@@ -1,23 +1,25 @@
 # This file defines the server names for use with the salt-ssh command
 
 # opendataservices boxes
-live2: live2.default.opendataservices.uk0.bigv.io
-live3: live3.default.opendataservices.uk0.bigv.io
-cove-live: cove-live.default.opendataservices.uk0.bigv.io
-cove-dev: cove-dev.default.opendataservices.uk0.bigv.io
-mon-2: mon-2.default.opendataservices.uk0.bigv.io
-mon-3: mon-3.default.opendataservices.uk0.bigv.io
-snapshotter: snapshotter.default.opendataservices.uk0.bigv.io
-backups: backups.backups.opendataservices.uk0.bigv.io
-dev3: dev3.default.opendataservices.uk0.bigv.io
-cove-live-ocds: cove-live-ocds.default.opendataservices.uk0.bigv.io
-involve: involve.default.opendataservices.uk0.bigv.io
+#   dev:
+dev3:                dev3.default.opendataservices.uk0.bigv.io
+mon-3:               mon-3.default.opendataservices.uk0.bigv.io
+cove-dev:            cove-dev.default.opendataservices.uk0.bigv.io
+#   live:
+live2:               live2.default.opendataservices.uk0.bigv.io
+live3:               live3.default.opendataservices.uk0.bigv.io
+mon-2:               mon-2.default.opendataservices.uk0.bigv.io
+cove-live:           cove-live.default.opendataservices.uk0.bigv.io
+cove-live-ocds:      cove-live-ocds.default.opendataservices.uk0.bigv.io
+involve:             involve.default.opendataservices.uk0.bigv.io
+snapshotter:         snapshotter.default.opendataservices.uk0.bigv.io
+backups:             backups.backups.opendataservices.uk0.bigv.io
 
 # threesixtygiving boxes
-# dev:
+#   dev:
 grantnav-dev:        grantnav-dev.default.threesixtygiving.uk0.bigv.io
 cove-360-dev:        cove-360-dev.default.threesixtygiving.uk0.bigv.io
-# live:
+#   live:
 grantnav-live-blue:  grantnav-blue.live.threesixtygiving.uk0.bigv.io
 grantnav-live-green: grantnav-green.live.threesixtygiving.uk0.bigv.io
-cove-360-live:        cove-360-live.live.threesixtygiving.uk0.bigv.io
+cove-360-live:       cove-360-live.live.threesixtygiving.uk0.bigv.io
