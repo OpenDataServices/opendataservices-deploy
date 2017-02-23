@@ -1,4 +1,4 @@
-default_branch: release-201701-360
+default_branch: master
 cove:
   servername: dataquality.threesixtygiving.org
   https: 'force'
