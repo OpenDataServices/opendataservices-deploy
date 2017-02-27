@@ -30,6 +30,10 @@ base:
     - survey-tool-live
     - icinga2-satellite
 
+  'org-ids':
+    - org-ids
+    - icinga2-satellite
+
   # STAGING
 
   'cove-staging':

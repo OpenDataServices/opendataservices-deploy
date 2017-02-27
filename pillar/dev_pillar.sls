@@ -12,6 +12,10 @@ cove:
   ocds_redirect: False
   larger_uwsgi_limits: True
   uwsgi_as_limit: 1800
+org_ids:
+  piwik:
+    url: '//mon.opendataservices.coop/piwik/'
+    site_id: 'XXX' 
 cove_url: http://cove.cove-live-ocds.default.opendataservices.uk0.bigv.io/
 automatic_reboot: 'true'
 extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values below

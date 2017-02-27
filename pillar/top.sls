@@ -24,6 +24,9 @@ base:
   'involve':
      - involve_pillar
      - private.involve_pillar
+  'org-ids':
+     - org-ids_pillar
+     - private.org-ids_pillar
   '*360*':
      - 360_pillar
   '*360-live':
