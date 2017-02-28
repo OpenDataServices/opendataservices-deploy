@@ -4,4 +4,4 @@ banner_message: 'This is an alpha tool. Please <a href=\"https://github.com/Open
 org_ids:
   piwik:
     url: '//mon.opendataservices.coop/piwik/'
-    site_id: 'XXX' 
+    site_id: '11' 
