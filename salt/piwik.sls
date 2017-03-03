@@ -96,6 +96,13 @@ salt-deps:
     - pkgs:
       - python-mysqldb
 
+geoip-deps:
+  pkg.installed:
+    - pkgs:
+      - php{{ phpver }}-geoip
+      - php{{ phpver }}-dev
+      - libgeoip-dev
+
 piwik:
   mysql_user.present:
     - host: localhost
