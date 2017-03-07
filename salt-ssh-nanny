@@ -1,0 +1,136 @@
+#!/bin/sh
+
+###############################################################################
+#
+# salt-ssh-nanny
+#
+# Nannying wrapper script for salt-ssh
+# David Spencer, Open Data Services Co-operative
+#
+# This wrapper script ensures the local branch of opendataservices-deploy (and
+# the embedded private pillar repo) is up-to-date with the Github upstream, so
+# we don't have little accidents.
+#
+# This wrapper should be symlinked at /usr/local/bin/salt-ssh to your local
+# clone of the deploy repo, so that $PATH causes the wrapper to be invoked
+# instead of the real salt-ssh binary.  You need to do this manually:
+#
+#   ln -s $(pwd)/salt-ssh-nanny /usr/local/bin/salt-ssh
+#
+# All arguments are passed unchanged to the real salt-ssh command, except:
+#   -f  [must be first argument]
+#       Invoke salt-ssh without checking the state of git
+#
+# Exit status:
+#   1   Nanny says no.  Rebase your branch or try again with '-f'.
+#   2   You're in the wrong directory, it wouldn't have worked anyway.
+#
+###############################################################################
+
+# Configurables:
+
+# Recognisable substring of our upstream Github repo name:
+UPSTREAM="${UPSTREAM:-OpenDataServices/opendataservices-deploy}"
+
+# How many seconds is too long since the last 'git fetch'? 
+INTERVAL="${INTERVAL:-3600}"
+
+###############################################################################
+
+repo_needs_fetch()
+# Function to determine whether a git repo in the current directory has been
+# fetched recently (i.e. in the last $INTERVAL seconds).
+# Returns:  0 = needs to be fetched, 1 = doesn't need to be fetched
+{
+  prevfetch=0
+  if [ -f '.git/FETCH_HEAD' ]; then
+    prevfetch="$(stat -c %Y .git/FETCH_HEAD)"
+  elif [ -f '.git/HEAD' ]; then
+    prevfetch="$(stat -c %Y .git/HEAD)"
+  fi
+  if [ $(( $(date +%s) - prevfetch )) -gt "$INTERVAL" ]; then
+    return 0
+  fi
+  return 1
+}
+
+###############################################################################
+
+set -eu
+
+nanny='no'
+
+# Only do the nannying if it's our deploy repo
+# (use a pattern, because the URL could be http: or git: or git@)
+case "$(git remote get-url --all origin 2>/dev/null)" in
+  *${UPSTREAM}*)
+    nanny='yes'
+    ;;
+  *)
+    ;;
+esac
+
+# (f)orcibly suppress nannying if requested
+if [ "${1}" = '-f' ]; then
+  nanny='no'
+  shift
+fi
+
+###############################################################################
+
+# Nannying department
+
+if [ "$nanny" = 'yes' ]; then
+
+  # Preparation (1)
+  # Ensure that we're in the deploy repo's root directory
+  if [ ! -d '.git' ]; then
+    echo "salt-ssh-nanny: You're not in the deploy repo root directory." >&2
+    exit 2
+  elif [ ! -f '.git/HEAD' ]; then
+    echo "salt-ssh-nanny: Are you sure this is a git repo?" >&2
+    exit 2
+  fi
+
+  # Preparation (2)
+  # Fetch the deploy repo if needed
+  if repo_needs_fetch; then
+    git fetch --all --prune
+    git remote update
+  fi
+
+  # Preparation (3)
+  # Fetch and fast-forward the private pillar if needed. 
+  (
+    cd pillar/private
+    if repo_needs_fetch; then
+      git fetch --all
+      # The private pillar will normally only have a 'master' branch.
+      # Bomb out if it won't fast-forward; that should be enough nannying ;)
+      git merge --ff-only origin/master
+    fi
+  )
+
+  # Check (1)
+  # Irrespective of which local branch we're on, the latest origin/master should
+  # be an ancestor of the latest local commit
+  if ! git merge-base --is-ancestor origin/master HEAD; then
+    echo "salt-ssh-nanny: Your local branch is out of date with respect to origin/master." >&2
+    echo "salt-ssh-nanny: Please rebase, or specify '-f' to force execution as-is." >&2
+    exit 1
+  fi
+
+  # Check (2)
+  # If we're on master, the local repo probably shouldn't be dirty
+  if [ "$(git rev-parse --abbrev-ref HEAD)" = 'master' ] && [ -n "$(git status -s .)" ]; then
+    echo "salt-ssh-nanny: Your local master branch is dirty." >&2
+    echo "salt-ssh-nanny: Please commit/stash/whatever, or specify '-f' to force execution as-is." >&2
+    exit 1
+  fi
+
+fi
+
+###############################################################################
+
+# Finally, hand off to the real salt-ssh
+exec /usr/bin/salt-ssh "${@}"
