@@ -128,6 +128,15 @@ if [ "$nanny" = 'yes' ]; then
     exit 1
   fi
 
+  (
+    cd pillar/private
+      if [ "$(git rev-parse --abbrev-ref HEAD)" = 'master' ] && [ -n "$(git status -s .)" ]; then
+        echo "salt-ssh-nanny: Your private pillar local master branch is dirty." >&2
+        echo "salt-ssh-nanny: Please commit/stash/whatever, or specify '-f' to force execution as-is." >&2
+        exit 1
+      fi
+  )
+
 fi
 
 ###############################################################################
