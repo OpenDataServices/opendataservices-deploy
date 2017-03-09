@@ -82,8 +82,7 @@ fi
 
 if [ "$nanny" = 'yes' ]; then
 
-  # Preparation (1)
-  # Ensure that we're in the deploy repo's root directory
+  # (1) Ensure that we're in the deploy repo's root directory
   if [ ! -d '.git' ]; then
     echo "salt-ssh-nanny: You're not in the deploy repo root directory." >&2
     exit 2
@@ -91,50 +90,77 @@ if [ "$nanny" = 'yes' ]; then
     echo "salt-ssh-nanny: Are you sure this is a git repo?" >&2
     exit 2
   fi
+  # Looks like a git repo, so remember whether we are on the master branch
+  onmaster='no'
+  [ "$(git rev-parse --abbrev-ref HEAD)" = 'master' ] && onmaster='yes'
 
-  # Preparation (2)
-  # Fetch the deploy repo if needed
+  # (2) Fetch the deploy repo if needed
   if repo_needs_fetch; then
     git fetch --all --prune
     git remote update
   fi
 
-  # Preparation (3)
-  # Fetch and fast-forward the private pillar if needed. 
+
+  if [ "$onmaster" = 'yes' ]; then
+
+    # (3) Keep the master branch tidy
+    # We shouldn't have a dirty local tree if we're on master (i.e. deploying to live)
+    if [ "$onmaster" = 'yes' ] && [ -n "$(git status -s .)" ]; then
+      echo "salt-ssh-nanny: Your local tree is dirty." >&2
+      echo "salt-ssh-nanny: Please commit/stash/whatever, or specify '-f' to force execution as-is." >&2
+      exit 1
+    fi
+
+    # If we're behind origin/master, fast-forward master
+    # (and if that fails, you've been abusing the master branch)
+    if git merge-base --is-ancestor origin/master HEAD; then
+      set +e
+      git merge --ff-only origin/master
+      failed=$?
+      set -e
+      if [ "$failed" != 0 ]; then
+        echo "salt-ssh-nanny: Your local master branch can't fast-forward to sync with origin/master." >&2
+        echo "salt-ssh-nanny: Please resolve the conflicts and try again." >&2
+        exit 1
+      fi
+    # If we're ahead of master, that's ok but we need to maintain situational awareness ;)
+    elif git merge-base --is-ancestor HEAD origin/master; then
+      echo "salt-ssh-nanny: This is a polite reminder: you are ahead of origin/master, please push sometime." >&2
+    else
+      # Welcome to hell
+      echo "salt-ssh-nanny: Your local master branch conflicts with origin/master." >&2
+      echo "salt-ssh-nanny: Please resolve the conflicts and try again." >&2
+      exit 1
+    fi
+
+  else
+
+    # (4) For other local branches, origin/master should be an ancestor of the latest local commit
+    if ! git merge-base --is-ancestor origin/master HEAD; then
+      echo "salt-ssh-nanny: Your local branch is out of date with respect to origin/master." >&2
+      echo "salt-ssh-nanny: Please rebase, or specify '-f' to force execution as-is." >&2
+      exit 1
+    fi
+
+  fi
+
+  # (5) Fetch the private pillar if needed and fast-forward
   (
     cd pillar/private
     if repo_needs_fetch; then
       git fetch --all
-      # The private pillar will normally only have a 'master' branch.
-      # Bomb out if it won't fast-forward; that should be enough nannying ;)
+      # Try to fast-forward -- this will fail if the local branch conflicts or local tree is dirty
+      # (having a dirty tree is only a problem if the local branch needs to be updated)
+      set +e
       git merge --ff-only origin/master
-    fi
-  )
-
-  # Check (1)
-  # Irrespective of which local branch we're on, the latest origin/master should
-  # be an ancestor of the latest local commit
-  if ! git merge-base --is-ancestor origin/master HEAD; then
-    echo "salt-ssh-nanny: Your local branch is out of date with respect to origin/master." >&2
-    echo "salt-ssh-nanny: Please rebase, or specify '-f' to force execution as-is." >&2
-    exit 1
-  fi
-
-  # Check (2)
-  # If we're on master, the local repo probably shouldn't be dirty
-  if [ "$(git rev-parse --abbrev-ref HEAD)" = 'master' ] && [ -n "$(git status -s .)" ]; then
-    echo "salt-ssh-nanny: Your local master branch is dirty." >&2
-    echo "salt-ssh-nanny: Please commit/stash/whatever, or specify '-f' to force execution as-is." >&2
-    exit 1
-  fi
-
-  (
-    cd pillar/private
-      if [ "$(git rev-parse --abbrev-ref HEAD)" = 'master' ] && [ -n "$(git status -s .)" ]; then
-        echo "salt-ssh-nanny: Your private pillar local master branch is dirty." >&2
-        echo "salt-ssh-nanny: Please commit/stash/whatever, or specify '-f' to force execution as-is." >&2
+      failed=$?
+      set -e
+      if [ "$failed" != 0 ]; then
+        echo "salt-ssh-nanny: The private pillar is out of date or dirty and can't fast-forward." >&2
+        echo "salt-ssh-nanny: Please resolve the conflicts and try again, or specify '-f' to force execution." >&2
         exit 1
       fi
+    fi
   )
 
 fi
