@@ -21,6 +21,8 @@ automatic_reboot: 'true'
 extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values below
   - name: release-201611
     uwsgi_port: 3040
+  - name: 528-codelist-529-extension-merge
+    uwsgi_port: 3041
 # Add a new branch with the name of the branch, and increment the port number.
 # Currently adding a new port number requires a manual uwsgi restart (ie. the
 # reload in highstate will fail, so you will need to ssh and run "service uwsgi
