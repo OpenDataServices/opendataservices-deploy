@@ -113,7 +113,7 @@ if [ "$nanny" = 'yes' ]; then
 
     # If we're behind origin/master, fast-forward master
     # (and if that fails, you've been abusing the master branch)
-    if git merge-base --is-ancestor origin/master HEAD; then
+    if git merge-base --is-ancestor HEAD origin/master; then
       set +e
       git merge --ff-only origin/master
       failed=$?
@@ -124,7 +124,7 @@ if [ "$nanny" = 'yes' ]; then
         exit 1
       fi
     # If we're ahead of master, that's ok but we need to maintain situational awareness ;)
-    elif git merge-base --is-ancestor HEAD origin/master; then
+    elif git merge-base --is-ancestor origin/master HEAD; then
       echo "salt-ssh-nanny: This is a polite reminder: you are ahead of origin/master, please push sometime." >&2
     else
       # Welcome to hell
