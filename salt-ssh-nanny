@@ -2,7 +2,7 @@
 
 ###############################################################################
 #
-# salt-ssh-nanny
+scriptname='salt-ssh-nanny'
 #
 # Nannying wrapper script for salt-ssh
 # David Spencer, Open Data Services Co-operative
@@ -84,10 +84,10 @@ if [ "$nanny" = 'yes' ]; then
 
   # (1) Ensure that we're in the deploy repo's root directory
   if [ ! -d '.git' ]; then
-    echo "salt-ssh-nanny: You're not in the deploy repo root directory." >&2
+    echo "${scriptname}: You're not in the deploy repo root directory." >&2
     exit 2
   elif [ ! -f '.git/HEAD' ]; then
-    echo "salt-ssh-nanny: Are you sure this is a git repo?" >&2
+    echo "${scriptname}: Are you sure this is a git repo?" >&2
     exit 2
   fi
   # Looks like a git repo, so remember whether we are on the master branch
@@ -96,8 +96,8 @@ if [ "$nanny" = 'yes' ]; then
 
   # (2) Fetch the deploy repo if needed
   if repo_needs_fetch; then
+    echo "${scriptname}: Updating from $(git remote get-url origin)"
     git fetch --all --prune
-    git remote update
   fi
 
 
@@ -106,8 +106,8 @@ if [ "$nanny" = 'yes' ]; then
     # (3) Keep the master branch tidy
     # We shouldn't have a dirty local tree if we're on master (i.e. deploying to live)
     if [ "$onmaster" = 'yes' ] && [ -n "$(git status -s .)" ]; then
-      echo "salt-ssh-nanny: Your local tree is dirty." >&2
-      echo "salt-ssh-nanny: Please commit/stash/whatever, or specify '-f' to force execution as-is." >&2
+      echo "${scriptname}: Your local tree is dirty." >&2
+      echo "${scriptname}: Please commit/stash/whatever, or specify '-f' to force execution as-is." >&2
       exit 1
     fi
 
@@ -119,17 +119,17 @@ if [ "$nanny" = 'yes' ]; then
       failed=$?
       set -e
       if [ "$failed" != 0 ]; then
-        echo "salt-ssh-nanny: Your local master branch can't fast-forward to sync with origin/master." >&2
-        echo "salt-ssh-nanny: Please resolve the conflicts and try again." >&2
+        echo "${scriptname}: Your local master branch can't fast-forward to sync with origin/master." >&2
+        echo "${scriptname}: Please resolve the conflicts and try again." >&2
         exit 1
       fi
     # If we're ahead of master, that's ok but we need to maintain situational awareness ;)
     elif git merge-base --is-ancestor origin/master HEAD; then
-      echo "salt-ssh-nanny: This is a polite reminder: you are ahead of origin/master, please push sometime." >&2
+      echo "${scriptname}: This is a polite reminder: you are ahead of origin/master, please push sometime." >&2
     else
       # Welcome to hell
-      echo "salt-ssh-nanny: Your local master branch conflicts with origin/master." >&2
-      echo "salt-ssh-nanny: Please resolve the conflicts and try again." >&2
+      echo "${scriptname}: Your local master branch conflicts with origin/master." >&2
+      echo "${scriptname}: Please resolve the conflicts and try again." >&2
       exit 1
     fi
 
@@ -137,8 +137,8 @@ if [ "$nanny" = 'yes' ]; then
 
     # (4) For other local branches, origin/master should be an ancestor of the latest local commit
     if ! git merge-base --is-ancestor origin/master HEAD; then
-      echo "salt-ssh-nanny: Your local branch is out of date with respect to origin/master." >&2
-      echo "salt-ssh-nanny: Please rebase, or specify '-f' to force execution as-is." >&2
+      echo "${scriptname}: Your local branch is out of date with respect to origin/master." >&2
+      echo "${scriptname}: Please rebase, or specify '-f' to force execution as-is." >&2
       exit 1
     fi
 
@@ -148,6 +148,7 @@ if [ "$nanny" = 'yes' ]; then
   (
     cd pillar/private
     if repo_needs_fetch; then
+      echo "${scriptname}: Updating from $(git remote get-url origin)"
       git fetch --all
       # Try to fast-forward -- this will fail if the local branch conflicts or local tree is dirty
       # (having a dirty tree is only a problem if the local branch needs to be updated)
@@ -156,8 +157,8 @@ if [ "$nanny" = 'yes' ]; then
       failed=$?
       set -e
       if [ "$failed" != 0 ]; then
-        echo "salt-ssh-nanny: The private pillar is out of date or dirty and can't fast-forward." >&2
-        echo "salt-ssh-nanny: Please resolve the conflicts and try again, or specify '-f' to force execution." >&2
+        echo "${scriptname}: The private pillar is out of date or dirty and can't fast-forward." >&2
+        echo "${scriptname}: Please resolve the conflicts and try again, or specify '-f' to force execution." >&2
         exit 1
       fi
     fi
