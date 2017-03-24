@@ -41,13 +41,14 @@ set_lc_all:
     - name: /etc/default/locale
 
 
-{% macro cove(name, giturl, branch, djangodir, user, uwsgi_port, servername=None, schema_url_ocds=None) %}
+{% macro cove(name, giturl, branch, djangodir, user, uwsgi_port, servername=None, schema_url_ocds=None, app='cove') %}
 
 
 {% set extracontext %}
 djangodir: {{ djangodir }}
 uwsgi_port: {{ uwsgi_port }}
 branch: {{ branch }}
+app: {{ app }}
 {% if schema_url_ocds %}
 schema_url_ocds: {{ schema_url_ocds }}
 {% else %}
@@ -175,5 +176,6 @@ MAILTO:
     djangodir='/home/'+user+'/cove-'+branch.name+'/',
     uwsgi_port=branch.uwsgi_port,
     servername=branch.servername if 'servername' in branch else None,
+    app=branch.app if 'app' in branch else 'cove',
     user=user) }}
 {% endfor %}

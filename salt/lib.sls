@@ -100,12 +100,16 @@
 
 {{ letsencrypt(servername, serveraliases) }}
 
+{% endif %}
+
 # https-enabled config has two files: the main .conf file is just
 # boilerplate from _common.conf, the service-specific config is in an
 # Apache-included file <name>.conf.include.
 #   Note 1, the include does not get linked into sites-enabled.
 #   Note 2, ideally we would use a Jinja include to create a proper
 #           standalone conf file, but that doesn't work in salt-ssh.
+
+{% if https %}
 
 /etc/apache2/sites-available/{{ name }}:
   file.managed:
@@ -145,6 +149,7 @@
       {% endif %}
         {{ extracontext | indent(8) }}
 
+{% if https == 'yes' or https == 'force' %}
 # For HTTPS we reload apache again after getting certificates 
 extra_reload_{{ servername }}:
   # Ensure apache running, and reload if any of the conf files change
@@ -153,6 +158,7 @@ extra_reload_{{ servername }}:
     - running
     - enable: True
     - reload: True
+{% endif %}
 
 # Create a symlink from sites-enabled to enable the config
 /etc/apache2/sites-enabled/{{ name }}:
@@ -160,7 +166,9 @@ extra_reload_{{ servername }}:
     - target: /etc/apache2/sites-available/{{ name }}
     - require:
       - file: /etc/apache2/sites-available/{{ name }}
+      {% if https == 'yes' or https == 'force' %}
       - service: extra_reload_{{ servername }}
+      {% endif %}
     - makedirs: True
     - watch_in:
       - service: apache2
