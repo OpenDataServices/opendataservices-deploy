@@ -166,6 +166,7 @@ MAILTO:
     djangodir='/home/'+user+'/cove/',
     uwsgi_port=3031,
     servername=pillar.cove.servername if 'servername' in pillar.cove else None,
+    app=pillar.cove.app if 'app' in pillar.cove else 'cove',
     user=user) }}
 
 {% for branch in pillar.extra_cove_branches %}

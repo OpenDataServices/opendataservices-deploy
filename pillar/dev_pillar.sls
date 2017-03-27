@@ -12,6 +12,7 @@ cove:
   ocds_redirect: False
   larger_uwsgi_limits: True
   uwsgi_as_limit: 1800
+  app: cove_ocds
 org_ids:
   piwik:
     url: '//mon.opendataservices.coop/piwik/'
