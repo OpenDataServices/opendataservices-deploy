@@ -126,7 +126,7 @@ icingaweb2:
 
 https://github.com/Icinga/icingaweb2.git:
   git.latest:
-    - rev: v2.4.0
+    - rev: v2.4.1
     - target: /usr/share/icingaweb2/
 
 /etc/icingaweb2/:
