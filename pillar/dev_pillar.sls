@@ -22,8 +22,6 @@ automatic_reboot: 'true'
 extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values below
   - name: release-201611
     uwsgi_port: 3040
-  - name: 528-codelist-529-extension-merge
-    uwsgi_port: 3041
   - name: 602-convert-upload
     uwsgi_port: 3042
     app: cove_iati
