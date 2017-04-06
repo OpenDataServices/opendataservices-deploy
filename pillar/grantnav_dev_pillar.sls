@@ -4,8 +4,7 @@ grantnav:
   server_size: small
   branches:
     - master
-    - iteration07.5
-    #- 352-remove-start-over
+    - iteration07.6
   dataselections:
     - all
     - acceptable_license_valid
