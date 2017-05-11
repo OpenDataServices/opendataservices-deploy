@@ -9,12 +9,12 @@ grantnav:
       branch: 'iteration07.6'
       dataselection: acceptable_license_valid
     current:
-      datadate: '2017-04-04'
+      datadate: '2017-05-09'
       branch: 'iteration07.6'
       dataselection: acceptable_license_valid
     old:
-      datadate: '2016-12-01_2'
-      branch: 'iteration07.4'
+      datadate: '2017-04-04'
+      branch: 'iteration07.6'
       dataselection: acceptable_license_valid
   piwik:
     url: '//mon.opendataservices.coop/piwik/'
