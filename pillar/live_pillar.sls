@@ -10,3 +10,4 @@ cove:
   ocds_redirect: True
   larger_uwsgi_limits: True
   uwsgi_as_limit: 3000
+  app: cove_ocds

@@ -1,4 +1,4 @@
-default_branch: master
+default_branch: live
 cove:
   servername: dataquality.threesixtygiving.org
   https: 'force'
