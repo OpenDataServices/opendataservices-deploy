@@ -1,7 +1,9 @@
 User-agent: *
-# Disallow 1.0 because we want the equivalent /latest indexed instead
+# Disallow 1.1 because we want the equivalent /latest indexed instead
+Disallow: /1.1
 Disallow: /1.0
 # Disallow known dev sites
+Disallow: /1.1-dev
 Disallow: /1.0-dev
 
 # Different config for Googlebot, as that supports Allows (so we can restrict more)
