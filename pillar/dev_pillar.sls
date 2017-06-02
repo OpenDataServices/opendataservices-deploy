@@ -31,6 +31,9 @@ extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values 
   - name: release-201705
     uwsgi_port: 3045
     app: cove_ocds
+  - name: iati-dev
+    uwsgi_port: 3047
+    app: cove_iati
 # Add a new branch with the name of the branch, and increment the port number.
 # Currently adding a new port number requires a manual uwsgi restart (ie. the
 # reload in highstate will fail, so you will need to ssh and run "service uwsgi
