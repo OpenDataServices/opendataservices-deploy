@@ -7,6 +7,8 @@
 
 git@opendataservices.plan.io:standardsupport-registry.data_threesixtygiving_org.git:
   git.latest:
+    - force_fetch: True
+    - force_reset: True
     - rev: master
     - target: /home/{{ user }}/web/
     - user: {{ user }}
