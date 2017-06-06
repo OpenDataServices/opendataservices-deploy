@@ -66,6 +66,7 @@ schema_url_ocds: null
 {% else %}
 {{ apache(user+'.conf',
     name=name+'.conf',
+    servername=servername if servername else 'default',
     extracontext=extracontext) }}
 {% endif %}
 
