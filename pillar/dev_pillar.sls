@@ -28,6 +28,9 @@ extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values 
   - name: 635-sort-xml
     uwsgi_port: 3044
     app: cove_iati
+  - name: release-201705
+    uwsgi_port: 3045
+    app: cove_ocds
   - name: iati-dev
     uwsgi_port: 3047
     app: cove_iati
