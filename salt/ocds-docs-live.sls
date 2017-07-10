@@ -31,7 +31,7 @@
 # 
 # # Symlink the version number
 # ssh root@live2.default.opendataservices.uk0.bigv.io \
-#   -c "rm /home/ocds-docs/web/${VER}; ln -sf ${VER}-${DATE}-${SEQ} /home/ocds-docs/web/${VER}"
+#   "rm /home/ocds-docs/web/${VER}; ln -sf ${VER}-${DATE}-${SEQ} /home/ocds-docs/web/${VER}"
 #
 # See also:
 #   salt/apache/ocds-docs-live.conf ("set live_versions = [...]")
