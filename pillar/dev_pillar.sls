@@ -20,18 +20,10 @@ org_ids:
 cove_url: http://cove.cove-live-ocds.default.opendataservices.uk0.bigv.io/
 automatic_reboot: 'true'
 extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values below
-  - name: release-201611
-    uwsgi_port: 3040
-  - name: 602-convert-upload
-    uwsgi_port: 3042
-    app: cove_iati
-  - name: 635-sort-xml
-    uwsgi_port: 3044
-    app: cove_iati
   - name: release-201705
     uwsgi_port: 3045
     app: cove_ocds
-  - name: iati-dev
+  - name: master
     uwsgi_port: 3047
     app: cove_iati
     servername: iati.cove.opendataservices.coop

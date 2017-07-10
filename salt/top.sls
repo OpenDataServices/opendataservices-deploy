@@ -55,6 +55,7 @@ base:
 
   'cove-dev':
      - cove_dev_other_schemas
+     - cove_dev_redirects
 
   'grantnav-dev*':
     - grantnav
