@@ -23,6 +23,9 @@ extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values 
   - name: release-201705
     uwsgi_port: 3045
     app: cove_ocds
+  - name: ocds-dev-schema
+    uwsgi_port: 3046
+    app: cove_ocds
   - name: master
     uwsgi_port: 3047
     app: cove_iati
