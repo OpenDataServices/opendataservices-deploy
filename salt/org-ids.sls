@@ -32,7 +32,7 @@ set_lc_all:
 
 {% set name='org-ids' %}
 {% set giturl=giturl %}
-{% set branch=pillar.default_branch %}
+{% set branch=pillar.org_ids.default_branch %}
 {% set djangodir='/home/'+user+'/'+name+'/' %}
 {% set uwsgi_port=3031 %}
 

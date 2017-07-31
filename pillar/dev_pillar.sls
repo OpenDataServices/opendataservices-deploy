@@ -14,6 +14,7 @@ cove:
   uwsgi_as_limit: 1800
   app: cove_ocds
 org_ids:
+  default_branch: 'ccmd-frontend'
   piwik:
     url: '//mon.opendataservices.coop/piwik/'
     site_id: 'XXX' 
