@@ -37,10 +37,14 @@
 #   salt/apache/ocds-docs-live.conf ("set live_versions = [...]")
 #   salt/ocds-docs/include/banner_* and version-options.html
 #
+# (4) If the build should also appear on /latest/ then update the `latest`
+# branch on GitHub, and repeat the steps above for VER=latest.
+# This is necessary because some aspects of the travis build depend on the
+# branch (e.g. to construct urls correctly).
 #
-# If you've made a semantic update to the schema, that should be tagged with a
-# patch version (e.g. 1__0__1 on GitHub), and the json should be copied to
-# /home/ocds-docs/web/schema on live2.
+# (5) If you've made a semantic update to the schema, that should be tagged
+# with a patch version (e.g. 1__0__1 on GitHub), and the json should be copied
+# to /home/ocds-docs/web/schema on live2.
 
 
 include:
