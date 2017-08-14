@@ -1,3 +1,5 @@
+{% from 'lib.sls' import apache %}
+
 apache2:
   # Ensure that  apache is installed
   pkg:
@@ -30,3 +32,6 @@ substitute:
     - contents_pillar: htpasswd
     - makedirs: True
 {% endif %}
+
+# Ensure 000-default conf exists, so it's obvious when we've typo'd something
+{{ apache('000-default.conf') }}
