@@ -93,7 +93,7 @@ schema_url_ocds: null
     - python: /usr/bin/python3
     - user: {{ user }}
     - system_site_packages: False
-    - requirements: {{ djangodir }}requirements.txt
+    - requirements: {{ djangodir }}requirements{{ '_iati' if app=='cove_iati' else '' }}.txt
     - require:
       - pkg: cove-deps
       - git: {{ giturl }}{{ djangodir }}
