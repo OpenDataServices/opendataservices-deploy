@@ -268,7 +268,7 @@ subdomain: '{{ deploy }}'
 {% endfor %}
 
 {{ apache('grantnav_default.conf',
-    name='000-default.conf') }}
+    name='000-0grantnav.conf') }}
 
 
 /etc/apache2/mods-available/mpm_event.conf:
