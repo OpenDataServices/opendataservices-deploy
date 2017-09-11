@@ -9,11 +9,11 @@ grantnav:
       branch: 'iteration07.6'
       dataselection: acceptable_license_valid
     current:
-      datadate: '2017-08-08'
+      datadate: '2017-09-06'
       branch: 'iteration07.6'
       dataselection: acceptable_license_valid
     old:
-      datadate: '2017-06-07'
+      datadate: '2017-08-08'
       branch: 'iteration07.6'
       dataselection: acceptable_license_valid
   piwik:
