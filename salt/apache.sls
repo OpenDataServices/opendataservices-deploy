@@ -33,5 +33,9 @@ substitute:
     - makedirs: True
 {% endif %}
 
+/var/www/html/robots.txt:
+  file.managed:
+    - source: salt://apache/robots_dev.txt
+
 # Ensure 000-default conf exists, so it's obvious when we've typo'd something
 {{ apache('000-default.conf') }}

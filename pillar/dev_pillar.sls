@@ -1,5 +1,6 @@
 # Values used only on the dev servers
 default_branch: 'master'
+dev_robots_txt: True
 # URL that OCDS /validator proxies to
 ocds_cove_backend: http://cove.cove-dev.default.opendataservices.uk0.bigv.io
 domain_prefix: 'dev.'
