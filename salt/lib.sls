@@ -283,4 +283,5 @@ extra_reload_{{ servername }}:
     - user: {{ user }}
     - enc: rsa
     - fingerprint: 77:d1:54:d7:33:7e:38:43:40:70:ca:2d:3a:24:05:22
+    - fingerprint_hash_type: md5
 {% endmacro %}
