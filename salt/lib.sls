@@ -40,14 +40,14 @@
     - group: users
     - mode: 644
     - require:
-      - file: user_ssh_dir
+      - file: {{ user }}_user_ssh_dir
 
 {{ user }}_user_ssh_rootkeys:
   file.append:
     - name: /home/{{ user }}/.ssh/authorized_keys
     - text: {{ salt['pillar.get']('authorized_keys') | yaml_encode }}
     - require:
-      - file: user_ssh_userkeys
+      - file: {{ user }}_user_ssh_userkeys
 
 {% endif %}
 
@@ -109,7 +109,7 @@
 #   Note 2, ideally we would use a Jinja include to create a proper
 #           standalone conf file, but that doesn't work in salt-ssh.
 
-{% if https %}
+{% if https == 'yes' or https == 'force' %}
 
 /etc/apache2/sites-available/{{ name }}:
   file.managed:
