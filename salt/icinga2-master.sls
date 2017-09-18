@@ -140,7 +140,7 @@ https://github.com/Icinga/icingaweb2.git:
     - makedirs: True
 
 rewrite:
-  apache_module.enable
+  apache_module.enabled
 
 /etc/apache2/conf-available/icingaweb2.conf:
   file.managed:
