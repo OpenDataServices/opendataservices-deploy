@@ -9,6 +9,7 @@
 include:
   - core
   - apache
+  - php
 
 # Apache and PHP setup
 
@@ -18,10 +19,6 @@ include:
           serveraliases = [ 'www.'+servername ],
           https='no') }}
 
-# Don't use php.sls, it explicitly uses php5 and we're on 16.04 php7 here :p
-php:
-  pkg.installed
-
 survey_tool_apache_php_modules:
   pkg.installed:
     - pkgs:
@@ -30,7 +27,6 @@ survey_tool_apache_php_modules:
       - php7.0-sqlite3
       - php7.0-curl
     - require:
-      - pkg: php
       - pkg: apache2
   cmd.run:
     - name: a2enmod rewrite
@@ -57,8 +53,15 @@ survey_tool_apache_php_modules:
     - require:
       - file: {{ p12path }}.b64
     - creates: {{ p12path }}
-    - runas: www-data
     - umask: 077
+
+{{ p12path }}_chgrp:
+  file.managed:
+    - name: {{ p12path }}
+    - require:
+      - cmd: {{ p12path }}
+    - group: www-data
+    - mode: 640
 
 # Pull the git repo. Force it, overwriting any substitutions (below) that will
 # probably still be there from a previous deployment.
