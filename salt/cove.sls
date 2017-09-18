@@ -15,7 +15,7 @@ include:
 {% if 'https' in pillar.cove %}  - letsencrypt{% endif %}
 
 cove-deps:
-    apache_module.enable:
+    apache_module.enabled:
       - name: proxy
       - watch_in:
         - service: apache2
@@ -31,7 +31,7 @@ cove-deps:
         - service: uwsgi
 
 remoteip:
-    apache_module.enable:
+    apache_module.enabled:
       - watch_in:
         - service: apache2
 

@@ -11,7 +11,7 @@ include:
   - uwsgi
 
 org-ids-deps:
-    apache_module.enable:
+    apache_module.enabled:
       - name: proxy
       - watch_in:
         - service: apache2

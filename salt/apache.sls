@@ -22,7 +22,7 @@ apache2:
 
 {% if 'banner_message' in pillar %}
 substitute:
-  apache_module.enable
+  apache_module.enabled
 {% endif %}
 
 # Set up a htpasswd file if its in the pillar

@@ -17,13 +17,13 @@ include:
     - user: ocds-docs
 
 mod_include:
-  apache_module.enable:
+  apache_module.enabled:
     - name: include
 
 rewrite:
-  apache_module.enable
+  apache_module.enabled
 
 mod_substitute:
-  apache_module.enable:
+  apache_module.enabled:
     - name: substitute
 
