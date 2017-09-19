@@ -46,9 +46,14 @@ set_lc_all:
 
 {% set extracontext %}
 djangodir: {{ djangodir }}
+{% if grains['osrelease'] == '16.04' %}
+uwsgi_port: null
+{% else %}
 uwsgi_port: {{ uwsgi_port }}
+{% endif %}
 branch: {{ branch }}
 app: {{ app }}
+bare_name: {{ name }}
 {% if schema_url_ocds %}
 schema_url_ocds: {{ schema_url_ocds }}
 {% else %}
@@ -176,7 +181,7 @@ MAILTO:
     giturl=giturl,
     branch=branch.name,
     djangodir='/home/'+user+'/cove-'+branch.name+'/',
-    uwsgi_port=branch.uwsgi_port,
+    uwsgi_port=branch.uwsgi_port if 'uwsgi_port' in branch else None,
     servername=branch.servername if 'servername' in branch else None,
     app=branch.app if 'app' in branch else 'cove',
     user=user) }}
