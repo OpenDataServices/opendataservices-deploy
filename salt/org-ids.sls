@@ -34,12 +34,11 @@ set_lc_all:
 {% set giturl=giturl %}
 {% set branch=pillar.org_ids.default_branch %}
 {% set djangodir='/home/'+user+'/'+name+'/' %}
-{% set uwsgi_port=3031 %}
 
 {% set extracontext %}
 djangodir: {{ djangodir }}
-uwsgi_port: {{ uwsgi_port }}
 branch: {{ branch }}
+bare_name: {{ name }}
 {% endset %}
 
 {{ apache(user+'.conf',
@@ -48,8 +47,7 @@ branch: {{ branch }}
 
 {{ uwsgi(user+'.ini',
     name=name+'.ini',
-    extracontext=extracontext,
-    port=uwsgi_port) }}
+    extracontext=extracontext) }}
 
 {{ giturl }}{{ djangodir }}:
   git.latest:
