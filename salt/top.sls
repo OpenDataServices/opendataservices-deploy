@@ -46,6 +46,9 @@ base:
     - ocds-docs-dev
     - opendataservices-website
     - temp
+    - icinga2-satellite
+
+  'dev4':
     - org-ids
     - icinga2-satellite
 
