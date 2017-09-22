@@ -3,6 +3,7 @@
 # opendataservices boxes
 #   dev:
 dev3:                dev3.default.opendataservices.uk0.bigv.io
+dev4:                dev4.default.opendataservices.uk0.bigv.io
 mon-3:               mon-3.default.opendataservices.uk0.bigv.io
 cove-dev:            cove-dev.default.opendataservices.uk0.bigv.io
 #   live:
