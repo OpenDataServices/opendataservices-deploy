@@ -19,6 +19,10 @@ org_ids:
   piwik:
     url: '//mon.opendataservices.coop/piwik/'
     site_id: 'XXX' 
+extra_org_ids_branches: #[] # remove the [] (empty list) if you re-add some values below
+  - name: fallback-link
+  - name: 133-overlapping-footer
+  - name: 148-nicer-pr-link
 cove_url: http://cove.cove-live-ocds.default.opendataservices.uk0.bigv.io/
 automatic_reboot: 'true'
 extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values below

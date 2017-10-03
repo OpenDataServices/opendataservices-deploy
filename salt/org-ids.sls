@@ -30,9 +30,8 @@ set_lc_all:
     - text: 'LC_ALL="en_GB.UTF-8"'
     - name: /etc/default/locale
 
-{% set name='org-ids' %}
-{% set giturl=giturl %}
-{% set branch=pillar.org_ids.default_branch %}
+{% macro org_ids(name, branch, giturl, user) %}
+
 {% set djangodir='/home/'+user+'/'+name+'/' %}
 
 {% set extracontext %}
@@ -136,3 +135,22 @@ collectstatic-{{name}}:
       - cmd: collectstatic-{{name}}
     - user: {{ user }}
     - group: {{ user }}
+
+{% endmacro %}
+
+
+{{ org_ids(
+    name='org-ids',
+    branch=pillar.org_ids.default_branch,
+    giturl=giturl,
+    user=user
+    ) }}
+
+{% for branch in pillar.extra_org_ids_branches %}
+{{ org_ids(
+    name='org-ids-'+branch.name,
+    branch=branch.name,
+    giturl=giturl,
+    user=user
+    ) }}
+{% endfor %}
