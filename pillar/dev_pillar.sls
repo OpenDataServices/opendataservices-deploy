@@ -42,8 +42,8 @@ extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values 
   - name: release-201709
     uwsgi_port: 3049
     app: cove_ocds
-  - name: 838-float-int
-    uwsgi_port: 3050
+  - name: 855-xml-to-spreadsheet
+    uwsgi_port: 3051
     app: cove_iati
 
 # Add a new branch with the name of the branch, and increment the port number.
