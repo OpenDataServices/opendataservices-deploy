@@ -6,6 +6,8 @@ dev3:                dev3.default.opendataservices.uk0.bigv.io
 dev4:                dev4.default.opendataservices.uk0.bigv.io
 mon-3:               mon-3.default.opendataservices.uk0.bigv.io
 cove-dev:            cove-dev.default.opendataservices.uk0.bigv.io
+cove-dev-2:          cove-dev-2.default.opendataservices.uk0.bigv.io
+
 #   live:
 live2:               live2.default.opendataservices.uk0.bigv.io
 sandstorm:           sandstorm.default.opendataservices.uk0.bigv.io
