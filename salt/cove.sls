@@ -26,6 +26,7 @@ cove-deps:
         - python-virtualenv
         - uwsgi-plugin-python3
         - gettext
+        - mercurial
       - watch_in:
         - service: apache2
         - service: uwsgi
