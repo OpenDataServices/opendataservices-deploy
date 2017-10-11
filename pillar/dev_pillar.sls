@@ -26,24 +26,12 @@ extra_org_ids_branches: #[] # remove the [] (empty list) if you re-add some valu
 cove_url: http://cove.cove-live-ocds.default.opendataservices.uk0.bigv.io/
 automatic_reboot: 'true'
 extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values below
-  - name: release-201705
-    uwsgi_port: 3045
-    app: cove_ocds
-  - name: ocds-dev-schema
-    uwsgi_port: 3046
-    app: cove_ocds
   - name: master
-    uwsgi_port: 3047
     app: cove_iati
     servername: iati.cove.opendataservices.coop
-  - name: release-201707
-    uwsgi_port: 3048
-    app: cove_ocds
   - name: release-201709
-    uwsgi_port: 3049
     app: cove_ocds
   - name: 855-xml-to-spreadsheet
-    uwsgi_port: 3051
     app: cove_iati
 
 # Add a new branch with the name of the branch, and increment the port number.
