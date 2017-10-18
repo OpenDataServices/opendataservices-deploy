@@ -5,6 +5,7 @@ grantnav:
   branches:
     - master
     - iteration07.6
+    - ni-geography
   dataselections:
     - all
     - acceptable_license_valid
@@ -12,11 +13,11 @@ grantnav:
   deploy_mode: matrix
   deploys:
     new:
-      datadate: '2017-02-03'
+      datadate: '2017-10-04'
     current:
-      datadate: '2017-01-10'
+      datadate: '2017-10-04'
     old:
-      datadate: '2016-12-01_2'
+      datadate: '2017-09-06'
   piwik:
     url: '//mon.opendataservices.coop/piwik/'
     site_id: '6'
