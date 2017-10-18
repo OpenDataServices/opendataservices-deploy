@@ -24,6 +24,7 @@ extra_org_ids_branches: #[] # remove the [] (empty list) if you re-add some valu
   - name: fallback-link
   - name: 133-overlapping-footer
   - name: 148-nicer-pr-link
+  - name: 173-display-access-details
 cove_url: http://cove.cove-live-ocds.default.opendataservices.uk0.bigv.io/
 automatic_reboot: 'true'
 extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values below
