@@ -33,6 +33,8 @@ extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values 
     servername: iati.cove.opendataservices.coop
   - name: release-201709
     app: cove_ocds
+  - name: release-201710
+    app: cove_ocds
   - name: 855-xml-to-spreadsheet
     app: cove_iati
 

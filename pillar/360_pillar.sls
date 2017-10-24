@@ -11,3 +11,5 @@ extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values 
     app: cove_360
   - name: release-201709
     app: cove_360
+  - name: release-201710
+    app: cove_360
