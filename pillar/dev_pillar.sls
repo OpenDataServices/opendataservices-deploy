@@ -24,6 +24,7 @@ extra_org_ids_branches: #[] # remove the [] (empty list) if you re-add some valu
   - name: fallback-link
   - name: 133-overlapping-footer
   - name: 148-nicer-pr-link
+  - name: 173-display-access-details
 cove_url: http://cove.cove-live-ocds.default.opendataservices.uk0.bigv.io/
 automatic_reboot: 'true'
 extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values below
@@ -31,6 +32,8 @@ extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values 
     app: cove_iati
     servername: iati.cove.opendataservices.coop
   - name: release-201709
+    app: cove_ocds
+  - name: release-201710
     app: cove_ocds
   - name: 855-xml-to-spreadsheet
     app: cove_iati
