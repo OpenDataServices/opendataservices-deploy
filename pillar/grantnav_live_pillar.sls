@@ -5,7 +5,7 @@ grantnav:
   deploy_mode: list
   deploys:
     new:
-      datadate: '2017-10-04'
+      datadate: '2017-11-06'
       branch: 'iteration07.6'
       dataselection: acceptable_license_valid
     current:
