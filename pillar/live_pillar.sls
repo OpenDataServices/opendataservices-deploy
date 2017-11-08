@@ -1,7 +1,7 @@
 # Values used only on the live servers
 default_branch: 'live'
 # URL that OCDS /validator proxies to
-ocds_cove_backend: http://cove.cove-live-ocds.default.opendataservices.uk0.bigv.io
+ocds_cove_backend: http://cove.cove-live-ocds-2.default.opendataservices.uk0.bigv.io
 cove:
   piwik:
     url: '//mon.opendataservices.coop/piwik/'
