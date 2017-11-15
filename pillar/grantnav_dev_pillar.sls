@@ -6,6 +6,7 @@ grantnav:
     - master
     - iteration07.6
     - ni-geography
+    - cabinet
   dataselections:
     - all
     - acceptable_license_valid
@@ -13,7 +14,7 @@ grantnav:
   deploy_mode: matrix
   deploys:
     new:
-      datadate: '2017-10-04'
+      datadate: '2017-11-15'
     current:
       datadate: '2017-10-04'
     old:
