@@ -5,8 +5,7 @@ grantnav:
   branches:
     - master
     - iteration07.6
-    - ni-geography
-    - cabinet
+    - ni-geography    
   dataselections:
     - all
     - acceptable_license_valid
