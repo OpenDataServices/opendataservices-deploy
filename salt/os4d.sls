@@ -66,3 +66,10 @@ os4d-makedocs:
       - virtualenv: {{ gitdir }}.ve/
     - onchanges:
       - git: {{ giturl }}
+
+{% if 'htpasswd' in pillar.os4d %}
+/etc/apache2/os4d-htpasswd:
+  file.managed:
+    - contents_pillar: os4d:htpasswd
+    - makedirs: True
+{% endif %}
