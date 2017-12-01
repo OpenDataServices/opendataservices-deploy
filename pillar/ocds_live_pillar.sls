@@ -8,4 +8,7 @@ cove:
   prefixmap: 'ocds=validator/'
   ocds_redirect: False
   google_analytics_id: 'UA-35677147-1'
-  larger_uwsgi_limits: False
+  larger_uwsgi_limits: True
+  # Note: these values supersede the much smaller values in live_pillar.sls
+  uwsgi_as_limit: 12000
+  uwsgi_harakiri: 1800

@@ -14,6 +14,7 @@ useful-shell-commands:
       - tmux
       - man-db
       - psmisc # gives us killall
+      - htop
 
 ## Security
 
