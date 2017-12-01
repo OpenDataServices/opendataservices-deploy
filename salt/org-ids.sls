@@ -25,11 +25,6 @@ org-ids-deps:
         - service: apache2
         - service: uwsgi
 
-set_lc_all:
-  file.append:
-    - text: 'LC_ALL="en_GB.UTF-8"'
-    - name: /etc/default/locale
-
 {% macro org_ids(name, branch, giturl, user) %}
 
 {% set djangodir='/home/'+user+'/'+name+'/' %}

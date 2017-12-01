@@ -109,3 +109,8 @@ MAILTO_root:
     - name: MAILTO
     - value: code@opendataservices.coop
     - user: root
+
+set_lc_all:
+  file.append:
+    - text: 'LC_ALL="en_GB.UTF-8"'
+    - name: /etc/default/locale
