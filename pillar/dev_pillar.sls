@@ -13,6 +13,8 @@ cove:
   ocds_redirect: False
   larger_uwsgi_limits: True
   uwsgi_as_limit: 1800
+  uwsgi_harakiri: 300
+  apache_uwsgi_timeout: 360
   app: cove_ocds
   iati: True
 org_ids:
