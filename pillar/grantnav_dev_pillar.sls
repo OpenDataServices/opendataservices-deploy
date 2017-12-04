@@ -5,7 +5,7 @@ grantnav:
   branches:
     - master
     - iteration07.6
-    - ni-geography    
+    - iteration08
   dataselections:
     - all
     - acceptable_license_valid
@@ -15,9 +15,9 @@ grantnav:
     new:
       datadate: '2017-11-15'
     current:
-      datadate: '2017-10-04'
+      datadate: '2017-11-06'
     old:
-      datadate: '2017-09-06'
+      datadate: '2017-10-04'
   piwik:
     url: '//mon.opendataservices.coop/piwik/'
     site_id: '6'

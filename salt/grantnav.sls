@@ -58,13 +58,6 @@ grantnav-backports-deps:
         - apache2-bin
         - apache2-data
 
-set_lc_all:
-  file.append:
-    - text: 'LC_ALL="en_GB.UTF-8"'
-    - name: /etc/default/locale
-
-
-
 
 # Macro for grantnav code files on disk
 {% macro grantnav_files(giturl, branch, djangodir, user) %}
