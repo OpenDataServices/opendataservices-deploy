@@ -10,7 +10,7 @@ grantnav:
       dataselection: acceptable_license_valid
     current:
       datadate: '2017-12-04'
-      branch: 'iteration07.6'
+      branch: 'iteration08'
       dataselection: acceptable_license_valid
     old:
       datadate: '2017-11-06'
