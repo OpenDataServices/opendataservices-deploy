@@ -39,12 +39,6 @@ remoteip:
       - watch_in:
         - service: apache2
 
-set_lc_all:
-  file.append:
-    - text: 'LC_ALL="en_GB.UTF-8"'
-    - name: /etc/default/locale
-
-
 {% macro cove(name, giturl, branch, djangodir, user, uwsgi_port, servername=None, schema_url_ocds=None, app='cove') %}
 
 
