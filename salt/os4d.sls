@@ -60,7 +60,7 @@ os4d-deps:
 
 os4d-makedocs:
   cmd.run:
-    - name: . .ve/bin/activate; cd docs; make dirhtml
+    - name: . .ve/bin/activate; cd docs; make -e SPHINXOPTS="-D todo_include_todos=0" dirhtml
     - user: {{ user }}
     - cwd: {{ gitdir }}
     - require:
