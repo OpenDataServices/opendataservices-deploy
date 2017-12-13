@@ -9,6 +9,7 @@ os4d-deps:
       - pkgs:
         - python-pip
         - python-virtualenv
+        - graphviz
 
 {% set user = 'os4d' %}
 {{ createuser(user) }}
