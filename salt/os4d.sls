@@ -9,6 +9,7 @@ os4d-deps:
       - pkgs:
         - python-pip
         - python-virtualenv
+        - graphviz
 
 {% set user = 'os4d' %}
 {{ createuser(user) }}
@@ -59,17 +60,10 @@ os4d-deps:
 
 os4d-makedocs:
   cmd.run:
-    - name: . .ve/bin/activate; cd docs; make dirhtml
+    - name: . .ve/bin/activate; cd docs; make -e SPHINXOPTS="-D todo_include_todos=0" dirhtml
     - user: {{ user }}
     - cwd: {{ gitdir }}
     - require:
       - virtualenv: {{ gitdir }}.ve/
     - onchanges:
       - git: {{ giturl }}
-
-{% if 'htpasswd' in pillar.os4d %}
-/etc/apache2/os4d-htpasswd:
-  file.managed:
-    - contents_pillar: os4d:htpasswd
-    - makedirs: True
-{% endif %}
