@@ -9,7 +9,7 @@ jobs:
         - "cd cove"
         - "pip install -r requirements_dev.txt"
         - "pip install -r requirements_iati.txt"
-        - "wget https://chromedriver.storage.googleapis.com/2.31/chromedriver_linux64.zip; unzip chromedriver_linux64.zip -d chromedriver; export PATH=$PATH:`pwd`/chromedriver"
+        - "wget https://chromedriver.storage.googleapis.com/2.33/chromedriver_linux64.zip; unzip chromedriver_linux64.zip -d chromedriver; export PATH=$PATH:`pwd`/chromedriver"
       script:
         - "CUSTOM_SERVER_URL=https://dataquality.threesixtygiving.org/ DJANGO_SETTINGS_MODULE=cove_360.settings py.test cove_360/tests_functional.py"
         - "CUSTOM_SERVER_URL=http://standard.open-contracting.org/ DJANGO_SETTINGS_MODULE=cove_ocds.settings py.test cove_ocds/tests_functional.py"
