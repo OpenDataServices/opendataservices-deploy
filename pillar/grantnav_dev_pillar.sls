@@ -13,11 +13,11 @@ grantnav:
   deploy_mode: matrix
   deploys:
     new:
-      datadate: '2017-11-06'
+      datadate: '2018-01-05'
     current:
-      datadate: '2017-11-06'
+      datadate: '2018-01-05'
     old:
-      datadate: '2017-10-04'
+      datadate: '2017-12-04'
   piwik:
     url: '//mon.opendataservices.coop/piwik/'
     site_id: '6'
