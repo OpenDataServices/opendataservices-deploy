@@ -6,10 +6,11 @@ grantnav:
     - master
     - iteration07.6
     - iteration08
+    - 381-accents
   dataselections:
-    - all
+#    - all
     - acceptable_license_valid
-    - valid
+#    - valid
   deploy_mode: matrix
   deploys:
     new:
