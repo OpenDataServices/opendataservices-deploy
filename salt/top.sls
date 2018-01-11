@@ -17,6 +17,7 @@ base:
 
   'live3':
     - icinga2-satellite
+    - os4d
 
   'cove*live*':
     - cove
