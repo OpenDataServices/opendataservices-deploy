@@ -7,6 +7,7 @@ grantnav:
     - iteration07.6
     - iteration08
     - 381-accents
+    - 387-sum-currencies
   dataselections:
 #    - all
     - acceptable_license_valid
