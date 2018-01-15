@@ -39,6 +39,8 @@ extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values 
     app: cove_ocds
   - name: release-201712
     app: cove_ocds
+  - name: release-201801
+    app: cove_ocds
   - name: 882-record-extensions
     app: cove_ocds
 
