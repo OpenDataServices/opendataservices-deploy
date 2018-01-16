@@ -4,10 +4,9 @@ grantnav:
   server_size: small
   branches:
     - master
-    - iteration07.6
     - iteration08
-    - 381-accents
     - 387-sum-currencies
+    - 382-include-GSS-codes
   dataselections:
 #    - all
     - acceptable_license_valid
