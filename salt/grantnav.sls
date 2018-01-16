@@ -156,6 +156,7 @@ djangodir: '{{ djangodir }}'
 es_index: '{{ es_index }}'
 dataselection: '{{ dataselection }}'
 datadate: '{{ deploy_info.datadate }}'
+deploy: '{{ deploy }}'
 subdomain: '{{ deploy }}.{{ dataselection }}.{{ branch }}'
 {% endset %}
 
@@ -177,11 +178,14 @@ subdomain: '{{ deploy }}.{{ dataselection }}.{{ branch }}'
 
 {{ apache('grantnav_list.conf') }}
 
-/home/grantnav/list/index.html:
+{% for public in [True, False] %}
+/home/grantnav/list/{% if public %}public{% else %}index{% endif %}.html:
   file.managed:
     - source: salt://grantnav/list.html
     - template: jinja
     - makedirs: True
+    - public: {{ public }}
+{% endfor %}
 
 
 {% else %}
@@ -215,6 +219,7 @@ djangodir: '{{ djangodir }}'
 es_index: '{{ es_index }}'
 dataselection: '{{ deploy_info.dataselection }}'
 datadate: '{{ deploy_info.datadate }}'
+deploy: '{{ deploy }}'
 subdomain: '{{ deploy }}'
 {% endset %}
 
