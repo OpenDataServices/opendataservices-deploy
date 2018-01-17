@@ -1,5 +1,5 @@
 org_ids:
-  default_branch: 'master'
+  default_branch: 'live'
   piwik:
     url: '//mon.opendataservices.coop/piwik/'
     site_id: '11' 
