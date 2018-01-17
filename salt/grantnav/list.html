@@ -6,7 +6,7 @@
 <ul>
 {% for dataselection in pillar.grantnav.dataselections %}
 <li>
-<a href="http://{% if not public %}{{pillar.htpasswd_user}}:{{pillar.htpasswd_password}}@{% endif %}{{deploy}}.{{dataselection.replace('_', '-')}}.{{branch}}.{{grains.fqdn}}/">
+<a href="http://{% if not public %}{{pillar.htpasswd_user}}:{{pillar.htpasswd_password}}@{% endif %}{{deploy}}.{{dataselection.replace('_', '-')}}.{{branch[:30]}}.{{grains.fqdn}}/">
 {{dataselection.replace('_', '-')}}
 </a>
 </li>

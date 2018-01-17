@@ -149,7 +149,8 @@ collectstatic-{{djangodir}}:
 {% for deploy, deploy_info in pillar.grantnav.deploys.items() %}
 {% for dataselection in pillar.grantnav.dataselections %}
 {% set deployment_base_name = 'grantnav_' + dataselection + '_' + branch %}
-{% set es_index = deployment_base_name + '_' + deploy_info.datadate %}
+# .lower() because elasticsearch only accepts lowercase index names
+{% set es_index = deployment_base_name.lower() + '_' + deploy_info.datadate %}
 {% set deployment_name = deployment_base_name + '_' + deploy %}
 {% set extracontext %}
 djangodir: '{{ djangodir }}'
@@ -157,7 +158,7 @@ es_index: '{{ es_index }}'
 dataselection: '{{ dataselection }}'
 datadate: '{{ deploy_info.datadate }}'
 deploy: '{{ deploy }}'
-subdomain: '{{ deploy }}.{{ dataselection }}.{{ branch }}'
+subdomain: '{{ deploy }}.{{ dataselection }}.{{ branch[:30] }}'
 {% endset %}
 
 
