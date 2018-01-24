@@ -21,10 +21,8 @@ deactivate
 
 {% if pillar.grantnav.deploy_mode == 'matrix' %}
 
-{% for branch in pillar.grantnav.branches %}
 {% for dataselection in pillar.grantnav.dataselections %}
 {{ load(dataselection, branch, pillar.grantnav.deploys[deploy].datadate, 'grantnav_'+dataselection+'_'+branch+'_'+pillar.grantnav.deploys[deploy].datadate) }}
-{% endfor %}
 {% endfor %}
 
 {% else %}

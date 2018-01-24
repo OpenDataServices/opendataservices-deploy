@@ -250,12 +250,37 @@ subdomain: '{{ deploy }}'
 #{% endfor %}
 
 {% for deploy in pillar.grantnav.deploys %}
+
+{% if pillar.grantnav.deploy_mode == 'matrix' %}
+{% for branch in pillar.grantnav.branches %}
+/home/grantnav/reload_{{ deploy }}_data_{{ branch }}.sh:
+  file.managed:
+    - source: salt://grantnav/reload_data.sh
+    - template: jinja
+    - mode: 755
+    - deploy: {{ deploy }}
+    - branch: {{ branch }}
+{% endfor %}
+
+/home/grantnav/reload_{{ deploy }}_data.sh:
+  file.managed:
+    - contents:
+      - '#!/bin/bash'
+      - set -e
+      {% for branch in pillar.grantnav.branches %}
+      - ./reload_{{ deploy }}_data_{{ branch }}.sh
+      {% endfor %}
+    - mode: 755
+    - deploy: {{ deploy }}
+
+{% else %}
 /home/grantnav/reload_{{ deploy }}_data.sh:
   file.managed:
     - source: salt://grantnav/reload_data.sh
     - template: jinja
     - mode: 755
     - deploy: {{ deploy }}
+{% endif %}
 
 /root/reload_{{ deploy }}_data.sh:
   file.managed:
