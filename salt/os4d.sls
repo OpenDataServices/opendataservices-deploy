@@ -42,7 +42,6 @@ os4d-deps:
     - system_site_packages: False
     - requirements: {{ gitdir }}pre_requirements.txt
     - require:
-      - pkg: org-ids-deps
       - git: {{ giturl }}
 
 # Then install the rest of our requirements
