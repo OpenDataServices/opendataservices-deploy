@@ -16,5 +16,5 @@ fi
 # Make a test ssh connection, as lftp doesn't output key errors so well
 # ssh -i id_rsa ocds-docs@dev3.default.opendataservices.uk0.bigv.io
 # Copy the files to the server
-$LFTP -c "set sftp:connect-program \"ssh -i id_rsa\"; connect sftp://ocds-docs:xxx@dev3.default.opendataservices.uk0.bigv.io; mirror -eR build web/$TRAVIS_BRANCH"
+$LFTP -c "set sftp:connect-program \"ssh -i id_rsa\"; connect sftp://ocds-docs:xxx@dev3.default.opendataservices.uk0.bigv.io; mirror -eR --include=assets --include-glob=?? build web/$TRAVIS_BRANCH"
 # Arguments to mirror are -R for recursive and -e to delete old files
