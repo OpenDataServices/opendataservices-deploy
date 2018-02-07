@@ -6,7 +6,6 @@ grantnav:
     - master
     - iteration08
     - 387-sum-currencies
-    - 382-include-GSS-codes
     - 356-shared-URL-shows-cookie-policy
     - 420-other-currency-changes
   dataselections:
