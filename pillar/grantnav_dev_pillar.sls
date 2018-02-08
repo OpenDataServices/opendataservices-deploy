@@ -5,8 +5,6 @@ grantnav:
   branches:
     - master
     - iteration08
-    - 387-sum-currencies
-    - 356-shared-URL-shows-cookie-policy
     - 420-other-currency-changes
   dataselections:
 #    - all
