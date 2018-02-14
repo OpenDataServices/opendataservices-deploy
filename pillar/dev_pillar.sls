@@ -31,8 +31,6 @@ extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values 
     servername: iati.cove.opendataservices.coop
   - name: release-201801
     app: cove_ocds
-  - name: 954-update-openpyxl
-    app: cove_iati
   - name: 951-improve-messages
     app: cove_ocds
 
