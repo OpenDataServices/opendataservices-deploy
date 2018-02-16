@@ -16,6 +16,7 @@ mon-2:               mon-2.default.opendataservices.uk0.bigv.io
 cove-live:           cove-live.default.opendataservices.uk0.bigv.io
 cove-live-ocds:      cove-live-ocds.default.opendataservices.uk0.bigv.io
 cove-live-ocds-2:    cove-live-ocds-2.default.opendataservices.uk0.bigv.io
+cove-live-iati:      cove-live-iati.default.opendataservices.uk0.bigv.io
 involve:             involve.default.opendataservices.uk0.bigv.io
 snapshotter:         snapshotter.default.opendataservices.uk0.bigv.io
 org-ids:             org-ids.default.opendataservices.uk0.bigv.io

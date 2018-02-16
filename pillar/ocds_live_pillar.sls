@@ -5,7 +5,6 @@ cove:
     url: '//mon.opendataservices.coop/piwik/'
     site_id: '5'
   allowedhosts: '.default.opendataservices.uk0.bigv.io,.standard.open-contracting.org'
-  prefixmap: 'ocds=validator/'
   ocds_redirect: False
   google_analytics_id: 'UA-35677147-1'
   larger_uwsgi_limits: True

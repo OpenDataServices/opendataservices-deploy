@@ -1,5 +1,4 @@
 cove:
-  prefixmap: '360=^/?'
   allowedhosts: '.threesixtygiving.org,.threesixtygiving.uk0.bigv.io'
   https: 'no'
   app: cove_360
