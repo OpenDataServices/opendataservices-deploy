@@ -207,6 +207,7 @@ subdomain: '{{ deploy }}.{{ dataselection }}.{{ branch[:30] }}'
 {% set deployment_name = deployment_base_name + '_' + deploy %}
 {% set apache_extracontext %}
 djangodir: '{{ djangodir }}'
+deploy: '{{ deploy }}'
 subdomain: '{{ deploy }}'
 {% endset %}
 
