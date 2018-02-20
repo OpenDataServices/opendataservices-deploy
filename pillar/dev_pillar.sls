@@ -29,6 +29,8 @@ extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values 
   - name: master
     app: cove_iati
     servername: iati.cove.opendataservices.coop
+  - name: downgrade-openpyxl
+    app: cove_iati
   - name: release-201801
     app: cove_ocds
   - name: 951-improve-messages
