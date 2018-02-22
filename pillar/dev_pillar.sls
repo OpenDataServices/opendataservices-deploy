@@ -35,6 +35,8 @@ extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values 
     app: cove_ocds
   - name: 951-improve-messages
     app: cove_ocds
+  - name: 952-favicon-font
+    app: cove_ocds
 
 # Add a new branch with the name of the branch, and increment the port number.
 # Currently adding a new port number requires a manual uwsgi restart (ie. the
