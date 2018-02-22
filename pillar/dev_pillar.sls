@@ -28,7 +28,7 @@ automatic_reboot: 'true'
 extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values below
   - name: master
     app: cove_iati
-    servername: iati.cove.opendataservices.coop
+    servername: iati.dev.cove.opendataservices.coop
   - name: downgrade-openpyxl
     app: cove_iati
   - name: release-201801
