@@ -17,5 +17,3 @@ extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values 
     app: cove_360
   - name: date-validation
     app: cove_360
-  - name: remove-google-doc
-    app: cove_360
