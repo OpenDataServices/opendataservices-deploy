@@ -68,6 +68,8 @@ base:
     - djangodebug
     - icinga2-satellite
 
+  'ocdsdata-test':
+    - ocdsdata
 
   # MONITORING
 

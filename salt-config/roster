@@ -7,6 +7,7 @@ dev4:                dev4.default.opendataservices.uk0.bigv.io
 mon-3:               mon-3.default.opendataservices.uk0.bigv.io
 cove-dev:            cove-dev.default.opendataservices.uk0.bigv.io
 cove-dev-2:          cove-dev-2.default.opendataservices.uk0.bigv.io
+ocdsdata-test:       ocdsdata-test.default.opendataservices.uk0.bigv.io
 
 #   live:
 live2:               live2.default.opendataservices.uk0.bigv.io
@@ -21,7 +22,6 @@ involve:             involve.default.opendataservices.uk0.bigv.io
 snapshotter:         snapshotter.default.opendataservices.uk0.bigv.io
 org-ids:             org-ids.default.opendataservices.uk0.bigv.io
 backups:             backups.backups.opendataservices.uk0.bigv.io
-find-that-charity:   find-that-charity.default.opendataservices.uk0.bigv.io
 
 # threesixtygiving boxes
 #   dev:
