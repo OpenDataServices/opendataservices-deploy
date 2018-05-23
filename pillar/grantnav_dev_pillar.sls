@@ -6,6 +6,7 @@ grantnav:
     - master
     - iteration08
     - 420-other-currency-changes
+    - gdpr-privacy-notice
   dataselections:
 #    - all
     - acceptable_license_valid
