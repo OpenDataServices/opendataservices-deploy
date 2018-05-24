@@ -5,7 +5,6 @@ grantnav:
   branches:
     - master
     - iteration08
-    - 420-other-currency-changes
     - gdpr-privacy-notice
   dataselections:
 #    - all
