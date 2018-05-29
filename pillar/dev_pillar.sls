@@ -17,6 +17,8 @@ cove:
   apache_uwsgi_timeout: 360
   app: cove_ocds
   iati: True
+registry360:
+  allowedhosts: .default.opendataservices.uk0.bigv.io
 org_ids:
   default_branch: 'master'
   piwik:
@@ -39,6 +41,8 @@ extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values 
     app: cove_iati
   - name: gdpr-privacy-notice
     app: cove_ocds
+extra_registry360_branches: #[] # remove the [] (empty list) if you re-add some values below
+  - name: 14778_new_registry_page
 
 # Add a new branch with the name of the branch, and increment the port number.
 # Currently adding a new port number requires a manual uwsgi restart (ie. the

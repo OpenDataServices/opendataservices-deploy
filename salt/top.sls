@@ -54,6 +54,7 @@ base:
     - org-ids
     - icinga2-satellite
     - os4d
+    - registry360
 
   'cove*dev*':
     - cove
