@@ -4,8 +4,7 @@ grantnav:
   server_size: small
   branches:
     - master
-    - iteration08
-    - gdpr-privacy-notice
+    - iteration13
   dataselections:
 #    - all
     - acceptable_license_valid
