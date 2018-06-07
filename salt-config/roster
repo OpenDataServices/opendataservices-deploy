@@ -22,6 +22,7 @@ involve:             involve.default.opendataservices.uk0.bigv.io
 snapshotter:         snapshotter.default.opendataservices.uk0.bigv.io
 org-ids:             org-ids.default.opendataservices.uk0.bigv.io
 backups:             backups.backups.opendataservices.uk0.bigv.io
+ocdsdata:            195.201.163.242
 
 # threesixtygiving boxes
 #   dev:

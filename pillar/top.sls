@@ -48,4 +48,5 @@ base:
      - tmp_pillar
      - private.dev_pillar
 
-
+  'ocdsdata*':
+     - private.ocdsdata_pillar

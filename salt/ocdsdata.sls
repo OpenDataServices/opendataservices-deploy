@@ -1,12 +1,30 @@
 {% from 'lib.sls' import createuser %}
 
+# Set up the server
+
+/etc/motd:
+  file.managed:
+    - source: salt://system/ocdsdata_motd
+
+ocdsdata-prerequisites  :
+  pkg.installed:
+    - pkgs:
+      - python-pip
+      - python3-pip
+      - python3-virtualenv
+      - virtualenv
+      - postgresql-10
+      - tmux
+      - sqlite3
+      - strace
+
 {% set user = 'ocdsdata' %}
 {{ createuser(user) }}
 
 {% set giturl = 'https://github.com/open-contracting/ocdsdata.git' %}
 
-{% set ocdsdatadir = '/home/' + user + '/ocdsdata/' %}
-
+{% set userdir = '/home/' + user %}
+{% set ocdsdatadir = userdir + '/ocdsdata/' %}
 
 {{ giturl }}{{ ocdsdatadir }}:
   git.latest:
@@ -18,16 +36,6 @@
     - require:
       - pkg: git
 
-{{ ocdsdatadir }}.ve/-pip:
-  virtualenv.managed:
-    - name: {{ ocdsdatadir }}.ve/
-    - python: /usr/bin/python3
-    - user: {{ user }}
-    - system_site_packages: False
-    - pip_pkgs: pip==9.0.3
-    - require:
-      - git: {{ giturl }}{{ ocdsdatadir }}
-
 {{ ocdsdatadir }}.ve/:
   virtualenv.managed:
     - python: /usr/bin/python3
@@ -36,25 +44,32 @@
     - cwd: {{ ocdsdatadir }}
     - requirements: {{ ocdsdatadir }}requirements.txt
     - require:
-      - virtualenv: {{ ocdsdatadir }}.ve/-pip
       - git: {{ giturl }}{{ ocdsdatadir }}
-
-ocdsdata:
-  cmd.run:
-    - name: wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-
-  pkgrepo.managed:
-    - humanname: Postgres
-    - name: deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main
-    - file: /etc/apt/sources.list.d/postgres.list
-
-  pkg.installed:
-    - pkgs:
-      - postgresql-10
 
   postgres_user.present:
     - name: ocdsdata
+    - password: {{ pillar.ocdsdata.postgres.ocdsdata.password }}
 
   postgres_database.present:
     - name: ocdsdata
+
+{{ userdir }}/.pgpass:
+  file.managed:
+    - source: salt://postgres/ocdsdata_.pgpass
+    - template: jinja
+    - user: ocdsdata
+    - group: ocdsdata
+    - mode: 0400
+
+/etc/postgresql/10/main/pg_hba.conf:
+  file.managed:
+    - source: salt://postgres/ocdsdata_pg_hba.conf
+
+createdatabase-{{ ocdsdatadir }}:
+    cmd.run:
+      - name: . .ve/bin/activate; python ocdsdata-cli --createdatabase
+      - user: {{ user }}
+      - cwd: {{ ocdsdatadir }}
+      - require:
+        - virtualenv: {{ ocdsdatadir }}.ve/
 
