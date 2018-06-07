@@ -14,7 +14,9 @@ ocdsdata-prerequisites  :
       - python3-virtualenv
       - virtualenv
       - postgresql-10
-      - screen
+      - tmux
+      - sqlite3
+      - strace
 
 {% set user = 'ocdsdata' %}
 {{ createuser(user) }}
