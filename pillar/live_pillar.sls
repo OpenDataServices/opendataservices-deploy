@@ -14,3 +14,5 @@ cove:
   # (which is defined in ocds_live_pillar.sls, *not* above)
   apache_uwsgi_timeout: 1830
   app: cove_ocds
+registry360:
+  allowedhosts: data.threesixtygiving,.live.threesixtygiving.uk0.bigv.io

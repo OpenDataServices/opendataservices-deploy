@@ -105,18 +105,17 @@ MAILTO:
     - value: code@opendataservices.coop
     - user: registry360
 
-{#
 {{ registry360(
     name='registry360',
     giturl=giturl,
-    branch=pillar.default_branch,
+    branch='master',
     djangodir='/home/'+user+'/registry360/',
     uwsgi_port=3031,
     servername=pillar.registry360.servername if 'servername' in pillar.registry360 else None,
     app=pillar.registry360.app if 'app' in pillar.registry360 else 'registry360',
     user=user) }}
-#}
 
+{% if 'extra_registry360_branches' in pillar %}
 {% for branch in pillar.extra_registry360_branches %}
 {{ registry360(
     name='registry360-'+branch.name,
@@ -128,3 +127,4 @@ MAILTO:
     app=branch.app if 'app' in branch else 'registry360',
     user=user) }}
 {% endfor %}
+{% endif %}
