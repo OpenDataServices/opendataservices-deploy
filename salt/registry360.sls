@@ -39,7 +39,7 @@ remoteip:
 
 {% set extracontext %}
 djangodir: {{ djangodir }}
-{% if grains['osrelease'] == '16.04' %}
+{% if grains['osrelease'] == '16.04' or grains['osrelease'] == '18.04' %}
 uwsgi_port: null
 {% else %}
 uwsgi_port: {{ uwsgi_port }}
@@ -110,7 +110,7 @@ MAILTO:
     giturl=giturl,
     branch='14778_new_registry_page',
     djangodir='/home/'+user+'/registry360/',
-    uwsgi_port=3031,
+    uwsgi_port=None,
     servername=pillar.registry360.servername if 'servername' in pillar.registry360 else None,
     app=pillar.registry360.app if 'app' in pillar.registry360 else 'registry360',
     user=user) }}
