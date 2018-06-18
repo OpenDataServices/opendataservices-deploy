@@ -108,7 +108,7 @@ MAILTO:
 {{ registry360(
     name='registry360',
     giturl=giturl,
-    branch='master',
+    branch='14778_new_registry_page',
     djangodir='/home/'+user+'/registry360/',
     uwsgi_port=3031,
     servername=pillar.registry360.servername if 'servername' in pillar.registry360 else None,
