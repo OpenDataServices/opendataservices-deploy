@@ -1,16 +1,20 @@
 icinga2:
+  {% if grains['osrelease'] != '18.04' %}
   pkgrepo.managed:
     - ppa: formorer/icinga
     - require_in:
       pkg: icinga2
+  {% endif %}
   pkg.installed:
     - pkgs:
       - icinga2
       - nagios-plugins
       - nagios-plugins-contrib
     - refresh: True
+  {% if grains['osrelease'] != '18.04' %}
     - require:
       - pkgrepo: icinga2
+  {% endif %}
   service:
     - running
     - enable: True
@@ -41,4 +45,10 @@ icinga2:
   file.patch:
     - source: salt://icinga/check_memory_new_free_output.patch
     - hash: md5=d7f464052b3114f90948c0488df30b25
+{% endif %}
+
+{% if grains['osrelease'] == '18.04' %}
+/etc/icinga2/repository.d/:
+  file.directory:
+    - makedirs: True
 {% endif %}

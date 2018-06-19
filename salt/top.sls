@@ -29,7 +29,7 @@ base:
 
   'data-360-live':
     - registry360
-    #- icinga2-satellite
+    - icinga2-satellite
 
   'involve':
     - survey-tool-live
