@@ -10,6 +10,8 @@
 # Wait approximately 1 minute, then, on the master:
 #   icinga2 node update-config
 #   service icinga2 restart
+# Note that this last step doesn't work for an 18.04 satellite. Instead we must
+# manually make copies of files in /etc/icinga2/repository.d/ on the master.
 
 include:
   - icinga2-base
