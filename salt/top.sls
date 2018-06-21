@@ -75,6 +75,10 @@ base:
   'ocdsdata*':
     - ocdsdata
 
+  'standard-search':
+    - standard-search
+#    - icinga2-satellite
+
   # MONITORING
 
   'mon*':
