@@ -29,6 +29,8 @@ base:
   'org-ids':
      - org-ids_pillar
      - private.org-ids_pillar
+  'standard-search':
+     - private.standard_search_pillar
   '*360*':
      - 360_pillar
   '*360-live':
