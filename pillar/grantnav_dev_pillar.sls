@@ -5,6 +5,7 @@ grantnav:
   branches:
     - master
     - iteration13
+    - 461-explain-search
   dataselections:
 #    - all
     - acceptable_license_valid
