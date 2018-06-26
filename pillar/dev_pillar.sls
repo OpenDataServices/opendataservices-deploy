@@ -43,6 +43,8 @@ extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values 
     app: cove_ocds
   - name: 1020-addfields-guidance
     app: cove_ocds
+  - name: 1030-xml-comma-array
+    app: cove_iati
 
 extra_registry360_branches: #[] # remove the [] (empty list) if you re-add some values below
   - name: 14778_new_registry_page
