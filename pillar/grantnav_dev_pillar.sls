@@ -4,8 +4,7 @@ grantnav:
   server_size: small
   branches:
     - master
-    - iteration13
-    - 461-explain-search
+    - iteration14
   dataselections:
 #    - all
     - acceptable_license_valid

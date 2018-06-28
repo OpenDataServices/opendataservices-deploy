@@ -6,3 +6,4 @@ salt-config/pki
 pillar/private
 ssh_log
 .ve
+.idea/
