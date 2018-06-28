@@ -33,16 +33,6 @@ extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values 
     servername: iati.dev.cove.opendataservices.coop
   - name: downgrade-openpyxl
     app: cove_iati
-  - name: release-201801
-    app: cove_ocds
-  - name: 951-improve-messages
-    app: cove_ocds
-  - name: 979-203
-    app: cove_iati
-  - name: gdpr-privacy-notice
-    app: cove_ocds
-  - name: 1020-addfields-guidance
-    app: cove_ocds
   - name: 1030-xml-comma-array
     app: cove_iati
 
