@@ -5,7 +5,6 @@
 dev3:                dev3.default.opendataservices.uk0.bigv.io
 dev4:                dev4.default.opendataservices.uk0.bigv.io
 mon-3:               mon-3.default.opendataservices.uk0.bigv.io
-cove-dev:            cove-dev.default.opendataservices.uk0.bigv.io
 cove-dev-2:          cove-dev-2.default.opendataservices.uk0.bigv.io
 ocdsdata-test:       ocdsdata-test.default.opendataservices.uk0.bigv.io
 
@@ -15,10 +14,8 @@ live3:               live3.default.opendataservices.uk0.bigv.io
 sandstorm:           sandstorm.default.opendataservices.uk0.bigv.io
 mon-2:               mon-2.default.opendataservices.uk0.bigv.io
 cove-live:           cove-live.default.opendataservices.uk0.bigv.io
-cove-live-ocds:      cove-live-ocds.default.opendataservices.uk0.bigv.io
 cove-live-ocds-2:    cove-live-ocds-2.default.opendataservices.uk0.bigv.io
 cove-live-iati:      cove-live-iati.default.opendataservices.uk0.bigv.io
-involve:             involve.default.opendataservices.uk0.bigv.io
 snapshotter:         snapshotter.default.opendataservices.uk0.bigv.io
 org-ids:             org-ids.default.opendataservices.uk0.bigv.io
 backups:             backups.backups.opendataservices.uk0.bigv.io
