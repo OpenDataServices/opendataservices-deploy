@@ -21,13 +21,17 @@ registry360-deps:
         - service: apache2
     pkg.installed:
       - pkgs:
-        - libapache2-mod-proxy-uwsgi
         - python-pip
         - python-virtualenv
         - uwsgi-plugin-python3
       - watch_in:
         - service: apache2
         - service: uwsgi
+
+proxy_http:
+    apache_module.enabled:
+      - watch_in:
+        - service: apache2
 
 remoteip:
     apache_module.enabled:
