@@ -33,8 +33,8 @@ extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values 
     servername: iati.dev.cove.opendataservices.coop
   - name: downgrade-openpyxl
     app: cove_iati
-  - name: 1030-xml-comma-array
-    app: cove_iati
+  - name: test-360-package-metadata
+    app: cove_360
 
 extra_registry360_branches: #[] # remove the [] (empty list) if you re-add some values below
   - name: issue_20_add_new_fields
