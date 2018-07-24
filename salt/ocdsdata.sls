@@ -12,6 +12,8 @@ ocdsdata-prerequisites  :
       - python-pip
       - python3-pip
       - python3-virtualenv
+      - python-requests  # Needed for redash upgrades
+      - python-semver # Needed for redash upgrades
       - virtualenv
       - postgresql-10
       - tmux
@@ -67,9 +69,47 @@ ocdsdata-prerequisites  :
 
 createdatabase-{{ ocdsdatadir }}:
     cmd.run:
-      - name: . .ve/bin/activate; python ocdsdata-cli --createdatabase
+      - name: . .ve/bin/activate; python ocdsdata-cli upgrade-database
       - user: {{ user }}
       - cwd: {{ ocdsdatadir }}
       - require:
         - virtualenv: {{ ocdsdatadir }}.ve/
 
+run-redash-upgrade-nointeraction:
+  cmd.run:
+    - name: /opt/redash/current/bin/upgrade-nointeraction
+    - onlyif: 'test -e /opt/redash/current/bin/upgrade-nointeraction'
+
+/tmp/redash-bootstrap.sh:
+  cmd.run:
+    - name: wget -O /tmp/redash-bootstrap.sh https://raw.githubusercontent.com/getredash/redash/master/setup/ubuntu/bootstrap.sh; chmod u+x /tmp/redash-bootstrap.sh; /tmp/redash-bootstrap.sh
+    - unless: 'test -e /opt/redash'
+
+/etc/nginx/redash-htpasswd:
+  file.managed:
+    - source: salt://nginx/ocdsdata_htpasswd
+    - require:
+      - cmd: run-redash-upgrade-nointeraction
+      - cmd: /tmp/redash-bootstrap.sh
+
+/etc/nginx/sites-available/redash:
+  file.managed:
+    - source: salt://nginx/ocdsdata_redash
+    - require:
+      - cmd: run-redash-upgrade-nointeraction
+      - cmd: /tmp/redash-bootstrap.sh
+
+restart-nignx:
+  cmd.run:
+    - name: /etc/init.d/nginx restart
+    - require:
+      - file: /etc/nginx/redash-htpasswd
+      - file: /etc/nginx/sites-available/redash
+
+/opt/redash/current/bin/upgrade-nointeraction:
+  file.managed:
+    - source: salt://redash/upgrade-nointeraction
+    - mode: 744
+    - require:
+      - cmd: run-redash-upgrade-nointeraction
+      - cmd: /tmp/redash-bootstrap.sh
