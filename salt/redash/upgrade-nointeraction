@@ -1,4 +1,29 @@
 #!/usr/bin/env python
+#
+# This is the upgrade file https://github.com/getredash/redash/blob/master/bin/upgrade
+#
+# This version is identical to the upstream version except:
+#
+# a) show_description_and_confirm function has 3 lines that confirm the upgrade with the user and exit. These are removed.
+# This is because when running through salt, there is no human interaction.
+#
+# diff:
+#
+#  -           if not confirm("Continue with upgrade?"):
+#  -	            red("Cancelling upgrade.")
+#  -	            exit(1)
+#
+#
+# b) verify_newer_version checks release.is_newer and if not, it asks the user if they want to continue anyway.
+# In this case we don't want to continue, so we replace the human check with an exit. Now our script will only do
+# anything if there is a new version.
+#
+# result:
+#
+#    def verify_newer_version(release):
+#        if not release.is_newer(current_version()):
+#            exit(0)
+#
 import urllib
 import argparse
 import os
