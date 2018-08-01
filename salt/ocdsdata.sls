@@ -87,7 +87,7 @@ run-redash-upgrade-nointeraction:
 
 /etc/nginx/redash-htpasswd:
   file.managed:
-    - source: salt://nginx/ocdsdata_htpasswd
+    - contents_pillar: ocdsdata:redash:htpasswd:contents
     - require:
       - cmd: run-redash-upgrade-nointeraction
       - cmd: /tmp/redash-bootstrap.sh
