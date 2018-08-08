@@ -31,8 +31,6 @@ extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values 
   - name: master
     app: cove_iati
     servername: iati.dev.cove.opendataservices.coop
-  - name: downgrade-openpyxl
-    app: cove_iati
   - name: test-360-package-metadata
     app: cove_360
 
