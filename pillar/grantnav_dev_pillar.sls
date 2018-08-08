@@ -4,7 +4,6 @@ grantnav:
   server_size: small
   branches:
     - master
-    - iteration14
   dataselections:
 #    - all
     - acceptable_license_valid
@@ -12,11 +11,11 @@ grantnav:
   deploy_mode: matrix
   deploys:
     new:
-      datadate: '2018-01-05'
+      datadate: '2018-08-01'
     current:
-      datadate: '2018-01-05'
+      datadate: '2018-08-01'
     old:
-      datadate: '2017-12-04'
+      datadate: '2017-07-05'
   piwik:
     url: '//mon.opendataservices.coop/piwik/'
     site_id: '6'
