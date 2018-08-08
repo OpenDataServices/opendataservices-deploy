@@ -52,3 +52,6 @@ base:
 
   'ocdsdata*':
      - private.ocdsdata_pillar
+
+  'ocds-redash*':
+     - private.ocds_redash_pillar
