@@ -55,3 +55,6 @@ base:
 
   'ocds-redash*':
      - private.ocds_redash_pillar
+
+   'sedl-redash*':
+     - private.sedl_redash_pillar

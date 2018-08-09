@@ -78,6 +78,9 @@ base:
   'ocds-redash*':
     - ocds-redash
 
+  'sedl-redash*':
+    - sedl-redash
+
   'standard-search':
     - standard-search
 #    - icinga2-satellite
