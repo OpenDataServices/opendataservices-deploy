@@ -7,6 +7,8 @@ dev4:                dev4.default.opendataservices.uk0.bigv.io
 mon-3:               mon-3.default.opendataservices.uk0.bigv.io
 cove-dev-2:          cove-dev-2.default.opendataservices.uk0.bigv.io
 ocdsdata-test:       ocdsdata-test.default.opendataservices.uk0.bigv.io
+sedl-redash:         sedl-redash.default.opendataservices.uk0.bigv.io
+sedl-db:             sedl-db.default.opendataservices.uk0.bigv.io
 
 #   live:
 live2:               live2.default.opendataservices.uk0.bigv.io
