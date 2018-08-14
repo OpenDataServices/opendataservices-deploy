@@ -45,7 +45,7 @@ sedldb-prerequisites  :
 
   postgres_user.present:
     - name: sedldata
-    - password: {{ pillar.sedl-db.postgres.sedldata.password }}
+    - password: {{ pillar.get('sedl-db').postgres.sedldata.password }}
 
   postgres_database.present:
     - name: sedldata
