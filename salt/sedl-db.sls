@@ -26,6 +26,7 @@ sedldb-prerequisites  :
   git.latest:
     - name: {{ giturl }}
     - user: {{ user }}
+    - branch: db-setup
     - force_fetch: True
     - force_reset: True
     - target: {{ sedldatadir }}
