@@ -81,6 +81,9 @@ base:
   'sedl-redash*':
     - sedl-redash
 
+  'sedl-db*':
+    - sedl-db
+
   'standard-search':
     - standard-search
 #    - icinga2-satellite
