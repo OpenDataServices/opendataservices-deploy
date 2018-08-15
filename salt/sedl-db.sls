@@ -22,11 +22,11 @@ sedldb-prerequisites  :
 {% set userdir = '/home/' + user %}
 {% set sedldatadir = userdir + '/sedldata/' %}
 
-{{ giturl }}{{ sedldata }}:
+{{ giturl }}{{ sedldatadir }}:
   git.latest:
     - name: {{ giturl }}
     - user: {{ user }}
-    - branch: db-setup
+    - rev: db-setup
     - force_fetch: True
     - force_reset: True
     - target: {{ sedldatadir }}
