@@ -49,6 +49,7 @@ sedldb-prerequisites  :
 
   postgres_database.present:
     - name: sedldata
+    - owner: sedldata
 
 {{ userdir }}/.pgpass:
   file.managed:
