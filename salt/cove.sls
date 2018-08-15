@@ -106,7 +106,7 @@ schema_url_ocds: null
 migrate-{{name}}:
   cmd.run:
     - name: . .ve/bin/activate; python manage.py migrate --noinput
-    - user: {{ user }}
+    - runas: {{ user }}
     - cwd: {{ djangodir }}
     - require:
       - virtualenv: {{ djangodir }}.ve/
@@ -116,7 +116,7 @@ migrate-{{name}}:
 compilemessages-{{name}}:
   cmd.run:
     - name: . .ve/bin/activate; python manage.py compilemessages
-    - user: {{ user }}
+    - runas: {{ user }}
     - cwd: {{ djangodir }}
     - require:
       - virtualenv: {{ djangodir }}.ve/
@@ -126,7 +126,7 @@ compilemessages-{{name}}:
 collectstatic-{{name}}:
   cmd.run:
     - name: . .ve/bin/activate; python manage.py collectstatic --noinput
-    - user: {{ user }}
+    - runas: {{ user }}
     - cwd: {{ djangodir }}
     - require:
       - virtualenv: {{ djangodir }}.ve/
