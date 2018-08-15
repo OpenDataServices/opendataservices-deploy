@@ -33,6 +33,8 @@ extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values 
     servername: iati.dev.cove.opendataservices.coop
   - name: test-360-package-metadata
     app: cove_360
+  - name: 959-org-file
+    app: cove_iati
 
 extra_registry360_branches: #[] # remove the [] (empty list) if you re-add some values below
   - name: issue_20_add_new_fields
