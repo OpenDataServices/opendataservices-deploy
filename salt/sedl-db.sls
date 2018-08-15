@@ -63,6 +63,10 @@ sedldb-prerequisites  :
   file.managed:
     - source: salt://postgres/sedl-db_pg_hba.conf
 
+/etc/postgresql/10/main/postgresql.conf:
+  file.managed:
+    - source: salt://postgres/sedl-db_postgresql.conf
+
 createdatabase-{{ sedldatadir }}:
     cmd.run:
       - name: . .ve/bin/activate; python sedldata upgrade
