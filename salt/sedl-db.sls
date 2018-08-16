@@ -67,10 +67,16 @@ sedldb-prerequisites  :
   file.managed:
     - source: salt://postgres/sedl-db_postgresql.conf
 
+env_db_uri:
+  environ.setenv:
+    - name: DB_URI
+    - value: postgresql://sedldata:{{ pillar.get('sedl-db').postgres.sedldata.password }}@localhost:5432/sedldata
+    - update_minion: True
+
 createdatabase-{{ sedldatadir }}:
-    cmd.run:
-      - name: . .ve/bin/activate; sedldata upgrade
-      - user: {{ user }}
-      - cwd: {{ sedldatadir }}
-      - require:
-        - virtualenv: {{ sedldatadir }}.ve/
+  cmd.run:
+    - name: . .ve/bin/activate; pip install -e .; sedldata upgrade
+    - user: {{ user }}
+    - cwd: {{ sedldatadir }}
+    - require:
+      - virtualenv: {{ sedldatadir }}.ve/
