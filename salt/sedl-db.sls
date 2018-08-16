@@ -69,7 +69,7 @@ sedldb-prerequisites  :
 
 createdatabase-{{ sedldatadir }}:
     cmd.run:
-      - name: . .ve/bin/activate; python sedldata upgrade
+      - name: . .ve/bin/activate; sedldata upgrade
       - user: {{ user }}
       - cwd: {{ sedldatadir }}
       - require:
