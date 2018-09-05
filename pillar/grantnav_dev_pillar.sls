@@ -4,7 +4,7 @@ grantnav:
   server_size: small
   branches:
     - master
-    - 450_accents_search_fix
+    - 479_search_titles_and_desc
   dataselections:
 #    - all
     - acceptable_license_valid
