@@ -21,7 +21,7 @@ ocdsdata-prerequisites  :
 {% set user = 'ocdsdata' %}
 {{ createuser(user) }}
 
-{% set giturl = 'https://github.com/open-contracting/ocdsdata.git' %}
+{% set giturl = 'https://github.com/open-contracting/kingfisher.git' %}
 
 {% set userdir = '/home/' + user %}
 {% set ocdsdatadir = userdir + '/ocdsdata/' %}
@@ -53,6 +53,11 @@ ocdsdata-prerequisites  :
   postgres_database.present:
     - name: ocdsdata
 
+postgres_readonlyuser_create:
+  postgres_user.present:
+    - name: ocdsdatareadonly
+    - password: {{ pillar.ocdsdata.postgres.ocdsdatareadonly.password }}
+
 {{ userdir }}/.pgpass:
   file.managed:
     - source: salt://postgres/ocdsdata_.pgpass
@@ -65,10 +70,44 @@ ocdsdata-prerequisites  :
   file.managed:
     - source: salt://postgres/ocdsdata_pg_hba.conf
 
+{{ userdir }}/.config/ocdsdata/config.ini:
+  file.managed:
+    - source: salt://ocdsdata/config.ini
+    - user: ocdsdata
+    - group: ocdsdata
+    - makedirs: True
+
 createdatabase-{{ ocdsdatadir }}:
     cmd.run:
       - name: . .ve/bin/activate; python ocdsdata-cli upgrade-database
-      - user: {{ user }}
+      - runas: {{ user }}
       - cwd: {{ ocdsdatadir }}
       - require:
         - virtualenv: {{ ocdsdatadir }}.ve/
+        - {{ userdir }}/.config/ocdsdata/config.ini
+
+postgres_readonlyuser_setup_as_postgres:
+    cmd.run:
+      - name: >
+            psql
+            -c "REVOKE ALL ON schema public FROM public; GRANT ALL ON schema public TO ocdsdata;
+            GRANT USAGE ON schema public TO ocdsdatareadonly; GRANT SELECT ON ALL TABLES IN SCHEMA public TO ocdsdatareadonly;"
+            ocdsdata
+      - runas: postgres
+      - cwd: {{ ocdsdatadir }}
+      - require:
+        - {{ userdir }}/.pgpass
+        - postgres_readonlyuser_create
+        - {{ ocdsdatadir }}.ve/
+
+postgres_readonlyuser_setup_as_user:
+    cmd.run:
+      - name: psql -c "ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO ocdsdatareadonly;" ocdsdata
+      - runas: {{ user }}
+      - cwd: {{ ocdsdatadir }}
+      - require:
+        - {{ userdir }}/.pgpass
+        - postgres_readonlyuser_create
+        - {{ ocdsdatadir }}.ve/
+        - postgres_readonlyuser_setup_as_postgres
+
