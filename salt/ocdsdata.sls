@@ -21,7 +21,7 @@ ocdsdata-prerequisites  :
 {% set user = 'ocdsdata' %}
 {{ createuser(user) }}
 
-{% set giturl = 'https://github.com/open-contracting/ocdsdata.git' %}
+{% set giturl = 'https://github.com/open-contracting/kingfisher.git' %}
 
 {% set userdir = '/home/' + user %}
 {% set ocdsdatadir = userdir + '/ocdsdata/' %}
