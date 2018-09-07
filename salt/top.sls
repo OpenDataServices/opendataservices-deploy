@@ -73,8 +73,8 @@ base:
     - djangodebug
     - icinga2-satellite
 
-  'ocdsdata*':
-    - ocdsdata
+  'ocdskingfisher*':
+    - ocdskingfisher
 
   'ocds-redash*':
     - ocds-redash

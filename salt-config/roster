@@ -6,7 +6,7 @@ dev3:                dev3.default.opendataservices.uk0.bigv.io
 dev4:                dev4.default.opendataservices.uk0.bigv.io
 mon-3:               mon-3.default.opendataservices.uk0.bigv.io
 cove-dev-2:          cove-dev-2.default.opendataservices.uk0.bigv.io
-ocdsdata-test:       ocdsdata-test.default.opendataservices.uk0.bigv.io
+ocdskingfisher-test: ocdsdata-test.default.opendataservices.uk0.bigv.io
 sedl-redash:         sedl-redash.default.opendataservices.uk0.bigv.io
 sedl-db:             sedl-db.default.opendataservices.uk0.bigv.io
 
@@ -21,7 +21,7 @@ cove-live-iati:      cove-live-iati.default.opendataservices.uk0.bigv.io
 snapshotter:         snapshotter.default.opendataservices.uk0.bigv.io
 org-ids:             org-ids.default.opendataservices.uk0.bigv.io
 backups:             backups.backups.opendataservices.uk0.bigv.io
-ocdsdata:            195.201.163.242
+ocdskingfisher:      195.201.163.242
 ocds-redash:         ocds-redash.default.opendataservices.uk0.bigv.io
 standard-search:     standard-search.default.opendataservices.uk0.bigv.io
 
