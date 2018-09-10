@@ -50,8 +50,8 @@ base:
      - tmp_pillar
      - private.dev_pillar
 
-  'ocdsdata*':
-     - private.ocdsdata_pillar
+  'ocdskingfisher*':
+     - private.ocdskingfisher_pillar
 
   'ocds-redash*':
      - private.ocds_redash_pillar
