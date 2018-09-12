@@ -14,7 +14,7 @@ grantnav:
       dataselection: acceptable_license_valid
     old:
       datadate: '2018-08-10'
-      branch: 'iteration16'
+      branch: 'iteration17.1'
       dataselection: acceptable_license_valid
   piwik:
     url: '//mon.opendataservices.coop/piwik/'
