@@ -18,7 +18,7 @@ pip install -r requirements.txt
 deactivate
 
 # Copy data file to explorer site
-cp /home/ocdsext/collector/output_dir/data.json /home/ocdsext/explorer/extension_explorer/local_data.json
+cp /home/ocdsext/collector/output_dir/data.json /home/ocdsext/explorer/extension_explorer/data.json
 
 # Trigger reload
 touch /home/ocdsext/explorer/wsgi.py
