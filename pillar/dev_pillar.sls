@@ -38,6 +38,7 @@ extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values 
 
 extra_registry360_branches: #[] # remove the [] (empty list) if you re-add some values below
   - name: currencies_explanation
+  - name: total_value_round_up
 
 # Add a new branch with the name of the branch, and increment the port number.
 # Currently adding a new port number requires a manual uwsgi restart (ie. the
