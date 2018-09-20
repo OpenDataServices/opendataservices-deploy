@@ -37,7 +37,7 @@ extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values 
     app: cove_iati
 
 extra_registry360_branches: #[] # remove the [] (empty list) if you re-add some values below
-  - name: use_salesforce_api
+  - name: currencies_explanation
 
 # Add a new branch with the name of the branch, and increment the port number.
 # Currently adding a new port number requires a manual uwsgi restart (ie. the
