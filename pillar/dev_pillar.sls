@@ -35,6 +35,8 @@ extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values 
     app: cove_360
   - name: 959-org-file
     app: cove_iati
+  - name: 1019-no-blank-sheets
+    app: cove_ocds
 
 extra_registry360_branches: #[] # remove the [] (empty list) if you re-add some values below
   - name: update_num_publishers
