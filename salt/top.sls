@@ -39,6 +39,10 @@ base:
     - org-ids
     - icinga2-satellite
 
+  'bods':
+    - icinga2-satellite
+
+
   # STAGING
 
   'cove-staging':
