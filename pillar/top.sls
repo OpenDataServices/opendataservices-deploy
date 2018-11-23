@@ -61,3 +61,8 @@ base:
 
   'sedl-redash*':
      - private.sedl_redash_pillar
+
+  '*live-bods*':
+     - bods_live_pillar
+  '*dev-bods*':
+     - bods_live_pillar
