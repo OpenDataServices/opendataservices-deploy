@@ -39,8 +39,6 @@ extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values 
     app: cove_ocds
   - name: 1051-embedded-code-lists
     app: cove_iati
-  - name: iati-fix-links
-    app: cove_iati
 
 extra_registry360_branches: #[] # remove the [] (empty list) if you re-add some values below
   - name: update_num_publishers
