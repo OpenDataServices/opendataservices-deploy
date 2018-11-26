@@ -16,7 +16,7 @@ include:
 
 cove-deps:
     apache_module.enabled:
-      - name: proxy
+      - name: proxy proxy_uwsgi
       - watch_in:
         - service: apache2
     pkg.installed:
@@ -164,10 +164,10 @@ MAILTO:
 
 {{ cove(
     name='cove',
-    giturl=giturl,
+    giturl=pillar.cove.giturl if 'giturl' in pillar.cove else giturl,
     branch=pillar.default_branch,
     djangodir='/home/'+user+'/cove/',
-    uwsgi_port=3031,
+    uwsgi_port=pillar.cove.uwsgi_port if 'uwsgi_port' in pillar.cove else 3031,
     servername=pillar.cove.servername if 'servername' in pillar.cove else None,
     app=pillar.cove.app if 'app' in pillar.cove else 'cove',
     user=user) }}
