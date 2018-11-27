@@ -1,4 +1,4 @@
-# Values used only on the Cove OCDS server
+# Values used only on the Cove BODS server
 default_branch: 'master'
 cove:
   app: cove_project
