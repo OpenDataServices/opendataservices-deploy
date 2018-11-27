@@ -65,4 +65,4 @@ base:
   '*live-bods*':
      - bods_live_pillar
   '*dev-bods*':
-     - bods_live_pillar
+     - bods_dev_pillar
