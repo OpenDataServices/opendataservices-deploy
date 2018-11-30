@@ -105,7 +105,7 @@ schema_url_ocds: null
 
 migrate-{{name}}:
   cmd.run:
-    - name: . .ve/bin/activate; python manage.py migrate --noinput
+    - name: . .ve/bin/activate; DJANGO_SETTINGS_MODULE={{ app }}.settings python manage.py migrate --noinput
     - runas: {{ user }}
     - cwd: {{ djangodir }}
     - require:
@@ -115,7 +115,7 @@ migrate-{{name}}:
 
 compilemessages-{{name}}:
   cmd.run:
-    - name: . .ve/bin/activate; python manage.py compilemessages
+    - name: . .ve/bin/activate; DJANGO_SETTINGS_MODULE={{ app }}.settings  python manage.py compilemessages
     - runas: {{ user }}
     - cwd: {{ djangodir }}
     - require:
@@ -125,7 +125,7 @@ compilemessages-{{name}}:
 
 collectstatic-{{name}}:
   cmd.run:
-    - name: . .ve/bin/activate; python manage.py collectstatic --noinput
+    - name: . .ve/bin/activate; DJANGO_SETTINGS_MODULE={{ app }}.settings  python manage.py collectstatic --noinput
     - runas: {{ user }}
     - cwd: {{ djangodir }}
     - require:
@@ -149,7 +149,7 @@ collectstatic-{{name}}:
     - require:
       - cmd: collectstatic-{{name}}
 
-cd {{ djangodir }}; . .ve/bin/activate; SECRET_KEY="{{pillar.cove.secret_key}}" python manage.py expire_files:
+cd {{ djangodir }}; . .ve/bin/activate; DJANGO_SETTINGS_MODULE={{ app }}.settings SECRET_KEY="{{pillar.cove.secret_key}}" python manage.py expire_files:
   cron.present:
     - identifier: COVE_EXPIRE_FILES{% if name != 'cove' %}_{{ name }}{% endif %}
     - user: cove
