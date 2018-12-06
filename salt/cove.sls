@@ -90,6 +90,19 @@ schema_url_ocds: null
     - watch_in:
       - service: uwsgi
 
+# We have seen different permissions on different servers and we have seen bugs arise due to problems with the permissions.
+# Make sure the user and permissions are set correctly for the media folder and all it's contents!
+# (This in itself won't make sure permissions are correct on new files, but it will sort any existing problems)
+{{ djangodir }}/media:
+  file.directory:
+    - name: {{ djangodir }}/media
+    - user: {{ user }}
+    - dir_mode: 755
+    - file_mode: 644
+    - recurse:
+      - user
+      - mode
+
 {{ djangodir }}.ve/:
   virtualenv.managed:
     - python: /usr/bin/python3
