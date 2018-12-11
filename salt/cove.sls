@@ -1,4 +1,4 @@
-{% from 'lib.sls' import createuser, apache, uwsgi %}
+{% from 'lib.sls' import createuser, apache, uwsgi, removeapache, removeuwsgi %}
 
 {% set user = 'cove' %}
 {{ createuser(user) }}
@@ -170,6 +170,22 @@ cd {{ djangodir }}; . .ve/bin/activate; DJANGO_SETTINGS_MODULE={{ app }}.setting
     - hour: 0
 {% endmacro %}
 
+{% macro removecove(name, djangodir, app) %}
+
+{{ removeapache(name+'.conf') }}
+
+{{ removeuwsgi(name+'.ini') }}
+
+{{ djangodir }}:
+    file.absent
+
+cd {{ djangodir }}; . .ve/bin/activate; DJANGO_SETTINGS_MODULE={{ app }}.settings SECRET_KEY="{{pillar.cove.secret_key}}" python manage.py expire_files:
+  cron.absent:
+    - identifier: COVE_EXPIRE_FILES{% if name != 'cove' %}_{{ name }}{% endif %}
+    - user: cove
+
+{% endmacro %}
+
 MAILTO:
   cron.env_present:
     - value: code@opendataservices.coop
@@ -196,6 +212,14 @@ MAILTO:
     app=branch.app if 'app' in branch else 'cove',
     user=user) }}
 {% endfor %}
+
+{% for branch in pillar.old_cove_branches %}
+{{ removecove(
+    name='cove-'+branch.name,
+    djangodir='/home/'+user+'/cove-'+branch.name+'/',
+    app=branch.app) }}
+{% endfor %}
+
 
 
 # We were having problems with the Raven library for Sentry on Ubuntu 18
