@@ -216,6 +216,19 @@ extra_reload_{{ servername }}:
 {% endmacro %}
 
 
+{% macro removeapache(name) %}
+
+/etc/apache2/sites-available/{{ name }}:
+  file.absent
+
+/etc/apache2/sites-available/{{ name }}.include:
+  file.absent
+
+/etc/apache2/sites-enabled/{{ name }}:
+  file.absent
+
+{% endmacro %}
+
 
 #-----------------------------------------------------------------------
 # uwsgi
@@ -259,6 +272,16 @@ extra_reload_{{ servername }}:
 
 {% endmacro %}
 
+
+{% macro removeuwsgi(name) %}
+
+/etc/uwsgi/apps-available/{{ name }}:
+  file.absent
+
+/etc/uwsgi/apps-enabled/{{ name }}:
+  file.absent
+
+{% endmacro %}
 
 
 #-----------------------------------------------------------------------
