@@ -78,6 +78,7 @@ base:
 
   'ocdskingfisher*':
     - ocdskingfisher
+    - ocdskingfisherprocess
 
   'ocds-redash*':
     - ocds-redash
