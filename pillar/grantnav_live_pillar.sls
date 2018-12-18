@@ -6,11 +6,11 @@ grantnav:
   deploys:
     new:
       datadate: '2018-12-03'
-      branch: 'iteration20'
+      branch: 'iteration21'
       dataselection: acceptable_license_valid
     current:
       datadate: '2018-12-03'
-      branch: 'iteration20'
+      branch: 'iteration21'
       dataselection: acceptable_license_valid
     old:
       datadate: '2018-11-06'
