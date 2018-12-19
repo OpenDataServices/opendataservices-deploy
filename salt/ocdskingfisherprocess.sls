@@ -66,9 +66,10 @@ kfp_postgres_readonlyuser_create:
     - group: {{ user }}
     - mode: 0400
 
-/etc/postgresql/10/main/pg_hba.conf:
-  file.managed:
-    - source: salt://postgres/ocdskingfisher_pg_hba.conf
+# This is in ocdskingfisher.sls
+#/etc/postgresql/10/main/pg_hba.conf:
+#  file.managed:
+#    - source: salt://postgres/ocdskingfisher_pg_hba.conf
 
 {{ userdir }}/.config/ocdskingfisher-process/config.ini:
   file.managed:
@@ -110,5 +111,5 @@ kfp_postgres_readonlyuser_setup_as_user:
         - {{ userdir }}/.pgpass
         - kfp_postgres_readonlyuser_create
         - {{ ocdskingfisherdir }}.ve/
-        - postgres_readonlyuser_setup_as_postgres
+        - kfp_postgres_readonlyuser_setup_as_postgres
 
