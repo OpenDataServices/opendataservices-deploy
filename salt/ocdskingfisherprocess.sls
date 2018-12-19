@@ -1,15 +1,25 @@
-{% from 'lib.sls' import createuser %}
+{% from 'lib.sls' import createuser, uwsgi, apache %}
 
 # Set up the server
 # ... these bits are in ocdskingfisher.sls
 # ... /etc/motd:
 
+include:
+  - apache
+  - uwsgi
+
 ocdskingfisherprocess-prerequisites  :
+  apache_module.enabled:
+    - name: proxy proxy_uwsgi
+    - watch_in:
+      - service: apache2
   pkg.installed:
     - pkgs:
       - python-pip
       - python3-pip
       - python3-virtualenv
+      - libapache2-mod-proxy-uwsgi
+      - uwsgi-plugin-python3
       - virtualenv
       - postgresql-10
       - tmux
@@ -71,6 +81,10 @@ kfp_postgres_readonlyuser_create:
 #  file.managed:
 #    - source: salt://postgres/ocdskingfisher_pg_hba.conf
 
+{{ ocdskingfisherdir }}/wsgi.py:
+  file.managed:
+    - source: salt://wsgi/ocdskingfisherprocess.py
+
 {{ userdir }}/.config/ocdskingfisher-process/config.ini:
   file.managed:
     - source: salt://ocdskingfisherprocess/config.ini
@@ -113,3 +127,17 @@ kfp_postgres_readonlyuser_setup_as_user:
         - {{ ocdskingfisherdir }}.ve/
         - kfp_postgres_readonlyuser_setup_as_postgres
 
+
+{{ apache('ocdskingfisherprocess.conf',
+    name='ocdskingfisherprocess.conf',
+    servername='ocdskingfisher-dev') }}
+
+{{ uwsgi('ocdskingfisherprocess.ini',
+    name='ocdskingfisherprocess.ini',
+    port=5001) }}
+
+# Need to manually reload this service - the library code should really do this for us
+reload_uwsgi_service:
+  cmd.run:
+    - name: sleep 10; /etc/init.d/uwsgi reload
+    - order: last
