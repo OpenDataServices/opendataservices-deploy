@@ -80,7 +80,7 @@ base:
     - ocdskingfisher
     - ocdskingfisherprocess
 
-  'ocdskingfisher-live':
+  'ocdskingfisher-dev':
     - icinga2-satellite
 
   'ocds-redash*':
