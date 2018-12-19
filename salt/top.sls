@@ -76,9 +76,12 @@ base:
     - djangodebug
     - icinga2-satellite
 
-  'ocdskingfisher*':
+  'ocdskingfisher':
     - ocdskingfisher
     - ocdskingfisherprocess
+
+  'ocdskingfisher-live':
+    - icinga2-satellite
 
   'ocds-redash*':
     - ocds-redash
