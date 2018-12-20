@@ -32,3 +32,60 @@
       - git: {{ giturl }}{{ ocdskingfisherdir }}
 
 
+{% set scrapyddir = userdir + '/scrapyd/' %}
+
+{{ scrapyddir }}:
+  file.directory:
+    - makedirs: True
+    - user: {{ user }}
+    - group: {{ user }}
+
+{{ scrapyddir }}requirements.txt:
+  file.managed:
+    - source: salt://ocdskingfisherscrape/scrapyd-requirements.txt
+    - user: {{ user }}
+    - group: {{ user }}
+    - mode: 0444
+    - require:
+      - file: {{ scrapyddir }}
+
+{{ scrapyddir }}.ve/:
+  virtualenv.managed:
+    - python: /usr/bin/python3
+    - user: {{ user }}
+    - system_site_packages: False
+    - cwd: {{ scrapyddir }}
+    - requirements: {{ scrapyddir }}requirements.txt
+    - require:
+      - file: {{ scrapyddir }}requirements.txt
+
+{{ scrapyddir }}dbs:
+  file.directory:
+    - makedirs: True
+    - user: {{ user }}
+    - group: {{ user }}
+
+{{ scrapyddir }}eggs:
+  file.directory:
+    - makedirs: True
+    - user: {{ user }}
+    - group: {{ user }}
+
+{{ scrapyddir }}logs:
+  file.directory:
+    - makedirs: True
+    - user: {{ user }}
+    - group: {{ user }}
+
+{{ scrapyddir }}items:
+  file.directory:
+    - makedirs: True
+    - user: {{ user }}
+    - group: {{ user }}
+
+/home/{{ user }}/.scrapyd.conf:
+  file.managed:
+    - source: salt://ocdskingfisherscrape/scrapyd.ini
+    - template: jinja
+    - context:
+        scrapyddir: {{ scrapyddir }}
