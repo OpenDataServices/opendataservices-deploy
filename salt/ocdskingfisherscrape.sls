@@ -1,5 +1,13 @@
-{% from 'lib.sls' import createuser %}
+{% from 'lib.sls' import createuser, apache %}
 
+include:
+  - apache
+
+ocdskingfisherscrape-prerequisites  :
+  apache_module.enabled:
+    - name: proxy proxy_http
+    - watch_in:
+      - service: apache2
 
 {% set user = 'ocdskfs' %}
 {{ createuser(user) }}
@@ -99,3 +107,14 @@
     - template: jinja
     - context:
         scrapyddir: {{ scrapyddir }}
+
+kfs-apache-password:
+  cmd.run:
+    - name: rm /home/{{ user }}/htpasswd ; htpasswd -c -b /home/{{ user }}/htpasswd scrape {{ pillar.ocdskingfisherscrape.web.password }}
+    - runas: {{ user }}
+    - cwd: /home/{{ user }}
+
+{{ apache('ocdskingfisherscrape.conf',
+    name='ocdskingfisherpscrape.conf',
+    servername='ocdskingfisher-dev') }}
+
