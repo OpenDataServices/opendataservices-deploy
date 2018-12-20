@@ -89,3 +89,13 @@
     - template: jinja
     - context:
         scrapyddir: {{ scrapyddir }}
+
+/home/{{ user }}/runscrapyd.sh:
+  file.managed:
+    - source: salt://ocdskingfisherscrape/runscrapyd.sh
+    - user: {{ user }}
+    - group: {{ user }}
+    - mode: 0744
+    - template: jinja
+    - context:
+        scrapyddir: {{ scrapyddir }}
