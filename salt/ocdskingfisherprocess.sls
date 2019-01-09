@@ -39,8 +39,8 @@ ocdskingfisherprocess-prerequisites  :
     - user: {{ user }}
     - force_fetch: True
     - force_reset: True
-    - branch: dev ### This is temporary - it will soon be set to master and not changed
-    - rev: dev ### This is temporary - it will soon be set to master and not changed
+    - branch: master
+    - rev: master
     - target: {{ ocdskingfisherdir }}
     - require:
       - pkg: git
