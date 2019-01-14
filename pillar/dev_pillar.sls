@@ -46,8 +46,6 @@ extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values 
 # Do NOT just delete branches from extra_cove_branches above! Instead add them to old_cove_branches!
 # They will be removed from the dev servers.
 old_cove_branches:
-  - name: 1050-ocds-show
-    app: cove_ocds
   - name: to-libs-360
     app: cove_360
 
