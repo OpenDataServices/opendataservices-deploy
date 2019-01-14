@@ -37,6 +37,8 @@ extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values 
     app: cove_iati
   - name: 1019-no-blank-sheets
     app: cove_ocds
+  - name: 1050-ocds-show
+    app: cove_ocds
   - name: 1051-embedded-code-lists
     app: cove_iati
   - name: org-type-schema-test
