@@ -53,6 +53,12 @@ base:
   'ocdskingfisher*':
      - private.ocdskingfisher_pillar
 
+  'ocdskingfisher':
+     - ocdskingfisher_live_pillar
+
+  'ocdskingfisher-dev':
+     - ocdskingfisher_dev_pillar
+
   'ocds-redash*':
      - private.ocds_redash_pillar
 

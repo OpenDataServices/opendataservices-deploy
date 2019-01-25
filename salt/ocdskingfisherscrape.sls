@@ -8,6 +8,10 @@ ocdskingfisherscrape-prerequisites  :
     - name: proxy proxy_http
     - watch_in:
       - service: apache2
+  pkg.installed:
+    - pkgs:
+      - supervisor
+      - curl
 
 {% set user = 'ocdskfs' %}
 {{ createuser(user) }}
@@ -23,8 +27,8 @@ ocdskingfisherscrape-prerequisites  :
     - user: {{ user }}
     - force_fetch: True
     - force_reset: True
-    - branch: master-scrapy ### This is temporary - it will soon be set to master and not changed
-    - rev: master-scrapy ### This is temporary - it will soon be set to master and not changed
+    - branch: master
+    - rev: master
     - target: {{ ocdskingfisherdir }}
     - require:
       - pkg: git
@@ -98,12 +102,9 @@ ocdskingfisherscrape-prerequisites  :
     - context:
         scrapyddir: {{ scrapyddir }}
 
-/home/{{ user }}/runscrapyd.sh:
+/etc/supervisor/conf.d/scrapyd.conf:
   file.managed:
-    - source: salt://ocdskingfisherscrape/runscrapyd.sh
-    - user: {{ user }}
-    - group: {{ user }}
-    - mode: 0744
+    - source: salt://ocdskingfisherscrape/supervisor.conf
     - template: jinja
     - context:
         scrapyddir: {{ scrapyddir }}
