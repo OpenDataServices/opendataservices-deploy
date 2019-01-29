@@ -41,6 +41,8 @@ ocdskingfisher-prerequisites  :
     - user: {{ user }}
     - force_fetch: True
     - force_reset: True
+    - branch: archive
+    - rev: archive
     - target: {{ ocdskingfisherdir }}
     - require:
       - pkg: git
