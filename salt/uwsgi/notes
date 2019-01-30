@@ -1,0 +1,18 @@
+
+uwsgi sedldata.ini
+
+env = ALLOWED_HOSTS={{pillar.sedldash.allowedhosts}}
+chdir = {{ djangodir }}
+wsgi-file = wsgi.py
+
+
+apache sedldata.conf
+ServerName data.threesixtygiving.org
+ServerAdmin code@opendataservices.coop
+ServerAlias data.*.live.threesixtygiving.uk0.bigv.io
+
+
+
+sedl-db.sls
+servername=pillar.sedldash.servername if 'servername' in pillar.sedldash else None,
+app=pillar.sedldash.app if 'app' in pillar.sedldash else 'sedldash',

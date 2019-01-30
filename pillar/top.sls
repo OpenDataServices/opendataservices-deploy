@@ -64,6 +64,7 @@ base:
 
   'sedl-db':
      - private.sedl-db_pillar
+     - sedl-db_pillar
 
   'sedl-redash*':
      - private.sedl_redash_pillar
