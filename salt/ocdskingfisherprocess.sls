@@ -136,6 +136,18 @@ kfp_postgres_readonlyuser_setup_as_user:
     name='ocdskingfisherprocess.ini',
     port=5001) }}
 
+cd {{ ocdskingfisherdir }}; . .ve/bin/activate; python ocdskingfisher-process-cli check-collections --runforseconds 3540:
+  cron.present:
+    - identifier: OCDS_KINGFISHER_SCRAPE_CHECK_COLLECTIONS
+    - user: {{ user }}
+    - minute: 0
+
+cd {{ ocdskingfisherdir }}; . .ve/bin/activate; python ocdskingfisher-process-cli transform-collections --runforseconds 3540:
+  cron.present:
+    - identifier: OCDS_KINGFISHER_SCRAPE_TRANSFORM_COLLECTIONS
+    - user: {{ user }}
+    - minute: 30
+
 # Need to manually reload this service - the library code should really do this for us
 reload_uwsgi_service:
   cmd.run:
