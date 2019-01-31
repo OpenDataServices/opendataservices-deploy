@@ -13,6 +13,7 @@ Allow: /latest/$
 Allow: /latest/en
 Allow: /latest/es
 Allow: /latest/fr
+Allow: /latest/it
 Allow: /validator
 Allow: /$
 Disallow: /
