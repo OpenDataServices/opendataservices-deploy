@@ -16,4 +16,6 @@ cove:
   uwsgi_harakiri: 1800
 # This is empty as we don't use extra_cove_branches on this server.
 # Instead just change the default_branch above (that means there can only be one, but that's fine for now)
-extra_cove_branches: []
+extra_cove_branches:
+  - name: 16-oneof-validation
+    app: cove_project
