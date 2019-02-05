@@ -204,7 +204,7 @@ MAILTO:
 {% for branch in pillar.extra_cove_branches %}
 {{ cove(
     name='cove-'+branch.name,
-    giturl=giturl,
+    giturl=pillar.cove.giturl if 'giturl' in pillar.cove else giturl,
     branch=branch.name,
     djangodir='/home/'+user+'/cove-'+branch.name+'/',
     uwsgi_port=branch.uwsgi_port if 'uwsgi_port' in branch else None,

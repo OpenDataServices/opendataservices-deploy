@@ -19,3 +19,4 @@ cove:
 extra_cove_branches:
   - name: 16-oneof-validation
     app: cove_project
+    uwsgi_port: 3033
