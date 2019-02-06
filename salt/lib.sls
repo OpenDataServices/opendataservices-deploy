@@ -17,6 +17,7 @@
     - name: {{ user }}
     - home: /home/{{ user }}
     - order: 1
+    - shell: /bin/bash
 
 {% if user+'_authorized_keys' in pillar %}
 
