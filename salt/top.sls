@@ -79,6 +79,7 @@ base:
   'ocdskingfisher':
     - ocdskingfisher
     - ocdskingfisherprocess
+    - ocdskingfisherscrape
 
   'ocdskingfisher-dev':
     - icinga2-satellite
