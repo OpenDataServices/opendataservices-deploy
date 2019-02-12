@@ -59,9 +59,6 @@ base:
   'ocdskingfisher-dev':
      - ocdskingfisher_dev_pillar
 
-  'ocds-kingfisher-archive':
-     - ocdskingfisher_archive_pillar
-
   'ocds-redash*':
      - private.ocds_redash_pillar
 
