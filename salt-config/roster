@@ -24,6 +24,7 @@ org-ids:             org-ids.default.opendataservices.uk0.bigv.io
 backups:             backups.backups.opendataservices.uk0.bigv.io
 bods:                bods.default.opendataservices.uk0.bigv.io
 ocdskingfisher:      195.201.163.242
+kingfisherarchive:   195.201.195.185
 ocds-redash:         ocds-redash.default.opendataservices.uk0.bigv.io
 standard-search:     standard-search.default.opendataservices.uk0.bigv.io
 
