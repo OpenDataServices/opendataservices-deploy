@@ -102,12 +102,28 @@ createdatabase-{{ ocdskingfisherdir }}:
         - virtualenv: {{ ocdskingfisherdir }}.ve/
         - {{ userdir }}/.config/ocdskingfisher-process/config.ini
 
+kfp_postgres_schema_creation:
+    cmd.run:
+      - name: >
+            psql
+            -c "create schema if not exists views; create schema if not exists views_test;"
+            ocdskingfisherprocess
+      - runas: postgres
+      - cwd: {{ ocdskingfisherdir }}
+      - require:
+        - {{ userdir }}/.pgpass
+        - {{ ocdskingfisherdir }}.ve/
+
 kfp_postgres_readonlyuser_setup_as_postgres:
     cmd.run:
       - name: >
             psql
-            -c "REVOKE ALL ON schema public FROM public; GRANT ALL ON schema public TO ocdskfp;
-            GRANT USAGE ON schema public TO ocdskfpreadonly; GRANT SELECT ON ALL TABLES IN SCHEMA public TO ocdskfpreadonly;"
+            -c "
+            REVOKE ALL ON schema public, views, views_test FROM public;
+            GRANT ALL ON schema public, views, views_test TO ocdskfp;
+            GRANT USAGE ON schema public, views, views_test TO ocdskfpreadonly;
+            GRANT SELECT ON ALL TABLES IN SCHEMA public, views, views_test TO ocdskfpreadonly;
+            "
             ocdskingfisherprocess
       - runas: postgres
       - cwd: {{ ocdskingfisherdir }}
@@ -115,10 +131,11 @@ kfp_postgres_readonlyuser_setup_as_postgres:
         - {{ userdir }}/.pgpass
         - kfp_postgres_readonlyuser_create
         - {{ ocdskingfisherdir }}.ve/
+        - kfp_postgres_schema_creation
 
 kfp_postgres_readonlyuser_setup_as_user:
     cmd.run:
-      - name: psql -c "ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO ocdskfpreadonly;" ocdskingfisherprocess
+      - name: psql -c "ALTER DEFAULT PRIVILEGES IN SCHEMA public, views, views_test GRANT SELECT ON TABLES TO ocdskfpreadonly;" ocdskingfisherprocess
       - runas: {{ user }}
       - cwd: {{ ocdskingfisherdir }}
       - require:
@@ -126,6 +143,7 @@ kfp_postgres_readonlyuser_setup_as_user:
         - kfp_postgres_readonlyuser_create
         - {{ ocdskingfisherdir }}.ve/
         - kfp_postgres_readonlyuser_setup_as_postgres
+        - kfp_postgres_schema_creation
 
 
 {{ apache('ocdskingfisherprocess.conf',
