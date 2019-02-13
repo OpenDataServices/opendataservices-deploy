@@ -1,0 +1,1 @@
+archive ALL = (ocdskfs) rm -rf /home/ocdskfs/scrapyd/data/*
