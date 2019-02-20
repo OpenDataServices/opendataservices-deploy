@@ -166,6 +166,14 @@ cd {{ ocdskingfisherdir }}; . .ve/bin/activate; python ocdskingfisher-process-cl
     - user: {{ user }}
     - minute: 30
 
+cd {{ ocdskingfisherdir }}; . .ve/bin/activate; python ocdskingfisher-process-cli delete-collections:
+  cron.present:
+    - identifier: OCDS_KINGFISHER_SCRAPE_DELETE_COLLECTIONS
+    - user: {{ user }}
+    - minute: 30
+    - hour: 7
+    - dayweek: 6
+
 # Need to manually reload this service - the library code should really do this for us
 reload_uwsgi_service:
   cmd.run:
