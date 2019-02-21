@@ -1,1 +1,3 @@
-from ocdskingfisherprocess.web.app import app as application
+from ocdskingfisherprocess.web.app import create_app
+
+application = create_app()
