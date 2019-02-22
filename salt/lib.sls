@@ -54,7 +54,21 @@
 
 {% endmacro %}
 
+{% macro private_keys(user) %}
 
+{% for file in ['id_rsa', 'id_rsa.pub'] %}
+
+/home/{{ user }}/.ssh/{{ file }}:
+  file.managed:
+    - contents_pillar: {{ user + "_" + file.replace('.', '_') }}
+    - makedirs: True
+    - user: {{ user }}
+    - group: users
+    - mode: 600
+
+{% endfor %}
+
+{% endmacro %}
 
 #-----------------------------------------------------------------------
 # letsencrypt

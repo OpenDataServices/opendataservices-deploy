@@ -81,6 +81,7 @@ base:
     - ocdskingfisherprocess
     - ocdskingfisherscrape
     - ocdskingfisheranalyse
+    - ocdskingfisherarchive
 
   'ocdskingfisher-dev':
     - icinga2-satellite
@@ -88,6 +89,9 @@ base:
     - ocdskingfisherprocess
     - ocdskingfisherscrape
     - ocdskingfisheranalyse
+
+  'ocds-kingfisher-archive':
+    - ocdskingfisherarchive
 
   'ocds-redash*':
     - ocds-redash
