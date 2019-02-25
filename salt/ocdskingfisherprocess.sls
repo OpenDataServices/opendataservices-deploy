@@ -29,9 +29,11 @@ ocdskingfisherprocess-prerequisites  :
 {% set user = 'ocdskfp' %}
 {{ createuser(user) }}
 {% set giturl = 'https://github.com/open-contracting/kingfisher-process.git' %}
+{% set views_giturl = 'https://github.com/open-contracting/kingfisher-views.git' %}
 
 {% set userdir = '/home/' + user %}
 {% set ocdskingfisherdir = userdir + '/ocdskingfisherprocess/' %}
+{% set ocdskingfisherviewsdir = userdir + '/ocdskingfisherviews/' %}
 
 {{ giturl }}{{ ocdskingfisherdir }}:
   git.latest:
@@ -42,6 +44,18 @@ ocdskingfisherprocess-prerequisites  :
     - branch: master
     - rev: master
     - target: {{ ocdskingfisherdir }}
+    - require:
+      - pkg: git
+
+{{ views_giturl }}{{ ocdskingfisherviewsdir }}:
+  git.latest:
+    - name: {{ views_giturl }}
+    - user: {{ user }}
+    - force_fetch: True
+    - force_reset: True
+    - branch: initial-work
+    - rev: initial-work
+    - target: {{ ocdskingfisherviewsdir }}
     - require:
       - pkg: git
 
@@ -61,6 +75,16 @@ ocdskingfisherprocess-prerequisites  :
 
   postgres_database.present:
     - name: ocdskingfisherprocess
+
+{{ ocdskingfisherviewsdir }}.ve/:
+  virtualenv.managed:
+    - python: /usr/bin/python3
+    - user: {{ user }}
+    - system_site_packages: False
+    - cwd: {{ ocdskingfisherviewsdir }}
+    - requirements: {{ ocdskingfisherviewsdir }}requirements.txt
+    - require:
+      - git: {{ views_giturl }}{{ ocdskingfisherviewsdir }}
 
 kfp_postgres_readonlyuser_create:
   postgres_user.present:
