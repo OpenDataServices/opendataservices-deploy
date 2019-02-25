@@ -89,6 +89,7 @@ base:
     - ocdskingfisherprocess
     - ocdskingfisherscrape
     - ocdskingfisheranalyse
+    - ocdskingfisherarchive
 
   'ocds-kingfisher-archive':
     - ocdskingfisherarchive
