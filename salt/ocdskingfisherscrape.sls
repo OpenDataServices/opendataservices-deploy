@@ -134,12 +134,3 @@ kfs-apache-password:
     name='ocdskingfisherpscrape.conf',
     servername='ocdskingfisher-dev') }}
 
-{{ userdir }}/.pgpass:
-  file.managed:
-    - source: salt://postgres/ocdskingfisher_scrape_.pgpass
-    - template: jinja
-    - user: {{ user }}
-    - group: {{ user }}
-    - mode: 0400
-
-

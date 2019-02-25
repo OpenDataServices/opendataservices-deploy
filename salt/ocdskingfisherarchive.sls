@@ -8,3 +8,11 @@
   file.managed:
     - source: salt://ocdskingfisherarchive/archive.sudoers
     - makedirs: True
+
+{{ userdir }}/.pgpass:
+  file.managed:
+    - source: salt://postgres/ocdskingfisher_archive_.pgpass
+    - template: jinja
+    - user: {{ user }}
+    - group: {{ user }}
+    - mode: 0400
