@@ -4,6 +4,8 @@
 {{ createuser(user) }}
 {{ private_keys(user) }}
 
+{% set userdir = '/home/' + user %}
+
 /etc/sudoers.d/archive:
   file.managed:
     - source: salt://ocdskingfisherarchive/archive.sudoers
