@@ -117,6 +117,23 @@ kfp_postgres_readonlyuser_create:
     - group: {{ user }}
     - makedirs: True
 
+{{ userdir }}/logs:
+  file.directory:
+    - user: {{ user }}
+    - group: {{ user }}
+    - mode: 755
+    - makedirs: True
+
+{{ userdir }}/.config/ocdskingfisher-process/logging.json:
+  file.managed:
+    - source: salt://ocdskingfisherprocess/logging.json
+    - template: jinja
+    - user: {{ user }}
+    - group: {{ user }}
+    - makedirs: True
+    - context:
+        userdir: {{ userdir }}
+
 createdatabase-{{ ocdskingfisherdir }}:
     cmd.run:
       - name: . .ve/bin/activate; python ocdskingfisher-process-cli upgrade-database
