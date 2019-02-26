@@ -25,6 +25,7 @@ ocdskingfisherprocess-prerequisites  :
       - tmux
       - sqlite3
       - strace
+      - redis
 
 {% set user = 'ocdskfp' %}
 {{ createuser(user) }}
@@ -195,11 +196,18 @@ kfp_postgres_readonlyuser_setup_as_user:
     name='ocdskingfisherprocess.ini',
     port=5001) }}
 
+
+cd {{ ocdskingfisherdir }}; . .ve/bin/activate; python ocdskingfisher-process-cli process-redis-queue --runforseconds 3540:
+  cron.present:
+    - identifier: OCDS_KINGFISHER_PROCESS_REDIS_QUEUE
+    - user: {{ user }}
+    - minute: 0
+
 cd {{ ocdskingfisherdir }}; . .ve/bin/activate; python ocdskingfisher-process-cli check-collections --runforseconds 3540:
   cron.present:
     - identifier: OCDS_KINGFISHER_SCRAPE_CHECK_COLLECTIONS
     - user: {{ user }}
-    - minute: 0
+    - minute: 15
 
 cd {{ ocdskingfisherdir }}; . .ve/bin/activate; python ocdskingfisher-process-cli transform-collections --runforseconds 3540:
   cron.present:
