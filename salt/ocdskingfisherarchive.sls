@@ -20,16 +20,6 @@
     - require:
       - pkg: git
 
-{{ ocdskingfisherdir }}.ve/:
-  virtualenv.managed:
-    - python: /usr/bin/python3
-    - user: {{ user }}
-    - system_site_packages: False
-    - cwd: {{ ocdskingfisherdir }}
-    - requirements: {{ ocdskingfisherdir }}requirements.txt
-    - require:
-      - git: {{ giturl }}{{ ocdskingfisherdir }}
-
 /etc/sudoers.d/archive:
   file.managed:
     - source: salt://ocdskingfisherarchive/archive.sudoers
