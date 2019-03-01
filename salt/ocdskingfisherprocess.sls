@@ -54,8 +54,8 @@ ocdskingfisherprocess-prerequisites  :
     - user: {{ user }}
     - force_fetch: True
     - force_reset: True
-    - branch: initial-work
-    - rev: initial-work
+    - branch: master
+    - rev: master
     - target: {{ ocdskingfisherviewsdir }}
     - require:
       - pkg: git
@@ -222,6 +222,13 @@ cd {{ ocdskingfisherdir }}; . .ve/bin/activate; python ocdskingfisher-process-cl
     - minute: 30
     - hour: 7
     - dayweek: 6
+
+cd {{ ocdskingfisherviewsdir }}; . .ve/bin/activate; python ocdskingfisher-views-cli refresh-views >> refresh-views-log.txt; python ocdskingfisher-views-cli field-counts >> refresh-views-log.txt;:
+  cron.present:
+    - identifier: OCDS_KINGFISHER_SCRAPE_DELETE_COLLECTIONS
+    - user: {{ user }}
+    - minute: 5
+    - hour: 1
 
 # Need to manually reload this service - the library code should really do this for us
 reload_uwsgi_service:
