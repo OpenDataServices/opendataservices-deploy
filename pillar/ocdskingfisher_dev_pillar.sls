@@ -4,5 +4,4 @@ ocdskingfisherprocess:
 
 ssh_keys:
   root:
-    - robredpath
-    - 
+    - yolile 
