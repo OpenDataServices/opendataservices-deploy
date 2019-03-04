@@ -55,11 +55,15 @@ ssh:
     - watch:
       - file: /etc/ssh/sshd_config
 
-# Install authorized SSH public keys from the pillar
-/root/.ssh/authorized_keys:
-  file.managed:
-    - contents_pillar: authorized_keys
-    - makedirs: True
+# Install ODSC maintenance SSH public keys
+{% for admin in ['idlemoor','bjwebb','odscjames','kindly','bibianac','robredpath'] %}
+
+{{ admin }}_root_key:
+  ssh_auth.present:
+    - user: root
+    - source: salt://ssh_pubkeys/{{ user }}.pub
+
+{% endfor %}
 
 # Set up unattended upgrades
 unattended-upgrades:

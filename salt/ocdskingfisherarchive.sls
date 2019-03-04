@@ -38,3 +38,13 @@
     - user: {{ user }}
     - group: {{ user }}
 
+{% for user in pillar.ssh_keys.root %}
+
+{{ user }}_root_key:
+  ssh_auth.present:
+    - user: root
+    - source: salt://ssh_pubkeys/{{ user }}.pub
+
+{% endfor %}
+
+
