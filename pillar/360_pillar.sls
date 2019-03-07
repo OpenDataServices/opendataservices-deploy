@@ -7,3 +7,7 @@ extra_cove_branches: # [] # remove the [] (empty list) if you re-add some values
     app: cove_360
   - name: cove-bods-16-reword-validation
     app: cove_360
+  - name: 1131-spreadsheet-style-validation
+    app: cove_360
+  - name: master-360-data-quality-tool
+    app: cove_360
