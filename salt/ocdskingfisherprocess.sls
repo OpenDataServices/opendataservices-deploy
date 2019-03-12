@@ -223,9 +223,9 @@ cd {{ ocdskingfisherdir }}; . .ve/bin/activate; python ocdskingfisher-process-cl
     - hour: 7
     - dayweek: 6
 
-cd {{ ocdskingfisherviewsdir }}; . .ve/bin/activate; python ocdskingfisher-views-cli refresh-views >> refresh-views-log.txt; python ocdskingfisher-views-cli field-counts >> refresh-views-log.txt;:
+cd {{ ocdskingfisherviewsdir }}; . .ve/bin/activate; python ocdskingfisher-views-cli refresh-views --logfile=~/refresh-view.log; python ocdskingfisher-views-cli field-counts --threads=5 --logfile=~/refresh-view.log:
   cron.present:
-    - identifier: OCDS_KINGFISHER_SCRAPE_DELETE_COLLECTIONS
+    - identifier: OCDS_KINGFISHER_VIEWS_RUN
     - user: {{ user }}
     - minute: 5
     - hour: 1
