@@ -57,6 +57,9 @@ base:
      - ocdskingfisher_live_pillar
      - private.ocdskingfisher_live_pillar
 
+  'ocds-kingfisher-archive':
+     - ocdskingfisher_live_pillar
+
   'ocdskingfisher-dev':
      - ocdskingfisher_dev_pillar
      - private.ocdskingfisher_dev_pillar
