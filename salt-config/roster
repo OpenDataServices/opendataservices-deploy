@@ -23,8 +23,8 @@ snapshotter:              snapshotter.default.opendataservices.uk0.bigv.io
 org-ids:                  org-ids.default.opendataservices.uk0.bigv.io
 backups:                  backups.backups.opendataservices.uk0.bigv.io
 bods:                     bods.default.opendataservices.uk0.bigv.io
-ocdskingfisher:           195.201.163.242
-ocds-kingfisher-archive:  195.201.195.185
+ocdskingfisher:           process.kingfisher.open-contracting.org
+ocds-kingfisher-archive:  archive.kingfisher.open-contracting.org
 ocds-redash:              ocds-redash.default.opendataservices.uk0.bigv.io
 standard-search:          standard-search.default.opendataservices.uk0.bigv.io
 

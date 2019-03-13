@@ -92,6 +92,7 @@ base:
     - ocdskingfisherarchive
 
   'ocds-kingfisher-archive':
+    - ocdskingfisher
     - ocdskingfisherarchive
     - ocdskingfisherprocess
     - ocdskingfisheranalyse
