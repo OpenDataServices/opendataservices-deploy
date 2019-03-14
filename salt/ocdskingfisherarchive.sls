@@ -38,3 +38,30 @@
     - user: {{ user }}
     - group: {{ user }}
 
+
+{% set user = 'ocdskfp' %}
+
+ECHO 1:
+  cron.absent:
+    - identifier: OCDS_KINGFISHER_PROCESS_REDIS_QUEUE
+    - user: {{ user }}
+
+ECHO 2:
+  cron.absent:
+    - identifier: OCDS_KINGFISHER_SCRAPE_CHECK_COLLECTIONS
+    - user: {{ user }}
+
+ECHO 3:
+  cron.absent:
+    - identifier: OCDS_KINGFISHER_SCRAPE_TRANSFORM_COLLECTIONS
+    - user: {{ user }}
+
+ECHO 4:
+  cron.absent:
+    - identifier: OCDS_KINGFISHER_SCRAPE_DELETE_COLLECTIONS
+    - user: {{ user }}
+
+ECHO 5:
+  cron.absent:
+    - identifier: OCDS_KINGFISHER_VIEWS_RUN
+    - user: {{ user }}

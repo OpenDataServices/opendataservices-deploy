@@ -93,9 +93,9 @@ base:
 
   'ocds-kingfisher-archive':
     - ocdskingfisher
-    - ocdskingfisherarchive
     - ocdskingfisherprocess
     - ocdskingfisheranalyse
+    - ocdskingfisherarchive
 
   'ocds-redash*':
     - ocds-redash
