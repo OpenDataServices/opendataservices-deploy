@@ -61,7 +61,3 @@ ECHO 4:
     - identifier: OCDS_KINGFISHER_SCRAPE_DELETE_COLLECTIONS
     - user: {{ user }}
 
-ECHO 5:
-  cron.absent:
-    - identifier: OCDS_KINGFISHER_VIEWS_RUN
-    - user: {{ user }}
