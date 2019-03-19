@@ -1,5 +1,7 @@
 {% from 'lib.sls' import createuser, private_keys %}
 
+
+
 {% set user = 'archive' %}
 {{ createuser(user) }}
 {{ private_keys(user) }}
@@ -7,6 +9,7 @@
 {% set giturl = 'https://github.com/open-contracting/kingfisher-archive.git' %}
 {% set userdir = '/home/' + user %}
 {% set ocdskingfisherdir = userdir + '/ocdskingfisherarchive/' %}
+
 
 {{ giturl }}{{ ocdskingfisherdir }}:
   git.latest:

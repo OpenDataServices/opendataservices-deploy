@@ -21,7 +21,6 @@ ocdskingfisherprocess-prerequisites  :
       - libapache2-mod-proxy-uwsgi
       - uwsgi-plugin-python3
       - virtualenv
-      - postgresql-10
       - tmux
       - sqlite3
       - strace
@@ -100,11 +99,6 @@ kfp_postgres_readonlyuser_create:
     - user: {{ user }}
     - group: {{ user }}
     - mode: 0400
-
-# This is in ocdskingfisher.sls
-#/etc/postgresql/10/main/pg_hba.conf:
-#  file.managed:
-#    - source: salt://postgres/ocdskingfisher_pg_hba.conf
 
 {{ ocdskingfisherdir }}/wsgi.py:
   file.managed:

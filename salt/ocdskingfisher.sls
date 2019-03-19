@@ -11,8 +11,6 @@
 # Everything below this in this file now sets up the old Kingfisher code.
 # The new Process code is set up in salt/ocdskingfisherprocess.sls
 # When we are ready to remove the old code, everything below this line (and it's associated files and variables) can be deleted.
-# (Also, when we remove /etc/postgresql/10/main/pg_hba.conf below, uncomment it in salt/ocdskingfisherprocess.sls )
-#
 
 
 ocdskingfisher-prerequisites  :
@@ -22,7 +20,6 @@ ocdskingfisher-prerequisites  :
       - python3-pip
       - python3-virtualenv
       - virtualenv
-      - postgresql-10
       - tmux
       - sqlite3
       - strace
@@ -76,10 +73,6 @@ postgres_readonlyuser_create:
     - user: ocdskingfisher
     - group: ocdskingfisher
     - mode: 0400
-
-/etc/postgresql/10/main/pg_hba.conf:
-  file.managed:
-    - source: salt://postgres/ocdskingfisher_pg_hba.conf
 
 {{ userdir }}/.config/ocdskingfisher/config.ini:
   file.managed:
