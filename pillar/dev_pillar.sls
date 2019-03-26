@@ -31,6 +31,13 @@ extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values 
   - name: master
     app: cove_iati
     servername: iati.dev.cove.opendataservices.coop
+  - name: update-flattentool-openpyxl
+    app: cove_iati
+# Do NOT just delete branches from extra_cove_branches above! Instead add them to old_cove_branches!
+# They will be removed from the dev servers.
+old_cove_branches:
+  - name: to-libs-360
+    app: cove_360
   - name: test-360-package-metadata
     app: cove_360
   - name: 959-org-file
@@ -51,11 +58,8 @@ extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values 
     app: cove_iati
   - name: master-360-data-quality-tool
     app: cove_360
-# Do NOT just delete branches from extra_cove_branches above! Instead add them to old_cove_branches!
-# They will be removed from the dev servers.
-old_cove_branches:
-  - name: to-libs-360
-    app: cove_360
+  - name: 1051-embedded-code-lists
+    app: cove_iati
 
 
 extra_registry360_branches: #[] # remove the [] (empty list) if you re-add some values below
