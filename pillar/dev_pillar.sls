@@ -39,29 +39,7 @@ extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values 
     app: cove_iati
 # Do NOT just delete branches from extra_cove_branches above! Instead add them to old_cove_branches!
 # They will be removed from the dev servers.
-old_cove_branches:
-  - name: to-libs-360
-    app: cove_360
-  - name: test-360-package-metadata
-    app: cove_360
-  - name: 959-org-file
-    app: cove_iati
-  - name: 1019-no-blank-sheets
-    app: cove_ocds
-  - name: 1050-ocds-show
-    app: cove_ocds
-  - name: org-type-schema-test
-    app: cove_360
-  - name: 1106-xml-line-number
-    app: cove_iati
-  - name: cove-bods-16-reword-validation
-    app: cove_ocds
-  - name: 977-openpyxl-trunk
-    app: cove_iati
-  - name: master-360-data-quality-tool
-    app: cove_360
-  - name: 1051-embedded-code-lists
-    app: cove_iati
+old_cove_branches: []
 
 
 extra_registry360_branches: #[] # remove the [] (empty list) if you re-add some values below
