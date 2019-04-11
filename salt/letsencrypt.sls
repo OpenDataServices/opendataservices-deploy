@@ -6,6 +6,8 @@
 #
 #  * the version in the 16.04 repo is tragically old (0.4.1) and
 #    predates renaming to certbot, nice apache support, etc
+#  * the version in the 18.04 repo is just a alias for certbot
+#  * when we have got rid of our last 16.04 server we can just switch this to certbot
 
 letsencrypt:
   pkg.installed
