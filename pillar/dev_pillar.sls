@@ -60,3 +60,8 @@ extra_registry360_branches: #[] # remove the [] (empty list) if you re-add some 
 # $ rm /etc/apache2/sites-enabled/cove-*.conf
 # $ rm /etc/fail2ban/jail.d/uwsgi-cove-*.conf
 # $ killall uwsgi
+
+opendataservices_website:
+    https: ''
+    servername: 'dev.opendataservices.coop'
+    serveraliases: ['www.dev.opendataservices.coop']

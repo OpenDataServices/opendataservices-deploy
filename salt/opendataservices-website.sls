@@ -6,6 +6,7 @@
 include:
   - core
   - apache
+{% if 'https' in pillar.opendataservices_website and pillar.opendataservices_website.https %}  - letsencrypt{% endif %}
 
 # Create a user for this piece of work, see lib.sls for more info
 {% set user = 'opendataservices' %}
@@ -27,5 +28,4 @@ git@opendataservices.plan.io:standardsupport-co-op.website.git:
       - ssh_known_hosts: {{ user }}-opendataservices.plan.io
 
 # Set up the Apache config using macro
-{{ apache('opendataservices-website.conf') }}
-
+{{ apache('opendataservices-website.conf','','','',pillar.opendataservices_website.servername,pillar.opendataservices_website.serveraliases,pillar.opendataservices_website.https) }}
