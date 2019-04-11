@@ -28,6 +28,7 @@ ocdskingfisher-new:       95.216.243.15
 ocds-kingfisher-archive:  archive.kingfisher.open-contracting.org
 ocds-redash:              ocds-redash.default.opendataservices.uk0.bigv.io
 standard-search:          standard-search.default.opendataservices.uk0.bigv.io
+ocdskit-web:              ocdskit-web.default.opendataservices.uk0.bigv.io
 
 # threesixtygiving boxes
 #   dev:

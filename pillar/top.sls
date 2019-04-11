@@ -50,6 +50,9 @@ base:
      - tmp_pillar
      - private.dev_pillar
 
+  'ocdskit-web':
+     - ocdskit_web_pillar
+
   'ocdskingfisher*':
      - private.ocdskingfisher_pillar
 
