@@ -56,10 +56,24 @@ ssh:
       - file: /etc/ssh/sshd_config
 
 # Install authorized SSH public keys from the pillar
-/root/.ssh/authorized_keys:
+root_authorized_keys_file:
   file.managed:
+    - name: /root/.ssh/authorized_keys
     - contents_pillar: authorized_keys
     - makedirs: True
+
+{% if 'extra_authorized_keys' in pillar %}
+
+root_authorized_keys_file_append:
+  file.append:
+    - name: /root/.ssh/authorized_keys
+    - text: {{ salt['pillar.get']('extra_authorized_keys') | yaml_encode }}
+    - require:
+      - file: root_authorized_keys_file
+
+{% endif %}
+
+
 
 # Set up unattended upgrades
 unattended-upgrades:
