@@ -9,3 +9,5 @@ cove:
   servername: iati.cove.opendataservices.coop
   allowedhosts: '.iati.cove.opendataservices.coop'
   app: cove_iati
+  https: 'force'
+
