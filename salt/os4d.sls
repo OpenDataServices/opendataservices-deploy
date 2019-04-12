@@ -16,11 +16,11 @@ os4d-deps:
 {{ planio_keys(user) }}
 
 {% set gitdir = '/home/' + user + '/handbook/' %}
-{% set giturl = 'git@opendataservices.plan.io:opendataservices/box.git' %}
+{% set giturl = 'https://github.com/OpenDataServices/os4d.git' %}
 
 {{ giturl }}:
   git.latest:
-    - rev: {{ pillar.default_branch }}
+    - rev: master
     - target: {{ gitdir }}
     - user: {{ user }}
     - submodules: True
@@ -28,7 +28,6 @@ os4d-deps:
     - force_reset: True
     - require:
       - pkg: git
-      - ssh_known_hosts: {{ user }}-opendataservices.plan.io
 
 # Set up the Apache config using macro
 {{ apache('os4d-handbook.conf') }}
