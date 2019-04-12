@@ -3,6 +3,7 @@
 include:
   - core
   - apache
+  - letsencrypt
 
 os4d-deps:
     pkg.installed:
@@ -30,7 +31,7 @@ os4d-deps:
       - pkg: git
 
 # Set up the Apache config using macro
-{{ apache('os4d-handbook.conf') }}
+{{ apache('os4d-handbook.conf', servername='os4d.opendataservices.coop', https='force') }}
 
 # Install pre requirements
 {{ gitdir }}.ve/-pre:

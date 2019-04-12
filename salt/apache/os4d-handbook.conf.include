@@ -1,0 +1,23 @@
+# vi: ft=apache
+
+
+    {% set documentroot='/home/os4d/handbook/docs/_build/dirhtml/' %}
+    DocumentRoot {{ documentroot }}
+    DirectoryIndex index.html
+
+    {{ banner }}
+
+    {% if pillar.dev_robots_txt %}
+    Alias /robots.txt "/var/www/html/robots.txt"
+    <Location "/robots.txt">
+            Order allow,deny
+            Allow from all
+    </Location>
+    {% endif %}
+
+    <Directory {{ documentroot }}>
+        Require all granted
+
+        Options Indexes FollowSymLinks
+        RedirectMatch 404 .git
+    </Directory>
