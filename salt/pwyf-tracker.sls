@@ -1,3 +1,15 @@
+# After the initial install of this state, run:
+#   pipenv run flask createsuperuser
+#   # ^ with user admin and password from private pillar
+#   pipenv run flask setup orgs import_data/2018_index_organisations.csv
+#   pipenv run flask iati download
+#   pipenv run flask iati import
+#   pipenv run flask iati test
+# See https://github.com/pwyf/aid-transparency-tracker/blob/master/README.rst for more info.
+#
+# You also need to follow this tutorial:
+# https://www.paulox.net/2019/03/13/how-to-use-uwsgi-with-python-3-7-in-ubuntu-18-x
+#
 {% from 'lib.sls' import createuser, apache, uwsgi %}
 
 {% set user = 'pwyf_tracker' %}
@@ -20,12 +32,9 @@ pwyf_tracker-deps:
       - name: proxy
       - watch_in:
         - service: apache2
-    pkgrepo.managed:
-      - ppa: deadsnakes/ppa
-      - require_in:
-        pkg: pwyf_tracker-deps
     pkg.installed:
       - pkgs:
+        - libapache2-mod-proxy-uwsgi
         - python-pip
         - uwsgi-plugin-python3
         - python3.7
@@ -34,10 +43,13 @@ pwyf_tracker-deps:
         - service: apache2
         - service: uwsgi
 
-proxy_http:
+pwyf_tracker-uwsgi:
     apache_module.enabled:
+      - name: proxy_uwsgi
       - watch_in:
         - service: apache2
+      - require:
+        - pkg: pwyf_tracker-deps
 
 remoteip:
     apache_module.enabled:
@@ -60,7 +72,7 @@ pwyf_tracker:
 
 
 {% set extracontext %}
-site_url: pillar.pwyf_tracker.site_url
+site_url: {{ pillar.pwyf_tracker.site_url }}
 flaskdir: {{ flaskdir }}
 {% if grains['osrelease'] == '16.04' %}{# or grains['osrelease'] == '18.04' %}#}
 uwsgi_port: null
@@ -98,6 +110,7 @@ bare_name: {{ name }}
     - user: {{ user }}
     - force_fetch: True
     - force_reset: True
+    - submodules: True
     - require:
       - pkg: git
     - watch_in:
@@ -114,6 +127,8 @@ bare_name: {{ name }}
       - file: set_lc_all # required to avoid unicode errors for the "schema" library
     - watch_in:
       - service: apache2
+    - onchanges:
+      - git: {{ giturl }}{{ flaskdir }}
 
 npm install:
   cmd.run:
@@ -125,6 +140,8 @@ npm install:
       - file: set_lc_all # required to avoid unicode errors for the "schema" library
     - watch_in:
       - service: apache2
+    - onchanges:
+      - git: {{ giturl }}{{ flaskdir }}
 
 npm run build:
   cmd.run:
@@ -134,6 +151,8 @@ npm run build:
       - cmd: npm install
     - watch_in:
       - service: apache2
+    - onchanges:
+      - git: {{ giturl }}{{ flaskdir }}
     
 {{ flaskdir }}/.env:
   file.managed:
@@ -150,15 +169,6 @@ pipenv run flask db upgrade:
       - file: {{ flaskdir }}/.env
       - postgres_user: pwyf_tracker
       - postgres_database: pwyf_tracker
-    - watch_in:
-      - service: apache2
-
-pipenv run flask createsuperuser:
-  cmd.run:
-    - runas: {{ user }}
-    - cwd: {{ flaskdir }}
-    - require:
-      - cmd: pipenv run flask db upgrade
     - watch_in:
       - service: apache2
 {% endmacro %}
