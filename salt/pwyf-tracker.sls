@@ -12,6 +12,7 @@ include:
   - core
   - apache
   - uwsgi
+  - postgres10
 {% if 'https' in pillar.pwyf_tracker %}  - letsencrypt{% endif %}
 
 pwyf_tracker-deps:
@@ -48,6 +49,12 @@ pipenv:
     - user: {{ user }}
     - require:
       - pkg: pwyf_tracker-deps
+
+pwyf_tracker:
+  postgres_user.present:
+    - password: {{ pillar.pwyf_tracker.postgres.pwyf_tracker.password }}
+
+  postgres_database.present: []
 
 {% macro pwyf_tracker(name, giturl, branch, flaskdir, user, uwsgi_port, servername=None) %}
 
@@ -141,6 +148,8 @@ pipenv run flask db upgrade:
     - cwd: {{ flaskdir }}
     - require:
       - file: {{ flaskdir }}/.env
+      - postgres_user: pwyf_tracker
+      - postgres_database: pwyf_tracker
     - watch_in:
       - service: apache2
 
