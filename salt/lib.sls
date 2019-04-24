@@ -111,6 +111,35 @@
 {% set servername=grains.fqdn %}
 {% endif %}
 
+# We always copy this .include file. For many sites it is empty. That is fine.
+# But for sites we want to use SSL on, you need an .include file.
+# And we want to avoid duplicating config between the X.conf and the X.conf.include file.
+# So always copy the .include file, and then it is available to be used via an Include statement, whatever SSL mode is selected.
+# (see salt/apache/opendataservices-website.conf for an example)
+/etc/apache2/sites-available/{{ name }}.include:
+  file.managed:
+    - source: salt://apache/{{ conffile }}.include
+    - template: jinja
+    - makedirs: True
+    - watch_in:
+      - service: apache2
+    - context:
+        socket_name: {{ socket_name }}
+        https: "{{ https }}"
+      {% if 'banner_message' in pillar %}
+        banner: |
+          # Inflate and deflate here to ensure that the message is not
+          # compressed when we do the substitution, but is afterwards.
+          # I think this may be adding some extra overhead, but for our
+          # dev site this shouldn't be noticeable.
+          AddOutputFilterByType INFLATE;SUBSTITUTE;DEFLATE text/html
+          Substitute "s|<body([^>]*)>|<body$1><div style=\"background-color:red; color: black; width: 100%; text-align: center; font-weight: bold; position: fixed; right: 0; left: 0; z-index: 1031\">{{ pillar.banner_message }}</div>|i"
+        {% else %}
+        banner: ''
+      {% endif %}
+        {{ extracontext | indent(8) }}
+
+
 {% if https == 'yes' or https == 'force' or https == 'certonly' %}
 
 {{ letsencrypt(servername, serveraliases) }}
@@ -137,28 +166,6 @@
         https: "{{ https }}"
         {{ extracontext | indent(8) }}
 
-/etc/apache2/sites-available/{{ name }}.include:
-  file.managed:
-    - source: salt://apache/{{ conffile }}.include
-    - template: jinja
-    - makedirs: True
-    - watch_in:
-      - service: apache2
-    - context:
-        socket_name: {{ socket_name }}
-        https: "{{ https }}"
-      {% if 'banner_message' in pillar %}
-        banner: |
-          # Inflate and deflate here to ensure that the message is not
-          # compressed when we do the substitution, but is afterwards.
-          # I think this may be adding some extra overhead, but for our
-          # dev site this shouldn't be noticeable.
-          AddOutputFilterByType INFLATE;SUBSTITUTE;DEFLATE text/html
-          Substitute "s|<body([^>]*)>|<body$1><div style=\"background-color:red; color: black; width: 100%; text-align: center; font-weight: bold; position: fixed; right: 0; left: 0; z-index: 1031\">{{ pillar.banner_message }}</div>|i"
-        {% else %}
-        banner: ''
-      {% endif %}
-        {{ extracontext | indent(8) }}
 
 # For HTTPS we reload apache again after getting certificates
 extra_reload_{{ servername }}:
@@ -197,6 +204,7 @@ extra_reload_{{ servername }}:
         servername: {{ servername }}
         serveraliases: {{ serveraliases }}
         https: "{{ https }}"
+        includefile: "/etc/apache2/sites-available/{{ name }}.include"
       {% if 'banner_message' in pillar %}
         banner: |
           # Inflate and deflate here to ensure that the message is not
