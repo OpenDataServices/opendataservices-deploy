@@ -39,12 +39,11 @@ extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values 
     app: cove_iati
   - name: openpyxl-commit
     app: cove_iati
-  - name: 1159-ocds-group-validation
-    app: cove_ocds
 # Do NOT just delete branches from extra_cove_branches above! Instead add them to old_cove_branches!
 # They will be removed from the dev servers.
-old_cove_branches: []
-
+old_cove_branches: #[] # remove the [] (empty list) if you re-add some values below
+  - name: 1159-ocds-group-validation
+    app: cove_ocds
 
 extra_registry360_branches: #[] # remove the [] (empty list) if you re-add some values below
   - name: update_num_publishers
