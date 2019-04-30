@@ -124,6 +124,10 @@ base:
     - standard-search
 #    - icinga2-satellite
 
+  'pwyf-dev':
+    - pwyf-tracker
+#    - icinga2-satellite
+
   # MONITORING
 
   'mon*':
@@ -138,3 +142,4 @@ base:
   'backups':
     - icinga2-satellite
     - backups
+

@@ -87,3 +87,7 @@ base:
      - bods_live_pillar
   '*dev-bods*':
      - bods_dev_pillar
+
+  'pwyf-dev':
+     - pwyf_tracker
+     - private.pwyf_tracker
