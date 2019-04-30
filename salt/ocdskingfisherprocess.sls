@@ -25,6 +25,7 @@ ocdskingfisherprocess-prerequisites  :
       - sqlite3
       - strace
       - redis
+      - libpq-dev
 
 {% set user = 'ocdskfp' %}
 {{ createuser(user) }}
