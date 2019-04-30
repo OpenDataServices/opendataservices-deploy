@@ -1,7 +1,10 @@
-# After the initial install of this state, run:
+# After the initial install of this state, run on the server:
+#   sudo su pwyf_tracker
+#   cd ~/pwyf_tracker/
+#   export PATH="$HOME/.local/bin:$PATH"
 #   pipenv run flask createsuperuser
 #   # ^ with user admin and password from private pillar
-#   pipenv run flask setup orgs import_data/2018_index_organisations.csv
+#   pipenv run flask setup orgs import_data/uk_aid_review_organisations.csv
 #   pipenv run flask iati download
 #   pipenv run flask iati import
 #   pipenv run flask iati test
