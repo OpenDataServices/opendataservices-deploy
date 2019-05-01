@@ -224,6 +224,7 @@ cd {{ ocdskingfisherviewsdir }}; . .ve/bin/activate; python ocdskingfisher-views
     - user: {{ user }}
     - minute: 5
     - hour: 1
+    - dayweek: 6
 
 # Need to manually reload this service - the library code should really do this for us
 reload_uwsgi_service:
