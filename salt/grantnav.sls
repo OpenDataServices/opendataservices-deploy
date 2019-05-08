@@ -7,7 +7,7 @@
 {% set user = 'grantnav' %}
 {{ createuser(user) }}
 
-{% set giturl = 'https://github.com/OpenDataServices/grantnav.git' %}
+{% set giturl = 'https://github.com/ThreeSixtyGiving/grantnav.git' %}
 
 include:
   - core
