@@ -1,0 +1,55 @@
+
+
+        DocumentRoot {{ djangodir }}
+
+        {{ banner }}
+
+        <Location "/">
+                {% if deploy != 'current' %}
+                AuthType Basic
+                AuthName "Authentication Required"
+                AuthUserFile "/etc/apache2/htpasswd"
+                Require valid-user
+                {% endif %}
+                # I tried to switch from using uwsgi over a numbered port, to
+                # over a unix socket (to avoid problems with picking the port
+                # numbers for multiple instances).
+                #
+                # Ideally we want to use the uwsgi protocol over this socket:
+                #   ProxyPass unix:/tmp/uwsgi_{{ socket_name }}.sock|uwsgi://{{ subdomain }}/
+                # but we can't do this due to this bug:
+                # https://bugs.launchpad.net/ubuntu/+source/uwsgi/+bug/1501854
+                # So, for now we use the uwsgi's less efficient http-socket
+                ProxyPreserveHost On
+                ProxyPass unix:/tmp/uwsgi_{{ socket_name }}.sock|http://{{ subdomain }}/
+        </Location>
+
+        {% if pillar.dev_robots_txt %}
+        Alias /robots.txt "/var/www/html/robots.txt"
+        <Location "/robots.txt">
+                ProxyPass !
+                Order allow,deny
+                Allow from all
+                SetHandler None
+        </Location>
+        {% endif %}
+
+        # Static content needed by Django
+        Alias /static "{{ djangodir }}static/"
+        <Location "/static">
+                ProxyPass !
+                Order allow,deny
+                Allow from all
+                SetHandler None
+        </Location>
+        # Static content uploaded by users
+        Alias /media "{{ djangodir }}media/"
+        <Location "/media">
+                ProxyPass !
+                Order allow,deny
+                Allow from all
+                SetHandler None
+        </Location>
+        <Directory {{ djangodir }}>
+                Require all granted
+        </Directory>

@@ -96,6 +96,12 @@ grantnav-backports-deps:
       - file: /etc/apache2/ssl
 
 
+/etc/apache2/mods-enabled/ssl.load:
+  file.symlink:
+    - target: /etc/apache2/mods-available/ssl.load
+    - makedirs: True
+    - watch_in:
+      - service: apache2
 
 # Macro for grantnav code files on disk
 {% macro grantnav_files(giturl, branch, djangodir, user) %}
