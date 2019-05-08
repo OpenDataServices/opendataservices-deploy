@@ -59,6 +59,44 @@ grantnav-backports-deps:
         - apache2-data
 
 
+/etc/apache2/ssl:
+  file.directory:
+    - file_mode: 700
+    - dir_mode: 700
+    - user: www-data
+    - group: www-data
+
+/etc/apache2/ssl/ssl.2019.cert:
+  file.managed:
+    - source: salt://private/grantnav/ssl.2019.cert
+    - user: www-data
+    - group: www-data
+    - mode: 700
+    - require:
+      - file: /etc/apache2/ssl
+
+
+/etc/apache2/ssl/ssl.2019.intermediate:
+  file.managed:
+    - source: salt://private/grantnav/ssl.2019.intermediate
+    - user: www-data
+    - group: www-data
+    - mode: 700
+    - require:
+      - file: /etc/apache2/ssl
+
+
+/etc/apache2/ssl/ssl.2019.key:
+  file.managed:
+    - source: salt://private/grantnav/ssl.2019.key
+    - user: www-data
+    - group: www-data
+    - mode: 700
+    - require:
+      - file: /etc/apache2/ssl
+
+
+
 # Macro for grantnav code files on disk
 {% macro grantnav_files(giturl, branch, djangodir, user) %}
 
