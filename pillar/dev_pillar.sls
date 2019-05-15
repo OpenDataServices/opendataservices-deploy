@@ -46,7 +46,7 @@ old_cove_branches: #[] # remove the [] (empty list) if you re-add some values be
     app: cove_ocds
 
 extra_registry360_branches: #[] # remove the [] (empty list) if you re-add some values below
-  - name: update_num_publishers
+  - name: 40-fix-order-bug
 
 # Add a new branch with the name of the branch, and increment the port number.
 # Currently adding a new port number requires a manual uwsgi restart (ie. the
