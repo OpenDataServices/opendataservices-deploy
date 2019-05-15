@@ -4,6 +4,7 @@ log
 salt-config/master.d
 salt-config/pki
 pillar/private
+salt/private/
 ssh_log
 .DS_Store
 .ve
