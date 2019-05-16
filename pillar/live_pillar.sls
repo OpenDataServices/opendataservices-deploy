@@ -20,3 +20,5 @@ opendataservices_website:
     https: ''
     servername: 'opendataservices.coop'
     serveraliases: ['www.opendataservices.coop']
+
+os4d_apache_https: "force"

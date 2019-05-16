@@ -31,7 +31,7 @@ os4d-deps:
       - pkg: git
 
 # Set up the Apache config using macro
-{{ apache('os4d-handbook.conf', servername='os4d.opendataservices.coop', https='force') }}
+{{ apache('os4d-handbook.conf', servername='os4d.opendataservices.coop', https=pillar.os4d_apache_https) }}
 
 # Install pre requirements
 {{ gitdir }}.ve/-pre:

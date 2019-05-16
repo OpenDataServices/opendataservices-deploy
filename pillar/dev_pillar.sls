@@ -66,3 +66,6 @@ opendataservices_website:
     https: ''
     servername: 'dev.opendataservices.coop'
     serveraliases: ['www.dev.opendataservices.coop']
+
+
+os4d_apache_https: "no"
