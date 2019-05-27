@@ -122,6 +122,10 @@ base:
     - pwyf-tracker
 #    - icinga2-satellite
 
+  'iati-misc':
+    - iati-misc
+#    - icinga2-satellite
+
   # MONITORING
 
   'mon*':
