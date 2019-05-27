@@ -119,11 +119,19 @@ bare_name: {{ name }}
     - watch_in:
       - service: uwsgi
 
-/home/{{ user }}/.local/bin/pipenv install:
+{{ flaskdir }}/.env:
+  file.managed:
+    - source: salt://env/pwyf_tracker.env
+    - template: jinja
+    - context:
+        {{ extracontext | indent(8) }}
+
+/home/{{ user }}/.local/bin/pipenv sync:
   cmd.run:
     - runas: {{ user }}
     - cwd: {{ flaskdir }}
     - require:
+      - file: {{ flaskdir }}/.env
       - pkg: pwyf_tracker-deps
       - pip: pipenv
       - git: {{ giturl }}{{ flaskdir }}
@@ -156,13 +164,6 @@ npm run build:
       - service: apache2
     - onchanges:
       - git: {{ giturl }}{{ flaskdir }}
-    
-{{ flaskdir }}/.env:
-  file.managed:
-    - source: salt://env/pwyf_tracker.env
-    - template: jinja
-    - context:
-        {{ extracontext | indent(8) }}
 
 pipenv run flask db upgrade:
   cmd.run:
