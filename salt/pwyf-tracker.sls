@@ -122,7 +122,7 @@ bare_name: {{ name }}
     - context:
         {{ extracontext | indent(8) }}
 
-/home/{{ user }}/.local/bin/pipenv sync:
+pipenv sync:
   cmd.run:
     - runas: {{ user }}
     - cwd: {{ flaskdir }}
@@ -136,6 +136,8 @@ bare_name: {{ name }}
       - service: apache2
     - onchanges:
       - git: {{ giturl }}{{ flaskdir }}
+    - env:
+      - PIPENV_VENV_IN_PROJECT: 'True'
 
 npm install:
   cmd.run:
