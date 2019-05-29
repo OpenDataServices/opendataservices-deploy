@@ -126,6 +126,10 @@ base:
     - iati-misc
 #    - icinga2-satellite
 
+  'ocds-docs-dev':
+    - icinga2-satellite
+
+
   # MONITORING
 
   'mon*':
