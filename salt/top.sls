@@ -128,6 +128,7 @@ base:
 
   'ocds-docs-dev':
     - icinga2-satellite
+    - ocds-docs-dev
 
 
   # MONITORING
