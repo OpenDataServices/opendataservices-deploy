@@ -79,7 +79,8 @@ base:
   'ocdskingfisher-new':
     - postgres11
     - ocdskingfisher
-    - ocdskingfisherarchive
+    - ocdskingfisherold
+    - ocdskingfisherarchiveonprocess
     - ocdskingfisherprocess
     - ocdskingfisherscrape
     - ocdskingfisheranalyse
@@ -88,17 +89,16 @@ base:
     - icinga2-satellite
     - postgres10
     - ocdskingfisher
+    - ocdskingfisherold
     - ocdskingfisherprocess
     - ocdskingfisherscrape
     - ocdskingfisheranalyse
-    - ocdskingfisherarchive
 
   'ocds-kingfisher-archive':
     - postgres11
     - ocdskingfisher
-    - ocdskingfisherprocess
     - ocdskingfisheranalyse
-    - ocdskingfisherarchive
+    - ocdskingfisherarchiveonarchive
 
   'ocds-redash*':
     - ocds-redash
