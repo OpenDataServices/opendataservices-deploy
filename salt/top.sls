@@ -76,14 +76,6 @@ base:
     - djangodebug
     - icinga2-satellite
 
-  'ocdskingfisher':
-    - postgres10
-    - ocdskingfisher
-    - ocdskingfisherarchive
-    - ocdskingfisherprocess
-    - ocdskingfisherscrape
-    - ocdskingfisheranalyse
-
   'ocdskingfisher-new':
     - postgres11
     - ocdskingfisher
