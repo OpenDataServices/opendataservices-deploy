@@ -10,9 +10,6 @@
 #   pipenv run flask iati test
 # See https://github.com/pwyf/aid-transparency-tracker/blob/master/README.rst for more info.
 #
-# You also need to follow this tutorial:
-# https://www.paulox.net/2019/03/13/how-to-use-uwsgi-with-python-3-7-in-ubuntu-18-x
-#
 {% from 'lib.sls' import createuser, apache, uwsgi %}
 
 {% set user = 'pwyf_tracker' %}
@@ -40,7 +37,6 @@ pwyf_tracker-deps:
         - libapache2-mod-proxy-uwsgi
         - python-pip
         - uwsgi-plugin-python3
-        - python3.7
         - npm
       - watch_in:
         - service: apache2
@@ -126,7 +122,7 @@ bare_name: {{ name }}
     - context:
         {{ extracontext | indent(8) }}
 
-/home/{{ user }}/.local/bin/pipenv sync:
+pipenv sync:
   cmd.run:
     - runas: {{ user }}
     - cwd: {{ flaskdir }}
@@ -140,6 +136,8 @@ bare_name: {{ name }}
       - service: apache2
     - onchanges:
       - git: {{ giturl }}{{ flaskdir }}
+    - env:
+      - PIPENV_VENV_IN_PROJECT: 'True'
 
 npm install:
   cmd.run:
