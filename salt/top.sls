@@ -42,6 +42,8 @@ base:
   'bods':
     - icinga2-satellite
 
+  'ocds-docs-live':
+    - icinga2-satellite
 
   # STAGING
 
