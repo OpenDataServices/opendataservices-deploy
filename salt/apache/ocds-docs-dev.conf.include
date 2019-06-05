@@ -1,0 +1,140 @@
+# vi: ft=apache
+
+    {% set documentroot='/home/ocds-docs/web/' %}
+    DocumentRoot {{ documentroot }}
+
+    SetEnv BANNER /includes/banner_dev.html
+
+    {% set infrastructure_live_versions = ['latest'] %}
+    {% set langs = ['en', 'es', 'fr'] %}
+    {% set langs_ppp = ['en', 'es'] %}
+
+    {% if pillar.dev_robots_txt %}
+    Alias /robots.txt "/var/www/html/robots.txt"
+    <Location "/robots.txt">
+            Order allow,deny
+            Allow from all
+    </Location>
+    {% endif %}
+
+    <Location /error/404>
+        RewriteEngine on
+        RewriteCond %{THE_REQUEST} "^[^ ]* (/profiles/[^/]*)?(/[^/]*/[^/]*/)"
+        RewriteRule ^(.*)$ %1%2/404/ [L]
+    </Location>
+    RewriteMap unescape int:unescape
+    <LocationMatch /(profiles/[^/]*/)?[^/]+/switcher>
+        RewriteEngine on
+        # Try using the referer to take you back to the same page in the
+        # different version.
+        # We match QUERY_STRING and HTTP_REFERER in the same RewriteCond as
+        # it's only possible to backreference the most recent RewriteCond
+        RewriteCond "%{HTTP_REFERER}:::%{QUERY_STRING}" "^https?://([^/]*)/(profiles/[^/]*/)?([^/]*)/([^/]*)/(.*):::lang=(.*)$"
+        RewriteRule ^(.*)$ /%2%3/${unescape:%6}/%5? [R]
+
+        # If our http referer regex failed for some reason:
+        RewriteCond "%{QUERY_STRING}" "^lang=(.+)$"
+        RewriteRule ^{{ documentroot }}(profiles/[^/]*/)?([^/]+)/(.*)$ /$1$2/${unescape:%1}? [R]
+    </LocationMatch>
+    <LocationMatch /([^/]*/[^/]*)/404/>
+        SetOutputFilter SUBSTITUTE
+        Substitute "s|\"\.\./|\"error_redirect/|i"
+    </LocationMatch>
+    <LocationMatch "(/profiles/[^/]*)?/([^/]*/[^/]*)/(.*/)?error_redirect/(.*)">
+        RewriteEngine on
+        RewriteCond "%{REQUEST_URI}" "(/profiles/[^/]*)?/([^/]*/[^/]*)/(.*/)?error_redirect/(.*)"
+        RewriteRule ^(.*)$ %1/%2/%4 [R]
+    </LocationMatch>
+
+    <Location /1.0-dev-fake-old/>
+        SetEnv BANNER /includes/banner_old.html
+    </Location>
+
+    <Location /profiles/ppp/>
+        SetEnv BANNER /includes/banner_dev_profiles_ppp.html
+    </Location>
+    <LocationMatch /profiles/ppp/(?!master)>
+        # Inflate and deflate here to ensure that the message is not
+        # compressed when we do the substitution, but is afterwards.
+        # I think this may be adding some extra overhead, but for our
+        # dev site this shouldn't be noticeable.
+        AddOutputFilterByType INFLATE;SUBSTITUTE;DEFLATE text/html
+        Substitute "s|<body([^>]*)>|<body$1><div style=\"background-color:red; color: black; width: 100%; text-align: center; font-weight: bold; position: fixed; right: 0; left: 0; z-index: 1031\">This is a dev copy of these docs.</div>|i"
+    </LocationMatch>
+
+    <Location /infrastructure/switcher>
+        RewriteEngine on
+        # Try using the referer to take you back to the same page in the
+        # different version.
+        # We match QUERY_STRING and HTTP_REFERER in the same RewriteCond as
+        # it's only possible to backreference the most recent RewriteCond
+        RewriteCond "%{HTTP_REFERER}:::%{QUERY_STRING}" "^https?://([^/]*)/infrastructure/([^/]*)/([^/]*)/(.*):::branch=(.*)$"
+        RewriteRule ^(.*)$ /infrastructure/${unescape:%5}/%3/%4? [R]
+
+        # If our http referer regex failed for some reason:
+        RewriteCond "%{QUERY_STRING}" "^branch=(.*)$"
+        RewriteRule ^(.*)$ /infrastructure/${unescape:%1}? [R]
+    </Location>
+
+    {% for infrastructure_version in infrastructure_live_versions %}
+        <Location /infrastructure/{{infrastructure_version}}/switcher>
+            RewriteEngine on
+            # Try using the referer to take you back to the same page in the
+            # different version.
+            # We match QUERY_STRING and HTTP_REFERER in the same RewriteCond as
+            # it's only possible to backreference the most recent RewriteCond
+            RewriteCond "%{HTTP_REFERER}:::%{QUERY_STRING}" "^https?://([^/]*)/infrastructure/([^/]*)/([^/]*)/(.*):::lang=(.*)$"
+            RewriteRule ^(.*)$ /infrastructure/{{infrastructure_version}}/${unescape:%5}/%4? [R]
+
+            RewriteCond "%{QUERY_STRING}" "^lang=(.*)$"
+            RewriteRule ^(.*)$ /infrastructure/{{infrastructure_version}}/${unescape:%1}? [R]
+        </Location>
+    {% endfor %}
+
+    <Directory {{ documentroot }}>
+        Require all granted
+        Options Indexes FollowSymLinks IncludesNOEXEC
+        AddOutputFilter INCLUDES .html
+        AddType "application/json;charset=utf-8" .json
+        ErrorDocument 404 /error/404
+    </Directory>
+
+    {# See https://crm.open-contracting.org/issues/4401 for this #}
+    {% for lang in langs %}
+        {% for version in ['1.1', 'latest'] %}
+            Redirect /{{ version }}/{{ lang }}/extensions/community/  https://extensions.open-contracting.org/{{ lang }}/extensions/
+            Redirect /{{ version }}/{{ lang }}/extensions/developing/  https://extensions.open-contracting.org/{{ lang }}/extensions/
+            Redirect /{{ version }}/{{ lang }}/extensions/party_details/  https://extensions.open-contracting.org/{{ lang }}/extensions/
+            Redirect /{{ version }}/{{ lang }}/extensions/bids/  https://extensions.open-contracting.org/{{ lang }}/extensions/bids/
+            Redirect /{{ version }}/{{ lang }}/extensions/enquiries/  https://extensions.open-contracting.org/{{ lang }}/extensions/enquiries/
+            Redirect /{{ version }}/{{ lang }}/extensions/location/  https://extensions.open-contracting.org/{{ lang }}/extensions/location/
+            Redirect /{{ version }}/{{ lang }}/extensions/lots/  https://extensions.open-contracting.org/{{ lang }}/extensions/lots/
+            Redirect /{{ version }}/{{ lang }}/extensions/milestone_documents/  https://extensions.open-contracting.org/{{ lang }}/extensions/milestone_documents/
+            Redirect /{{ version }}/{{ lang }}/extensions/participation_fee/  https://extensions.open-contracting.org/{{ lang }}/extensions/participation_fee/
+            Redirect /{{ version }}/{{ lang }}/extensions/process_title/  https://extensions.open-contracting.org/{{ lang }}/extensions/process_title/
+        {% endfor %}
+    {% endfor %}
+    {% for lang in langs_ppp %}
+        {% for version in ['latest'] %}
+            Redirect /profiles/ppp/{{ version }}/{{ lang }}/extensions/bids/  https://extensions.open-contracting.org/{{ lang }}/extensions/bids/
+            Redirect /profiles/ppp/{{ version }}/{{ lang }}/extensions/budget/  https://extensions.open-contracting.org/{{ lang }}/extensions/budget/
+            Redirect /profiles/ppp/{{ version }}/{{ lang }}/extensions/budget_project/  https://extensions.open-contracting.org/{{ lang }}/extensions/budget_project/
+            Redirect /profiles/ppp/{{ version }}/{{ lang }}/extensions/charges/  https://extensions.open-contracting.org/{{ lang }}/extensions/charges/
+            Redirect /profiles/ppp/{{ version }}/{{ lang }}/extensions/documentation_details/  https://extensions.open-contracting.org/{{ lang }}/extensions/documentation_details/
+            Redirect /profiles/ppp/{{ version }}/{{ lang }}/extensions/finance/  https://extensions.open-contracting.org/{{ lang }}/extensions/finance/
+            Redirect /profiles/ppp/{{ version }}/{{ lang }}/extensions/index/  https://extensions.open-contracting.org/{{ lang }}/extensions/index/
+            Redirect /profiles/ppp/{{ version }}/{{ lang }}/extensions/location/  https://extensions.open-contracting.org/{{ lang }}/extensions/location/
+            Redirect /profiles/ppp/{{ version }}/{{ lang }}/extensions/metrics/  https://extensions.open-contracting.org/{{ lang }}/extensions/metrics/
+            Redirect /profiles/ppp/{{ version }}/{{ lang }}/extensions/milestone_documents/  https://extensions.open-contracting.org/{{ lang }}/extensions/milestone_documents/
+            Redirect /profiles/ppp/{{ version }}/{{ lang }}/extensions/performance_failures/  https://extensions.open-contracting.org/{{ lang }}/extensions/performance_failures/
+            Redirect /profiles/ppp/{{ version }}/{{ lang }}/extensions/ppp/  https://extensions.open-contracting.org/{{ lang }}/extensions/ppp/
+            Redirect /profiles/ppp/{{ version }}/{{ lang }}/extensions/process_title/  https://extensions.open-contracting.org/{{ lang }}/extensions/process_title/
+            Redirect /profiles/ppp/{{ version }}/{{ lang }}/extensions/qualification/  https://extensions.open-contracting.org/{{ lang }}/extensions/qualification/
+            Redirect /profiles/ppp/{{ version }}/{{ lang }}/extensions/requirements/  https://extensions.open-contracting.org/{{ lang }}/extensions/requirements/
+            Redirect /profiles/ppp/{{ version }}/{{ lang }}/extensions/risk_allocation/  https://extensions.open-contracting.org/{{ lang }}/extensions/risk_allocation/
+            Redirect /profiles/ppp/{{ version }}/{{ lang }}/extensions/shareholders/  https://extensions.open-contracting.org/{{ lang }}/extensions/shareholders/
+            Redirect /profiles/ppp/{{ version }}/{{ lang }}/extensions/signatories/  https://extensions.open-contracting.org/{{ lang }}/extensions/signatories/
+            Redirect /profiles/ppp/{{ version }}/{{ lang }}/extensions/tariffs/  https://extensions.open-contracting.org/{{ lang }}/extensions/tariffs/
+            Redirect /profiles/ppp/{{ version }}/{{ lang }}/extensions/transaction_milestones/  https://extensions.open-contracting.org/{{ lang }}/extensions/transaction_milestones/
+        {% endfor %}
+    {% endfor %}
