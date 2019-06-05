@@ -44,6 +44,7 @@ base:
 
   'ocds-docs-live':
     - icinga2-satellite
+    - ocds-docs-live
 
   # STAGING
 
