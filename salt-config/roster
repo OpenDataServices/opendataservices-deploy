@@ -43,3 +43,4 @@ ocds-docs-dev:           dev.docs.opencontracting.uk0.bigv.io
 ocdskingfisher-new:       95.216.243.15
 ocds-kingfisher-archive:  archive.kingfisher.open-contracting.org
 ocds-redash:              live.redash.opencontracting.uk0.bigv.io
+ocds-docs-live:           live.docs.opencontracting.uk0.bigv.io
