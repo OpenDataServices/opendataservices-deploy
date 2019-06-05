@@ -10,6 +10,7 @@ include:
 
 {% from 'lib.sls' import apache %}
 {{ apache('ocds-docs-live.conf') }}
+{{ apache('ocds-docs-live-new.conf') }}
 
 https://github.com/open-contracting/standard-legacy-staticsites.git:
   git.latest:
