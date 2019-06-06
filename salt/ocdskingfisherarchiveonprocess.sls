@@ -46,9 +46,14 @@
     - require:
       - user: {{ user }}_user_exists
 
+/etc/logrotate.d/archive:
+  file.managed:
+    - source: salt://ocdskingfisherarchive/logrotate
+    - makedirs: True
+
 #cd {{ ocdskingfisherdir }}; ./rsync-downloaded-files.sh  >> {{ userdir }}/logs/rsync-downloaded-files.log 2>&1:
 #  cron.present:
-#    - identifier: OCDS_KINGFISHER_SCRAPE_DELETE_COLLECTIONS
+#    - identifier: OCDS_KINGFISHER_ARCHIVE_RUN
 #    - user: {{ user }}
 #    - minute: 0
 #    - hour: 1

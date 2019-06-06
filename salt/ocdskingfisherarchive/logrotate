@@ -1,0 +1,7 @@
+/home/archive/logs/rsync-downloaded-files.log {
+  rotate 365
+  daily
+  compress
+  missingok
+  notifempty
+}
