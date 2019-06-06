@@ -1,1 +1,2 @@
 archive ALL = (ocdskfs) NOPASSWD: /bin/rm -rf /home/ocdskfs/scrapyd/data/*/*
+archive ALL = (ocdskfs) NOPASSWD: /bin/rm -rf /home/ocdskfs/old-data/*/*
