@@ -9,7 +9,6 @@ base:
   # LIVE
 
   'live2':
-    - ocds-docs-live
     - ocds-legacy
     - opendataservices-website
     - icinga2-satellite
@@ -51,7 +50,6 @@ base:
   # DEVELOPMENT
 
   'dev3':
-    - ocds-docs-dev
     - opendataservices-website
     - temp
     - icinga2-satellite
