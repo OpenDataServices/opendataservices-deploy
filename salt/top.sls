@@ -31,10 +31,6 @@ base:
     - registry360
     - icinga2-satellite
 
-  'involve':
-    - survey-tool-live
-    - icinga2-satellite
-
   'org-ids':
     - org-ids
     - icinga2-satellite
