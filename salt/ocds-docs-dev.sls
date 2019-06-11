@@ -13,9 +13,10 @@
 
 include:
   - ocds-docs-common
+  - letsencrypt
 
 {% from 'lib.sls' import apache %}
-{{ apache('ocds-docs-dev.conf') }}
+{{ apache('ocds-docs-dev.conf', servername='dev.standard.open-contracting.org', https='yes' ) }}
 
 
 add-travis-key-for-ocds-docs-dev:
