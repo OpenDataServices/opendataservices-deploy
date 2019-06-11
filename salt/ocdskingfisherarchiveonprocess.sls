@@ -51,12 +51,12 @@
     - source: salt://ocdskingfisherarchive/logrotate
     - makedirs: True
 
-#cd {{ ocdskingfisherdir }}; ./rsync-downloaded-files.sh  >> {{ userdir }}/logs/rsync-downloaded-files.log 2>&1:
-#  cron.present:
-#    - identifier: OCDS_KINGFISHER_ARCHIVE_RUN
-#    - user: {{ user }}
-#    - minute: 0
-#    - hour: 1
+cd {{ ocdskingfisherdir }}; ./rsync-downloaded-files.sh  >> {{ userdir }}/logs/rsync-downloaded-files.log 2>&1:
+  cron.present:
+    - identifier: OCDS_KINGFISHER_ARCHIVE_RUN
+    - user: {{ user }}
+    - minute: 0
+    - hour: 1
 #    - dayweek: 6
 
 
