@@ -16,7 +16,11 @@ include:
   - letsencrypt
 
 {% from 'lib.sls' import apache %}
-{{ apache('ocds-docs-dev.conf', servername='dev.standard.open-contracting.org', https='yes' ) }}
+{{ apache('ocds-docs-dev.conf') }}
+
+# We can't do this yet - it causes problems with hostnames
+# https://github.com/open-contracting/standard/issues/878
+# { { apache('ocds-docs-dev.conf', servername='dev.standard.open-contracting.org', https='yes' ) } }
 
 
 add-travis-key-for-ocds-docs-dev:
