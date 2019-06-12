@@ -196,7 +196,7 @@ cd {{ ocdskingfisherdir }}; . .ve/bin/activate; python ocdskingfisher-process-cl
   cron.present:
     - identifier: OCDS_KINGFISHER_PROCESS_REDIS_QUEUE
     - user: {{ user }}
-    - minute: 0
+    - minute: 0,15,30,45
 
 cd {{ ocdskingfisherdir }}; . .ve/bin/activate; python ocdskingfisher-process-cli check-collections --runforseconds 3540:
   cron.present:
