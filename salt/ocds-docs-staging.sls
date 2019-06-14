@@ -27,12 +27,12 @@ include:
 testing: False
 {% endset %}
 
-{{ apache('ocds-docs-dev.conf',
-    name='ocds-docs-dev.conf',
+{{ apache('ocds-docs-staging.conf',
+    name='ocds-docs-staging.conf',
     extracontext=extracontext,
     socket_name='',
-    servername='dev.standard.open-contracting.org',
-    serveraliases=['ocds-standard.*.docs.opencontracting.uk0.bigv.io','standard.open-contracting.org','*.standard.open-contracting.org'],
+    servername='staging.standard.open-contracting.org',
+    serveraliases=['dev.standard.open-contracting.org', 'ocds-standard.*.docs.opencontracting.uk0.bigv.io','standard.open-contracting.org','*.standard.open-contracting.org'],
     https='') }}
 
 # This is the "testing" server setup.
@@ -42,11 +42,11 @@ testing: False
 testing: True
 {% endset %}
 
-{{ apache('ocds-docs-dev.conf',
-    name='ocds-docs-dev-testing.conf',
+{{ apache('ocds-docs-staging.conf',
+    name='ocds-docs-staging-testing.conf',
     extracontext=extracontext,
     socket_name='',
-    servername='testing.dev.standard.open-contracting.org',
+    servername='testing.staging.standard.open-contracting.org',
     serveraliases=['ocds-standard-testing.*.docs.opencontracting.uk0.bigv.io'],
     https='') }}
 

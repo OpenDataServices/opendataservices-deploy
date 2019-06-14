@@ -153,7 +153,7 @@
     </Location>
 
     # This block aplies only to requests that would be proxied to dev
-    <Proxy http://dev.standard.open-contracting.org/>
+    <Proxy http://ocds-standard.staging.docs.opencontracting.uk0.bigv.io/>
         # Redirects for pages that were on the old
         # standard.open-contracting.org blod site
         Redirect /announcing-the-ocds-help-desk http://www.open-contracting.org/2015/03/20/announcing-the-ocds-help-desk
@@ -231,4 +231,4 @@
     ProxyPass /static {{ pillar.ocds_cove_backend }}/static
     ProxyPass /media {{ pillar.ocds_cove_backend }}/media
     ProxyPass /i18n {{ pillar.ocds_cove_backend }}/i18n
-    ProxyPass / http://dev.standard.open-contracting.org/
+    ProxyPass / http://ocds-standard.staging.docs.opencontracting.uk0.bigv.io/

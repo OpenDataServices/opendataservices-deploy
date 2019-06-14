@@ -37,6 +37,11 @@ base:
   'bods':
     - icinga2-satellite
 
+
+  'ocds-docs-staging':
+    - icinga2-satellite
+    - ocds-docs-staging
+
   'ocds-docs-live':
     - icinga2-satellite
     - ocds-docs-live
@@ -114,10 +119,6 @@ base:
   'iati-misc':
     - iati-misc
 #    - icinga2-satellite
-
-  'ocds-docs-dev':
-    - icinga2-satellite
-    - ocds-docs-dev
 
 
   # MONITORING
