@@ -1,5 +1,13 @@
 # vi: ft=apache
 
+    {% if testing  %}
+        # If you have some config you only want on the testing site, use this ....
+    {% endif %}
+    {% if not testing %}
+        # If you have some config you only want on the live site, use this ....
+    {% endif %}
+
+
     {% set documentroot='/home/ocds-docs/web/' %}
     DocumentRoot {{ documentroot }}
 

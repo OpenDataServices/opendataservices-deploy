@@ -16,12 +16,41 @@ include:
   - letsencrypt
 
 {% from 'lib.sls' import apache %}
-{{ apache('ocds-docs-dev.conf') }}
 
-# We can't do this yet - it causes problems with hostnames
+# We can't enable SSL yet - it causes problems with hostnames
 # https://github.com/open-contracting/standard/issues/878
-# { { apache('ocds-docs-dev.conf', servername='dev.standard.open-contracting.org', https='yes' ) } }
 
+# This is the "live" server setup.
+# (In OCDS, the "dev" server actually receives Travis builds and hosts some dev files. It should be thought of as handling live traffic!)
+
+{% set extracontext %}
+testing: False
+{% endset %}
+
+{{ apache('ocds-docs-dev.conf',
+    name='ocds-docs-dev.conf',
+    extracontext=extracontext,
+    socket_name='',
+    servername='dev.standard.open-contracting.org',
+    serveraliases=['ocds-standard.*.docs.opencontracting.uk0.bigv.io','standard.open-contracting.org','*.standard.open-contracting.org'],
+    https='') }}
+
+# This is the "testing" server setup.
+# If you need to mess around with the apache configs (maybe you need to test some redirects or proxy options) use this please.
+
+{% set extracontext %}
+testing: True
+{% endset %}
+
+{{ apache('ocds-docs-dev.conf',
+    name='ocds-docs-dev-testing.conf',
+    extracontext=extracontext,
+    socket_name='',
+    servername='testing.dev.standard.open-contracting.org',
+    serveraliases=['ocds-standard-testing.*.docs.opencontracting.uk0.bigv.io'],
+    https='') }}
+
+# And now other misc stuff .....
 
 add-travis-key-for-ocds-docs-dev:
     ssh_auth.present:
