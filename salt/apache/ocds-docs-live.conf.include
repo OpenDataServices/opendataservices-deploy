@@ -223,6 +223,7 @@
 
     ProxyPass /legacy !
     ProxyPass /schema !
+    ProxyPass /infrastructure/schema !
     ProxyPass /robots.txt !
     ProxyPass /switcher !
     ProxyPass /includes !
