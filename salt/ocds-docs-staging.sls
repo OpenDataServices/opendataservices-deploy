@@ -21,7 +21,6 @@ include:
 # https://github.com/open-contracting/standard/issues/878
 
 # This is the "live" server setup.
-# (In OCDS, the "dev" server actually receives Travis builds and hosts some dev files. It should be thought of as handling live traffic!)
 
 {% set extracontext %}
 testing: False
