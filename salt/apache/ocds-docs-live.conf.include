@@ -1,5 +1,19 @@
 # vi: ft=apache
 
+    {% if testing  %}
+        # If you have some config you only want on the testing site, use this ....
+
+        # We want a deny all robots.txt on testing, but our real robots.txt on the live site
+        Alias /robots.txt "/var/www/html/robots.txt"
+        <Location "/robots.txt">
+                Order allow,deny
+                Allow from all
+        </Location>
+    {% endif %}
+    {% if not testing %}
+        # If you have some config you only want on the live site, use this ....
+    {% endif %}
+
     {% set documentroot='/home/ocds-docs/web/' %}
     DocumentRoot {{ documentroot }}
     SetEnv BANNER /includes/banner_live.html

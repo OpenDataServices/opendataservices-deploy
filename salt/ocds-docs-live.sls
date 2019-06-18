@@ -9,7 +9,39 @@ include:
   - ocds-docs-common
 
 {% from 'lib.sls' import apache %}
-{{ apache('ocds-docs-live.conf') }}
+
+# This is the "live" server setup.
+
+{% set extracontext %}
+testing: False
+{% endset %}
+
+{{ apache('ocds-docs-live.conf',
+    name='ocds-docs-live.conf',
+    extracontext=extracontext,
+    socket_name='',
+    servername='standard.open-contracting.org',
+    serveraliases=['ocds-standard.*.docs.opencontracting.uk0.bigv.io','*.standard.open-contracting.org'],
+    https='') }}
+
+# This is the "testing" server setup.
+# If you need to mess around with the apache configs (maybe you need to test some redirects or proxy options) use this please.
+
+{% set extracontext %}
+testing: True
+{% endset %}
+
+{{ apache('ocds-docs-live.conf',
+    name='ocds-docs-live-testing.conf',
+    extracontext=extracontext,
+    socket_name='',
+    servername='testing.live.standard.open-contracting.org',
+    serveraliases=[],
+    https='') }}
+
+
+# And now other misc stuff .....
+
 {{ apache('ocds-docs-live-new.conf') }}
 
 https://github.com/open-contracting/standard-legacy-staticsites.git:
