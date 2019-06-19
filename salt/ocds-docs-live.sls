@@ -21,7 +21,7 @@ testing: False
     extracontext=extracontext,
     socket_name='',
     servername='standard.open-contracting.org',
-    serveraliases=['ocds-standard.*.docs.opencontracting.uk0.bigv.io'],
+    serveraliases=[],
     https='') }}
 
 # This is the "testing" server setup.
