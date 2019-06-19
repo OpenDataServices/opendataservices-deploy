@@ -9,7 +9,6 @@ base:
   # LIVE
 
   'live2':
-    - ocds-legacy
     - opendataservices-website
     - icinga2-satellite
 
@@ -45,6 +44,7 @@ base:
   'ocds-docs-live':
     - icinga2-satellite
     - ocds-docs-live
+    - ocds-legacy
 
   # STAGING
 

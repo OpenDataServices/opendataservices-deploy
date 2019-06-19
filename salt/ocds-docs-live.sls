@@ -42,9 +42,6 @@ testing: True
 
 # And now other misc stuff .....
 
-# This old domain is still in use, so set up a redirect to new site
-{{ apache('ocds-open-contracting-org.conf') }}
-
 https://github.com/open-contracting/standard-legacy-staticsites.git:
   git.latest:
     - rev: master
