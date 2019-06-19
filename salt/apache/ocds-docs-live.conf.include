@@ -201,15 +201,6 @@
         Redirect /sprinting-at-europython-2014 http://www.open-contracting.org/2014/07/31/sprinting-at-europython-2014
         Redirect /upgrading-ocds-governance-process-consultation-deadline-january-5th-2016 http://www.open-contracting.org/2015/12/02/upgrading-ocds-governance-process-consultation-deadline-january-5th-2016
 
-        # TODO: remove these once the archive site is removed
-        Redirect /author http://archive.standard.open-contracting.org/author
-        Redirect /category http://archive.standard.open-contracting.org/category
-        Redirect /comments http://archive.standard.open-contracting.org/comments
-        Redirect /page http://archive.standard.open-contracting.org/page
-        Redirect /wp-content http://archive.standard.open-contracting.org/wp-content
-        Redirect /wp-includes http://archive.standard.open-contracting.org/wp-includes
-        Redirect /wp-json http://archive.standard.open-contracting.org/wp-json
-
         Redirect /validator /review
         RedirectMatch ^/validator/(.*)$ /review/$1
 

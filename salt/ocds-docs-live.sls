@@ -21,7 +21,7 @@ testing: False
     extracontext=extracontext,
     socket_name='',
     servername='standard.open-contracting.org',
-    serveraliases=['ocds-standard.*.docs.opencontracting.uk0.bigv.io','*.standard.open-contracting.org'],
+    serveraliases=['ocds-standard.*.docs.opencontracting.uk0.bigv.io'],
     https='') }}
 
 # This is the "testing" server setup.
@@ -42,7 +42,8 @@ testing: True
 
 # And now other misc stuff .....
 
-{{ apache('ocds-docs-live-new.conf') }}
+# This old domain is still in use, so set up a redirect to new site
+{{ apache('ocds-open-contracting-org.conf') }}
 
 https://github.com/open-contracting/standard-legacy-staticsites.git:
   git.latest:
