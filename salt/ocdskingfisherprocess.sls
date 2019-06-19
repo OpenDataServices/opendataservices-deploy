@@ -113,13 +113,6 @@ kfp_postgres_readonlyuser_create:
     - group: {{ user }}
     - makedirs: True
 
-{{ userdir }}/logs:
-  file.directory:
-    - user: {{ user }}
-    - group: {{ user }}
-    - mode: 755
-    - makedirs: True
-
 {{ userdir }}/.config/ocdskingfisher-process/logging.json:
   file.managed:
     - source: salt://ocdskingfisherprocess/logging.json
@@ -129,6 +122,21 @@ kfp_postgres_readonlyuser_create:
     - makedirs: True
     - context:
         userdir: {{ userdir }}
+
+/etc/rsyslog.d/90-kingfisher.conf:
+  file.managed:
+    - source: salt://ocdskingfisherprocess/rsyslog.conf
+
+/etc/logrotate.d/kingfisher.conf:
+  file.managed:
+    - source: salt://ocdskingfisherprocess/logrotate.conf
+
+restart-syslog:
+  cmd.run:
+      - name: service rsyslog restart
+      - runas: root
+      - require:
+        - file: /etc/rsyslog.d/90-kingfisher.conf
 
 createdatabase-{{ ocdskingfisherdir }}:
     cmd.run:
