@@ -78,6 +78,9 @@ base:
   '*dev-bods*':
      - bods_dev_pillar
 
+  'cove-dev-oc4ids':
+     - oc4ids_dev_pillar
+
   'pwyf-dev':
      - pwyf_tracker
      - private.pwyf_tracker

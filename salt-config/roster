@@ -8,6 +8,7 @@ mon-3:               mon-3.default.opendataservices.uk0.bigv.io
 cove-dev-2:          cove-dev-2.default.opendataservices.uk0.bigv.io
 cove-dev-bods:       cove-dev-bods.default.opendataservices.uk0.bigv.io
 ocdskingfisher-dev:  ocdskingfisher-dev.default.opendataservices.uk0.bigv.io
+cove-dev-oc4ids:     oc4ids-cove-dev.default.opendataservices.uk0.bigv.io
 
 #   live:
 live2:                    live2.default.opendataservices.uk0.bigv.io
