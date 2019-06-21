@@ -31,7 +31,7 @@ testing: False
     extracontext=extracontext,
     socket_name='',
     servername='staging.standard.open-contracting.org',
-    serveraliases=['standard.open-contracting.org'],
+    serveraliases=[],
     https='') }}
 
 # This is the "testing" server setup.

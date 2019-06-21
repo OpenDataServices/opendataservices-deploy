@@ -232,15 +232,8 @@
     ProxyPass /robots.txt !
     ProxyPass /switcher !
     ProxyPass /includes !
-    {% if not testing  %}
-    # ProxyPreserveHost On is the old setting that is currently live
-    ProxyPreserveHost On
-    {% endif %}
-    {% if testing  %}
-    # ProxyPreserveHost Off is the new setting we would like to have, as it makes adding SSL much easier.
-    # However we need to test it works first.
+    # ProxyPreserveHost was on but we need it to be Off, as it makes adding SSL much easier.
     ProxyPreserveHost Off
-    {% endif %}
     ProxyPass /review {{ pillar.ocds_cove_backend }}/review timeout={{ pillar.cove.apache_uwsgi_timeout }}
     ProxyPass /static {{ pillar.ocds_cove_backend }}/static
     ProxyPass /media {{ pillar.ocds_cove_backend }}/media
