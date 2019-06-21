@@ -11,6 +11,7 @@ include:
   - core
   - apache
   - uwsgi
+  - letsencrypt
 
 standard-search-deps:
     apache_module.enabled:
@@ -74,7 +75,7 @@ elasticsearch:
     - template: jinja
 
 
-{% macro standard_search(name, branch, giturl, user) %}
+{% macro standard_search(name, branch, giturl, user, servername, https) %}
 
 {% set djangodir='/home/'+user+'/'+name+'/' %}
 
@@ -86,6 +87,8 @@ bare_name: {{ name }}
 
 {{ apache(user+'.conf',
     name=name+'.conf',
+    https=https,
+    servername=servername,
     extracontext=extracontext) }}
 
 {{ uwsgi(user+'.ini',
@@ -187,6 +190,8 @@ collectstatic-{{name}}:
     name='ocds-search',
     branch='master',
     giturl=giturl,
-    user=user
+    user=user,
+    servername='www.standard-search.default.opendataservices.uk0.bigv.io',
+    https='yes'
 ) }}
 

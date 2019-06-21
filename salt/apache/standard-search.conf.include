@@ -1,0 +1,43 @@
+        DocumentRoot {{ djangodir }}
+
+        {{ banner }}
+
+        <Location "/">
+                ProxyPass unix:/run/uwsgi/app/{{ bare_name }}/socket|uwsgi://{{ bare_name }}/
+        </Location>
+
+        <Location "/.well-known/acme-challenge">
+            ProxyPass !
+        </Location>
+        
+        {% if pillar.dev_robots_txt %}
+        Alias /robots.txt "/var/www/html/robots.txt"
+        <Location "/robots.txt">
+                ProxyPass !
+                Order allow,deny
+                Allow from all
+                SetHandler None
+        </Location>
+        {% endif %}
+
+        # Static content needed by Django
+        Alias /static "{{ djangodir }}static/"
+        <Location "/static">
+                ProxyPass !
+                Order allow,deny
+                Allow from all
+                SetHandler None
+        </Location>
+
+        # Static content uploaded by users
+        Alias /media "{{ djangodir }}media/"
+        <Location "/media">
+                ProxyPass !
+                Order allow,deny
+                Allow from all
+                SetHandler None
+        </Location>
+
+        <Directory {{ djangodir }}>
+                Require all granted
+        </Directory>
