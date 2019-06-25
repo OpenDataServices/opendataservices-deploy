@@ -1,7 +1,7 @@
 # Values used only on the live servers
 default_branch: 'live'
 # URL that OCDS /validator proxies to
-ocds_cove_backend: http://cove.cove-live-ocds-2.default.opendataservices.uk0.bigv.io
+ocds_cove_backend: https://cove.cove-live-ocds-2.default.opendataservices.uk0.bigv.io
 cove:
   ocds_redirect: True
   larger_uwsgi_limits: True
@@ -14,6 +14,8 @@ cove:
   # (which is defined in ocds_live_pillar.sls, *not* above)
   apache_uwsgi_timeout: 1830
   app: cove_ocds
+  https: 'yes'
+  servername: 'cove.cove-live-ocds-2.default.opendataservices.uk0.bigv.io'
 registry360:
   allowedhosts: data.threesixtygiving,.live.threesixtygiving.uk0.bigv.io
 opendataservices_website:

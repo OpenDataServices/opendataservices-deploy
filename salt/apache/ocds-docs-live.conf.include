@@ -14,6 +14,9 @@
         # If you have some config you only want on the live site, use this ....
     {% endif %}
 
+    # Needed so we can proxy to SSL servers!
+    SSLProxyEngine on
+
     {% set documentroot='/home/ocds-docs/web/' %}
     DocumentRoot {{ documentroot }}
     SetEnv BANNER /includes/banner_live.html
