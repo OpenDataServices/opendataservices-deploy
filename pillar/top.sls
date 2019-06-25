@@ -72,6 +72,10 @@ base:
 
   'ocds-redash*':
      - private.ocds_redash_pillar
+     - private.ocds_live_pillar
+
+  'ocds-docs-*':
+     - private.ocds_live_pillar
 
   '*live-bods*':
      - bods_live_pillar
