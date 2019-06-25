@@ -19,12 +19,25 @@
                 {% if pillar.cove.ocds_redirect %}
                 Redirect /ocds http://standard.open-contracting.org/validator
                 {% endif %}
+                {% if pillar.cove._360_redirect %}
+                Redirect /360 https://dataquality.threesixtygiving.org
+                {% endif %}
                 {% if uwsgi_port %}
                 ProxyPass uwsgi://127.0.0.1:{{ uwsgi_port }}/ timeout={{ pillar.cove.uwsgi_harakiri + 15 }}
                 {% else %}
                 ProxyPass unix:/tmp/uwsgi_{{ bare_name }}.sock|uwsgi://{{ bare_name }}/ timeout={{ pillar.cove.uwsgi_harakiri + 15 }}
                 {% endif %}
         </Location>
+
+        {% if pillar.dev_robots_txt %}
+        Alias /robots.txt "/var/www/html/robots.txt"
+        <Location "/robots.txt">
+                ProxyPass !
+                Order allow,deny
+                Allow from all
+                SetHandler None
+        </Location>
+        {% endif %}
 
         # Static content needed by Django
         Alias /static "{{ djangodir }}static/"
