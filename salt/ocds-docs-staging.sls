@@ -17,9 +17,6 @@ include:
 
 {% from 'lib.sls' import apache %}
 
-# We can't enable SSL yet - it causes problems with hostnames
-# https://github.com/open-contracting/standard/issues/878
-
 # This is the "live" server setup.
 
 {% set extracontext %}
@@ -32,7 +29,7 @@ testing: False
     socket_name='',
     servername='staging.standard.open-contracting.org',
     serveraliases=[],
-    https='') }}
+    https='yes') }}
 
 # This is the "testing" server setup.
 # If you need to mess around with the apache configs (maybe you need to test some redirects or proxy options) use this please.
@@ -47,7 +44,7 @@ testing: True
     socket_name='',
     servername='testing.staging.standard.open-contracting.org',
     serveraliases=[],
-    https='') }}
+    https='yes') }}
 
 # And now other misc stuff .....
 
