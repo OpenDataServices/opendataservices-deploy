@@ -12,7 +12,7 @@
 letsencrypt:
   pkg.installed
 
-/var/www/html/.well-known:
+/var/www/html/.well-known/acme-challenge:
   file.directory:
     - user: www-data
     - group: www-data

@@ -89,6 +89,7 @@
       - /etc/letsencrypt/live/{{ servername }}/privkey.pem
     - require:
       - pkg: letsencrypt
+      # The next line refers to something in the apache() macro
       - service: extra_reload_{{ servername }}
     - watch_in:
       - service: apache2
@@ -175,6 +176,12 @@ extra_reload_{{ servername }}:
     - running
     - enable: True
     - reload: True
+    - require:
+        - file: /etc/apache2/sites-available/{{ name }}
+        - file: /etc/apache2/sites-available/{{ name }}.include
+        - file: /etc/apache2/sites-enabled/{{ name }}
+        # The next line refers to something in salt/letsencrypt.sls
+        - file: /var/www/html/.well-known/acme-challenge
 
 # Create a symlink from sites-enabled to enable the config
 /etc/apache2/sites-enabled/{{ name }}:
@@ -182,9 +189,6 @@ extra_reload_{{ servername }}:
     - target: /etc/apache2/sites-available/{{ name }}
     - require:
       - file: /etc/apache2/sites-available/{{ name }}
-      {% if https == 'yes' or https == 'force' %}
-      - service: extra_reload_{{ servername }}
-      {% endif %}
     - makedirs: True
     - watch_in:
       - service: apache2
