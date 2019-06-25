@@ -233,6 +233,7 @@
     ProxyPass /schema !
     ProxyPass /infrastructure/schema !
     ProxyPass /robots.txt !
+    ProxyPass /.well-known/acme-challenge !
     ProxyPass /switcher !
     ProxyPass /includes !
     # ProxyPreserveHost was on but we need it to be Off, as it makes adding SSL much easier.

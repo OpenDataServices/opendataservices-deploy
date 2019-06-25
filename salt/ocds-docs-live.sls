@@ -22,7 +22,7 @@ testing: False
     socket_name='',
     servername='standard.open-contracting.org',
     serveraliases=[],
-    https='') }}
+    https='yes') }}
 
 # This is the "testing" server setup.
 # If you need to mess around with the apache configs (maybe you need to test some redirects or proxy options) use this please.
@@ -37,7 +37,7 @@ testing: True
     socket_name='',
     servername='testing.live.standard.open-contracting.org',
     serveraliases=[],
-    https='') }}
+    https='yes') }}
 
 
 # And now other misc stuff .....
