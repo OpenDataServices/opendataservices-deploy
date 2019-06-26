@@ -73,6 +73,10 @@ root_authorized_keys_file_append:
 
 {% endif %}
 
+# Don't need and don't want RPC portmapper:
+rpcbind:
+  pkg.removed
+
 
 
 # Set up unattended upgrades
