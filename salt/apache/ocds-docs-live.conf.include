@@ -246,8 +246,6 @@
     ProxyPass /i18n {{ pillar.ocds_cove_backend }}/i18n
     ProxyPass / https://staging.standard.open-contracting.org/
 
-
-    {% if testing  %}
     {# See https://crm.open-contracting.org/issues/4401 for this #}
     {% for lang in langs %}
         {% for version in ['1.1', 'latest'] %}
@@ -287,4 +285,4 @@
             Redirect /profiles/ppp/{{ version }}/{{ lang }}/extensions/transaction_milestones/  https://extensions.open-contracting.org/{{ lang }}/extensions/transaction_milestones/
         {% endfor %}
     {% endfor %}
-    {% endif %}
+
