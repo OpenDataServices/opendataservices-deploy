@@ -16,6 +16,9 @@ include:
 testing: False
 {% endset %}
 
+# When https is changed to FORCE there is a block in salt/apache/ocds-docs-live.conf.include that can be deleted too.
+# It is commited in the same commit as this comment, check the commit out.
+
 {{ apache('ocds-docs-live.conf',
     name='ocds-docs-live.conf',
     extracontext=extracontext,

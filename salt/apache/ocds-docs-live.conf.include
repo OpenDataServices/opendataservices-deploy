@@ -244,6 +244,22 @@
     ProxyPass /static {{ pillar.ocds_cove_backend }}/static
     ProxyPass /media {{ pillar.ocds_cove_backend }}/media
     ProxyPass /i18n {{ pillar.ocds_cove_backend }}/i18n
+
+    {# This solves a problem - "Convert to Spreadsheet" was working on HTTPS but not HTTP. Fix this by forcing header to be something the CSFR check likes. #}
+    {# When we change HTTPS to force, there will be no HTTP traffic and this block should be removed. #}
+    {% if testing  %}
+        <Location /review>
+                Header add referer "https://testing.live.standard.open-contracting.org"
+                RequestHeader set referer "https://testing.live.standard.open-contracting.org"
+        </Location>
+    {% endif %}
+    {% if not testing %}
+        <Location /review>
+                Header add referer "https://standard.open-contracting.org"
+                RequestHeader set referer "https://standard.open-contracting.org"
+        </Location>
+    {% endif %}
+
     ProxyPass / https://staging.standard.open-contracting.org/
 
     {# See https://crm.open-contracting.org/issues/4401 for this #}
