@@ -45,3 +45,5 @@ ocds-kingfisher-archive:  archive.kingfisher.open-contracting.org
 ocds-redash:              live.redash.opencontracting.uk0.bigv.io
 ocds-docs-staging:        staging.docs.opencontracting.uk0.bigv.io
 ocds-docs-live:           live.docs.opencontracting.uk0.bigv.io
+
+cove-live-oc4ids:         cove-live.oc4ids.opencontracting.uk0.bigv.io

@@ -85,6 +85,9 @@ base:
   'cove-dev-oc4ids':
      - oc4ids_dev_pillar
 
+  'cove-live-oc4ids':
+     - oc4ids_live_pillar
+
   'pwyf-dev':
      - pwyf_tracker
      - private.pwyf_tracker
