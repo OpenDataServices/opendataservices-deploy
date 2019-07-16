@@ -87,10 +87,17 @@ ocdskingfisherprocess-prerequisites  :
     - require:
       - git: {{ views_giturl }}{{ ocdskingfisherviewsdir }}
 
+
 kfp_postgres_readonlyuser_create:
   postgres_user.present:
     - name: ocdskfpreadonly
     - password: {{ pillar.ocdskingfisherprocess.postgres.ocdskfpreadonly.password }}
+
+
+kfp_postgres_guest_create:
+  postgres_user.present:
+    - name: ocdskfpguest
+    - password: {{ pillar.ocdskingfisherprocess.postgres.ocdskfpguest.password }}
 
 
 {{ userdir }}/.pgpass:
@@ -166,8 +173,8 @@ kfp_postgres_readonlyuser_setup_as_postgres:
             -c "
             REVOKE ALL ON schema public, views, views_test FROM public;
             GRANT ALL ON schema public, views, views_test TO ocdskfp;
-            GRANT USAGE ON schema public, views, views_test TO ocdskfpreadonly;
-            GRANT SELECT ON ALL TABLES IN SCHEMA public, views, views_test TO ocdskfpreadonly;
+            GRANT USAGE ON schema public, views, views_test TO ocdskfpreadonly, ocdskfpguest;
+            GRANT SELECT ON ALL TABLES IN SCHEMA public, views, views_test TO ocdskfpreadonly, ocdskfpguest;
             "
             ocdskingfisherprocess
       - runas: postgres
@@ -180,7 +187,7 @@ kfp_postgres_readonlyuser_setup_as_postgres:
 
 kfp_postgres_readonlyuser_setup_as_user:
     cmd.run:
-      - name: psql -c "ALTER DEFAULT PRIVILEGES IN SCHEMA public, views, views_test GRANT SELECT ON TABLES TO ocdskfpreadonly;" ocdskingfisherprocess
+      - name: psql -c "ALTER DEFAULT PRIVILEGES IN SCHEMA public, views, views_test GRANT SELECT ON TABLES TO ocdskfpreadonly, ocdskfpguest;" ocdskingfisherprocess
       - runas: {{ user }}
       - cwd: {{ ocdskingfisherdir }}
       - require:
