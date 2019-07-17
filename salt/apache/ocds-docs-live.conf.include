@@ -263,13 +263,17 @@
                 Header add referer "https://standard.open-contracting.org"
                 RequestHeader set referer "https://standard.open-contracting.org"
         </Location>
+        <Location /infrastructure/review>
+                Header add referer "https://standard.open-contracting.org"
+                RequestHeader set referer "https://standard.open-contracting.org"
+        </Location>
     {% endif %}
 
     {% if testing  %}
-      ProxyPass /infrastructure/review {{ pillar.oc4ids_cove_backend }} timeout={{ pillar.cove.apache_uwsgi_timeout }}
-      ProxyPass /infrastructure/static {{ pillar.oc4ids_cove_backend }}/static
-      ProxyPass /infrastructure/media {{ pillar.oc4ids_cove_backend }}/media
-      ProxyPass /infrastructure/i18n {{ pillar.oc4ids_cove_backend }}/i18n
+      ProxyPass /infrastructure/review {{ pillar.oc4ids_cove_backend }}/infrastructure/review timeout={{ pillar.cove.apache_uwsgi_timeout }}
+      ProxyPass /infrastructure/static {{ pillar.oc4ids_cove_backend }}/infrastructure/static
+      ProxyPass /infrastructure/media {{ pillar.oc4ids_cove_backend }}/infrastructure/media
+      ProxyPass /infrastructure/i18n {{ pillar.oc4ids_cove_backend }}/infrastructure/i18n
     {% endif %}
 
     ProxyPass / https://staging.standard.open-contracting.org/

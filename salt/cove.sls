@@ -38,7 +38,7 @@ remoteip:
       - watch_in:
         - service: apache2
 
-{% macro cove(name, giturl, branch, djangodir, user, uwsgi_port, servername=None, schema_url_ocds=None, app='cove') %}
+{% macro cove(name, giturl, branch, djangodir, user, uwsgi_port, servername=None, schema_url_ocds=None, app='cove', assets_base_url='') %}
 
 
 {% set extracontext %}
@@ -51,6 +51,7 @@ uwsgi_port: {{ uwsgi_port }}
 branch: {{ branch }}
 app: {{ app }}
 bare_name: {{ name }}
+assets_base_url: {{ assets_base_url }}
 {% if schema_url_ocds %}
 schema_url_ocds: {{ schema_url_ocds }}
 {% else %}
@@ -199,6 +200,7 @@ MAILTO:
     uwsgi_port=pillar.cove.uwsgi_port if 'uwsgi_port' in pillar.cove else 3031,
     servername=pillar.cove.servername if 'servername' in pillar.cove else None,
     app=pillar.cove.app if 'app' in pillar.cove else 'cove',
+    assets_base_url=pillar.cove.assets_base_url if 'assets_base_url' in pillar.cove else '',
     user=user) }}
 
 {% for branch in pillar.extra_cove_branches %}
@@ -209,6 +211,7 @@ MAILTO:
     djangodir='/home/'+user+'/cove-'+branch.name+'/',
     uwsgi_port=branch.uwsgi_port if 'uwsgi_port' in branch else None,
     servername=branch.servername if 'servername' in branch else None,
+    assets_base_url=pillar.cove.assets_base_url if 'assets_base_url' in pillar.cove else '',
     app=branch.app if 'app' in branch else 'cove',
     user=user) }}
 {% endfor %}

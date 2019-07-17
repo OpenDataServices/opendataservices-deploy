@@ -2,6 +2,7 @@
 default_branch: 'master'
 cove:
   app: cove_project
+  assets_base_url: '/infrastructure'
   uwsgi_port: 3032  # Can't use default 3031 on Ubuntu 18 till https://github.com/unbit/uwsgi/issues/1491 is fixed
   piwik:
     url: '//mon.opendataservices.coop/piwik/'
