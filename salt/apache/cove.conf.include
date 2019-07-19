@@ -44,8 +44,8 @@
         {% endif %}
 
         # Static content needed by Django
-        Alias {{ assets_base_url }}/static "{{ djangodir }}static/"
-        <Location "{{ assets_base_url }}/static">
+        Alias {{ assets_base_url or '' }}/static "{{ djangodir }}static/"
+        <Location "{{ assets_base_url or '' }}/static">
                 ProxyPass !
                 Order allow,deny
                 Allow from all
@@ -53,8 +53,8 @@
         </Location>
 
         # Static content uploaded by users
-        Alias {{ assets_base_url }}/media "{{ djangodir }}media/"
-        <Location "{{ assets_base_url }}/media">
+        Alias {{ assets_base_url  or '' }}/media "{{ djangodir }}media/"
+        <Location "{{ assets_base_url  or '' }}/media">
                 ProxyPass !
                 Order allow,deny
                 Allow from all
