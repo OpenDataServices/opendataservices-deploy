@@ -269,12 +269,10 @@
         </Location>
     {% endif %}
 
-    {% if testing  %}
-      ProxyPass /infrastructure/review {{ pillar.oc4ids_cove_backend }}/infrastructure/review timeout={{ pillar.cove.apache_uwsgi_timeout }}
-      ProxyPass /infrastructure/static {{ pillar.oc4ids_cove_backend }}/infrastructure/static
-      ProxyPass /infrastructure/media {{ pillar.oc4ids_cove_backend }}/infrastructure/media
-      ProxyPass /infrastructure/i18n {{ pillar.oc4ids_cove_backend }}/infrastructure/i18n
-    {% endif %}
+    ProxyPass /infrastructure/review {{ pillar.oc4ids_cove_backend }}/infrastructure/review timeout={{ pillar.cove.apache_uwsgi_timeout }}
+    ProxyPass /infrastructure/static {{ pillar.oc4ids_cove_backend }}/infrastructure/static
+    ProxyPass /infrastructure/media {{ pillar.oc4ids_cove_backend }}/infrastructure/media
+    ProxyPass /infrastructure/i18n {{ pillar.oc4ids_cove_backend }}/infrastructure/i18n
 
     ProxyPass / https://staging.standard.open-contracting.org/
 
