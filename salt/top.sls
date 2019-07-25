@@ -74,8 +74,7 @@ base:
      - cove_dev_redirects
 
   'grantnav-dev*':
-    - grantnav
-    - djangodebug
+    - grantnav-es7
     - icinga2-satellite
 
   'ocdskingfisher-new':
