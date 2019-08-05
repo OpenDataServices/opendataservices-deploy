@@ -1,3 +1,3 @@
 ocdskingfisherprocess:
   web:
-    host: process.ocdskingfisher-dev.default.opendataservices.uk0.bigv.io
+    host: process.dev.kingfisher.opencontracting.uk0.bigv.io
