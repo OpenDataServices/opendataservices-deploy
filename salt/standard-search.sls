@@ -191,7 +191,7 @@ collectstatic-{{name}}:
     branch='master',
     giturl=giturl,
     user=user,
-    servername='www.standard-search.default.opendataservices.uk0.bigv.io',
+    servername='www.live.standard-search.opencontracting.uk0.bigv.io',
     https='yes'
 ) }}
 
