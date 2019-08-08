@@ -23,7 +23,7 @@ org-ids:                  org-ids.default.opendataservices.uk0.bigv.io
 backups:                  backups.backups.opendataservices.uk0.bigv.io
 bods:                     bods.default.opendataservices.uk0.bigv.io
 standard-search:          live.standard-search.opencontracting.uk0.bigv.io
-ocdskit-web:              ocdskit-web.default.opendataservices.uk0.bigv.io
+ocdskit-web:              toucan.open-contracting.org
 pwyf-dev:                 pwyf-dev.default.opendataservices.uk0.bigv.io
 iati-misc:                iati-misc.default.opendataservices.uk0.bigv.io
 
