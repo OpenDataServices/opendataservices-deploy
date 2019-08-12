@@ -70,32 +70,6 @@
 
 {% endmacro %}
 
-#-----------------------------------------------------------------------
-# letsencrypt
-# Automatically obtain and install a Letsencrypt certificate
-#-----------------------------------------------------------------------
-
-{% macro letsencrypt(servername, serveraliases) %}
-
-{% set domainargs= "-d "+ " -d ".join([ servername ] + serveraliases ) %}
-
-{{ servername }}_acquire_certs:
-  cmd.run:
-    - name: letsencrypt certonly --non-interactive --no-self-upgrade --expand --email code@opendataservices.coop --agree-tos --webroot --webroot-path /var/www/html/ {{ domainargs }}
-    - creates:
-      - /etc/letsencrypt/live/{{ servername }}/cert.pem
-      - /etc/letsencrypt/live/{{ servername }}/chain.pem
-      - /etc/letsencrypt/live/{{ servername }}/fullchain.pem
-      - /etc/letsencrypt/live/{{ servername }}/privkey.pem
-    - require:
-      - pkg: letsencrypt
-      - service: extra_reload_{{ servername }}
-    - watch_in:
-      - service: apache2
-
-{% endmacro %}
-
-
 
 #-----------------------------------------------------------------------
 # apache
@@ -142,8 +116,6 @@
 
 {% if https == 'yes' or https == 'force' or https == 'certonly' %}
 
-{{ letsencrypt(servername, serveraliases) }}
-
 # https-enabled config has two files: the main .conf file is just
 # boilerplate from _common.conf, the service-specific config is in an
 # Apache-included file <name>.conf.include.
@@ -166,26 +138,23 @@
         https: "{{ https }}"
         {{ extracontext | indent(8) }}
 
+{% set domainargs= "-d "+ " -d ".join([ servername ] + serveraliases ) %}
 
-# For HTTPS we reload apache again after getting certificates
-extra_reload_{{ servername }}:
-  # Ensure apache running, and reload if any of the conf files change
-  service:
-    - name: apache2
-    - running
-    - enable: True
-    - reload: True
-
-# Create a symlink from sites-enabled to enable the config
-/etc/apache2/sites-enabled/{{ name }}:
-  file.symlink:
-    - target: /etc/apache2/sites-available/{{ name }}
+{{ servername }}_acquire_certs:
+  cmd.run:
+    - name: /etc/init.d/apache2 reload; letsencrypt certonly --non-interactive --no-self-upgrade --expand --email code@opendataservices.coop --agree-tos --webroot --webroot-path /var/www/html/ {{ domainargs }}
+    - creates:
+      - /etc/letsencrypt/live/{{ servername }}/cert.pem
+      - /etc/letsencrypt/live/{{ servername }}/chain.pem
+      - /etc/letsencrypt/live/{{ servername }}/fullchain.pem
+      - /etc/letsencrypt/live/{{ servername }}/privkey.pem
     - require:
+      - pkg: letsencrypt
       - file: /etc/apache2/sites-available/{{ name }}
-      {% if https == 'yes' or https == 'force' %}
-      - service: extra_reload_{{ servername }}
-      {% endif %}
-    - makedirs: True
+      - file: /etc/apache2/sites-available/{{ name }}.include
+      - file: /etc/apache2/sites-enabled/{{ name }}
+      # The next line refers to something in salt/letsencrypt.sls
+      - file: /var/www/html/.well-known/acme-challenge
     - watch_in:
       - service: apache2
 
@@ -218,6 +187,8 @@ extra_reload_{{ servername }}:
       {% endif %}
         {{ extracontext | indent(8) }}
 
+{% endif %}
+
 # Create a symlink from sites-enabled to enable the config
 /etc/apache2/sites-enabled/{{ name }}:
   file.symlink:
@@ -227,8 +198,6 @@ extra_reload_{{ servername }}:
     - makedirs: True
     - watch_in:
       - service: apache2
-
-{% endif %}
 
 {% endmacro %}
 
