@@ -5,6 +5,7 @@ include:
   - apache
   - apache-proxy
   - uwsgi
+  - letsencrypt
 
 {% set user = 'ocdskit-web' %}
 {{ createuser(user) }}
@@ -28,7 +29,7 @@ ocdskit-web-deps:
 {% set userdir = '/home/' + user %}
 {% set ocdskitwebdir = userdir + '/ocdskit-web/' %}
 
-{% macro ocdskit_web(name, branch, giturl, user, servername) %}
+{% macro ocdskit_web(name, branch, giturl, user, servername, https='') %}
 
 {% set djangodir='/home/'+user+'/'+name+'/' %}
 
@@ -41,7 +42,8 @@ bare_name: {{ name }}
 {{ apache(user+'.conf',
     name=name+'.conf',
     extracontext=extracontext,
-    servername=servername) }}
+    servername=servername,
+    https=https) }}
 
 {{ uwsgi(user+'.ini',
     name=name+'.ini',
@@ -142,7 +144,8 @@ collectstatic-{{name}}:
     branch=pillar.ocdskit_web.default_branch,
     giturl=giturl,
     user=user,
-    servername='toucan.open-contracting.org'
+    servername='toucan.open-contracting.org',
+    https='force'
     ) }}
 
 # Set up an redirect from an old server name

@@ -6,6 +6,10 @@
             ProxyPass uwsgi://127.0.0.1:5001/
     </Location>
 
+    <Location "/.well-known/acme-challenge">
+        ProxyPass !
+    </Location>
+
     {% if pillar.dev_robots_txt %}
     Alias /robots.txt "/var/www/html/robots.txt"
     <Location "/robots.txt">
