@@ -28,7 +28,7 @@ ocdskit-web-deps:
 {% set userdir = '/home/' + user %}
 {% set ocdskitwebdir = userdir + '/ocdskit-web/' %}
 
-{% macro ocdskit_web(name, branch, giturl, user) %}
+{% macro ocdskit_web(name, branch, giturl, user, servername) %}
 
 {% set djangodir='/home/'+user+'/'+name+'/' %}
 
@@ -40,7 +40,8 @@ bare_name: {{ name }}
 
 {{ apache(user+'.conf',
     name=name+'.conf',
-    extracontext=extracontext) }}
+    extracontext=extracontext,
+    servername=servername) }}
 
 {{ uwsgi(user+'.ini',
     name=name+'.ini',
@@ -140,7 +141,11 @@ collectstatic-{{name}}:
     name='ocdskit-web',
     branch=pillar.ocdskit_web.default_branch,
     giturl=giturl,
-    user=user
+    user=user,
+    servername='toucan.open-contracting.org'
     ) }}
 
+# Set up an redirect from an old server name
+{{ apache('ocdskit-web-redirects.conf',
+    name='ocdskit-web-redirects.conf') }}
 
