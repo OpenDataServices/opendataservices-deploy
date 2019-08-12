@@ -75,7 +75,7 @@ elasticsearch:
     - template: jinja
 
 
-{% macro standard_search(name, branch, giturl, user, servername, https) %}
+{% macro standard_search(name, branch, giturl, user, servername, https, serveraliases=[]) %}
 
 {% set djangodir='/home/'+user+'/'+name+'/' %}
 
@@ -89,6 +89,7 @@ bare_name: {{ name }}
     name=name+'.conf',
     https=https,
     servername=servername,
+    serveraliases=serveraliases,
     extracontext=extracontext) }}
 
 {{ uwsgi(user+'.ini',
@@ -191,7 +192,8 @@ collectstatic-{{name}}:
     branch='master',
     giturl=giturl,
     user=user,
-    servername='www.live.standard-search.opencontracting.uk0.bigv.io',
+    servername='standard-search.open-contracting.org',
+    serveraliases=['www.live.standard-search.opencontracting.uk0.bigv.io'],
     https='yes'
 ) }}
 
