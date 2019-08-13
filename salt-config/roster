@@ -38,7 +38,6 @@ data-360-live:          data.live.threesixtygiving.uk0.bigv.io
 # Open Contracting boxes
 #   dev:
 #   live:
-ocds-kingfisher-archive:  archive.kingfisher.open-contracting.org
 
 cove-live-oc4ids:         cove-live.oc4ids.opencontracting.uk0.bigv.io
 
@@ -57,4 +56,5 @@ cove-live-oc4ids:         cove-live.oc4ids.opencontracting.uk0.bigv.io
 #standard-search:          live.standard-search.opencontracting.uk0.bigv.io
 #ocds-redash:              live.redash.opencontracting.uk0.bigv.io
 #ocdskit-web:              toucan.open-contracting.org
+#ocds-kingfisher-archive:  archive.kingfisher.open-contracting.org
 
