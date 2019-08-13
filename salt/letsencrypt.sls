@@ -16,6 +16,7 @@ letsencrypt:
   file.directory:
     - user: www-data
     - group: www-data
+    - makedirs: True
 
 /etc/apache2/mods-enabled/ssl.load:
   file.symlink:
