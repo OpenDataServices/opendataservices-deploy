@@ -66,10 +66,6 @@ base:
      - private.ocdskingfisher_live_pillar
      - private.ocdskingfisher_pillar
 
-  'ocdskingfisher-dev':
-     - ocdskingfisher_dev_pillar
-     - private.ocdskingfisher_dev_pillar
-
   'ocds-redash*':
      - private.ocds_redash_pillar
      - private.ocds_live_pillar
@@ -81,9 +77,6 @@ base:
      - bods_live_pillar
   '*dev-bods*':
      - bods_dev_pillar
-
-  'cove-dev-oc4ids':
-     - oc4ids_dev_pillar
 
   'cove-live-oc4ids':
      - oc4ids_live_pillar

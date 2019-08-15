@@ -86,15 +86,6 @@ base:
     - ocdskingfisherscrape
     - ocdskingfisheranalyse
 
-  'ocdskingfisher-dev':
-    - icinga2-satellite
-    - postgres10
-    - ocdskingfisher
-    - ocdskingfisherold
-    - ocdskingfisherprocess
-    - ocdskingfisherscrape
-    - ocdskingfisheranalyse
-
   'ocds-kingfisher-archive':
     - postgres11
     - ocdskingfisher
