@@ -13,7 +13,6 @@ live2:                    live2.default.opendataservices.uk0.bigv.io
 live3:                    live3.default.opendataservices.uk0.bigv.io
 mon-2:                    mon-2.default.opendataservices.uk0.bigv.io
 cove-live:                cove-live.default.opendataservices.uk0.bigv.io
-cove-live-ocds-2:         live.cove.opencontracting.uk0.bigv.io
 cove-live-iati:           cove-live-iati.default.opendataservices.uk0.bigv.io
 cove-live-bods:           cove-live-bods.default.opendataservices.uk0.bigv.io
 snapshotter:              snapshotter.default.opendataservices.uk0.bigv.io
@@ -33,11 +32,6 @@ grantnav-live-green-2:  grantnav-green-2.live.threesixtygiving.uk0.bigv.io
 cove-360-live:          cove-360-live.live.threesixtygiving.uk0.bigv.io
 data-360-live:          data.live.threesixtygiving.uk0.bigv.io
 
-# Open Contracting boxes
-#   dev:
-#   live:
-
-cove-live-oc4ids:         cove-live.oc4ids.opencontracting.uk0.bigv.io
 
 
 #  We are moving all Open Contracting boxes to new deploy repositories!
@@ -55,4 +49,7 @@ cove-live-oc4ids:         cove-live.oc4ids.opencontracting.uk0.bigv.io
 #ocds-redash:              live.redash.opencontracting.uk0.bigv.io
 #ocdskit-web:              toucan.open-contracting.org
 #ocds-kingfisher-archive:  archive.kingfisher.open-contracting.org
+#cove-live-ocds-2:         live.cove.opencontracting.uk0.bigv.io
+#cove-live-oc4ids:         cove-live.oc4ids.opencontracting.uk0.bigv.io
+
 
