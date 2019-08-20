@@ -64,7 +64,6 @@ base:
     - icinga2-satellite
     - os4d
     - registry360
-    - ocds-extension-explorer
 
   'cove*dev*':
     - cove
