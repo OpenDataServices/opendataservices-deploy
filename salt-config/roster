@@ -34,22 +34,8 @@ data-360-live:          data.live.threesixtygiving.uk0.bigv.io
 
 
 
-#  We are moving all Open Contracting boxes to new deploy repositories!
+#  We have moved all Open Contracting boxes to new deploy repositories!
 #  https://github.com/open-contracting/deploy
 #  https://github.com/open-contracting/deploy-pillar-private
 #  https://github.com/open-contracting/deploy-salt-private
-#  All boxes below have already been moved and should not be run from this repository.
-#  For now, we are leaving the salt associated with these boxes in this repository
-#     until we are totally sure everything is working fine in the new repositories.
-#  Then we will delete any Open Contracting stuff from this repository.
-#ocdskingfisher-new:       95.216.243.15
-#ocds-docs-staging:        staging.docs.opencontracting.uk0.bigv.io
-#ocds-docs-live:           live.docs.opencontracting.uk0.bigv.io
-#standard-search:          live.standard-search.opencontracting.uk0.bigv.io
-#ocds-redash:              live.redash.opencontracting.uk0.bigv.io
-#ocdskit-web:              toucan.open-contracting.org
-#ocds-kingfisher-archive:  archive.kingfisher.open-contracting.org
-#cove-live-ocds-2:         live.cove.opencontracting.uk0.bigv.io
-#cove-live-oc4ids:         cove-live.oc4ids.opencontracting.uk0.bigv.io
-
 

@@ -1,8 +1,5 @@
 # Values used only on the live servers
 default_branch: 'live'
-# URL that OCDS /validator proxies to
-ocds_cove_backend: https://cove.live.cove.opencontracting.uk0.bigv.io
-oc4ids_cove_backend: https://oc4ids.cove.live.opendataservices.coop
 cove:
   ocds_redirect: True
   larger_uwsgi_limits: True

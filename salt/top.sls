@@ -36,16 +36,6 @@ base:
   'bods':
     - icinga2-satellite
 
-
-  'ocds-docs-staging':
-    - icinga2-satellite
-    - ocds-docs-staging
-
-  'ocds-docs-live':
-    - icinga2-satellite
-    - ocds-docs-live
-    - ocds-legacy
-
   # STAGING
 
   'cove-staging':
@@ -75,31 +65,6 @@ base:
   'grantnav-dev*':
     - grantnav-es7
     - icinga2-satellite
-
-  'ocdskingfisher-new':
-    - postgres11
-    - ocdskingfisher
-    - ocdskingfisherold
-    - ocdskingfisherarchiveonprocess
-    - ocdskingfisherprocess
-    - ocdskingfisherscrape
-    - ocdskingfisheranalyse
-
-  'ocds-kingfisher-archive':
-    - postgres11
-    - ocdskingfisher
-    - ocdskingfisheranalyse
-    - ocdskingfisherarchiveonarchive
-
-  'ocds-redash*':
-    - ocds-redash
-
-  'ocdskit-web':
-    - ocdskit-web
-
-  'standard-search':
-    - standard-search
-#    - icinga2-satellite
 
   'pwyf-dev':
     - pwyf-tracker
