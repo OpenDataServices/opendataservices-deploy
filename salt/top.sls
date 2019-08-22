@@ -17,6 +17,9 @@ base:
     - os4d
     - travis-secret-files
 
+  'live4':
+    - icinga2-satellite
+
   'cove*live*':
     - cove
     - icinga2-satellite
