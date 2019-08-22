@@ -1,0 +1,16 @@
+[Unit]
+Description=Prometheus Server
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User={{ user }}
+Group={{ user }}
+Type=simple
+ExecStart=/home/{{ user }}/prometheus-{{ pillar.prometheus.server_prometheus_version }}.linux-amd64/prometheus \
+    --config.file /home/{{ user }}/conf-prometheus.yml \
+    --storage.tsdb.path /home/{{ user }}/data \
+    --web.listen-address 127.0.0.1:9057
+
+[Install]
+WantedBy=multi-user.target

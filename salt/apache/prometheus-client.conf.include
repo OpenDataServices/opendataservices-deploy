@@ -1,0 +1,12 @@
+
+    <Location "/">
+
+        ProxyPass http://localhost:9157/
+
+        AuthName "Open Data Services Prometheus Node Exporter"
+        AuthType Basic
+        AuthUserFile /home/{{ user }}/htpasswd
+        require valid-user
+
+    </Location>
+

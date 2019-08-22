@@ -1,0 +1,27 @@
+global:
+  scrape_interval: 60s
+
+scrape_configs:
+  - job_name: 'prometheus'
+    scrape_interval: 60s
+    static_configs:
+      - targets: ['localhost:9057']
+    scheme: http
+  - job_name: 'own_node_exporter'
+    scrape_interval: 60s
+    static_configs:
+      - targets: ['localhost:9157']
+    scheme: http
+    #basic_auth:
+    #  username: prom
+    #  password: xxxxxxxxxxxxxxxxxxxx
+
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets:
+      - 'localhost:9095'
+
+rule_files:
+  - /home/{{ user }}/conf-prometheus-rules.yml
+

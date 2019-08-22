@@ -1,0 +1,16 @@
+[Unit]
+Description=Prometheus Alertmanager
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User={{ user }}
+Group={{ user }}
+Type=simple
+ExecStart=/home/{{ user }}/alertmanager-{{ pillar.prometheus.server_alertmanager_version }}.linux-amd64/alertmanager \
+    --storage.path /home/{{ user }}/data \
+    --config.file /home/{{ user }}/conf-alertmanager.yml \
+    --web.listen-address=127.0.0.1:9095
+
+[Install]
+WantedBy=multi-user.target

@@ -88,6 +88,10 @@ base:
     - icinga2-master
     - piwik
 
+  'mon-4':
+    - prometheus-server
+    - prometheus-client-apache
+
   # OTHERS
 
   'snapshotter':

@@ -5,6 +5,7 @@ base:
   '*':
      - common_pillar
      - private.common_pillar
+     - private.prometheus_pillar
   '*live*':
      - live_pillar
      - private.live_pillar
