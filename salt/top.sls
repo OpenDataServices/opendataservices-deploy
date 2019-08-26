@@ -9,7 +9,6 @@ base:
   # LIVE
 
   'live2':
-    - opendataservices-website
     - icinga2-satellite
 
   'live3':
@@ -18,6 +17,7 @@ base:
     - travis-secret-files
 
   'live4':
+    - opendataservices-website
     - icinga2-satellite
 
   'cove*live*':
