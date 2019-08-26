@@ -1,3 +1,9 @@
+#
+# For Ubuntu:
+#  * 18 LTS - Yes.
+#  * 16 LTS - Not tested, but should be fine.
+#  * 14 LTS - No - this uses Systemd and 14 does not have that.
+#
 
 {% from 'lib.sls' import createuser, apache %}
 
