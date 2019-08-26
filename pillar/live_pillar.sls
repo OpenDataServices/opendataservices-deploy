@@ -17,7 +17,7 @@ cove:
 registry360:
   allowedhosts: data.threesixtygiving,.live.threesixtygiving.uk0.bigv.io
 opendataservices_website:
-    https: ''
+    https: 'yes'
     servername: 'opendataservices.coop'
     serveraliases: ['www.opendataservices.coop']
 
