@@ -80,7 +80,11 @@ base:
 
   # MONITORING
 
-  'mon*':
+  'mon-2':
+    - icinga2-master
+    - piwik
+
+  'mon-3':
     - icinga2-master
     - piwik
 

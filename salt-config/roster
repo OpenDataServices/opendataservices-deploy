@@ -13,6 +13,7 @@ live2:                    live2.default.opendataservices.uk0.bigv.io
 live3:                    live3.default.opendataservices.uk0.bigv.io
 live4:                    live4.default.opendataservices.uk0.bigv.io
 mon-2:                    mon-2.default.opendataservices.uk0.bigv.io
+mon-4:                    mon-4.default.opendataservices.uk0.bigv.io
 cove-live:                cove-live.default.opendataservices.uk0.bigv.io
 cove-live-iati:           cove-live-iati.default.opendataservices.uk0.bigv.io
 cove-live-bods:           cove-live-bods.default.opendataservices.uk0.bigv.io
