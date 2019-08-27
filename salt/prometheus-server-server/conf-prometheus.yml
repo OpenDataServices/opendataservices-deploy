@@ -12,9 +12,14 @@ scrape_configs:
     static_configs:
       - targets: ['localhost:9157']
     scheme: http
-    #basic_auth:
-    #  username: prom
-    #  password: xxxxxxxxxxxxxxxxxxxx
+  - job_name: 'live4'
+    scrape_interval: 60s
+    static_configs:
+      - targets: ['prom-client.live4.default.opendataservices.uk0.bigv.io']
+    scheme: http
+    basic_auth:
+      username: prom
+      password: {{ pillar.prometheus.client_password }}
 
 alerting:
   alertmanagers:

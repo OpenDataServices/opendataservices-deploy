@@ -17,6 +17,7 @@ base:
     - travis-secret-files
 
   'live4':
+    - prometheus-client-apache
     - opendataservices-website
     - icinga2-satellite
 
