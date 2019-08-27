@@ -10,6 +10,22 @@ groups:
     annotations:
       summary: "Endpoint {{ $labels.instance }} down"
       description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 1 minutes."
+  - alert: AvailableMemoryLow
+    expr: node_memory_MemAvailable_bytes < 5e+7
+    for: 1m
+    labels:
+      severity: "critical"
+    annotations:
+      summary: "Endpoint {{ $labels.instance }} has less than 50MB available memory"
+      description: "{{ $labels.instance }} of job {{ $labels.job }} has less than 50MB available memory."
+  - alert: RootFileSystemLow
+    expr: node_filesystem_free_bytes{mountpoint="/"} < 1e+9
+    for: 1m
+    labels:
+      severity: "critical"
+    annotations:
+      summary: "Endpoint {{ $labels.instance }} has less than 1GB of disk space available"
+      description: "{{ $labels.instance }} of job {{ $labels.job }} has less than 1GB of disk space available."
 
 
 {% endraw %}
