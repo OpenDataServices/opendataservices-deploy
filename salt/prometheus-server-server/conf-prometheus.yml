@@ -20,6 +20,12 @@ scrape_configs:
     basic_auth:
       username: prom
       password: {{ pillar.prometheus.client_password }}
+  ### Do NOT enable this on live server, it's for VM testing only. See salt/prometheus-client-apache-testing.sls for more.
+  #- job_name: 'testing'
+  #  scrape_interval: 10s
+  #  static_configs:
+  #   - targets: ['localhost:9099']
+  #  scheme: http
 
 alerting:
   alertmanagers:
