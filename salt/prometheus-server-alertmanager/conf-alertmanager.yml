@@ -6,11 +6,16 @@ route:
   group_wait: 10s
   group_interval: 10s
   repeat_interval: 1h
-  receiver: 'web.hook'
+  receiver: 'email.planio.servers'
 receivers:
-- name: 'web.hook'
-  webhook_configs:
-  - url: 'http://127.0.0.1:5001/'
+- name: 'email.planio.servers'
+  email_configs:
+    - to: inbox+opendataservices+443f+servers@plan.io
+      from: root@mon-4.default.opendataservices.uk0.bigv.io
+      smarthost: localhost:25
+      require_tls: false
+      tls_config:
+        insecure_skip_verify: true
 inhibit_rules:
   - source_match:
       severity: 'critical'

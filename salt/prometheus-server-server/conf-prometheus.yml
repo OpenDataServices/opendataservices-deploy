@@ -2,12 +2,12 @@ global:
   scrape_interval: 60s
 
 scrape_configs:
-  - job_name: 'prometheus'
+  - job_name: 'prometheus-server'
     scrape_interval: 60s
     static_configs:
       - targets: ['localhost:9057']
     scheme: http
-  - job_name: 'own_node_exporter'
+  - job_name: 'mon-4'
     scrape_interval: 60s
     static_configs:
       - targets: ['localhost:9157']
