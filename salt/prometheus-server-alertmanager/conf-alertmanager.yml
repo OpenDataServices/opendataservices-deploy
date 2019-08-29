@@ -3,9 +3,9 @@ global:
 
 route:
   group_by: ['alertname']
-  group_wait: 10s
-  group_interval: 10s
-  repeat_interval: 1h
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 1d
   receiver: 'email.planio.servers'
 receivers:
 - name: 'email.planio.servers'
@@ -16,12 +16,6 @@ receivers:
       require_tls: false
       tls_config:
         insecure_skip_verify: true
-inhibit_rules:
-  - source_match:
-      severity: 'critical'
-    target_match:
-      severity: 'warning'
-    equal: ['alertname', 'dev', 'instance']
 
 
 
