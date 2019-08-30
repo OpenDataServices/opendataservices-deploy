@@ -26,6 +26,13 @@ groups:
     annotations:
       summary: "Endpoint {{ $labels.instance }} has less than 1GB of disk space available"
       description: "{{ $labels.instance }} of job {{ $labels.job }} has less than 1GB of disk space available."
-
+  - alert: WebsiteDown
+    expr: probe_success == 0
+    for: 1m
+    labels:
+      severity: "critical"
+    annotations:
+      summary: "Website {{ $labels.instance }} appears to be down"
+      description: "{{ $labels.instance }} of job {{ $labels.job }} appears to be down."
 
 {% endraw %}

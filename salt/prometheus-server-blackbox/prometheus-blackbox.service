@@ -1,0 +1,15 @@
+[Unit]
+Description=Prometheus Alertmanager
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User={{ user }}
+Group={{ user }}
+Type=simple
+ExecStart=/home/{{ user }}/blackbox_exporter-{{ pillar.prometheus.server_blackbox_exporter_version }}.linux-amd64/blackbox_exporter \
+    --config.file /home/{{ user }}/conf-blackbox.yml \
+    --web.listen-address=127.0.0.1:9085
+
+[Install]
+WantedBy=multi-user.target
