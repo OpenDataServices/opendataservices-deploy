@@ -8,6 +8,9 @@ include:
   - apache
 {% if 'https' in pillar.opendataservices_website and pillar.opendataservices_website.https %}  - letsencrypt{% endif %}
 
+rewrite:
+  apache_module.enabled
+
 # Create a user for this piece of work, see lib.sls for more info
 {% set user = 'opendataservices' %}
 {{ createuser(user) }}

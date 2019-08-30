@@ -28,3 +28,9 @@
         RedirectMatch 404 .git
     </Directory>
 
+    # See https://www.loomio.org/p/ysAxYtgT
+    <IfModule mod_rewrite.c>
+        RewriteEngine On
+        RewriteCond %{HTTP_HOST} www\.opendataservices\.coop$ [NC]
+        RewriteRule ^(.*)$ https://opendataservices.coop/ [L,R=307]
+    </IfModule>
