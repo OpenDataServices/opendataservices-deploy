@@ -5,7 +5,7 @@ grantnav:
   deploy_mode: list
   deploys:
     new:
-      datadate: '2019-08-08'
+      datadate: '2019-09-03'
       branch: 'iteration23'
       dataselection: acceptable_license_valid
     current:
@@ -13,7 +13,7 @@ grantnav:
       branch: 'iteration23'
       dataselection: acceptable_license_valid
     old:
-      datadate: '2019-07-03'
+      datadate: '2019-08-08'
       branch: 'iteration23'
       dataselection: acceptable_license_valid
   piwik:
