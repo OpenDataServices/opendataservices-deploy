@@ -39,6 +39,8 @@ extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values 
     app: cove_iati
   - name: openpyxl-commit
     app: cove_iati
+  - name: 1208-iati-cove-orgxml-spreadsheet
+    app: cove_iati
 # Do NOT just delete branches from extra_cove_branches above! Instead add them to old_cove_branches!
 # They will be removed from the dev servers.
 old_cove_branches: #[] # remove the [] (empty list) if you re-add some values below
