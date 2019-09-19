@@ -33,7 +33,7 @@ extract_prometheus_blackbox:
 
 /home/{{ user }}/conf-blackbox.yml:
   file.managed:
-    - source: salt://prometheus-server-blackbox/conf-blackbox.yml
+    - source: salt://private/prometheus-server-blackbox/conf-blackbox.yml
     - template: jinja
     - context:
         user: {{ user }}
