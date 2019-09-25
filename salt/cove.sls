@@ -1,3 +1,4 @@
+# For a live deploy, please follow the instructions at https://cove.readthedocs.io/en/latest/deployment/
 {% from 'lib.sls' import createuser, apache, uwsgi, removeapache, removeuwsgi %}
 
 {% set user = 'cove' %}
