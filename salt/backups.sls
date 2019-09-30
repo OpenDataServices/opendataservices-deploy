@@ -1,14 +1,24 @@
 {% from 'lib.sls' import createuser, apache %}
 
-{% set user = 'automated' %}
-{{ createuser(user) }}
-
-{% set user = 'coop' %}
-{{ createuser(user) }}
 
 acl:
   pkg.installed
 
-# Ensure all home directories are only readable by their users (and root)
-chmod og-rwx /home/*; setfacl -d -m g::--- /home/*; setfacl -d -m o::--- /home/*:
+
+{% for user in ['archive','nrgi','pantheon','planio','threesixtygiving_data'] %}
+
+{{ createuser(user) }}
+
+# Ensure home directory is only readable by their users (and root)
+# We get errors because some folders are empty or because you can't set default acls on files; ignore
+chmod og-rwx /home/{{ user }}/* || true:
   cmd.run
+
+setfacl -d -m g::--- /home/{{ user }}/* || true:
+  cmd.run
+
+setfacl -d -m o::--- /home/{{ user }}/* || true:
+  cmd.run
+
+{% endfor %}
+

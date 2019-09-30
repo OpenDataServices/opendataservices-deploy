@@ -13,6 +13,7 @@ base:
 
   'live3':
     - icinga2-satellite
+    - prometheus-client-apache
     - os4d
 
   'live4':
@@ -24,19 +25,32 @@ base:
     - cove
     - icinga2-satellite
 
+  'cove-live-iati':
+    - prometheus-client-apache
+
+  'cove-live-bods':
+    - prometheus-client-apache
+
+  'cove-360-live':
+    - prometheus-client-apache
+
   'grantnav-live*':
     - grantnav
     - icinga2-satellite
+    - prometheus-client-apache
 
   'data-360-live':
     - registry360
     - icinga2-satellite
+    - prometheus-client-apache
 
   'org-ids':
     - org-ids
+    - prometheus-client-apache
     - icinga2-satellite
 
   'bods':
+    - prometheus-client-apache
     - icinga2-satellite
 
   # STAGING
@@ -55,12 +69,14 @@ base:
   'dev4':
     - org-ids
     - icinga2-satellite
+    - prometheus-client-apache
     - os4d
     - registry360
 
   'cove*dev*':
     - cove
     - icinga2-satellite
+    - prometheus-client-apache
 
   'cove-dev*':
      - cove_dev_redirects
@@ -68,6 +84,7 @@ base:
   'grantnav-dev*':
     - grantnav-es7
     - icinga2-satellite
+    - prometheus-client-apache
 
   'pwyf-dev':
     - pwyf-tracker
@@ -75,6 +92,7 @@ base:
 
   'iati-misc':
     - iati-misc
+    - prometheus-client-apache
 #    - icinga2-satellite
 
 
@@ -96,8 +114,10 @@ base:
 
   'snapshotter':
     - icinga2-satellite
+    - prometheus-client-apache
 
   'backups':
     - icinga2-satellite
+    - prometheus-client-apache
     - backups
 
