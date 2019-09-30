@@ -85,6 +85,7 @@ base:
 
   'pwyf-dev':
     - pwyf-tracker
+    - prometheus-client-apache
 #    - icinga2-satellite
 
   'iati-misc':
