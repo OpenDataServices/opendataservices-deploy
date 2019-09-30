@@ -8,9 +8,6 @@ base:
 
   # LIVE
 
-  'live2':
-    - icinga2-satellite
-
   'live3':
     - icinga2-satellite
     - prometheus-client-apache

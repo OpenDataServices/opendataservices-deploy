@@ -9,9 +9,6 @@
         # live3
         RemoteIPTrustedProxy 46.43.3.132
         RemoteIPTrustedProxy 2001:41c9:1:420::132
-        # live2
-        RemoteIPTrustedProxy 46.43.2.168
-        RemoteIPTrustedProxy 2001:41c9:1:41f::168
         # OCDS Docs Live
         RemoteIPTrustedProxy 5.28.62.151
         RemoteIPTrustedProxy 2001:41c9:1:41c::151
