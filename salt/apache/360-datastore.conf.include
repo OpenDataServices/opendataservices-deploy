@@ -1,0 +1,53 @@
+
+        <Location / >
+            # TESTING
+            AuthType Basic
+            AuthName "360 Datastore Test"
+            AuthUserFile /etc/apache2/360.htpasswd
+            Require valid-user
+        </Location>
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+        <Location / >
+                ProxyPass uwsgi://127.0.0.1:3032/
+        </Location>
+
+
+        Alias /static /var/www/static/
+        <Location /static>
+                ProxyPass !
+                Order allow,deny
+                Allow from all
+                SetHandler None
+        </Location>
+
+        Alias /grantnav_packages /var/www/grantnav_packages/
+        <Location /grantnav_packages>
+                ProxyPass !
+                Order allow,deny
+                Allow from all
+                SetHandler None
+        </Location>
+
+        Alias /reports /var/www/reports/
+        <Location /reports>
+                ProxyPass !
+                Order allow,deny
+                Allow from all
+                SetHandler None
+        </Location>
+
+        # Apache's icons which are used for index (index of..)
+        Alias /icons /usr/share/apache2/icons/
+        <Location /icons>
+                ProxyPass !
+                Order allow,deny
+                Allow from all
+                SetHandler None
+        </Location>
+
+        <Location "/.well-known/acme-challenge">
+                ProxyPass !
+        </Location>

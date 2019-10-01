@@ -52,6 +52,7 @@ base:
 
   'datastore-360-live':
     - icinga2-satellite
+    - 360-datastore
 
   # STAGING
 
