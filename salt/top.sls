@@ -50,6 +50,9 @@ base:
     - prometheus-client-apache
     - icinga2-satellite
 
+  'datastore-360-live':
+    - icinga2-satellite
+
   # STAGING
 
   'cove-staging':
