@@ -16,6 +16,7 @@ base:
   'live4':
     - prometheus-client-apache
     - opendataservices-website
+    - cove-opendataservices-coop
     - icinga2-satellite
 
   'cove*live*':

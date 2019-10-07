@@ -1,0 +1,8 @@
+    DocumentRoot {{ webdir }}
+    DirectoryIndex index.html
+
+    <Directory {{ webdir }}>
+        Require all granted
+        RedirectMatch 404 .git
+    </Directory>
+    
