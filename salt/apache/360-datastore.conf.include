@@ -15,7 +15,7 @@
         </Location>
 
 
-        Alias /static /var/www/static/
+        Alias /static {{ pillar.datastore.static_dir }}
         <Location /static>
                 ProxyPass !
                 Order allow,deny
@@ -23,7 +23,7 @@
                 SetHandler None
         </Location>
 
-        Alias /grantnav_packages /var/www/grantnav_packages/
+        Alias /grantnav_packages {{ pillar.datastore.grantnav_packages_dir }}
         <Location /grantnav_packages>
                 ProxyPass !
                 Order allow,deny
@@ -31,7 +31,7 @@
                 SetHandler None
         </Location>
 
-        Alias /reports /var/www/reports/
+        Alias /reports {{ pillar.datastore.reports_dir }}
         <Location /reports>
                 ProxyPass !
                 Order allow,deny
