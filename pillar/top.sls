@@ -50,3 +50,7 @@ base:
   'pwyf-dev':
      - pwyf_tracker
      - private.pwyf_tracker
+
+  'pwyf-tracker-dev':
+     - pwyf_tracker_original
+     - private.pwyf_tracker_original
