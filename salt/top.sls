@@ -97,6 +97,11 @@ base:
     - pwyf-tracker-original
     - prometheus-client-apache
 
+  'pwyf-dqt-*':
+    - pwyf-dqt
+    - prometheus-client-apache
+
+
   'iati-misc':
     - iati-misc
     - prometheus-client-apache
