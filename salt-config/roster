@@ -35,7 +35,6 @@ data-360-live:          data.live.threesixtygiving.uk0.bigv.io
 datastore-360-live:     datastore-dev.grantnav.threesixtygiving.org
 
 
-
 #  We have moved all Open Contracting boxes to new deploy repositories!
 #  https://github.com/open-contracting/deploy
 #  https://github.com/open-contracting/deploy-pillar-private

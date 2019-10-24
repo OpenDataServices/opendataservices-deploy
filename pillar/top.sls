@@ -54,3 +54,7 @@ base:
   'pwyf-tracker-dev':
      - pwyf_tracker_original
      - private.pwyf_tracker_original
+
+  'pwyf-dqt-*':
+    - pwyf_dqt_pillar
+    - private.pwyf_dqt_pillar
