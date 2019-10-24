@@ -8,6 +8,9 @@ cove:
   iati: True
   servername: iati.cove.opendataservices.coop
   allowedhosts: '.iati.cove.opendataservices.coop'
+  larger_uwsgi_limits: True
+  uwsgi_as_limit: 12000
+  uwsgi_harakiri: 1800
   app: cove_iati
   https: 'force'
 
