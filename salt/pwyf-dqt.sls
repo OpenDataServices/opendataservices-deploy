@@ -9,7 +9,7 @@ include:
   - core
   - apache
   - uwsgi
-#   - letsencrypt
+  - letsencrypt
 
 # uWSGI from data-quality-tester > requirements.txt has a C
 # extension not sure if this is needed given we install the pkg
@@ -19,6 +19,7 @@ include:
 pwyf-dqt-deps:
   pkg.installed:
     - pkgs:
+      - cron
       - virtualenv
       - libapache2-mod-proxy-uwsgi
       - uwsgi-plugin-python3
@@ -94,7 +95,6 @@ setup_dqt:
       - setup_dqt
 
 
-
 {{ pillar.pwyf_dqt.static_dir }}:
   file.directory:
     - user: {{ pillar.pwyf_dqt.user }}
@@ -134,22 +134,16 @@ setup_dqt_assets:
     - user: {{ pillar.pwyf_dqt.user }}
     - group: {{ pillar.pwyf_dqt.user }}
 
-
-/var/run/pwyf_dqt_celery:
-  file.directory:
-    - makedirs: True
-    - user: {{ pillar.pwyf_dqt.user }}
-    - group: {{ pillar.pwyf_dqt.user }}
-
 pwyf_dqt_celery:
   service:
     - running
     - enable: True
     - reload: True
     - require:
-      - /var/run/pwyf_dqt_celery
+      - /etc/systemd/system/pwyf_dqt_celery.service
+      - /var/log/pwyf_dqt_celery
 
-##### Cron job for clean ups
+##### Cron jobs
 
 clean_up_cron:
   cron.present:
@@ -158,6 +152,18 @@ clean_up_cron:
     - minute: 0
     - hour: 0
 
+
+# There appears to be a memory leak in the tasks that
+# the celery runs where the tasks don't release the
+# memory so as a work around until this issue is fixed
+# restart the celery process.
+# https://github.com/pwyf/data-quality-tester/issues/46
+
+restart_celery_cron:
+  cron.present:
+    - name: service pwyf_dqt_celery restart
+    - minute: 0
+    - hour: 1
 
 ##### Webserver setup
 
@@ -172,9 +178,9 @@ apache(
   'pwyf-dqt.conf',
   name='pwyf-dqt.conf',
   servername=pillar.pwyf_dqt.servername,
-  serveraliases=[ pillar.pwyf_dqt.servername+'.'+grains.fqdn ],
+  serveraliases=[  ],
   extracontext=extracontext,
-  https='no'
+  https='yes'
 )
 }}
 

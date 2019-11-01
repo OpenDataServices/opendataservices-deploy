@@ -34,6 +34,8 @@ cove-360-live:          cove-360-live.live.threesixtygiving.uk0.bigv.io
 data-360-live:          data.live.threesixtygiving.uk0.bigv.io
 datastore-360-live:     datastore-dev.grantnav.threesixtygiving.org
 
+# Publish What You Fund (PWYF)
+pwyf-dqt-live:          dqt-dev.publishwhatyoufund.org
 
 #  We have moved all Open Contracting boxes to new deploy repositories!
 #  https://github.com/open-contracting/deploy

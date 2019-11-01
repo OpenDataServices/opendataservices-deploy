@@ -6,8 +6,20 @@ After=network.target
 Type=forking
 User={{ user }}
 Group={{ user }}
+
+ReadWriteDirectories=-/var/log/pwyf_dqt_celery
+ReadWriteDirectories=-/var/run/pwyf_dqt_celery
 WorkingDirectory=/home/dqt/data-quality-tester/
 EnvironmentFile=/etc/default/pwyf_dqt_celery
+
+ExecStop=/usr/bin/pkill -9 -f 'celery worker'
+TimeoutStopSec=0
+Restart=always
+
+RuntimeDirectory=pwyf_dqt_celery
+RuntimeDirectoryMode=2755
+UMask=007
+
 ExecStart=/bin/sh -c 'source {{ ve_bin }} ; ${CELERY_BIN} multi start ${CELERYD_NODES} \
   -A ${CELERY_APP} --pidfile=${CELERYD_PID_FILE} \
   --logfile=${CELERYD_LOG_FILE} --loglevel=${CELERYD_LOG_LEVEL} ${CELERYD_OPTS}'
