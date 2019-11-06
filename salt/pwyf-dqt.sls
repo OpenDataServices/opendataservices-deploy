@@ -76,6 +76,24 @@ redis-server:
       - git: /home/{{ pillar.pwyf_dqt.user }}/{{ pillar.pwyf_dqt.checkout_dir }}
 
 ##### Flask app setup
+## Flask config
+
+
+default_config:
+  file.copy:
+    - source: /home/{{ pillar.pwyf_dqt.user }}/{{ pillar.pwyf_dqt.checkout_dir }}/config.py.tmpl
+    - name: /home/{{ pillar.pwyf_dqt.user }}/{{ pillar.pwyf_dqt.checkout_dir }}/default_config.py
+
+new_config:
+  file.managed:
+    - name: /home/{{ pillar.pwyf_dqt.user }}/{{ pillar.pwyf_dqt.checkout_dir }}/config.py
+    - source: salt://pwyf-dqt/config.py
+    - template: jinja
+    - context:
+      db_uri: sqlite:////home/{{ pillar.pwyf_dqt.user }}/{{ pillar.pwyf_dqt.checkout_dir }}/db.sqlite3
+      secret_key: {{ pillar.pwyf_dqt_private.secret_key }}
+    - require:
+      - default_config
 
 setup_dqt:
   cmd.run:
@@ -83,16 +101,9 @@ setup_dqt:
     - env:
       - FLASK_APP: 'DataQualityTester/__init__.py'
     - cwd: /home/{{ pillar.pwyf_dqt.user }}/{{ pillar.pwyf_dqt.checkout_dir }}/
-    - name: source ./.ve/bin/activate; cp config.py.tmpl config.py; flask db upgrade; flask assets build
-
-## Flask config
-/home/{{ pillar.pwyf_dqt.user }}/{{ pillar.pwyf_dqt.checkout_dir }}/config.py:
- file.append:
-    - text:
-      - "    SQLALCHEMY_DATABASE_URI='sqlite:////home/{{ pillar.pwyf_dqt.user }}/{{ pillar.pwyf_dqt.checkout_dir }}/db.sqlite3'"
-      - "    SECRET_KEY='{{ pillar.pwyf_dqt_private.secret_key }}'"
+    - name: source ./.ve/bin/activate; flask db upgrade; flask assets build
     - require:
-      - setup_dqt
+      - new_config
 
 
 {{ pillar.pwyf_dqt.static_dir }}:
