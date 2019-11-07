@@ -7,3 +7,6 @@ pwyf_dqt:
   user: 'dqt'
   static_dir: '/var/www/static/'
   celery_nodes: 4
+
+prometheus:
+  client_fqdn: 'prom.dqt-dev.publishwhatyoufund.org'
