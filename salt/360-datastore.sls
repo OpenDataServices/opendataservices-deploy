@@ -130,6 +130,23 @@ database_setup:
       - service: postgresql
       - postgres_user: {{ pillar.datastore.user }}
 
+
+##### Colab
+
+/etc/postgresql/10/main/pg_hba.conf:
+  file.managed:
+    - source: salt://postgres/pg10_hba_360_datastore.conf
+
+/etc/postgresql/10/main/conf.d/listen_all.conf:
+  file.managed:
+    - source: salt://postgres/postgres_conf_d_listen_all.conf
+
+colab_notebooks:
+  postgres_user.present:
+    - password: {{ pillar.datastore_private.colab_pg_password }}
+    - groups: readaccess
+
+
 ##### Datastore directories
 
 {% for dir in [pillar.datastore.reports_dir,
