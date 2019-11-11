@@ -11,6 +11,19 @@ include:
       - postgresql-10
       - postgresql-server-dev-10
 
+/etc/postgresql/10/main/pg_hba.conf:
+  file.managed:
+    - source: salt://postgres/pg10_hba_360_datastore.conf
+
+/etc/postgresql/10/main/conf.d/listen_all.conf:
+  file.managed:
+    - source: salt://postgres/postgres_conf_d_listen_all.conf
+
+colab_notebooks:
+  postgres_user.present:
+    - password: {{ pillar.the_360_datastore.postgres.colab_notebooks.password }}
+    - groups: readaccess
+
 {% set user = 'datastore' %}
 {{ createuser(user) }}
 

@@ -30,6 +30,9 @@ base:
   '*360-live':
      - 360_live_pillar
 
+  'datastore-360-live':
+    - private.360-datastore
+
   'grantnav-dev*':
      - grantnav_dev_pillar
      - private.grantnav_dev_pillar
