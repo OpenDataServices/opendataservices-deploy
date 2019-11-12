@@ -133,19 +133,22 @@ database_setup:
 
 ##### Colab
 
-/etc/postgresql/10/main/pg_hba.conf:
-  file.managed:
-    - source: salt://postgres/pg10_hba_360_datastore.conf
-
-/etc/postgresql/10/main/conf.d/listen_all.conf:
-  file.managed:
-    - source: salt://postgres/postgres_conf_d_listen_all.conf
-
 colab_notebooks:
   postgres_user.present:
     - password: {{ pillar.datastore_private.colab_pg_password }}
     - groups: readaccess
+    - require:
+      - service: postgresql
 
+update_postgres_config_colab_user_access:
+  file.managed:
+    - name: /etc/postgresql/10/main/pg_hba.conf
+    - source: salt://postgres/pg10_hba_360_datastore.conf
+
+update_postgres_listen_all:
+  file.managed:
+    - name: /etc/postgresql/10/main/conf.d/listen_all.conf
+    - source: salt://postgres/postgres_conf_d_listen_all.conf
 
 ##### Datastore directories
 
