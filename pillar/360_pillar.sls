@@ -9,3 +9,5 @@ extra_cove_branches: # [] # remove the [] (empty list) if you re-add some values
     app: cove_360
   - name: test-360-package-metadata
     app: cove_360
+  - name: flatten-tool-ods-support
+    app: cove_iati
