@@ -93,7 +93,7 @@ base:
     - prometheus-client-apache
 #    - icinga2-satellite
 #
-  'pwyf-tracker-dev':
+  'pwyf-tracker-*':
     - pwyf-tracker-original
     - prometheus-client-apache
 

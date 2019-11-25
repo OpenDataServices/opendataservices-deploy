@@ -58,6 +58,10 @@ base:
      - pwyf_tracker_original
      - private.pwyf_tracker_original
 
+  'pwyf-tracker-2019':
+     - pwyf_tracker_2019
+     - private.pwyf_tracker_original
+
   'pwyf-dqt-*':
     - pwyf_dqt_pillar
     - private.pwyf_dqt_pillar

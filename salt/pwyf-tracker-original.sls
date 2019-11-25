@@ -89,10 +89,12 @@ bare_name: {{ name }}
   git.latest:
     - name: {{ giturl }}
     - rev: {{ branch }}
+    - branch: {{ branch }}
     - target: {{ flaskdir }}
     - user: {{ user }}
     - force_fetch: True
     - force_reset: True
+    - force_checkout: True
     - submodules: True
     - require:
       - pkg: git
@@ -147,7 +149,7 @@ MAILTO:
 {{ pwyf_tracker(
     name='pwyf_tracker_original',
     giturl=giturl,
-    branch='refactor',
+    branch='2020tracker',
     flaskdir='/home/'+user+'/pwyf_tracker/',
     uwsgi_port=3032,
     servername=pillar.pwyf_tracker.servername if 'servername' in pillar.pwyf_tracker else None,
