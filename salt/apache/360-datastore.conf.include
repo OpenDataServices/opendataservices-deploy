@@ -37,6 +37,7 @@
                 Order allow,deny
                 Allow from all
                 SetHandler None
+                Require all granted
         </Location>
 
         # Apache's icons which are used for index (index of..)
@@ -46,8 +47,10 @@
                 Order allow,deny
                 Allow from all
                 SetHandler None
+                Require all granted
         </Location>
 
         <Location "/.well-known/acme-challenge">
                 ProxyPass !
+                Require all granted
         </Location>
