@@ -3,7 +3,7 @@ grantnav:
   allowedhosts: '.default.threesixtygiving.uk0.bigv.io'
   server_size: small
   branches:
-    - es7
+    - master-next-major-version
   dataselections:
 #    - all
     - acceptable_license_valid
