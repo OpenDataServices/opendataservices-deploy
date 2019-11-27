@@ -11,3 +11,6 @@ datastore:
 
 datatester:
   branch: 'master'
+
+prometheus:
+  client_fqdn: 'prom.datastore-dev.grantnav.threesixtygiving.org'

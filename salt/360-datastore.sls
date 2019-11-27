@@ -185,7 +185,7 @@ migrate-database:
 
 collectstatic:
   cmd.run:
-    - name: source ../.ve/bin/activate; DJANGO_SETTINGS_MODULE={{ pillar.datastore_private.settings_module }}  python manage.py collectstatic -v 3  --noinput >> /tmp/collectstatic.log
+    - name: source ../.ve/bin/activate; DJANGO_SETTINGS_MODULE={{ pillar.datastore_private.settings_module }}  python manage.py collectstatic -v 3  --noinput > /tmp/collectstatic.log
     - runas: {{ pillar.datastore.user }}
     - cwd: {{ djangodir }}
     - require:
@@ -213,7 +213,7 @@ collectstatic:
 
 datagetter_and_reports:
     cron.present:
-      - name: ~/datastore/tools/data_run.sh ; ~/reports_run.sh
+      - name: /home/{{ pillar.datastore.user }}/datastore/tools/data_run.sh > /home/{{ pillar.datastore.user }}/data_run.log ; /home/{{ pillar.datastore.user }}/reports_run.sh > /home/{{ pillar.datastore.user }}/report_run.log
       - user: {{ pillar.datastore.user }}
       - minute: 0
       - hour: 3
