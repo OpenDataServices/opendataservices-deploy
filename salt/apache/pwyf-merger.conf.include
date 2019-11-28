@@ -15,6 +15,22 @@
                 SetHandler None
         </Location>
 
+        Alias /input {{ input_dir }}
+        <Location /input>
+                ProxyPass !
+                Order allow,deny
+                Allow from all
+                SetHandler None
+        </Location>
+
+        Alias /output {{ output_dir }}
+        <Location /output>
+                ProxyPass !
+                Order allow,deny
+                Allow from all
+                SetHandler None
+        </Location>
+
         # Apache's icons which are used for index (index of..)
         Alias /icons /usr/share/apache2/icons/
         <Location /icons>

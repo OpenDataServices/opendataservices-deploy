@@ -9,7 +9,7 @@ include:
   - core
   - apache
   - uwsgi
-  {# - letsencrypt #}
+  - letsencrypt
 
 # uWSGI from data-quality-tester > requirements.txt has a C
 # extension not sure if this is needed given we install the pkg
@@ -107,12 +107,28 @@ setup_merger_assets:
     - require:
       - file: {{ pillar.pwyf_merger.static_dir }}
 
+{{ pillar.pwyf_merger.input_dir }}:
+  file.directory:
+    - user: {{ pillar.pwyf_merger.user }}
+    - group: www-data
+    - mode: 755
+    - makedirs: True
+
+{{ pillar.pwyf_merger.output_dir }}:
+  file.directory:
+    - user: {{ pillar.pwyf_merger.user }}
+    - group: www-data
+    - mode: 755
+    - makedirs: True
+
 ##### Webserver setup
 
 {% set extracontext %}
 user: {{ pillar.pwyf_merger.user }}
 checkout_dir: {{ pillar.pwyf_merger.checkout_dir }}
 static_dir: {{ pillar.pwyf_merger.static_dir }}
+input_dir: {{ pillar.pwyf_merger.input_dir }}
+output_dir: {{ pillar.pwyf_merger.output_dir }}
 {% endset %}
 
 {{

@@ -6,6 +6,8 @@ pwyf_merger:
   branch: 'face-lift'
   user: 'merger'
   static_dir: '/var/www/static/'
+  input_dir: '/var/www/input/'
+  output_dir: '/var/www/output/'
 
 {# prometheus:
   client_fqdn: 'prom.dqt-dev.publishwhatyoufund.org' #}
