@@ -19,7 +19,7 @@ include:
 pwyf-merger-deps:
   pkg.installed:
     - pkgs:
-      {# - cron #}
+      - cron
       - virtualenv
       - libapache2-mod-proxy-uwsgi
       - uwsgi-plugin-python3
@@ -67,8 +67,7 @@ pwyf-merger-deps:
 ##### Flask app setup
 ## Flask config
 
-
-{# default_config:
+default_config:
   file.copy:
     - source: /home/{{ pillar.pwyf_merger.user }}/{{ pillar.pwyf_merger.checkout_dir }}/config.py.tmpl
     - name: /home/{{ pillar.pwyf_merger.user }}/{{ pillar.pwyf_merger.checkout_dir }}/default_config.py
@@ -79,20 +78,11 @@ new_config:
     - source: salt://pwyf-merger/config.py
     - template: jinja
     - context:
-      db_uri: sqlite:////home/{{ pillar.pwyf_merger.user }}/{{ pillar.pwyf_merger.checkout_dir }}/db.sqlite3
       secret_key: {{ pillar.pwyf_merger_private.secret_key }}
+      input_dir: {{ pillar.pwyf_merger.input_dir }}
+      output_dir : {{ pillar.pwyf_merger.output_dir }}
     - require:
-      - default_config #}
-
-{# setup_merger:
-  cmd.run:
-    - runas: {{ pillar.pwyf_merger.user }}
-    - env:
-      - FLASK_APP: 'ActivityMerger/__init__.py'
-    - cwd: /home/{{ pillar.pwyf_merger.user }}/{{ pillar.pwyf_merger.checkout_dir }}/
-    - name: source ./.ve/bin/activate; flask assets build
-    {# - require:
-      - new_config #} #}
+      - default_config
 
 {{ pillar.pwyf_merger.static_dir }}:
   file.directory:
@@ -120,6 +110,14 @@ setup_merger_assets:
     - group: www-data
     - mode: 755
     - makedirs: True
+
+clean_up_cron:
+  cron.present:
+    - name: rm -rf /var/www/output/*.xml
+    - user: {{ pillar.pwyf_merger.user }}
+    - minute: 0
+    - hour: 0
+    - dayweek: 6
 
 ##### Webserver setup
 

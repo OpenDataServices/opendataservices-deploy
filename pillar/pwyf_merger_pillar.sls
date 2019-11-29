@@ -3,7 +3,7 @@ pwyf_merger:
   servername: 'iati-activity-merge.testing.opendataservices.uk0.bigv.io'
   checkout_dir: 'activity-merger'
   git_url: 'https://github.com/OpenDataServices/iati-activity-merger'
-  branch: 'face-lift'
+  branch: 'config-and-structure'
   user: 'merger'
   static_dir: '/var/www/static/'
   input_dir: '/var/www/input/'

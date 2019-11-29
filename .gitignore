@@ -10,3 +10,4 @@ ssh_log
 .ve
 .idea/
 .vscode
+venv
