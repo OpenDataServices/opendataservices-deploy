@@ -50,7 +50,14 @@
                 Require all granted
         </Location>
 
-        <Location "/.well-known/acme-challenge">
+        <Location /.well-known/acme-challenge>
                 ProxyPass !
                 Require all granted
+        </Location>
+
+        <Location /prometheus>
+                AuthName "Open Data Services Prometheus DataServices Exporter"
+                AuthType Basic
+                AuthUserFile /home/prometheus-client/htpasswd
+                require valid-user
         </Location>
