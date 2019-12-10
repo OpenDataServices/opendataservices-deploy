@@ -189,7 +189,7 @@ apache(
   'pwyf-dqt.conf',
   name='pwyf-dqt.conf',
   servername=pillar.pwyf_dqt.servername,
-  serveraliases=[  ],
+  serveraliases=pillar.pwyf_dqt.serveraliases,
   extracontext=extracontext,
   https='yes'
 )
