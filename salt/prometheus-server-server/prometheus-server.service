@@ -12,5 +12,8 @@ ExecStart=/home/{{ user }}/prometheus-{{ pillar.prometheus.server_prometheus_ver
     --storage.tsdb.path /home/{{ user }}/data \
     --web.listen-address 127.0.0.1:9057
 
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+
 [Install]
 WantedBy=multi-user.target

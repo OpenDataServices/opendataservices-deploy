@@ -76,6 +76,7 @@ extract_prometheus:
 prometheus-server:
   service.running:
     - enable: True
+    - reload: True
     - requires:
       - cmd: extract_prometheus
       - file: /home/{{ user }}/data
