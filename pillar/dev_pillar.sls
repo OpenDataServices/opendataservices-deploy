@@ -41,8 +41,6 @@ extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values 
     app: cove_iati
   - name: 1208-iati-cove-orgxml-spreadsheet
     app: cove_iati
-  - name: 1220-improve-non-unique-elements-error
-    app: cove_ocds
   - name: flatten-tool-ods-support
     app: cove_iati
 
@@ -54,6 +52,8 @@ old_cove_branches: #[] # remove the [] (empty list) if you re-add some values be
   - name: 1206-prolog
     app: cove_iati
   - name: 895-oneOf-messages
+    app: cove_ocds
+  - name: 1220-improve-non-unique-elements-error
     app: cove_ocds
 
 extra_registry360_branches: [] # remove the [] (empty list) if you re-add some values below
