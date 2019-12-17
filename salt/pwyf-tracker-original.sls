@@ -77,6 +77,7 @@ bare_name: {{ name }}
 {{ apache(user+'.conf',
     name=name+'.conf',
     servername=servername if servername else 'default',
+    serveraliases=serveraliases,
     extracontext=extracontext) }}
 {% endif %}
 
