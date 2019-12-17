@@ -1,7 +1,6 @@
 # vi: ft=apache
 
         ServerAdmin code@opendataservices.coop
-        ServerName {{ site_url }}
         DocumentRoot {{ flaskdir }}
 
         {{ banner }}
@@ -19,3 +18,7 @@
                 SetHandler None
         </Location>
         {% endif %}
+
+        <Location "/.well-known/acme-challenge">
+                ProxyPass !
+        </Location>
