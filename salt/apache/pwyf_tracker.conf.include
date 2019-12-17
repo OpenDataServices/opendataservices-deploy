@@ -19,7 +19,3 @@
                 SetHandler None
         </Location>
         {% endif %}
-
-        <Location "/.well-known/acme-challenge">
-                ProxyPass !
-        </Location>
