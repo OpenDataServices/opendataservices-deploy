@@ -19,6 +19,7 @@
         </Location>
         {% endif %}
 
+        Alias /.well-known/acme-challenge "/var/www/html/.well-known/acme-challenge"
         <Location "/.well-known/acme-challenge">
                 ProxyPass !
         </Location>
