@@ -54,7 +54,6 @@ pwyf_tracker:
 {% macro pwyf_tracker(name, giturl, branch, flaskdir, user, uwsgi_port, servername=None) %}
 
 {% set extracontext %}
-site_url: {{ pillar.pwyf_tracker.site_url }}
 secret_key: {{ pillar.pwyf_tracker.secret_key }}
 flaskdir: {{ flaskdir }}
 {% if grains['osrelease'] == '16.04' %}{# or grains['osrelease'] == '18.04' %}#}
@@ -66,19 +65,12 @@ branch: {{ branch }}
 bare_name: {{ name }}
 {% endset %}
 
-{% if 'https' in pillar.pwyf_tracker %}
 {{ apache(user+'.conf',
     name=name+'.conf',
     extracontext=extracontext,
-    servername=servername if servername else branch+'.'+grains.fqdn,
-    serveraliases=[ branch+'.'+grains.fqdn ] if servername else [],
+    servername=servername,
+    serveraliases=pillar.pwyf_tracker.serveraliases,
     https=pillar.pwyf_tracker.https) }}
-{% else %}
-{{ apache(user+'.conf',
-    name=name+'.conf',
-    servername=servername if servername else 'default',
-    extracontext=extracontext) }}
-{% endif %}
 
 {{ uwsgi('pwyf_tracker_original.ini',
     name=name+'.ini',

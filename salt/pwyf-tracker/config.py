@@ -35,7 +35,7 @@ INTRO_HTML = 'Data collection for the <a href="http://www.publishwhatyoufund.org
 
 # INTRO_HTML = 'Data collection for the <a href="http://www.publishwhatyoufund.org/the-index/">2018 Aid Transparency Index</a> has now started. We will release more detailed information in June 2018 when the Aid Transparency Index will be launched. Results and analysis for previous years is available in the <a href="http://ati.publishwhatyoufund.org/" target="_blank">2016 Index</a>.'
 
-ATI_YEAR = "2019"
+ATI_YEAR = "2020"
 PREVIOUS_ATI_YEAR = "2018"
 
 basedir = dirname(abspath(__file__))
