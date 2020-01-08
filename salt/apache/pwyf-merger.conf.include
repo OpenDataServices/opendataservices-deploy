@@ -1,0 +1,45 @@
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+        <Location / >
+                ProxyPass uwsgi://127.0.0.1:3032/
+        </Location>
+
+
+        Alias /static {{ static_dir }}
+        <Location /static>
+                ProxyPass !
+                Order allow,deny
+                Allow from all
+                SetHandler None
+        </Location>
+
+        Alias /input {{ input_dir }}
+        <Location /input>
+                ProxyPass !
+                Order allow,deny
+                Allow from all
+                SetHandler None
+        </Location>
+
+        Alias /output {{ output_dir }}
+        <Location /output>
+                ProxyPass !
+                Order allow,deny
+                Allow from all
+                SetHandler None
+        </Location>
+
+        # Apache's icons which are used for index (index of..)
+        Alias /icons /usr/share/apache2/icons/
+        <Location /icons>
+                ProxyPass !
+                Order allow,deny
+                Allow from all
+                SetHandler None
+        </Location>
+
+        <Location "/.well-known/acme-challenge">
+                ProxyPass !
+        </Location>

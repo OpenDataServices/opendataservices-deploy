@@ -9,3 +9,5 @@ ssh_log
 .DS_Store
 .ve
 .idea/
+.vscode
+venv
