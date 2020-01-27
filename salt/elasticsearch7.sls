@@ -11,7 +11,6 @@ elasticsearch-base:
   pkg.installed:
     - pkgs:
       - elasticsearch
-#      - openjdk-8-jre-headless
 
   service.running:
     - name: elasticsearch
