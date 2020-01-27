@@ -66,6 +66,6 @@ base:
     - pwyf_dqt_pillar
     - private.pwyf_dqt_pillar
 
-  'pwyf-merger-dev':
+  'pwyf-merger':
     - pwyf_merger_pillar
     - private.pwyf_merger_pillar

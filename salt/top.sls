@@ -102,9 +102,8 @@ base:
     - pwyf-dqt
     - prometheus-client-apache
 
-  'pwyf-merger-dev':
+  'pwyf-merger':
     - pwyf-merger
-    {# - prometheus-client-apache #}
 
 
   'iati-misc':
