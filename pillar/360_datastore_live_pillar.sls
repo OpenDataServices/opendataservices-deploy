@@ -1,7 +1,7 @@
 
 datastore:
   user: 'datastore'
-  servername: 'datastore-dev.grantnav.threesixtygiving.org'
+  servername: 'store.data.threesixtygiving.org'
   branch: 'master'
   database_name: '360givingdatastore'
   git_url: 'https://github.com/threesixtygiving/datastore.git'
@@ -13,4 +13,4 @@ datatester:
   branch: 'master'
 
 prometheus:
-  client_fqdn: 'prom.datastore-dev.grantnav.threesixtygiving.org'
+  client_fqdn: 'prom.store.data.threesixtygiving.org'

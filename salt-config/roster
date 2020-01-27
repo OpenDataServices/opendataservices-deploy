@@ -32,7 +32,7 @@ grantnav-live-blue-2:   grantnav-blue-2.live.threesixtygiving.uk0.bigv.io
 grantnav-live-green-2:  grantnav-green-2.live.threesixtygiving.uk0.bigv.io
 cove-360-live:          cove-360-live.live.threesixtygiving.uk0.bigv.io
 data-360-live:          data.live.threesixtygiving.uk0.bigv.io
-datastore-360-live:     datastore-dev.grantnav.threesixtygiving.org
+datastore-360-live:     store.data.threesixtygiving.org
 
 # Publish What You Fund (PWYF)
 pwyf-dqt-live:          dqt-dev.publishwhatyoufund.org

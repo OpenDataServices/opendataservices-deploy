@@ -226,7 +226,6 @@ apache(
   '360-datastore.conf',
   name='360-datastore.conf',
   servername=pillar.datastore.servername,
-  serveraliases=[ pillar.datastore.servername+'.'+grains.fqdn ],
   https='yes'
 )
 
