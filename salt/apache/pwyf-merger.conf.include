@@ -3,7 +3,7 @@
         CustomLog ${APACHE_LOG_DIR}/access.log combined
 
         <Location / >
-                ProxyPass uwsgi://127.0.0.1:3032/
+                ProxyPass uwsgi://127.0.0.1:3033/
         </Location>
 
 
