@@ -37,9 +37,13 @@ base:
      - grantnav_dev_pillar
      - private.grantnav_dev_pillar
 
-  'grantnav-live*':
+  'grantnav-live-green-2':
      - grantnav_live_pillar
-     - private.grantnav_live_pillar
+     - private.grantnav_live_old_pillar
+
+  'grantnav-live-blue-2':
+     - grantnav_live_old_pillar
+     - private.grantnav_live_old_pillar
 
   'tmp2':
      - tmp_pillar
