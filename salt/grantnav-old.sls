@@ -255,7 +255,7 @@ deploy: '{{ deploy }}'
 subdomain: '{{ deploy }}'
 {% endset %}
 
-{{ apache(user+'.conf',
+{{ apache(user+'_old.conf',
     name=deployment_name+'.conf',
     socket_name=deployment_name,
     extracontext=apache_extracontext) }}
@@ -269,7 +269,7 @@ deploy: '{{ deploy }}'
 subdomain: '{{ deploy }}'
 {% endset %}
 
-{{ uwsgi(user+'.ini',
+{{ uwsgi(user+'_old.ini',
     name=deployment_name+'.ini',
     socket_name=deployment_name,
     extracontext=uwsgi_extracontext) }}
