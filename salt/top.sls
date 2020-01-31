@@ -42,6 +42,16 @@ base:
     - icinga2-satellite
     - prometheus-client-apache
 
+  'grantnav-live-teal':
+    - grantnav
+    - icinga2-satellite
+    - prometheus-client-apache
+
+  'grantnav-live-orange':
+    - grantnav
+    - icinga2-satellite
+    - prometheus-client-apache
+
   'data-360-live':
     - registry360
     - icinga2-satellite

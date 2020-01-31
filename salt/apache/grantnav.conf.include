@@ -1,0 +1,20 @@
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+        <Location / >
+                ProxyPass uwsgi://127.0.0.1:3032/
+        </Location>
+
+        Alias /static {{  pillar.grantnav.static_dir }}
+        <Location /static>
+                ProxyPass !
+                Order allow,deny
+                Allow from all
+                SetHandler None
+        </Location>
+
+        <Location /.well-known/acme-challenge>
+                ProxyPass !
+                Require all granted
+        </Location>

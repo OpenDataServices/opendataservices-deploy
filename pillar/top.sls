@@ -45,6 +45,14 @@ base:
      - grantnav_live_old_pillar
      - private.grantnav_live_old_pillar
 
+  'grantnav-live-teal':
+     - grantnav_live_pillar
+     - private.grantnav_live_pillar
+
+  'grantnav-live-orange':
+     - grantnav_live_pillar
+     - private.grantnav_live_pillar
+
   'tmp2':
      - tmp_pillar
      - private.dev_pillar
