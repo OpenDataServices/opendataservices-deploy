@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash +x
 # Reload latest index from data from the datastore
 # Creates a new index and deletes the old one once the load is complete
 

@@ -95,6 +95,14 @@ update_static_dir:
 
 ##### Datastore data fetcher
 
+
+/home/{{ pillar.grantnav.user }}/logs:
+  file.directory:
+    - user: grantnav
+    - group: grantnav
+    - mode: 700
+    - makedirs: True
+
 /home/{{ pillar.grantnav.user }}/poll_datastore.py:
   file.managed:
     - source: https://raw.githubusercontent.com/ThreeSixtyGiving/datastore/master/tools/poll_datastore.py
@@ -111,11 +119,24 @@ update_static_dir:
        djangodir: {{ djangodir }}
     - mode: 755
 
+/home/{{ pillar.grantnav.user }}/poll_datastore.sh:
+  file.managed:
+    - source: salt://grantnav/poll_datastore.sh
+    - template: jinja
+    - context:
+       user: {{ pillar.grantnav.user }}
+       datastore_user: {{ pillar.grantnav.datastore_user }}
+       datastore_password: {{ pillar.grantnav.datastore_password }}
+       datastore_url: {{ pillar.grantnav.datastore_url }}
+    - mode: 755
+
 datastore_poll:
     cron.present:
-      - name: python3 ./poll_datastore.py --url {{ pillar.grantnav.datastore_url}} --username={{ pillar.grantnav.datastore_user }} --password={{ pillar.grantnav.datastore_password }} --load-grantnav-script /home/{{ pillar.grantnav.user }}/reload_latest_daily.sh > /home/{{ pillar.grantnav.user }}/latest_load.log 2>&1
+      - name: bash /home/{{ pillar.grantnav.user }}/poll_datastore.sh
       - user: {{ pillar.grantnav.user }}
       - minute: '*/5'
+      - require:
+        - file: /home/{{ pillar.grantnav.user }}/poll_datastore.sh
 
 ##### Scheduled backup snapshots of index
 
