@@ -14,7 +14,7 @@ fi
 cd {{ djangodir }}
 source .ve/bin/activate
 cd /home/{{ user }}/latest/json_all/
-mkdir -p ~/dataload_logs
+mkdir -p /home/{{ user }}/logs
 
 # New index name
 export ES_INDEX=`date +latest_daily_at_%s`
@@ -26,9 +26,9 @@ fi
 
 # Load latest daily data
 echo "Loading new index $ES_INDEX"
-python -u {{djangodir}}/dataload/import_to_elasticsearch.py --clean * &> /home/{{ user }}/dataload_logs/latest_daily.log || echo "Data loading failed for branch es7 with data from the datastore, see dataload_logs/latest_daily.log for more information."
+python -u {{djangodir}}/dataload/import_to_elasticsearch.py --clean * &> /home/{{ user }}/logs/load_$ES_INDEX.log || echo "Data loading failed for branch es7 with data from the datastore, see logs/load_$ES_INDEX.log for more information."
 
-# Set the application to use new es index name
+# Set Grantnav application to use new es index name
 echo $ES_INDEX > /home/{{ user }}/es_index
 
 # Now we can delete the old index
@@ -36,5 +36,8 @@ if [ $OLD_INDEX_NAME ]; then
   echo "Deleting old index $OLD_INDEX_NAME"
   curl -XDELETE 'http://localhost:9200/'$OLD_INDEX_NAME
 fi
+
+# Delete old logs
+find /home/{{ user }}/logs/  -name "*.log" -mtime +60 -delete
 
 deactivate

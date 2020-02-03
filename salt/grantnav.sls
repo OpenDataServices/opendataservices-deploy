@@ -25,7 +25,7 @@ grantnav-deps:
         - service: uwsgi
 
     apache_module.enabled:
-      - name: proxy proxy_uwsgi
+      - name: proxy proxy_uwsgi ssl
       - watch_in:
         - service: apache2
 
@@ -185,16 +185,6 @@ uwsgi('grantnav.ini', name='grantnav.ini')
     - require:
       - file: /etc/apache2/ssl
 
-#/etc/apache2/ssl/ssl.2019.intermediate:
-#  file.managed:
-#    - source: salt://private/grantnav/ssl.2019.intermediate
-#    - user: www-data
-#    - group: www-data
-#    - mode: 700
-#    - require:
-#     - file: /etc/apache2/ssl
-
-
 /etc/apache2/ssl/ssl.2019.key:
   file.managed:
     - source: salt://private/grantnav/ssl.2019.key
@@ -204,5 +194,11 @@ uwsgi('grantnav.ini', name='grantnav.ini')
     - require:
       - file: /etc/apache2/ssl
 
-
-
+/etc/apache2/ssl/ssl.2019.intermediate:
+  file.managed:
+    - source: salt://private/grantnav/ssl.2019.intermediate
+    - user: www-data
+    - group: www-data
+    - mode: 700
+    - require:
+      - file: /etc/apache2/ssl
