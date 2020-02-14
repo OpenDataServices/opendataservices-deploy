@@ -106,7 +106,7 @@ update_static_dir:
 /home/{{ pillar.grantnav.user }}/poll_datastore.py:
   file.managed:
     - source: https://raw.githubusercontent.com/ThreeSixtyGiving/datastore/master/tools/poll_datastore.py
-    - source_hash: sha256=b7ac6c53e43ad2a759f5d734996e3006370817024898fccb9363b20571816eed
+    - source_hash: sha256=5056492bec6a4027a023f897dc773340df76dfc9a17c60cd4c1c2b8c06b89540
     - user: {{ pillar.grantnav.user }}
     - mode: 755
 
