@@ -21,7 +21,7 @@ jobs:
     - stage: test-ocds
 
       install:
-        - "git clone 'https://github.com/open-contracting/cove-ocds/cove.git' coveocds"
+        - "git clone 'https://github.com/open-contracting/cove-ocds.git' coveocds"
         - "cd coveocds"
         - "pip install -r requirements_dev.txt"
         - "wget https://chromedriver.storage.googleapis.com/2.36/chromedriver_linux64.zip; unzip chromedriver_linux64.zip -d chromedriver; export PATH=$PATH:`pwd`/chromedriver"
