@@ -144,18 +144,18 @@ snap_weekly:
    cron.present:
      - name: source {{ djangodir }}/.ve/bin/activate; export SOURCE_INDEX=`cat /home/{{ pillar.grantnav.user }}/es_index`; python3 {{ djangodir }}/dataload/copy_es_index.py $SOURCE_INDEX latest_weekly
      - user: {{ pillar.grantnav.user }}
-     - hour: 4
      - minute: 0
-     - dayweek: 4
+     - hour: 4
+     - dayweek: '*/5'
 
 snap_monthly:
    cron.present:
      - name: source {{ djangodir }}/.ve/bin/activate; export SOURCE_INDEX=`cat /home/{{ pillar.grantnav.user }}/es_index`; python3 {{ djangodir }}/dataload/copy_es_index.py $SOURCE_INDEX latest_monthly
      - user: {{ pillar.grantnav.user }}
-     - hour: 5
      - minute: 0
-     - dayweek: 0
+     - hour: 5
      - daymonth: 1
+     - month: '*/1'
 
 ##### Apache
 
