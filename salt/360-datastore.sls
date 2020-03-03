@@ -199,12 +199,13 @@ collectstatic:
 
 ##### Datatester Reports runner/config
 
-/home/{{ pillar.datastore.user }}/reports_run.sh:
+/home/{{ pillar.datastore.user }}/data_runner.sh:
   file.managed:
-    - source: salt://private/datastore/reports_run.sh
+    - source: salt://private/datastore/data_runner.sh
     - template: jinja
     - context:
        datastore_private: {{ pillar.datastore_private }}
+       datastore_user: {{ pillar.datastore.user }}
     - mode: 750
     - user: {{ pillar.datastore.user }}
     - require:
@@ -213,7 +214,7 @@ collectstatic:
 
 datagetter_and_reports:
     cron.present:
-      - name: /home/{{ pillar.datastore.user }}/datastore/tools/data_run.sh > /home/{{ pillar.datastore.user }}/data_run.log ; /home/{{ pillar.datastore.user }}/reports_run.sh > /home/{{ pillar.datastore.user }}/report_run.log
+      - name: /home/{{ pillar.datastore.user }}/data_runner.sh
       - user: {{ pillar.datastore.user }}
       - minute: 0
       - hour: 3
