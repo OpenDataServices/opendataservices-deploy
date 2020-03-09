@@ -52,10 +52,6 @@ base:
     - prometheus-client-apache
     - icinga2-satellite
 
-  'bods':
-    - prometheus-client-apache
-    - icinga2-satellite
-
   'datastore-360-live':
     - icinga2-satellite
     - 360-datastore
