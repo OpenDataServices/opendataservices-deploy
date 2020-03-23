@@ -140,6 +140,36 @@ colab_notebooks:
     - require:
       - service: postgresql
 
+colab_notebooks1:
+  postgres_user.present:
+    - password: {{ pillar.datastore_private.colab_pg_password1 }}
+    - groups: readaccess
+    - require:
+      - service: postgresql
+
+colab_notebooks2:
+  postgres_user.present:
+    - password: {{ pillar.datastore_private.colab_pg_password2 }}
+    - groups: readaccess
+    - require:
+      - service: postgresql
+
+colab_notebooks3:
+  postgres_user.present:
+    - password: {{ pillar.datastore_private.colab_pg_password3 }}
+    - groups: readaccess
+    - require:
+      - service: postgresql
+
+colab_notebooks4:
+  postgres_user.present:
+    - password: {{ pillar.datastore_private.colab_pg_password4 }}
+    - groups: readaccess
+    - require:
+      - service: postgresql
+
+
+
 update_postgres_config_colab_user_access:
   file.managed:
     - name: /etc/postgresql/10/main/pg_hba.conf
