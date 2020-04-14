@@ -5,9 +5,7 @@ cove:
 extra_cove_branches: # [] # remove the [] (empty list) if you re-add some values below
   - name: cove-bods-16-reword-validation
     app: cove_360
-  - name: 1131-spreadsheet-style-validation
-    app: cove_360
-  - name: flatten-tool-ods-support
+  - name: 360-1200-additional-checks-count
     app: cove_360
 
 old_cove_branches:
