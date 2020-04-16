@@ -4,6 +4,7 @@ grantnav:
   server_size: small
   branches:
     - master-next-major-version
+    - rebrand-copy-changes
   dataselections:
 #    - all
     - acceptable_license_valid
