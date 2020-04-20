@@ -32,12 +32,7 @@ base:
   'cove-360-live':
     - prometheus-client-apache
 
-  'grantnav-live-teal':
-    - grantnav
-    - icinga2-satellite
-    - prometheus-client-apache
-
-  'grantnav-live-orange':
+  'grantnav-live-*':
     - grantnav
     - icinga2-satellite
     - prometheus-client-apache
