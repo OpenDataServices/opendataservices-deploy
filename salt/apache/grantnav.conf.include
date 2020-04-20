@@ -18,3 +18,10 @@
                 ProxyPass !
                 Require all granted
         </Location>
+
+        <Location /prometheus>
+                AuthName "Open Data Services Prometheus GrantNav Exporter"
+                AuthType Basic
+                AuthUserFile /home/prometheus-client/htpasswd
+                require valid-user
+        </Location>
