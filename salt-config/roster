@@ -12,7 +12,6 @@ pwyf-tracker-dev:    pwyf-tracker-dev.default.opendataservices.uk0.bigv.io
 #   live:
 live3:                    live3.default.opendataservices.uk0.bigv.io
 live4:                    live4.default.opendataservices.uk0.bigv.io
-mon-2:                    mon-2.default.opendataservices.uk0.bigv.io
 # Prometheus on mon-4 is using IP based whitelisting for sending emails - if we move server/IP that will need attention.
 mon-4:                    mon-4.default.opendataservices.uk0.bigv.io
 cove-live-iati:           cove-live-iati.default.opendataservices.uk0.bigv.io
