@@ -72,6 +72,9 @@ base:
     - os4d
     - registry360
 
+  'dev5':
+    - prometheus-client-apache
+
   'cove*dev*':
     - cove
     - icinga2-satellite
