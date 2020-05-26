@@ -74,6 +74,7 @@ base:
 
   'dev5':
     - prometheus-client-apache
+    - json-data-ferret
 
   'cove*dev*':
     - cove

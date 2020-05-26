@@ -81,3 +81,7 @@ base:
   'pwyf-merger':
     - pwyf_merger_pillar
     - private.pwyf_merger_pillar
+
+  'dev5':
+    - json_data_ferret_dev5
+    - private.json_data_ferret_dev5
