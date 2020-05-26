@@ -101,7 +101,7 @@ createvirtualenv-{{name}}:
 
 migrate-{{name}}:
   cmd.run:
-    - name: . .ve/bin/activate; python manage.py migrate --noinput
+    - name: . .ve/bin/activate; JSONDATAFERRET_DATABASE_PASSWORD="{{  pillar.jsondataferret.postgres_password }}" JSONDATAFERRET_DATABASE_USER="{{  postgres_user }}" JSONDATAFERRET_DATABASE_NAME="{{ postgres_name  }}" python manage.py migrate --noinput
     - runas: {{ user }}
     - cwd: {{ djangodir }}
     - require:
