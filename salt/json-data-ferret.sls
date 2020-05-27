@@ -109,6 +109,28 @@ migrate-{{name}}:
     - onchanges:
       - git: {{ giturl }}{{ djangodir }}
 
+
+collectstatic-{{name}}:
+  cmd.run:
+    - name: . .ve/bin/activate; python manage.py collectstatic --noinput
+    - runas: {{ user }}
+    - cwd: {{ djangodir }}
+    - require:
+      - cmd: {{ djangodir }}.ve/
+    - onchanges:
+      - git: {{ giturl }}{{ djangodir }}
+
+{{ djangodir }}static/:
+  file.directory:
+    - user: {{ user }}
+    - file_mode: 644
+    - dir_mode: 755
+    - recurse:
+      - mode
+    - require:
+      - cmd: collectstatic-{{name}}
+
+
 {% endmacro %}
 
 {% for install in pillar.json_data_ferret_installs %}
