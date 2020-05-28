@@ -15,6 +15,9 @@ useful-shell-commands:
       - man-db
       - psmisc # gives us killall
       - htop
+# Bizarrely missing from Gandi server images
+logrotate:
+  pkg.installed
 
 ## Security
 
