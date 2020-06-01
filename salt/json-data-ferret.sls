@@ -75,7 +75,7 @@ createvirtualenv-{{name}}:
 
 {{ djangodir }}.ve/:
   cmd.run:
-    - name: . .ve/bin/activate; pip install -r requirements.txt
+    - name: . .ve/bin/activate; pip install -e .
     - runas: {{ user }}
     - cwd: {{ djangodir }}
     - require:
@@ -133,6 +133,32 @@ collectstatic-{{name}}:
 
 {% endmacro %}
 
+
+{% macro removejsondataferret(name, djangodir, postgres_user, postgres_name, user) %}
+
+{{ removeapache(name+'.conf') }}
+
+{{ removeuwsgi(name+'.ini') }}
+
+{{ djangodir }}:
+    file.absent
+
+{{ djangodir }}database_user:
+  postgres_user.absent:
+    - name: '{{ postgres_user }}'
+    - require:
+      - pkg: json-data-ferret-deps
+      - postgres_database: {{ djangodir }}database
+
+{{ djangodir }}database:
+  postgres_database.absent:
+    - name: '{{ postgres_name }}'
+    - require:
+      - pkg: json-data-ferret-deps
+
+{% endmacro %}
+
+
 {% for install in pillar.json_data_ferret_installs %}
 {{ jsondataferret(
     name='jsondataferret-'+install.name,
@@ -141,6 +167,15 @@ collectstatic-{{name}}:
     djangodir='/home/'+user+'/jsondataferret-'+install.name+'/',
     uwsgi_port=install.uwsgi_port if 'uwsgi_port' in install else None,
     servername=install.servername if 'servername' in install else None,
+    postgres_user=install.postgres_user,
+    postgres_name=install.postgres_name,
+    user=user) }}
+{% endfor %}
+
+{% for install in pillar.json_data_ferret_installs_to_remove %}
+{{ removejsondataferret(
+    name='jsondataferret-'+install.name,
+    djangodir='/home/'+user+'/jsondataferret-'+install.name+'/',
     postgres_user=install.postgres_user,
     postgres_name=install.postgres_name,
     user=user) }}
