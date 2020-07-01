@@ -87,7 +87,12 @@ unattended-upgrades:
   pkg.installed:
     - pkgs:
       - unattended-upgrades # this perform unattended upgrades
+      {% if grains['os'] != 'Debian' %}
+      # This package doesn't seem to be needed for Debian stretch, probably as
+      # functionality is moved into unattended-upgrades.
+      # (I've not checked if its needed for latest Ubuntu)
       - update-notifier-common # this checks whether a restart is required
+      {% endif %}
 
 /etc/apt/apt.conf.d/50unattended-upgrades:
   file.managed:
