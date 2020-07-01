@@ -40,6 +40,13 @@ pwyf-dqt-live:          dqt-dev.publishwhatyoufund.org
 pwyf-tracker-2019:      xvm-131-159.dc3.ghst.net
 pwyf-merger:            xvm-175-147.dc0.ghst.net
 
+# declared. (Was Open Register of Interests (oroi))
+oroi-proxy: oroi-proxy.docker.opendataservices.uk0.bigv.io
+oroi-8:     oroi-8.docker.opendataservices.uk0.bigv.io
+oroi-9:     oroi-9.docker.opendataservices.uk0.bigv.io
+oroi-10:    oroi-10.docker.opendataservices.uk0.bigv.io
+oroi-11:    oroi-11.docker.opendataservices.uk0.bigv.io
+
 #  We have moved all Open Contracting boxes to new deploy repositories!
 #  https://github.com/open-contracting/deploy
 #  https://github.com/open-contracting/deploy-pillar-private
