@@ -111,6 +111,8 @@ base:
     - prometheus-client-apache
 #    - icinga2-satellite
 
+  'oroi*':
+    - docker-workarounds
 
   # MONITORING
 
@@ -137,4 +139,3 @@ base:
     - icinga2-satellite
     - prometheus-client-apache
     - backups
-
