@@ -112,6 +112,7 @@ base:
 #    - icinga2-satellite
 
   'oroi*':
+    # Mostly not managed with salt, see the roster for more information.
     - docker-workarounds
 
   # MONITORING
