@@ -1,7 +1,17 @@
+{% if grains['os'] == 'Debian' %}
+// Using Allowed-Origins doesn't work for Debian because that expects the
+// archive name (oldstable) instead of the codename (stretch).
+// (Ben: This is out of the default Debian config, so should work, but I've not
+// had chance to check it against a real security update yet.)
+Unattended-Upgrade::Origins-Pattern {
+    "origin=Debian,codename=${distro_codename},label=Debian-Security";
+};
+{% else %}
 Unattended-Upgrade::Allowed-Origins {
         "Ubuntu {{ grains.oscodename }}-security";
 //      "Ubuntu {{ grains.oscodename }}-updates";
 };
+{% endif %}
 Unattended-Upgrade::Mail "code@opendataservices.coop";
 Unattended-Upgrade::MailOnlyOnError "true";
 Unattended-Upgrade::Automatic-Reboot "{{pillar.automatic_reboot}}";

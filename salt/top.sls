@@ -111,6 +111,9 @@ base:
     - prometheus-client-apache
 #    - icinga2-satellite
 
+  'oroi*':
+    # Mostly not managed with salt, see the roster for more information.
+    - docker-workarounds
 
   # MONITORING
 
@@ -137,4 +140,3 @@ base:
     - icinga2-satellite
     - prometheus-client-apache
     - backups
-

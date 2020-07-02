@@ -1,0 +1,12 @@
+[Unit]
+Description=A service to forward Docker's port 81 on IPv4 to port 80 on IPv4/6
+After=network.target
+
+[Service]
+Type=simple
+Restart=always
+User=root
+ExecStart=/usr/bin/socat TCP6-LISTEN:80,,su=nobody,fork,reuseaddr TCP4:127.0.0.1:81
+
+[Install]
+WantedBy=multi-user.target
