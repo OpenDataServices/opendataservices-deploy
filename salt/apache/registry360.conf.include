@@ -1,0 +1,44 @@
+  ErrorLog ${APACHE_LOG_DIR}/error.log
+  CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+  {{ banner }}
+
+  <Location / >
+    {% if uwsgi_port %}
+    ProxyPass uwsgi://127.0.0.1:{{ uwsgi_port }}/
+    {% else %}
+    ProxyPass unix:/tmp/uwsgi_{{ bare_name }}.sock|http://{{ bare_name }}/
+    {% endif %}
+    ProxyPass uwsgi://127.0.0.1:3032/
+  </Location>
+
+  {% if pillar.dev_robots_txt %}
+  Alias /robots.txt "/var/www/html/robots.txt"
+  <Location "/robots.txt">
+    ProxyPass !
+    Order allow,deny
+    Allow from all
+    SetHandler None
+  </Location>
+  {% endif %}
+
+  # Static content needed by Django
+  Alias /static "{{ djangodir }}static/"
+  <Location "/static">
+    ProxyPass !
+    Order allow,deny
+    Allow from all
+    SetHandler None
+  </Location>
+
+  <Directory {{ djangodir }}>
+    Require all granted
+  </Directory>
+
+  # Letsencrypt auth
+  <Location /.well-known/acme-challenge>
+    ProxyPass !
+    Require all granted
+  </Location>
+
+

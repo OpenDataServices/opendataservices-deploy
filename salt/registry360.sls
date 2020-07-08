@@ -12,7 +12,7 @@ include:
   - core
   - apache
   - uwsgi
-{% if 'https' in pillar.registry360 %}  - letsencrypt{% endif %}
+  - letsencrypt
 
 registry360-deps:
     apache_module.enabled:
@@ -38,7 +38,7 @@ remoteip:
       - watch_in:
         - service: apache2
 
-{% macro registry360(name, giturl, branch, djangodir, user, uwsgi_port, servername=None, schema_url_ocds=None, app='registry360') %}
+{% macro registry360(name, giturl, branch, djangodir, user, uwsgi_port, servername=None, schema_url_ocds=None, app='registry360', serveraliases=[]) %}
 
 
 {% set extracontext %}
@@ -58,19 +58,14 @@ schema_url_ocds: null
 {% endif %}
 {% endset %}
 
-{% if 'https' in pillar.registry360 %}
+# https set to no here because we don't want the default https setup found in _common.conf
 {{ apache(user+'.conf',
     name=name+'.conf',
     extracontext=extracontext,
-    servername=servername if servername else branch+'.'+grains.fqdn,
-    serveraliases=[ branch+'.'+grains.fqdn ] if servername else [],
-    https=pillar.registry360.https) }}
-{% else %}
-{{ apache(user+'.conf',
-    name=name+'.conf',
-    servername=servername if servername else 'default',
-    extracontext=extracontext) }}
-{% endif %}
+    servername=servername,
+    serveraliases=serveraliases,
+    https=pillar.registry360.https if 'https' in pillar.registry360 else 'no')
+}}
 
 {{ uwsgi(user+'.ini',
     name=name+'.ini',
@@ -115,7 +110,7 @@ MAILTO:
     branch='master',
     djangodir='/home/'+user+'/registry360/',
     uwsgi_port=3032,
-    servername=pillar.registry360.servername if 'servername' in pillar.registry360 else None,
+    servername=pillar.registry360.servername if 'servername' in pillar.registry360 else grains.fqdn,
     app=pillar.registry360.app if 'app' in pillar.registry360 else 'registry360',
     user=user) }}
 
@@ -127,7 +122,7 @@ MAILTO:
     branch=branch.name,
     djangodir='/home/'+user+'/registry360-'+branch.name+'/',
     uwsgi_port=branch.uwsgi_port if 'uwsgi_port' in branch else None,
-    servername=branch.servername if 'servername' in branch else None,
+    servername=branch + '.' + pillar.registry360.servername if 'servername' in pillar.registry360 else branch + 'registry360' + '.' + grains.fqdn,
     app=branch.app if 'app' in branch else 'registry360',
     user=user) }}
 {% endfor %}
