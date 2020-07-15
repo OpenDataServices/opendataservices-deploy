@@ -158,7 +158,7 @@ pwyf_dqt_celery:
 
 clean_up_cron:
   cron.present:
-    - name: cd /home/{{ pillar.pwyf_dqt.user}}/{{ pillar.pwyf_dqt.checkout_dir }} ; source ./.ve/bin/activate ; FLASK_APP=DataQualityTester/__init__.py flask flush-data
+    - name: cd /home/{{ pillar.pwyf_dqt.user}}/{{ pillar.pwyf_dqt.checkout_dir }} ; . ./.ve/bin/activate ; FLASK_APP=DataQualityTester/__init__.py flask flush-data
     - user: {{ pillar.pwyf_dqt.user }}
     - minute: 0
     - hour: 0
