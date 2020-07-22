@@ -69,7 +69,12 @@ bare_name: {{ name }}
     name=name+'.conf',
     extracontext=extracontext,
     servername=servername,
-    serveraliases=pillar.pwyf_tracker.serveraliases,
+    https=pillar.pwyf_tracker.https) }}
+
+{{ apache(user+'.dev.conf',
+    name=name+'.dev.conf',
+    extracontext=extracontext,
+    servername=pillar.pwyf_tracker.devname,
     https=pillar.pwyf_tracker.https) }}
 
 {{ uwsgi('pwyf_tracker_original.ini',

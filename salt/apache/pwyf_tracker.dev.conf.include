@@ -1,0 +1,7 @@
+# vi: ft=apache
+
+        Redirect permanent / https://2020tracker.publishwhatyoufund.org
+
+        <Location "/.well-known/acme-challenge">
+                ProxyPass !
+        </Location>
