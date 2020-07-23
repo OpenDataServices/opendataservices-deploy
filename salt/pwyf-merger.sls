@@ -113,11 +113,10 @@ setup_merger_assets:
 
 clean_up_cron:
   cron.present:
-    - name: rm -rf /var/www/output/*.xml
+    - name: cd /home/{{ pillar.pwyf_merger.user}}/{{ pillar.pwyf_merger.checkout_dir }} ; . ./.ve/bin/activate ; FLASK_APP=ActivityMerger/__init__.py flask flush-data
     - user: {{ pillar.pwyf_merger.user }}
     - minute: 0
     - hour: 0
-    - dayweek: 6
 
 ##### Webserver setup
 
