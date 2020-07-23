@@ -189,7 +189,16 @@ apache(
   'pwyf-dqt.conf',
   name='pwyf-dqt.conf',
   servername=pillar.pwyf_dqt.servername,
-  serveraliases=pillar.pwyf_dqt.serveraliases,
+  extracontext=extracontext,
+  https='yes'
+)
+}}
+
+{{
+apache(
+  'pwyf-dqt.dev.conf',
+  name='pwyf-dqt.dev.conf',
+  servername=pillar.pwyf_dqt.devname,
   extracontext=extracontext,
   https='yes'
 )
