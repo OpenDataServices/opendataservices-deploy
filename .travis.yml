@@ -8,7 +8,6 @@ python:
 jobs:
   include:
     - stage: test-iati-360
-
       install: 
         - "git clone 'https://github.com/OpenDataServices/cove.git'"
         - "cd cove"
@@ -18,15 +17,15 @@ jobs:
       script:
         - "CUSTOM_SERVER_URL=https://dataquality.threesixtygiving.org/ DJANGO_SETTINGS_MODULE=cove_360.settings py.test cove_360/tests_functional.py"
         #- "CUSTOM_SERVER_URL=http://iati.cove.opendataservices.coop/ DJANGO_SETTINGS_MODULE=cove_iati.settings py.test cove_iati/tests_functional.py"
-#   - stage: test-ocds
 
-#     install:
-#       - "git clone 'https://github.com/open-contracting/cove-ocds.git' coveocds"
-#       - "cd coveocds"
-#       - "pip install -r requirements_dev.txt"
-#       - "wget https://chromedriver.storage.googleapis.com/2.36/chromedriver_linux64.zip; unzip chromedriver_linux64.zip -d chromedriver; export PATH=$PATH:`pwd`/chromedriver"
-#     script:
-#       - "CUSTOM_SERVER_URL=http://standard.open-contracting.org/ DJANGO_SETTINGS_MODULE=cove_project.settings py.test cove_ocds/tests_functional.py"
+    - stage: test-ocds
+      install:
+        - "git clone 'https://github.com/open-contracting/cove-ocds.git' coveocds"
+        - "cd coveocds"
+        - "pip install -r requirements_dev.txt"
+        - "wget https://chromedriver.storage.googleapis.com/2.36/chromedriver_linux64.zip; unzip chromedriver_linux64.zip -d chromedriver; export PATH=$PATH:`pwd`/chromedriver"
+      script:
+        - "CUSTOM_SERVER_URL=http://standard.open-contracting.org/ DJANGO_SETTINGS_MODULE=cove_project.settings py.test cove_ocds/tests_functional.py"
 notifications:
   email:
     recipients:
