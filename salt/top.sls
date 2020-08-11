@@ -18,6 +18,7 @@ base:
     - opendataservices-website
     - cove-opendataservices-coop
     - icinga2-satellite
+    - org-ids-datatig
 
   'cove*live*':
     - cove
