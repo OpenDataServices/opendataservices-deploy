@@ -1,6 +1,6 @@
 # vi: ft=apache
 
-        Redirect permanent / https://dataqualitytester.publishwhatyoufund.org
+        Redirect permanent / https://dataqualitytester.publishwhatyoufund.org/
 
         <Location "/.well-known/acme-challenge">
                 ProxyPass !
