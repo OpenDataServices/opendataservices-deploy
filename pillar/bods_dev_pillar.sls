@@ -1,5 +1,5 @@
 # Values used only on the Cove BODS server
-default_branch: '35-spreadsheet-version-detection'
+default_branch: 'flattentool-357-format-date'
 cove:
   app: cove_project
   uwsgi_port: 3032  # Can't use default 3031 on Ubuntu 18 till https://github.com/unbit/uwsgi/issues/1491 is fixed
