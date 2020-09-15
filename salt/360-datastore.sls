@@ -168,6 +168,49 @@ colab_notebooks4:
     - require:
       - service: postgresql
 
+colab_notebooks5:
+  postgres_user.present:
+    - password: {{ pillar.datastore_private.colab_pg_password5 }}
+    - groups: readaccess
+    - require:
+      - service: postgresql
+
+colab_notebooks6:
+  postgres_user.present:
+    - password: {{ pillar.datastore_private.colab_pg_password6 }}
+    - groups: readaccess
+    - require:
+      - service: postgresql
+
+colab_notebooks7:
+  postgres_user.present:
+    - password: {{ pillar.datastore_private.colab_pg_password7 }}
+    - groups: readaccess
+    - require:
+      - service: postgresql
+
+colab_notebooks8:
+  postgres_user.present:
+    - password: {{ pillar.datastore_private.colab_pg_password8 }}
+    - groups: readaccess
+    - require:
+      - service: postgresql
+
+
+colab_notebooks9:
+  postgres_user.present:
+    - password: {{ pillar.datastore_private.colab_pg_password9 }}
+    - groups: readaccess
+    - require:
+      - service: postgresql
+
+colab_notebooks10:
+  postgres_user.present:
+    - password: {{ pillar.datastore_private.colab_pg_password10 }}
+    - groups: readaccess
+    - require:
+      - service: postgresql
+
 
 
 update_postgres_config_colab_user_access:
