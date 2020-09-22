@@ -26,7 +26,7 @@ fi
 
 # Load latest daily data
 echo "Loading new index $ES_INDEX"
-python -u {{djangodir}}/dataload/import_to_elasticsearch.py --clean * &> /home/{{ user }}/logs/load_$ES_INDEX.log || echo "Data loading failed for branch es7 with data from the datastore, see logs/load_$ES_INDEX.log for more information."
+python -u {{djangodir}}/dataload/import_to_elasticsearch.py --clean * &> /home/{{ user }}/logs/load_$ES_INDEX.log
 
 # Set Grantnav application to use new es index name
 echo $ES_INDEX > /home/{{ user }}/es_index
