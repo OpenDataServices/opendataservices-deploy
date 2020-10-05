@@ -142,7 +142,7 @@ datastore_poll:
 
 snap_weekly:
    cron.present:
-     - name: source {{ djangodir }}/.ve/bin/activate; export SOURCE_INDEX=`cat /home/{{ pillar.grantnav.user }}/es_index`; python3 {{ djangodir }}/dataload/copy_es_index.py $SOURCE_INDEX latest_weekly
+     - name: . {{ djangodir }}/.ve/bin/activate; export SOURCE_INDEX=`cat /home/{{ pillar.grantnav.user }}/es_index`; python3 {{ djangodir }}/dataload/copy_es_index.py $SOURCE_INDEX $(date +latest_weekly_%F)
      - user: {{ pillar.grantnav.user }}
      - minute: 0
      - hour: 4
@@ -150,12 +150,11 @@ snap_weekly:
 
 snap_monthly:
    cron.present:
-     - name: source {{ djangodir }}/.ve/bin/activate; export SOURCE_INDEX=`cat /home/{{ pillar.grantnav.user }}/es_index`; python3 {{ djangodir }}/dataload/copy_es_index.py $SOURCE_INDEX latest_monthly
+     - name: . {{ djangodir }}/.ve/bin/activate; export SOURCE_INDEX=`cat /home/{{ pillar.grantnav.user }}/es_index`; python3 {{ djangodir }}/dataload/copy_es_index.py $SOURCE_INDEX $(date +latest_monthly_%F)
      - user: {{ pillar.grantnav.user }}
      - minute: 0
      - hour: 5
      - daymonth: 1
-     - month: '*/1'
 
 ##### Apache
 
