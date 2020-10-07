@@ -146,7 +146,7 @@ snap_weekly:
      - user: {{ pillar.grantnav.user }}
      - minute: 0
      - hour: 4
-     - dayweek: '*/5'
+     - dayweek: 0
 
 snap_monthly:
    cron.present:
