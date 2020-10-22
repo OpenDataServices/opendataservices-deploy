@@ -90,23 +90,6 @@ base:
     - icinga2-satellite
     - prometheus-client-apache
 
-  'pwyf-dev':
-    - pwyf-tracker
-    - prometheus-client-apache
-#    - icinga2-satellite
-#
-  'pwyf-tracker-*':
-    - pwyf-tracker-original
-    - prometheus-client-apache
-
-  'pwyf-dqt-*':
-    - pwyf-dqt
-    - prometheus-client-apache
-
-  'pwyf-merger':
-    - pwyf-merger
-
-
   'iati-misc':
     - iati-misc
     - prometheus-client-apache

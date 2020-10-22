@@ -8,7 +8,6 @@ dev5:                dev5.default.opendataservices.uk0.bigv.io
 mon-3:               mon-3.default.opendataservices.uk0.bigv.io
 cove-dev-2:          cove-dev-2.default.opendataservices.uk0.bigv.io
 cove-dev-bods:       cove-dev-bods.default.opendataservices.uk0.bigv.io
-pwyf-tracker-dev:    pwyf-tracker-dev.default.opendataservices.uk0.bigv.io
 
 #   live:
 live3:                    live3.default.opendataservices.uk0.bigv.io
@@ -21,7 +20,6 @@ cove-live-bods:           cove-live-bods.default.opendataservices.uk0.bigv.io
 snapshotter:              snapshotter.default.opendataservices.uk0.bigv.io
 org-ids:                  org-ids.default.opendataservices.uk0.bigv.io
 backups:                  backups.backups.opendataservices.uk0.bigv.io
-pwyf-dev:                 pwyf-dev.default.opendataservices.uk0.bigv.io
 iati-misc:                iati-misc.default.opendataservices.uk0.bigv.io
 
 # threesixtygiving boxes
@@ -35,10 +33,6 @@ cove-360-live:          cove-360-live.live.threesixtygiving.uk0.bigv.io
 data-360-live:          data.live.threesixtygiving.uk0.bigv.io
 datastore-360-live:     store.data.threesixtygiving.org
 
-# Publish What You Fund (PWYF)
-pwyf-dqt-live:          dqt-dev.publishwhatyoufund.org
-pwyf-tracker-2019:      xvm-131-159.dc3.ghst.net
-pwyf-merger:            xvm-175-147.dc0.ghst.net
 
 # declared. (Was Open Register of Interests (oroi))
 # Mostly this server is not managed with salt, for install steps see

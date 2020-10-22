@@ -64,26 +64,6 @@ base:
   '*dev-bods*':
      - bods_dev_pillar
 
-  'pwyf-dev':
-     - pwyf_tracker
-     - private.pwyf_tracker
-
-  'pwyf-tracker-dev':
-     - pwyf_tracker_original
-     - private.pwyf_tracker_original
-
-  'pwyf-tracker-2019':
-     - pwyf_tracker_2019
-     - private.pwyf_tracker_original
-
-  'pwyf-dqt-*':
-    - pwyf_dqt_pillar
-    - private.pwyf_dqt_pillar
-
-  'pwyf-merger':
-    - pwyf_merger_pillar
-    - private.pwyf_merger_pillar
-
   'dev5':
     - json_data_ferret_dev5
     - private.json_data_ferret_dev5
