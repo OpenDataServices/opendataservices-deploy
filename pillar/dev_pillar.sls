@@ -15,7 +15,7 @@ cove:
   uwsgi_as_limit: 1800
   uwsgi_harakiri: 300
   apache_uwsgi_timeout: 360
-  app: cove_ocds
+  app: cove_iati
   iati: True
 registry360:
   allowedhosts: .default.opendataservices.uk0.bigv.io
@@ -31,17 +31,9 @@ extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values 
   - name: master
     app: cove_iati
     servername: iati.dev.cove.opendataservices.coop
-  - name: update-flattentool-openpyxl
-    app: cove_iati
   - name: downgrade-openpyxl-2-6
     app: cove_iati
   - name: flattentool-177-xml-path-consistency
-    app: cove_iati
-  - name: openpyxl-commit
-    app: cove_iati
-  - name: 1208-iati-cove-orgxml-spreadsheet
-    app: cove_iati
-  - name: flatten-tool-ods-support
     app: cove_iati
 
 # Do NOT just delete branches from extra_cove_branches above! Instead add them to old_cove_branches!
@@ -55,6 +47,14 @@ old_cove_branches: #[] # remove the [] (empty list) if you re-add some values be
     app: cove_ocds
   - name: 1220-improve-non-unique-elements-error
     app: cove_ocds
+  - name: openpyxl-commit
+    app: cove_iati
+  - name: flatten-tool-ods-support
+    app: cove_iati
+  - name: 1208-iati-cove-orgxml-spreadsheet
+    app: cove_iati
+  - name: update-flattentool-openpyxl
+    app: cove_iati
 
 extra_registry360_branches: [] # remove the [] (empty list) if you re-add some values below
 
