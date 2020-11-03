@@ -28,7 +28,7 @@ extra_org_ids_branches: [] # remove the [] (empty list) if you re-add some value
 cove_url: http://cove.cove-live-ocds.default.opendataservices.uk0.bigv.io/
 automatic_reboot: 'true'
 extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values below
-  - name: master
+  - name: iati-dev
     app: cove_iati
     servername: iati.dev.cove.opendataservices.coop
   - name: downgrade-openpyxl-2-6
@@ -54,6 +54,8 @@ old_cove_branches: #[] # remove the [] (empty list) if you re-add some values be
   - name: 1208-iati-cove-orgxml-spreadsheet
     app: cove_iati
   - name: update-flattentool-openpyxl
+    app: cove_iati
+  - name: master
     app: cove_iati
 
 extra_registry360_branches: [] # remove the [] (empty list) if you re-add some values below
