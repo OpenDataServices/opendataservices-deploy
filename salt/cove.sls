@@ -23,8 +23,15 @@ cove-deps:
     pkg.installed:
       - pkgs:
         - libapache2-mod-proxy-uwsgi
+        {% if grains['osrelease'] == '18.04' or grains['osrelease'] == '16.04' %}
         - python-pip
         - python-virtualenv
+        {% endif %}
+        {% if grains['osrelease'] == '20.04' %}
+        - python3-virtualenv
+        - gcc
+        - libxslt1-dev
+        {% endif %}
         - uwsgi-plugin-python3
         - gettext
           {% if 'iati' in pillar.cove and pillar.cove.iati %}
