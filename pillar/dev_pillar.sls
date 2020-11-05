@@ -31,9 +31,7 @@ extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values 
   - name: iati-dev
     app: cove_iati
     servername: iati.dev.cove.opendataservices.coop
-  - name: downgrade-openpyxl-2-6
-    app: cove_iati
-  - name: flattentool-177-xml-path-consistency
+  - name: update-flattentool
     app: cove_iati
 
 # Do NOT just delete branches from extra_cove_branches above! Instead add them to old_cove_branches!
@@ -56,6 +54,10 @@ old_cove_branches: #[] # remove the [] (empty list) if you re-add some values be
   - name: update-flattentool-openpyxl
     app: cove_iati
   - name: master
+    app: cove_iati
+  - name: downgrade-openpyxl-2-6
+    app: cove_iati
+  - name: flattentool-177-xml-path-consistency
     app: cove_iati
 
 extra_registry360_branches: [] # remove the [] (empty list) if you re-add some values below
