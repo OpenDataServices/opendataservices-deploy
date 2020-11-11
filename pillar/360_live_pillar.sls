@@ -1,5 +1,6 @@
 default_branch: master
 cove:
+  gitbranch: live
   servername: dataquality.threesixtygiving.org
   https: 'force'
   piwik:

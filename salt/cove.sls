@@ -203,7 +203,7 @@ MAILTO:
 {{ cove(
     name='cove',
     giturl=pillar.cove.giturl if 'giturl' in pillar.cove else giturl,
-    branch=pillar.default_branch,
+    branch=pillar.cove.gitbranch if 'gitbranch' in pillar.cove else pillar.default_branch,
     djangodir='/home/'+user+'/cove/',
     uwsgi_port=pillar.cove.uwsgi_port if 'uwsgi_port' in pillar.cove else 3031,
     servername=pillar.cove.servername if 'servername' in pillar.cove else None,

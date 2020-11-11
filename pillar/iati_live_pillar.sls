@@ -1,6 +1,7 @@
 # Values used only on the Cove OCDS server
 default_branch: 'master'
 cove:
+  gitbranch: live
   piwik:
     url: '//mon.opendataservices.coop/piwik/'
     site_id: '18' 
