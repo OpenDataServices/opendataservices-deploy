@@ -86,7 +86,6 @@ base:
      - cove_dev_redirects
 
   'grantnav-dev*':
-    - grantnav-es7
     - icinga2-satellite
     - prometheus-client-apache
 
