@@ -222,3 +222,24 @@ uwsgi('grantnav.ini', name='grantnav.ini')
     - mode: 700
     - require:
       - file: /etc/apache2/ssl
+
+
+###### SOCKS Proxy user for Datastore #######
+socks_proxy_user_setup:
+  user.present:
+    - name: datagetter_proxy
+    - home: /home/datagetter_proxy
+    - shell: /usr/sbin/nologin
+
+
+/home/datagetter_proxy/.ssh/authorized_keys:
+  file.managed:
+    - source: salt://private/grantnav/datastore_datagetter_ssh_key.pub
+    - makedirs: True
+    - user: datagetter_proxy
+    - group: datagetter_proxy
+    - mode: 700
+    - require:
+      - user: socks_proxy_user_setup
+
+#############################################

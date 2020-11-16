@@ -196,7 +196,6 @@ colab_notebooks8:
     - require:
       - service: postgresql
 
-
 colab_notebooks9:
   postgres_user.present:
     - password: {{ pillar.datastore_private.colab_pg_password9 }}
