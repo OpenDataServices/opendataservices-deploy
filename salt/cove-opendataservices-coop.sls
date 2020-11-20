@@ -6,7 +6,7 @@
 /home/{{ user }}/web:
   git.latest:
     - name: https://github.com/OpenDataServices/cove-opendataservices-coop.git
-    - rev: master
+    - rev: live
     - target: /home/{{ user }}/web
     - user: {{ user }}
     - force_fetch: True
