@@ -20,7 +20,7 @@ cove:
 registry360:
   allowedhosts: .default.opendataservices.uk0.bigv.io
 org_ids:
-  default_branch: 'master'
+  default_branch: 'live'
   piwik:
     url: '//mon.opendataservices.coop/piwik/'
     site_id: 'XXX' 
