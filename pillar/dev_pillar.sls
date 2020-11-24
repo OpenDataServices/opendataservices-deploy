@@ -6,6 +6,7 @@ ocds_cove_backend: http://cove.cove-dev.default.opendataservices.uk0.bigv.io
 domain_prefix: 'dev.'
 banner_message: 'This is a development site with experimental features. Do not rely on it.'
 cove:
+  gitbranch: live
   piwik:
     url: '//mon.opendataservices.coop/piwik/'
     site_id: '1' 
@@ -31,8 +32,6 @@ extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values 
   - name: iati-dev
     app: cove_iati
     servername: iati.dev.cove.opendataservices.coop
-  - name: update-flattentool
-    app: cove_iati
 
 # Do NOT just delete branches from extra_cove_branches above! Instead add them to old_cove_branches!
 # They will be removed from the dev servers.
@@ -58,6 +57,8 @@ old_cove_branches: #[] # remove the [] (empty list) if you re-add some values be
   - name: downgrade-openpyxl-2-6
     app: cove_iati
   - name: flattentool-177-xml-path-consistency
+    app: cove_iati
+  - name: update-flattentool
     app: cove_iati
 
 extra_registry360_branches: [] # remove the [] (empty list) if you re-add some values below
