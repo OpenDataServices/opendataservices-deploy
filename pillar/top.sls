@@ -29,6 +29,7 @@ base:
      - private.org-ids_pillar
   '*360*':
      - 360_pillar
+     - private.360_pillar
   '*360-live':
      - 360_live_pillar
   'datastore-360-live':
@@ -38,6 +39,9 @@ base:
   'grantnav-live-*':
      - grantnav_live_pillar
      - private.grantnav_live_pillar
+
+  'grantnav-*':
+     - private.360_pillar
 
   'tmp2':
      - tmp_pillar
@@ -51,3 +55,4 @@ base:
   'dev5':
     - json_data_ferret_dev5
     - private.json_data_ferret_dev5
+
