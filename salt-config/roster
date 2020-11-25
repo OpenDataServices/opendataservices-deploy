@@ -23,17 +23,6 @@ org-ids:                  org-ids.default.opendataservices.uk0.bigv.io
 backups:                  backups.backups.opendataservices.uk0.bigv.io
 iati-misc:                iati-misc.default.opendataservices.uk0.bigv.io
 
-# threesixtygiving boxes
-#   dev:
-grantnav-dev:           grantnav-dev.default.threesixtygiving.uk0.bigv.io
-cove-360-dev:           cove-360-dev.default.threesixtygiving.uk0.bigv.io
-#   live:
-grantnav-live-teal:     grantnav-teal.live.threesixtygiving.uk0.bigv.io
-grantnav-live-orange:   grantnav-orange.live.threesixtygiving.uk0.bigv.io
-cove-360-live:          cove-360-live.live.threesixtygiving.uk0.bigv.io
-data-360-live:          data.live.threesixtygiving.uk0.bigv.io
-datastore-360-live:     store.data.threesixtygiving.org
-
 
 # declared. (Was Open Register of Interests (oroi))
 # Mostly this server is not managed with salt, for install steps see
@@ -47,6 +36,12 @@ oroi-8:     oroi-8.docker.opendataservices.uk0.bigv.io
 oroi-9:     oroi-9.docker.opendataservices.uk0.bigv.io
 oroi-10:    oroi-10.docker.opendataservices.uk0.bigv.io
 oroi-11:    oroi-11.docker.opendataservices.uk0.bigv.io
+
+#  We have moved all 360 boxes to new deploy repositories!
+#  https://github.com/ThreeSixtyGiving/threesixtygiving-deploy
+#  https://github.com/ThreeSixtyGiving/threesixtygiving-deploy-salt-private
+#  https://github.com/ThreeSixtyGiving/threesixtygiving-deploy-pillar-private
+#  See https://opendataservices.plan.io/issues/27581 for more.
 
 #  We have moved all Open Contracting boxes to new deploy repositories!
 #  https://github.com/open-contracting/deploy
