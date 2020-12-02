@@ -21,7 +21,7 @@ os4d-deps:
 
 {{ giturl }}:
   git.latest:
-    - rev: master
+    - rev: live
     - target: {{ gitdir }}
     - user: {{ user }}
     - submodules: True
