@@ -27,21 +27,6 @@ base:
   'org-ids':
      - org-ids_pillar
      - private.org-ids_pillar
-  '*360*':
-     - 360_pillar
-     - private.360_pillar
-  '*360-live':
-     - 360_live_pillar
-  'datastore-360-live':
-     - 360_datastore_live_pillar
-     - private.360_datastore_live_pillar
-
-  'grantnav-live-*':
-     - grantnav_live_pillar
-     - private.grantnav_live_pillar
-
-  'grantnav-*':
-     - private.360_pillar
 
   'tmp2':
      - tmp_pillar

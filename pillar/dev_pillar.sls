@@ -18,8 +18,6 @@ cove:
   apache_uwsgi_timeout: 360
   app: cove_iati
   iati: True
-registry360:
-  allowedhosts: .default.opendataservices.uk0.bigv.io
 org_ids:
   default_branch: 'live'
   piwik:
@@ -60,8 +58,6 @@ old_cove_branches: #[] # remove the [] (empty list) if you re-add some values be
     app: cove_iati
   - name: update-flattentool
     app: cove_iati
-
-extra_registry360_branches: [] # remove the [] (empty list) if you re-add some values below
 
 # Add a new branch with the name of the branch, and increment the port number.
 # Currently adding a new port number requires a manual uwsgi restart (ie. the

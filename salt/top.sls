@@ -30,28 +30,10 @@ base:
   'cove-live-bods':
     - prometheus-client-apache
 
-  'cove-360-live':
-    - prometheus-client-apache
-
-  'grantnav-live-*':
-    - grantnav
-    - icinga2-satellite
-    - prometheus-client-apache
-
-  'data-360-live':
-    - registry360
-    - icinga2-satellite
-    - prometheus-client-apache
-
   'org-ids':
     - org-ids
     - prometheus-client-apache
     - icinga2-satellite
-
-  'datastore-360-live':
-    - icinga2-satellite
-    - 360-datastore
-    - prometheus-client-apache
 
   # STAGING
 
@@ -71,7 +53,6 @@ base:
     - icinga2-satellite
     - prometheus-client-apache
     - os4d
-    - registry360
 
   'dev5':
     - prometheus-client-apache
@@ -85,9 +66,6 @@ base:
   'cove-dev*':
      - cove_dev_redirects
 
-  'grantnav-dev*':
-    - icinga2-satellite
-    - prometheus-client-apache
 
   'iati-misc':
     - iati-misc
