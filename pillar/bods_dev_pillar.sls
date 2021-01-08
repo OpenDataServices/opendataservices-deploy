@@ -1,5 +1,4 @@
 # Values used only on the Cove BODS server
-default_branch: 'flattentool-357-format-date'
 cove:
   app: cove_project
   uwsgi_port: 3032  # Can't use default 3031 on Ubuntu 18 till https://github.com/unbit/uwsgi/issues/1491 is fixed
@@ -8,6 +7,7 @@ cove:
     site_id: '22'
     dimension_map: 'file_type=1,page_type=2,form_name=3,language=4,exit_language=5'
   giturl: 'https://github.com/openownership/cove-bods.git'
+  gitbranch: 'master'
   allowedhosts: '.default.opendataservices.uk0.bigv.io,dev.datareview.openownership.org'
   ocds_redirect: False
   larger_uwsgi_limits: True
