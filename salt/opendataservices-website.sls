@@ -20,7 +20,7 @@ rewrite:
 # Download the repository (all static HTML)
 git@opendataservices.plan.io:standardsupport-co-op.website.git:
   git.latest:
-    - rev: {{ pillar.default_branch }}
+    - rev: {{ pillar.opendataservices_website.default_branch }}
     - target: /home/{{ user }}/website/
     - user: {{ user }}
     - submodules: True
