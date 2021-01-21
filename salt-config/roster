@@ -5,7 +5,6 @@
 dev3:                dev3.default.opendataservices.uk0.bigv.io
 dev4:                dev4.default.opendataservices.uk0.bigv.io
 dev5:                dev5.default.opendataservices.uk0.bigv.io
-dev6:                135.181.181.103
 mon-3:               mon-3.default.opendataservices.uk0.bigv.io
 cove-dev-2:          cove-dev-2.default.opendataservices.uk0.bigv.io
 cove-dev-4:          cove-dev-4.default.opendataservices.uk0.bigv.io
