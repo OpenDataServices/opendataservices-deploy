@@ -101,3 +101,7 @@ base:
     - icinga2-satellite
     - prometheus-client-apache
     - backups
+
+  'dokku*':
+    - dokku
+
