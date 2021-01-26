@@ -103,5 +103,6 @@ base:
     - backups
 
   'dokku*':
+    - prometheus-client-standalone
     - dokku
 

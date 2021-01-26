@@ -1,0 +1,15 @@
+[Unit]
+Description=Prometheus Node Exporter
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User={{ user }}
+Group={{ user }}
+Type=simple
+ExecStart=/home/{{ user }}/node_exporter-{{ pillar.prometheus.node_exporter_version_for_standalone }}.linux-amd64/node_exporter \
+    --web.listen-address=:9157 \
+    --web.config /home/{{ user }}/web-config.yaml
+
+[Install]
+WantedBy=multi-user.target
