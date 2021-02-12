@@ -106,3 +106,7 @@ base:
     - prometheus-client-standalone
     - dokku
 
+  'analysis-*':
+    - prometheus-client-standalone
+    - postgres
+

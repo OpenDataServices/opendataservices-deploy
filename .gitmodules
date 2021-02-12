@@ -1,0 +1,4 @@
+[submodule "formulas/postgres-formula"]
+	path = formulas/postgres-formula
+	url = https://github.com/saltstack-formulas/postgres-formula
+    branch = v0.41.5

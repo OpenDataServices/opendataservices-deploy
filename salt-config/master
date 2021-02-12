@@ -2,6 +2,7 @@
 file_roots:
   base:
     - salt/
+    - formulas/postgres-formula
 
 pillar_roots:
   base:

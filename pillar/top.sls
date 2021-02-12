@@ -41,3 +41,10 @@ base:
     - json_data_ferret_dev5
     - private.json_data_ferret_dev5
 
+  'analysis-*':
+     - postgres_pillar
+
+  'analysis-1':
+     - private.analysis1
+
+

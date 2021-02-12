@@ -51,3 +51,6 @@ dokku1:     dokku1.dokku.opendataservices.uk0.bigv.io
 #  https://github.com/open-contracting/deploy-pillar-private
 #  https://github.com/open-contracting/deploy-salt-private
 
+# Analysis Server
+
+analysis-1: 95.216.225.116 
