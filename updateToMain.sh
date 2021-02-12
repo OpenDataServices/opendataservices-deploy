@@ -17,3 +17,7 @@ git checkout main
 git pull
 cd ../..
 
+echo "--------------------- SUBMODULES"
+git submodule init
+git submodule update
+echo "submodules upto date"
