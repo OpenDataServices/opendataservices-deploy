@@ -20,6 +20,9 @@ base:
     - icinga2-satellite
     - org-ids-datatig
 
+  'live5':
+    - prometheus-client-apache
+
   'cove*live*':
     - cove
     - icinga2-satellite
@@ -57,6 +60,9 @@ base:
   'dev5':
     - prometheus-client-apache
     - json-data-ferret
+
+  'dev7':
+    - prometheus-client-apache
 
   'cove*dev*':
     - cove
