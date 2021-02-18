@@ -46,8 +46,11 @@ base:
 
   # DEVELOPMENT
 
+  # dev3 server can be turned off as soon as we are sure the moves have been successful
   'dev3':
+    # This has been moved to dev5
     - opendataservices-website
+    # This has been moved to dev7
     - temp
     - icinga2-satellite
 
@@ -60,9 +63,11 @@ base:
   'dev5':
     - prometheus-client-apache
     - json-data-ferret
+    - opendataservices-website
 
   'dev7':
     - prometheus-client-apache
+    - temp
 
   'cove*dev*':
     - cove
