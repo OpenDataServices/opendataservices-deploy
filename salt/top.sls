@@ -11,6 +11,7 @@ base:
   'live3':
     - icinga2-satellite
     - prometheus-client-apache
+    # This is being moved to live5
     - os4d
 
   'live4':
@@ -22,6 +23,7 @@ base:
 
   'live5':
     - prometheus-client-apache
+    - os4d
 
   'cove*live*':
     - cove
@@ -58,6 +60,7 @@ base:
     - org-ids
     - icinga2-satellite
     - prometheus-client-apache
+    # This is being moved to dev7
     - os4d
 
   'dev5':
@@ -68,6 +71,7 @@ base:
   'dev7':
     - prometheus-client-apache
     - temp
+    - os4d
 
   'cove*dev*':
     - cove

@@ -133,7 +133,12 @@
       - /etc/letsencrypt/live/{{ servername }}/fullchain.pem
       - /etc/letsencrypt/live/{{ servername }}/privkey.pem
     - require:
+{% if grains['osrelease'] == '18.04' or grains['osrelease'] == '16.04' %}
       - pkg: letsencrypt
+{% endif %}
+{% if grains['osrelease'] == '20.04' %}
+      - pkg: certbot
+{% endif %}
       - file: /etc/apache2/sites-available/{{ name }}
       - file: /etc/apache2/sites-available/{{ name }}.include
       - file: /etc/apache2/sites-enabled/{{ name }}
