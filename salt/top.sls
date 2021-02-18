@@ -58,6 +58,7 @@ base:
     - org-ids
     - icinga2-satellite
     - prometheus-client-apache
+    # This has been moved to dev7
     - os4d
 
   'dev5':
@@ -68,6 +69,7 @@ base:
   'dev7':
     - prometheus-client-apache
     - temp
+    - os4d
 
   'cove*dev*':
     - cove
