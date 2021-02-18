@@ -1,9 +1,9 @@
 json_data_ferret_installs:
-  - name: master
-    branch: master
-    servername: 'jsondatatferret.dev5.default.opendataservices.uk0.bigv.io'
-    postgres_user: jdf_master
-    postgres_name: jdf_master
+  - name: main
+    branch: main
+    servername: 'jsondataferret.dev5.default.opendataservices.uk0.bigv.io'
+    postgres_user: jdf_main
+    postgres_name: jdf_main
     uwsgi_port: 3501
 
 # Do NOT just delete branches from json_data_ferret_installs above! Instead add them to json_data_ferret_installs_to_remove!
@@ -16,4 +16,10 @@ json_data_ferret_installs_to_remove:
     postgres_user: jdf_indigo
     postgres_name: jdf_indigo
     uwsgi_port: 3502
+  - name: master
+    branch: master
+    servername: 'jsondatatferret.dev5.default.opendataservices.uk0.bigv.io'
+    postgres_user: jdf_master
+    postgres_name: jdf_master
+    uwsgi_port: 3501
 
