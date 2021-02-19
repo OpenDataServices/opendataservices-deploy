@@ -31,7 +31,6 @@ os4d-deps:
     - rev: live-ubuntu-18-16
 {% endif %}
 {% if grains['osrelease'] == '20.04' %}
-# This is https://github.com/OpenDataServices/os4d/pull/6 - once that is merged to live this can be removed!
     - rev: live
 {% endif %}
     - target: {{ gitdir }}
