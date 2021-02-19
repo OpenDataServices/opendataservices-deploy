@@ -28,11 +28,11 @@ os4d-deps:
 {{ giturl }}:
   git.latest:
 {% if grains['osrelease'] == '18.04' or grains['osrelease'] == '16.04' %}
-    - rev: live
+    - rev: live-ubuntu-18-16
 {% endif %}
 {% if grains['osrelease'] == '20.04' %}
 # This is https://github.com/OpenDataServices/os4d/pull/6 - once that is merged to live this can be removed!
-    - rev: update
+    - rev: live
 {% endif %}
     - target: {{ gitdir }}
     - user: {{ user }}
