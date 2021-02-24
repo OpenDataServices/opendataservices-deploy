@@ -36,8 +36,6 @@ oroi-proxy: oroi-proxy.docker.opendataservices.uk0.bigv.io
 # https://github.com/OpenDataServices/oroi-deploy/blob/master/README.md#live-deploy-docker-stack
 oroi-8:     oroi-8.docker.opendataservices.uk0.bigv.io
 oroi-9:     oroi-9.docker.opendataservices.uk0.bigv.io
-oroi-10:    oroi-10.docker.opendataservices.uk0.bigv.io
-oroi-11:    oroi-11.docker.opendataservices.uk0.bigv.io
 
 # Dokku
 dokku1:     dokku1.dokku.opendataservices.uk0.bigv.io
