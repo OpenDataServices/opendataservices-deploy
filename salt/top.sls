@@ -24,6 +24,7 @@ base:
   'live5':
     - prometheus-client-apache
     - os4d
+    - org-ids
 
   'cove*live*':
     - cove
@@ -36,6 +37,7 @@ base:
     - prometheus-client-apache
 
   'org-ids':
+    # This is being moved to live5
     - org-ids
     - prometheus-client-apache
     - icinga2-satellite
@@ -57,6 +59,7 @@ base:
     - icinga2-satellite
 
   'dev4':
+    # This is being moved to dev7
     - org-ids
     - icinga2-satellite
     - prometheus-client-apache
@@ -72,6 +75,7 @@ base:
     - prometheus-client-apache
     - temp
     - os4d
+    - org-ids
 
   'cove*dev*':
     - cove

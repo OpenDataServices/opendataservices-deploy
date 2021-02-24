@@ -24,7 +24,12 @@ base:
      - private.mon_pillar
   'backups':
      - backups_pillar
+
+  # This is being moved to live5 and the 'org-ids' server will be turned off then
   'org-ids':
+     - org-ids_pillar
+     - private.org-ids_pillar
+  'live5':
      - org-ids_pillar
      - private.org-ids_pillar
 

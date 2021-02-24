@@ -1,5 +1,6 @@
 org_ids:
   default_branch: 'live'
+  uwsgi_port: 3502
   piwik:
     url: '//mon.opendataservices.coop/piwik/'
     site_id: '11' 
