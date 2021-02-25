@@ -58,6 +58,7 @@ base:
     - temp
     - icinga2-satellite
 
+  # dev4 server can be turned off as soon as we are sure the moves have been successful
   'dev4':
     # This is being moved to dev7
     - org-ids

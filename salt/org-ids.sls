@@ -1,4 +1,4 @@
-{% from 'lib.sls' import createuser, apache, uwsgi %}
+{% from 'lib.sls' import createuser, apache, uwsgi, removeapache, removeuwsgi %}
 
 {% set user = 'org-ids' %}
 {{ createuser(user) }}
@@ -32,7 +32,11 @@ org-ids-deps:
         - service: apache2
         - service: uwsgi
 
-{% macro org_ids(name, branch, giturl, user, uwsgi_port) %}
+{{ apache('org-ids-redirect.conf',
+    name='org-ids-redirect.conf',
+    https='no') }}
+
+{% macro org_ids(name, branch, giturl, user, uwsgi_port, servername, https) %}
 
 {% set djangodir='/home/'+user+'/'+name+'/' %}
 
@@ -49,6 +53,8 @@ uwsgi_port: {{ uwsgi_port }}
 
 {{ apache(user+'.conf',
     name=name+'.conf',
+    servername=servername,
+    https=https,
     extracontext=extracontext) }}
 
 {{ uwsgi(user+'.ini',
@@ -112,7 +118,7 @@ uwsgi_port: {{ uwsgi_port }}
       - service: apache2
 
 # This should ideally be in virtualenv.managed but we get an error if we do that
-orgs-ids-install-python-packages:
+{{ djangodir }}orgs-ids-install-python-packages:
   cmd.run:
     - name: . .ve/bin/activate; pip install -r requirements.txt
     - user: {{ user }}
@@ -132,7 +138,7 @@ migrate-{{name}}:
     - require:
       - virtualenv: {{ djangodir }}.ve/
 {% if grains['osrelease'] == '20.04' %}
-      - cmd: orgs-ids-install-python-packages
+      - cmd: {{ djangodir }}orgs-ids-install-python-packages
 {% endif %}
     - onchanges:
       - git: {{ giturl }}{{ djangodir }}
@@ -145,7 +151,7 @@ migrate-{{name}}:
 #    - require:
 #      - virtualenv: {{ djangodir }}.ve/
 #{% if grains['osrelease'] == '20.04' %}
-#      - cmd: orgs-ids-install-python-packages
+#      - cmd: {{ djangodir }}orgs-ids-install-python-packages
 #{% endif %}
 #    - onchanges:
 #      - git: {{ giturl }}{{ djangodir }}
@@ -158,7 +164,7 @@ collectstatic-{{name}}:
     - require:
       - virtualenv: {{ djangodir }}.ve/
 {% if grains['osrelease'] == '20.04' %}
-      - cmd: orgs-ids-install-python-packages
+      - cmd: {{ djangodir }}orgs-ids-install-python-packages
 {% endif %}
     - onchanges:
       - git: {{ giturl }}{{ djangodir }}
@@ -185,12 +191,27 @@ collectstatic-{{name}}:
 {% endmacro %}
 
 
+{% macro remove_org_ids(name, djangodir, app) %}
+
+{{ removeapache(name+'.conf') }}
+
+{{ removeuwsgi(name+'.ini') }}
+
+{% set djangodir='/home/'+user+'/'+name+'/' %}
+
+{{ djangodir }}:
+    file.absent
+
+{% endmacro %}
+
 {{ org_ids(
     name='org-ids',
     branch=pillar.org_ids.default_branch,
     giturl=giturl,
     user=user,
-    uwsgi_port=pillar.org_ids.uwsgi_port
+    uwsgi_port=pillar.org_ids.uwsgi_port,
+    servername=pillar.org_ids.server_name,
+    https=pillar.org_ids.https
     ) }}
 
 {% for branch in pillar.extra_org_ids_branches %}
@@ -199,6 +220,14 @@ collectstatic-{{name}}:
     branch=branch.name,
     giturl=giturl,
     user=user,
-    uwsgi_port=branch.uwsgi_port
+    uwsgi_port=branch.uwsgi_port,
+    servername=branch.name+'.dev.org-id.guide',
+    https='no'
+    ) }}
+{% endfor %}
+
+{% for branch in pillar.old_extra_org_ids_branches %}
+{{ remove_org_ids(
+    name='org-ids-'+branch.name
     ) }}
 {% endfor %}

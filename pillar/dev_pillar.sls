@@ -20,11 +20,21 @@ cove:
   iati: True
 org_ids:
   default_branch: 'live'
+  server_name: 'dev.org-id.guide'
+  https: 'no'
   uwsgi_port: 3502
   piwik:
     url: '//mon.opendataservices.coop/piwik/'
     site_id: 'XXX' 
 extra_org_ids_branches: [] # remove the [] (empty list) if you re-add some values below
+#  - name: test-branch
+#    uwsgi_port: 3503
+
+# Do NOT just delete branches from extra_org_ids_branches above! Instead add them to old_extra_org_ids_branches!
+# They will be removed from the dev servers.
+old_extra_org_ids_branches: [] # remove the [] (empty list) if you re-add some values below
+
+
 cove_url: http://cove.cove-live-ocds.default.opendataservices.uk0.bigv.io/
 automatic_reboot: 'true'
 extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values below
