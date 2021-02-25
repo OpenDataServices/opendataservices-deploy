@@ -28,6 +28,7 @@ cove-deps:
         - python-virtualenv
         {% endif %}
         {% if grains['osrelease'] == '20.04' %}
+        - python3-pip
         - python3-virtualenv
         - gcc
         - libxslt1-dev
@@ -117,13 +118,29 @@ schema_url_ocds: null
     - python: /usr/bin/python3
     - user: {{ user }}
     - system_site_packages: False
+{% if grains['osrelease'] == '18.04' or grains['osrelease'] == '16.04' %}
     - requirements: {{ djangodir }}requirements{{ '_iati' if app=='cove_iati' else '' }}.txt
+{% endif %}
     - require:
       - pkg: cove-deps
       - git: {{ giturl }}{{ djangodir }}
       - file: set_lc_all # required to avoid unicode errors for the "schema" library
     - watch_in:
       - service: apache2
+
+{% if grains['osrelease'] == '20.04' %}
+# This should ideally be in virtualenv.managed but we get an error if we do that
+{{ djangodir }}install-python-packages:
+  cmd.run:
+    - name: . .ve/bin/activate; pip install -r requirements{{ '_iati' if app=='cove_iati' else '' }}.txt
+    - user: {{ user }}
+    - cwd: {{ djangodir }}
+    - require:
+      - virtualenv: {{ djangodir }}.ve/
+    - onchanges:
+      - git: {{ giturl }}{{ djangodir }}
+{% endif %}
+
 
 migrate-{{name}}:
   cmd.run:
@@ -132,6 +149,9 @@ migrate-{{name}}:
     - cwd: {{ djangodir }}
     - require:
       - virtualenv: {{ djangodir }}.ve/
+{% if grains['osrelease'] == '20.04' %}
+      - cmd: {{ djangodir }}install-python-packages
+{% endif %}
     - onchanges:
       - git: {{ giturl }}{{ djangodir }}
 
@@ -142,6 +162,9 @@ compilemessages-{{name}}:
     - cwd: {{ djangodir }}
     - require:
       - virtualenv: {{ djangodir }}.ve/
+{% if grains['osrelease'] == '20.04' %}
+      - cmd: {{ djangodir }}install-python-packages
+{% endif %}
     - onchanges:
       - git: {{ giturl }}{{ djangodir }}
 
@@ -152,6 +175,9 @@ collectstatic-{{name}}:
     - cwd: {{ djangodir }}
     - require:
       - virtualenv: {{ djangodir }}.ve/
+{% if grains['osrelease'] == '20.04' %}
+      - cmd: {{ djangodir }}install-python-packages
+{% endif %}
     - onchanges:
       - git: {{ giturl }}{{ djangodir }}
 

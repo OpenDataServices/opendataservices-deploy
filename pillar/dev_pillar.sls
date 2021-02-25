@@ -40,8 +40,12 @@ automatic_reboot: 'true'
 extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values below
   - name: flattentool-342-last-modified-does-not-convert
     app: cove_iati
+    uwsgi_port: 4001
   - name: iati-dportal-link
     app: cove_iati
+    uwsgi_port: 4002
+
+
 
 # Do NOT just delete branches from extra_cove_branches above! Instead add them to old_cove_branches!
 # They will be removed from the dev servers.
