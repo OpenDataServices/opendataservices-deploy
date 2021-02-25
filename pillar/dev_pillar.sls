@@ -38,9 +38,6 @@ old_extra_org_ids_branches: [] # remove the [] (empty list) if you re-add some v
 cove_url: http://cove.cove-live-ocds.default.opendataservices.uk0.bigv.io/
 automatic_reboot: 'true'
 extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values below
-  - name: iati-dev
-    app: cove_iati
-    servername: iati.dev.cove.opendataservices.coop
   - name: flattentool-342-last-modified-does-not-convert
     app: cove_iati
   - name: iati-dportal-link
@@ -73,6 +70,9 @@ old_cove_branches: #[] # remove the [] (empty list) if you re-add some values be
     app: cove_iati
   - name: update-flattentool
     app: cove_iati
+  - name: iati-dev
+    app: cove_iati
+    servername: iati.dev.cove.opendataservices.coop
 
 # Add a new branch with the name of the branch, and increment the port number.
 # Currently adding a new port number requires a manual uwsgi restart (ie. the
