@@ -43,6 +43,8 @@ extra_cove_branches: #[] # remove the [] (empty list) if you re-add some values 
     servername: iati.dev.cove.opendataservices.coop
   - name: flattentool-342-last-modified-does-not-convert
     app: cove_iati
+  - name: iati-dportal-link
+    app: cove_iati
 
 # Do NOT just delete branches from extra_cove_branches above! Instead add them to old_cove_branches!
 # They will be removed from the dev servers.
