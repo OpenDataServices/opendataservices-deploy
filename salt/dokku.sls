@@ -23,6 +23,12 @@ dokkuconfig3:
     - name: echo "dokku dokku/skip_key_file boolean true" | debconf-set-selections
     - runas: root
 
+letsencrypt_plugin:
+  cmd.run:
+    - name: dokku plugin:install https://github.com/dokku/dokku-letsencrypt.git
+    - runas: root
+
+
 installdokku:
   cmd.run:
     - name: wget https://raw.githubusercontent.com/dokku/dokku/v0.22.9/bootstrap.sh && bash bootstrap.sh
