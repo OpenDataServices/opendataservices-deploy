@@ -52,4 +52,6 @@ base:
   'analysis-1':
      - private.analysis1
 
+  'oa1':
+    - private.openactive_conformance_services_private
 

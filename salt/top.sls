@@ -130,3 +130,7 @@ base:
     - prometheus-client-standalone
     - postgres
 
+  'oa1':
+    - prometheus-client-standalone
+    - dokku
+    - openactive-conformance-services

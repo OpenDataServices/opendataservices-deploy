@@ -39,6 +39,7 @@ oroi-9:     oroi-9.docker.opendataservices.uk0.bigv.io
 
 # Dokku
 dokku1:     dokku1.dokku.opendataservices.uk0.bigv.io
+oa1:        oa1.host.opendataservices.coop
 
 #  We have moved all 360 boxes to new deploy repositories!
 #  https://github.com/ThreeSixtyGiving/threesixtygiving-deploy
