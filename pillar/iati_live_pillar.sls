@@ -14,4 +14,6 @@ cove:
   uwsgi_harakiri: 1800
   app: cove_iati
   https: 'force'
+  # A uwsgi_port is needed to make cove-live-iati-2 work
+  # uwsgi_port: 3008
 

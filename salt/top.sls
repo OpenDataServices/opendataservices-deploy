@@ -33,6 +33,9 @@ base:
   'cove-live-iati':
     - prometheus-client-apache
 
+  'cove-live-iati-2':
+    - prometheus-client-apache
+
   'cove-live-bods':
     - prometheus-client-apache
 
