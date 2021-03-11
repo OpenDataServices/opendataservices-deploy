@@ -129,6 +129,15 @@ schema_url_ocds: null
       - service: apache2
 
 {% if grains['osrelease'] == '20.04' %}
+# Fix permissions in virtual env
+{{ djangodir }}fix-ve-permissions:
+  cmd.run:
+    - name: chown -R {{ user }}:{{ user }} .ve
+    - user: root
+    - cwd: {{ djangodir }}
+    - require:
+      - virtualenv: {{ djangodir }}.ve/
+
 # This should ideally be in virtualenv.managed but we get an error if we do that
 {{ djangodir }}install-python-packages:
   cmd.run:
@@ -137,8 +146,6 @@ schema_url_ocds: null
     - cwd: {{ djangodir }}
     - require:
       - virtualenv: {{ djangodir }}.ve/
-    - onchanges:
-      - git: {{ giturl }}{{ djangodir }}
 {% endif %}
 
 
@@ -152,8 +159,6 @@ migrate-{{name}}:
 {% if grains['osrelease'] == '20.04' %}
       - cmd: {{ djangodir }}install-python-packages
 {% endif %}
-    - onchanges:
-      - git: {{ giturl }}{{ djangodir }}
 
 compilemessages-{{name}}:
   cmd.run:
@@ -165,8 +170,6 @@ compilemessages-{{name}}:
 {% if grains['osrelease'] == '20.04' %}
       - cmd: {{ djangodir }}install-python-packages
 {% endif %}
-    - onchanges:
-      - git: {{ giturl }}{{ djangodir }}
 
 collectstatic-{{name}}:
   cmd.run:
@@ -178,8 +181,6 @@ collectstatic-{{name}}:
 {% if grains['osrelease'] == '20.04' %}
       - cmd: {{ djangodir }}install-python-packages
 {% endif %}
-    - onchanges:
-      - git: {{ giturl }}{{ djangodir }}
 
 {{ djangodir }}static/:
   file.directory:
@@ -261,10 +262,11 @@ MAILTO:
 
 # We were having problems with the Raven library for Sentry on Ubuntu 18
 # https://github.com/getsentry/raven-python/issues/1311
-# Reloading the server manually after a short bit seemed to be the only fix.
+# Reload the server manually after a short bit seemed to be the only fix.
+# And we restart the server because when adding new sites, a reload crashes
 # In testing, the code above seems not to always restart uwsgi anyway so we are happy putting this in.
 # (Well, we are not happy about this situation at all, but we think this won't cause any problems at least.)
 reload_uwsgi_service:
   cmd.run:
-    - name: sleep 10; /etc/init.d/uwsgi reload
+    - name: sleep 10; /etc/init.d/uwsgi restart
     - order: last
