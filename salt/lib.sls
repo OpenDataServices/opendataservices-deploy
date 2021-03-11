@@ -200,7 +200,9 @@
   file.absent
 
 /etc/apache2/sites-enabled/{{ name }}:
-  file.absent
+  file.absent:
+    - watch_in:
+      - service: apache2
 
 {% endmacro %}
 
