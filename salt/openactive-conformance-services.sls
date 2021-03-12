@@ -93,5 +93,18 @@ clean-up-cron:
     - user: root
     - minute: '*/30'
 
+clean-up-all-cron:
+  cron.present:
+    - name: 'dokku run conformance-services "node ./src/bin/clean-up-database.js all" >> /var/log/conformance-services/clean-up-database.log 2>&1'
+    - user: root
+    - hour: 0
+
+# FIXME Manual Extra
+# In "/etc/systemd/system/multi-user.target.wants/postgresql.service"
+# Make sure "After=docker.target is present to avoid a race condition
+# On reboot.
+# This is so that the docker networking bridge is setup so that postgres can
+# bind to it.
+# After=docker.target
 
 
