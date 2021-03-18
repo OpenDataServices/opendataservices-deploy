@@ -75,5 +75,10 @@ prometheus-client-apache-password:
     - runas: {{ user }}
     - cwd: /home/{{ user }}
 
+  # Make sure Apache can read this
+  file.managed:
+    - name: /home/{{ user }}/htpasswd
+    - mode: 0644
+    - replace: False
 
 
