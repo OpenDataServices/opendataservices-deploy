@@ -25,7 +25,7 @@ snapshotter:              snapshotter.default.opendataservices.uk0.bigv.io
 org-ids:                  org-ids.default.opendataservices.uk0.bigv.io
 backups:                  backups.backups.opendataservices.uk0.bigv.io
 iati-misc:                iati-misc.default.opendataservices.uk0.bigv.io
-
+meetyournextmsp:          meetyournextmsp.default.opendataservices.uk0.bigv.io
 
 # declared. (Was Open Register of Interests (oroi))
 # Mostly this server is not managed with salt, for install steps see

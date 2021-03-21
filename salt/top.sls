@@ -137,3 +137,6 @@ base:
     - prometheus-client-standalone
     - dokku
     - openactive-conformance-services
+
+  'meetyournextmsp':
+    - prometheus-client-apache
