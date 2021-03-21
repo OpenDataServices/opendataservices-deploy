@@ -132,6 +132,10 @@ base:
   'analysis-*':
     - prometheus-client-standalone
     - postgres
+    - users
+
+  'analysis-1':
+    - ocdsdata
 
   'oa1':
     - prometheus-client-standalone

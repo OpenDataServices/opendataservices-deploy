@@ -51,6 +51,7 @@ base:
 
   'analysis-1':
      - private.analysis1
+     - private.ocdsdata
 
   'oa1':
     - private.openactive_conformance_services_private

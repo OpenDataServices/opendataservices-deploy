@@ -1,0 +1,16 @@
+[Unit]
+Description=Airflow scheduler daemon
+After=network.target postgresql.service 
+Wants=postgresql.service
+
+[Service]
+EnvironmentFile=/home/airflow/ocdsdata.env
+User=airflow
+Group=airflow
+Type=simple
+ExecStart=/home/airflow/ocdsdata/airflow/.ve/bin/airflow scheduler
+Restart=always
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
