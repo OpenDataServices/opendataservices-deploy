@@ -1,0 +1,19 @@
+# vi: ft=apache
+
+        DocumentRoot /home/meetyournextmsp/website/meetyournextmsp
+
+        <Directory /home/meetyournextmsp/website/meetyournextmsp/static>
+                Require all granted
+        </Directory>
+
+        <Location "/">
+                ProxyPass uwsgi://127.0.0.1:3097/
+        </Location>
+
+        <Location "/static">
+                ProxyPass !
+        </Location>
+
+        <Location "/.well-known/acme-challenge">
+                ProxyPass !
+        </Location>

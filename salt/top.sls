@@ -144,3 +144,4 @@ base:
 
   'meetyournextmsp':
     - prometheus-client-apache
+    - meetyournextmsp
