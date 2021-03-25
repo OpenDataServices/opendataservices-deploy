@@ -3,26 +3,20 @@
 # opendataservices boxes
 #   dev:
 dev3:                dev3.default.opendataservices.uk0.bigv.io
-dev4:                dev4.default.opendataservices.uk0.bigv.io
 dev5:                dev5.default.opendataservices.uk0.bigv.io
 dev7:                dev7.default.opendataservices.uk0.bigv.io
-mon-3:               mon-3.default.opendataservices.uk0.bigv.io
-cove-dev-2:          cove-dev-2.default.opendataservices.uk0.bigv.io
 cove-dev-4:          cove-dev-4.default.opendataservices.uk0.bigv.io
 cove-dev-bods:       cove-dev-bods.default.opendataservices.uk0.bigv.io
 
 #   live:
-live3:                    live3.default.opendataservices.uk0.bigv.io
 live4:                    live4.default.opendataservices.uk0.bigv.io
 live5:                    live5.default.opendataservices.uk0.bigv.io
 mon-2:                    mon-2.default.opendataservices.uk0.bigv.io
 # Prometheus on mon-4 is using IP based whitelisting for sending emails - if we move server/IP that will need attention.
 mon-4:                    mon-4.default.opendataservices.uk0.bigv.io
-cove-live-iati:           cove-live-iati.default.opendataservices.uk0.bigv.io
 cove-live-iati-2:         cove-live-iati-2.default.opendataservices.uk0.bigv.io
 cove-live-bods:           cove-live-bods.default.opendataservices.uk0.bigv.io
 snapshotter:              snapshotter.default.opendataservices.uk0.bigv.io
-org-ids:                  org-ids.default.opendataservices.uk0.bigv.io
 backups:                  backups.backups.opendataservices.uk0.bigv.io
 iati-misc:                iati-misc.default.opendataservices.uk0.bigv.io
 meetyournextmsp:          meetyournextmsp.default.opendataservices.uk0.bigv.io
