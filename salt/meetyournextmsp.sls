@@ -121,7 +121,7 @@ permissions3:
     - mode: 744
 
 
-cd /home/{{ user }}; .updatedata.sh:
+cd /home/{{ user }}; ./updatedata.sh:
   cron.present:
     - identifier: UPDATEDATA
     - user: {{ user }}
@@ -141,6 +141,12 @@ cd /home/{{ user }}; .updatedata.sh:
     - mode: 644
 
 /home/{{ user }}/contribs:
+  file.directory:
+    - user: {{ user }}
+    - group: {{ user }}
+    - dir_mode: 755
+
+/home/{{ user }}/logs:
   file.directory:
     - user: {{ user }}
     - group: {{ user }}
