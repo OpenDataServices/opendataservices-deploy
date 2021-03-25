@@ -121,11 +121,11 @@ permissions3:
     - mode: 744
 
 
-#cd /home/{{ user }}; .updatedata.sh:
-#cron.present:
-#    - identifier: UPDATEDATA
-#    - user: {{ user }}
-#    - minute: random
+cd /home/{{ user }}; .updatedata.sh:
+  cron.present:
+    - identifier: UPDATEDATA
+    - user: {{ user }}
+    - minute: random
 
 
 /home/{{ user }}/website/instance:

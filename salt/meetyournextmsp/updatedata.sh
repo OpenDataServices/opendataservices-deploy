@@ -3,7 +3,7 @@
 set -e
 
 cd ~/data
-git pull
+git pull > /dev/null
 
 cd ~/eventtig
 source .ve/bin/activate
