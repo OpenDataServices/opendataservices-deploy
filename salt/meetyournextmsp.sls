@@ -140,6 +140,13 @@ cd /home/{{ user }}; .updatedata.sh:
     - user: {{ user }}
     - mode: 644
 
+/home/{{ user }}/contribs:
+  file.directory:
+    - user: {{ user }}
+    - group: {{ user }}
+    - dir_mode: 755
+
+
 # TODO run update command straight away
 
 restart_uwsgi_service:
