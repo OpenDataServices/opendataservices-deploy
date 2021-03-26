@@ -1,3 +1,14 @@
+caddy-pkgrepo:
+  pkgrepo.managed:
+    - humanname: Caddy
+    - name: 'deb https://dl.cloudsmith.io/public/caddy/stable/deb/debian "any-version" main'
+    - file: /etc/apt/sources.list.d/caddy-stable.list
+    - require_in:
+      - pkg: ocdsdata-deps
+    - gpgcheck: 1
+    - key_url: https://dl.cloudsmith.io/public/caddy/stable/gpg.key
+
+
 ocdsdata-deps:
     pkg.installed:
       - pkgs:
@@ -13,6 +24,7 @@ ocdsdata-deps:
         {% endif %}
         - git
         - python3-dev
+        - caddy
 
 ocdsdata-git:
     git.latest:
@@ -25,6 +37,24 @@ ocdsdata-git:
         - submodules: True
         - require:
             - pkg: ocdsdata-deps
+
+caddy:
+  service:
+    - running
+    - enable: True
+    - reload: True
+    - require:
+      - ocdsdata-deps
+
+/etc/caddy/Caddyfile:
+  file.managed:
+    - source: salt://caddy/reverse8080.caddyfile
+    - template: jinja
+    - require:
+      - /home/airflow/ocdsdata.env
+      - ocdsdata-pip
+      - collect-pip
+
 
 {% set airflow_ve = '/home/airflow/ocdsdata/airflow/.ve' %}
 
@@ -89,7 +119,6 @@ collect-pip:
       - /home/airflow/ocdsdata.env
       - ocdsdata-pip
       - collect-pip
-
 
 airflow-webserver:
   service:
