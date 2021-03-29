@@ -139,6 +139,7 @@ cd /home/{{ user }}; ./updatedata.sh:
     - source: salt://meetyournextmsp/config.py
     - user: {{ user }}
     - mode: 644
+    - template: jinja
 
 /home/{{ user }}/contribs:
   file.directory:

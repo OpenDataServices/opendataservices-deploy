@@ -56,3 +56,5 @@ base:
   'oa1':
     - private.openactive_conformance_services_private
 
+  'meetyournextmsp':
+     - private.meetyournextmsp
