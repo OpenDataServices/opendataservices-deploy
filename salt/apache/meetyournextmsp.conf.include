@@ -17,3 +17,7 @@
         <Location "/.well-known/acme-challenge">
                 ProxyPass !
         </Location>
+
+        ErrorLog ${APACHE_LOG_DIR}/meetyournextmsp-error.log
+        CustomLog ${APACHE_LOG_DIR}/meetyournextmsp-access.log combined
+        
