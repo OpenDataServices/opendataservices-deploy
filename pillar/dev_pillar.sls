@@ -19,7 +19,7 @@ cove:
   app: cove_iati
   iati: True
 org_ids:
-  default_branch: 'live'
+  default_branch: 'update-requirements'
   server_name: 'dev.org-id.guide'
   https: 'no'
   uwsgi_port: 3502
