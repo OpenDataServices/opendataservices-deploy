@@ -109,10 +109,11 @@ base:
     - icinga2-master
     - piwik
 
-  # Prometheus on mon-4 is using IP white-listing for sending emails - if we move server/IP that will need attention.
+  # Prometheus on mon-4 is using IP allow-listing for sending emails from our gmail - if we move server/IP that will need attention.
   'mon-4':
     - prometheus-server
     - prometheus-client-apache
+    - private.360G-datatester
 
   # OTHERS
 
