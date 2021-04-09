@@ -97,13 +97,6 @@ ocdsdata-pip:
       - virtualenv: {{ocdsdata_ve}}
       - git: ocdsdata-git
 
-collect-pip:
-  cmd.wait:
-    - name: "{{ocdsdata_ve}}/bin/pip install -r kingfisher-collect/requirements.txt"
-    - cwd: /home/airflow/ocdsdata
-    - runas: airflow
-    - watch:
-      - virtualenv: {{ocdsdata_ve}}
 
 /home/airflow/ocdsdata.env:
   file.managed:
