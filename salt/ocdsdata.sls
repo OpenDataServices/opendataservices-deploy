@@ -53,7 +53,6 @@ caddy:
     - require:
       - /home/airflow/ocdsdata.env
       - ocdsdata-pip
-      - collect-pip
 
 
 {% set airflow_ve = '/home/airflow/ocdsdata/airflow/.ve' %}
@@ -111,7 +110,6 @@ ocdsdata-pip:
     - require:
       - /home/airflow/ocdsdata.env
       - ocdsdata-pip
-      - collect-pip
 
 airflow-webserver:
   service:
@@ -129,7 +127,6 @@ airflow-webserver:
     - require:
       - /home/airflow/ocdsdata.env
       - ocdsdata-pip
-      - collect-pip
 
 
 airflow-scheduler:
