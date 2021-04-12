@@ -24,6 +24,7 @@ ocdsdata-deps:
         {% endif %}
         - git
         - python3-dev
+        - sqlite3
         - caddy
 
 ocdsdata-git:
