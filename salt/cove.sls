@@ -35,7 +35,7 @@ cove-deps:
         {% endif %}
         - uwsgi-plugin-python3
         - gettext
-          {% if 'iati' in pillar.cove and pillar.cove.iati %}
+          {% if grains['osrelease'] == '18.04' or ('iati' in pillar.cove and pillar.cove.iati) %}
         - python3-dev
           {% endif %}
       - watch_in:
