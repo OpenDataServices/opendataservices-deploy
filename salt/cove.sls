@@ -1,4 +1,8 @@
 # For a live deploy, please follow the instructions at https://cove.readthedocs.io/en/latest/deployment/
+
+# Ubuntu 20 only!
+# See git history of this file for how to install on older servers
+
 {% from 'lib.sls' import createuser, apache, uwsgi, removeapache, removeuwsgi %}
 
 {% set user = 'cove' %}
@@ -23,21 +27,13 @@ cove-deps:
     pkg.installed:
       - pkgs:
         - libapache2-mod-proxy-uwsgi
-        {% if grains['osrelease'] == '18.04' or grains['osrelease'] == '16.04' %}
-        - python-pip
-        - python-virtualenv
-        {% endif %}
-        {% if grains['osrelease'] == '20.04' %}
         - python3-pip
         - python3-virtualenv
         - gcc
         - libxslt1-dev
-        {% endif %}
         - uwsgi-plugin-python3
         - gettext
-          {% if grains['osrelease'] == '18.04' or ('iati' in pillar.cove and pillar.cove.iati) %}
         - python3-dev
-          {% endif %}
       - watch_in:
         - service: apache2
         - service: uwsgi
@@ -118,9 +114,6 @@ schema_url_ocds: null
     - python: /usr/bin/python3
     - user: {{ user }}
     - system_site_packages: False
-{% if grains['osrelease'] == '18.04' or grains['osrelease'] == '16.04' %}
-    - requirements: {{ djangodir }}requirements{{ '_iati' if app=='cove_iati' else '' }}.txt
-{% endif %}
     - require:
       - pkg: cove-deps
       - git: {{ giturl }}{{ djangodir }}
@@ -128,7 +121,6 @@ schema_url_ocds: null
     - watch_in:
       - service: apache2
 
-{% if grains['osrelease'] == '20.04' %}
 # Fix permissions in virtual env
 {{ djangodir }}fix-ve-permissions:
   cmd.run:
@@ -146,7 +138,6 @@ schema_url_ocds: null
     - cwd: {{ djangodir }}
     - require:
       - virtualenv: {{ djangodir }}.ve/
-{% endif %}
 
 
 migrate-{{name}}:
@@ -156,9 +147,7 @@ migrate-{{name}}:
     - cwd: {{ djangodir }}
     - require:
       - virtualenv: {{ djangodir }}.ve/
-{% if grains['osrelease'] == '20.04' %}
       - cmd: {{ djangodir }}install-python-packages
-{% endif %}
 
 compilemessages-{{name}}:
   cmd.run:
@@ -167,9 +156,7 @@ compilemessages-{{name}}:
     - cwd: {{ djangodir }}
     - require:
       - virtualenv: {{ djangodir }}.ve/
-{% if grains['osrelease'] == '20.04' %}
       - cmd: {{ djangodir }}install-python-packages
-{% endif %}
 
 collectstatic-{{name}}:
   cmd.run:
@@ -178,9 +165,7 @@ collectstatic-{{name}}:
     - cwd: {{ djangodir }}
     - require:
       - virtualenv: {{ djangodir }}.ve/
-{% if grains['osrelease'] == '20.04' %}
       - cmd: {{ djangodir }}install-python-packages
-{% endif %}
 
 {{ djangodir }}static/:
   file.directory:
