@@ -18,6 +18,7 @@ cove:
   apache_uwsgi_timeout: 360
   app: cove_iati
   iati: True
+  uwsgi_port: 3008
 org_ids:
   default_branch: 'update-requirements'
   server_name: 'dev.org-id.guide'
