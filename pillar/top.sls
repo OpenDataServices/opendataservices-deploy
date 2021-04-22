@@ -54,7 +54,11 @@ base:
      - private.ocdsdata
 
   'oa1':
+    - oa1_pillar
     - private.openactive_conformance_services_private
+
+  'dokku1':
+    - dokku1_pillar
 
   'meetyournextmsp':
      - private.meetyournextmsp

@@ -1,0 +1,6 @@
+ssh_dokku_host: dokku1.dokku.opendataservices.uk0.bigv.io
+repositories:
+  - id: test-dokku-jekyll
+    url: https://github.com/OpenDataServices/test-dokku-jekyll
+    branches:
+        - main
