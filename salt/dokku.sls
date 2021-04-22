@@ -92,8 +92,8 @@ letsencrypt_plugin:
   file.directory:
     - user: dokku
     - group: dokku
-    - dir_mode: 755
-    - file_mode: 644
+    - dir_mode: 700
+    - file_mode: 600
     - recurse:
       - user
       - group
