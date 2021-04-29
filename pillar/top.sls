@@ -60,5 +60,11 @@ base:
   'dokku1':
     - dokku1_pillar
 
+  'dokku-dev-2':
+    - dokku_dev_2_pillar
+
+  'dokku-live-2':
+    - dokku_live_2_pillar
+
   'meetyournextmsp':
      - private.meetyournextmsp
