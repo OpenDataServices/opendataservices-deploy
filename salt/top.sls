@@ -19,7 +19,6 @@ base:
     - opendataservices-website
     - cove-opendataservices-coop
     - icinga2-satellite
-    - org-ids-datatig
 
   'live5':
     - prometheus-client-apache
