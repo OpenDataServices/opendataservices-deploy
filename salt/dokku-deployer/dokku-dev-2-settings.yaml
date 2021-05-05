@@ -1,1 +1,17 @@
-ssh_dokku_host: dokku-dev-2.dokku.opendataservices.uk0.bigv.io
+repositories:
+  - id: standards-lab
+    url: https://github.com/OpenDataServices/standards-lab
+    app_name_format: standards-lab-{branch_name}
+    all_branches: true
+    branches:
+        - main
+    setup_dokku_commands:
+      - dokku config:set $APP_NAME ALLOWED_HOSTS=.ods.mobi
+      - dokku redis:create $APP_NAME
+      - dokku redis:link $APP_NAME $APP_NAME
+      - dokku storage:mount $APP_NAME /var/lib/dokku/data/storage/$APP_NAME/projects_dir:/projects_dir
+      - dokku proxy:ports-add $APP_NAME http:80:80
+      - dokku ps:scale $APP_NAME web=1 worker=1
+    teardown_dokku_commands:
+      - dokku redis:unlink $APP_NAME $APP_NAME
+      - dokku redis:destroy $APP_NAME -f

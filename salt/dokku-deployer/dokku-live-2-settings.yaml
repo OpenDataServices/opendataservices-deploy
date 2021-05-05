@@ -1,1 +1,6 @@
-ssh_dokku_host: dokku-live-2.dokku.opendataservices.uk0.bigv.io
+repositories:
+  - id: standards-lab
+    url: https://github.com/OpenDataServices/standards-lab
+    branches:
+        - main
+    app_name_format: standards-lab

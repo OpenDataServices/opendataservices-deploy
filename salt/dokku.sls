@@ -7,7 +7,31 @@
 # you will have to set the default domain:
 #   dokku domains:remove-global dokkuX.dokku.opendataservices.uk0.bigv.io
 #   dokku domains:add-global dokkuX.ods.mobi
-
+#
+# enable plugins
+#   dokku plugin:install https://github.com/dokku/dokku-redis.git redis
+#
+#
+# For the deployer app:
+#
+# dokku apps:create deployer
+# dokku config:set deployer GITHUB_SECRET=<RANDOM_SECRET> SSH_DOKKU_HOST=<HOSTNAME>
+# dokku domains:add deployer deployer.<HOSTNAME>
+#        (I'm not sure why this is needed - I thought this would be set up automatically?)
+# dokku storage:mount deployer /var/lib/dokku/data/storage/deployer/ssh:/home/dokku/.ssh
+# dokku storage:mount deployer /var/lib/dokku/data/storage/deployer/deploy-logs:/app/deploy-logs
+# dokku storage:mount deployer /var/lib/dokku/data/storage/deployer/repos:/app/repos
+# dokku storage:mount deployer /var/lib/dokku/data/storage/deployer/settings:/app/settings
+# dokku docker-options:add deployer build "--build-arg GROUP_ID=$(id -g dokku)"
+# dokku docker-options:add deployer build "--build-arg USER_ID=$(id -u dokku)"
+# dokku ssh-keys:add dokku-branch-deployer /var/lib/dokku/data/storage/deployer/ssh/id_rsa.pub
+# dokku git:sync --build deployer https://github.com/OpenDataServices/dokku-branch-deployer.git main
+#
+#
+# To upgrade deployer app to latest version:
+#  dokku git:sync --build deployer https://github.com/OpenDataServices/dokku-branch-deployer.git main
+# (Can't put this is Salt as it has an interacive prompt I can't work out how to avoid)
+#
 
 #--- Install Dokku from scratch
 
@@ -123,3 +147,4 @@ generate_deployer_key:
     - group: dokku
     - require:
       - file: /var/lib/dokku/data/storage/deployer/settings
+
