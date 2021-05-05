@@ -44,3 +44,7 @@
         <Directory {{ djangodir }}>
                 Require all granted
         </Directory>
+
+        <Location "/.well-known/acme-challenge">
+                ProxyPass !
+        </Location>

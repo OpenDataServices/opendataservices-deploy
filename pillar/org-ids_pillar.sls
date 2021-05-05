@@ -1,7 +1,7 @@
 org_ids:
   default_branch: 'live'
   server_name: 'org-id.guide'
-  https: 'no'
+  https: 'yes'
   uwsgi_port: 3502
   piwik:
     url: '//mon.opendataservices.coop/piwik/'
