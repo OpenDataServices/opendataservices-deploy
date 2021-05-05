@@ -22,5 +22,8 @@ webdir: /home/{{ user }}/web
 {{ apache(
 'cove-opendataservices-coop.conf',
 name='cove-opendataservices-coop.conf',
+servername='cove.opendataservices.coop',
+serveraliases=[],
+https='yes',
 extracontext=extracontext,
 ) }}
