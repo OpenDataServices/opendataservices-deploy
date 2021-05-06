@@ -65,6 +65,3 @@ base:
 
   'dokku-live-2':
     - dokku_live_2_pillar
-
-  'meetyournextmsp':
-     - private.meetyournextmsp

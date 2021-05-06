@@ -142,6 +142,3 @@ base:
     - dokku
     - openactive-conformance-services
 
-  'meetyournextmsp':
-    - prometheus-client-apache
-    - meetyournextmsp
