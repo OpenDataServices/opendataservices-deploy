@@ -3,8 +3,6 @@ repositories:
     url: https://github.com/OpenDataServices/standards-lab
     app_name_format: standards-lab-{branch_name}
     all_branches: true
-    branches:
-        - main
     setup_dokku_commands:
       - dokku config:set $APP_NAME ALLOWED_HOSTS=.ods.mobi
       - dokku redis:create $APP_NAME
