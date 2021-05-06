@@ -5,6 +5,7 @@
 # you will have to setup SSH keys for the dokku user - see dokku ssh-keys:add
 #
 # you will have to set the default domain:
+#   dokku domains:report --global
 #   dokku domains:remove-global dokkuX.dokku.opendataservices.uk0.bigv.io
 #   dokku domains:add-global dokkuX.ods.mobi
 #
@@ -26,6 +27,8 @@
 # dokku docker-options:add deployer build "--build-arg USER_ID=$(id -u dokku)"
 # dokku ssh-keys:add dokku-branch-deployer /var/lib/dokku/data/storage/deployer/ssh/id_rsa.pub
 # dokku git:sync --build deployer https://github.com/OpenDataServices/dokku-branch-deployer.git main
+# dokku config:set --no-restart deployer DOKKU_LETSENCRYPT_EMAIL=code@opendataservices.coop
+# dokku letsencrypt:enable deployer
 #
 #
 # To upgrade deployer app to latest version:

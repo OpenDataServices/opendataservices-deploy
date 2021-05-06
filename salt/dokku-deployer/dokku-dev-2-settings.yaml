@@ -15,3 +15,4 @@ repositories:
     teardown_dokku_commands:
       - dokku redis:unlink $APP_NAME $APP_NAME
       - dokku redis:destroy $APP_NAME -f
+      # TODO remove files on disk.
