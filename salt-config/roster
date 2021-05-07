@@ -31,16 +31,15 @@ oroi-proxy: oroi-proxy.docker.opendataservices.uk0.bigv.io
 oroi-8:     oroi-8.docker.opendataservices.uk0.bigv.io
 oroi-9:     oroi-9.docker.opendataservices.uk0.bigv.io
 
-# Dokku
-dokku1:     dokku1.dokku.opendataservices.uk0.bigv.io
-oa1:        oa1.host.opendataservices.coop
-
 # Dokku Dev
-# TEMP If you want to put things on these servers talk to me please - I'm working on some Dokku deploy stuff - James
+# (Please edit the config files in salt/dokku-deployer if you change stuff -  even just a comment is great!)
 dokku-dev-2: dokku-dev-2.dokku.opendataservices.uk0.bigv.io
 
 # Dokku Live
-# TEMP If you want to put things on these servers talk to me please - I'm working on some Dokku deploy stuff - James
+# (Please edit the config files in salt/dokku-deployer if you change stuff -  even just a comment is great!)
+# (But these are LIVE so be very careful with them!)
+dokku1:     dokku1.dokku.opendataservices.uk0.bigv.io
+oa1:        oa1.host.opendataservices.coop
 dokku-live-2: dokku-live-2.dokku.opendataservices.uk0.bigv.io
 
 #  We have moved all 360 boxes to new deploy repositories!
