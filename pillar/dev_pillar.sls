@@ -38,9 +38,10 @@ old_extra_org_ids_branches: [] # remove the [] (empty list) if you re-add some v
 
 cove_url: http://cove.cove-live-ocds.default.opendataservices.uk0.bigv.io/
 automatic_reboot: 'true'
-extra_cove_branches: [] # remove the [] (empty list) if you re-add some values below
+extra_cove_branches: # remove the [] (empty list) if you re-add some values below
   - name: 360-additional-check-dates
     app: cove_360
+    uwsgi_port: 4004
 
 
 # Do NOT just delete branches from extra_cove_branches above! Instead add them to old_cove_branches!
