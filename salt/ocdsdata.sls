@@ -26,6 +26,7 @@ ocdsdata-deps:
         - python3-dev
         - sqlite3
         - caddy
+        - s3cmd
 
 ocdsdata-git:
     git.latest:
@@ -68,7 +69,7 @@ caddy:
 
 airflow-pip:
   cmd.wait:
-    - name: "{{airflow_ve}}/bin/pip install --upgrade apache-airflow[postgres]==2.0.1 --constraint https://raw.githubusercontent.com/apache/airflow/constraints-2.0.1/constraints-3.6.txt"
+    - name: "{{airflow_ve}}/bin/pip install --upgrade apache-airflow[postgres,amazon]==2.0.1 --constraint https://raw.githubusercontent.com/apache/airflow/constraints-2.0.1/constraints-3.6.txt"
     - cwd: /home/airflow/ocdsdata
     - runas: airflow
     - env_vars:
