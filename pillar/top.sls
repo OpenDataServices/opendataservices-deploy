@@ -46,12 +46,13 @@ base:
     - json_data_ferret_dev5
     - private.json_data_ferret_dev5
 
-  'analysis-*':
-     - postgres_pillar
-
   'analysis-1':
+     - postgres_pillar
      - private.analysis1
      - private.ocdsdata
+
+  'analysis-2':
+     - private.iatitables
 
   'oa1':
     - oa1_pillar

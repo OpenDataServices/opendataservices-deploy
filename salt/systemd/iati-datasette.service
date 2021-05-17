@@ -1,0 +1,17 @@
+[Unit]
+Description=IATI Tables Datesette
+After=network.target
+
+[Service]
+EnvironmentFile=/home/iatitables/iatitables.env
+User=iatitables
+Group=iatitables
+Type=simple
+ExecStart=/home/iatitables/datasette/.ve/bin/datasette serve -i iati.db -h 127.0.0.1 -p 8080 --setting sql_time_limit_ms 60000 --setting max_returned_rows 2000000
+WorkingDirectory=/home/iatitables/datasette
+Restart=on-failure
+RestartSec=5s
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
