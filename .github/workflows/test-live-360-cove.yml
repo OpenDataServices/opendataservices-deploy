@@ -1,0 +1,25 @@
+name: Test Live 360 CoVE
+on:
+  schedule:
+    - cron: '0 1 * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.6
+        architecture: x64
+    - run: git clone https://github.com/threesixtygiving/dataquality.git
+    - run: pip install -r requirements_cove.txt && pip install -r requirements_dev.txt
+    - run: cd cove && CUSTOM_SERVER_URL=https://dataquality.threesixtygiving.org/ DJANGO_SETTINGS_MODULE=cove_project.settings py.test cove_360/tests_functional.py
+    - name: notify
+      if: failure()
+      # This is pipped to /dev/null otherwise a lot of info is returned that does not need to be made public
+      run: |
+        echo '<issue><project_id>code</project_id><subject>Cove Live Tests Have Failed</subject><description>See https://github.com/OpenDataServices/opendataservices-deploy/actions</description><assigned_to_id>27</assigned_to_id></issue>' | \
+        curl -X POST -H 'Content-type: text/xml' -H 'X-Redmine-API-Key: ${{ secrets.PLANIO_USER_KEY }}' \
+        -H 'Accept: text/xml' -d @- https://opendataservices.plan.io/projects/code/issues.xml > /dev/null
