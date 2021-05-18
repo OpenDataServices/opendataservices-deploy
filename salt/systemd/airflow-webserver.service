@@ -8,6 +8,7 @@ EnvironmentFile=/home/airflow/ocdsdata.env
 User=airflow
 Group=airflow
 Type=simple
+WorkingDirectory=/home/airflow/ocdsdata/airflow/
 ExecStart=/home/airflow/ocdsdata/airflow/.ve/bin/airflow webserver --pid /home/airflow/airflow.pid -H localhost
 Restart=on-failure
 RestartSec=5s

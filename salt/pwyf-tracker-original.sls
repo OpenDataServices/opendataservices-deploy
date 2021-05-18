@@ -12,7 +12,6 @@ include:
   - core
   - apache
   - uwsgi
-  - postgres10
 
 {% if 'https' in pillar.pwyf_tracker %}  - letsencrypt{% endif %}
 
@@ -24,8 +23,8 @@ pwyf_tracker-deps:
     pkg.installed:
       - pkgs:
         - libapache2-mod-proxy-uwsgi
-        - python-pip
-        - python-virtualenv
+        - python3-pip
+        - python3-virtualenv
         - uwsgi-plugin-python3
       - watch_in:
         - service: apache2
@@ -43,12 +42,6 @@ remoteip:
     apache_module.enabled:
       - watch_in:
         - service: apache2
-
-pwyf_tracker:
-  postgres_user.present:
-    - password: {{ pillar.pwyf_tracker.postgres.pwyf_tracker.password }}
-
-  postgres_database.present: []
 
 
 {% macro pwyf_tracker(name, giturl, branch, flaskdir, user, uwsgi_port, servername=None) %}
@@ -71,11 +64,11 @@ bare_name: {{ name }}
     servername=servername,
     https=pillar.pwyf_tracker.https) }}
 
-{{ apache(user+'.dev.conf',
+{# apache(user+'.dev.conf',
     name=name+'.dev.conf',
     extracontext=extracontext,
     servername=pillar.pwyf_tracker.devname,
-    https=pillar.pwyf_tracker.https) }}
+    https=pillar.pwyf_tracker.https) #}
 
 {{ uwsgi('pwyf_tracker_original.ini',
     name=name+'.ini',
@@ -113,6 +106,7 @@ bare_name: {{ name }}
 
 {{ flaskdir }}/config.py:
   file.managed:
+    - user: {{ user }}
     - source: salt://pwyf-tracker/config.py
     - template: jinja
     - context:
@@ -146,7 +140,7 @@ MAILTO:
 {{ pwyf_tracker(
     name='pwyf_tracker_original',
     giturl=giturl,
-    branch='2020tracker',
+    branch='2021tracker-dev',
     flaskdir='/home/'+user+'/pwyf_tracker/',
     uwsgi_port=3032,
     servername=pillar.pwyf_tracker.servername if 'servername' in pillar.pwyf_tracker else None,

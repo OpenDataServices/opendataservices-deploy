@@ -1,3 +1,10 @@
 pwyf_tracker:
-  site_url: test.pwyf-tracker-dev.default.opendataservices.uk0.bigv.io
+  servername: 2022tracker-dev.publishwhatyoufund.org
   database_url: 'postgresql+psycopg2:///pwyf_tracker'
+  https: 'yes'
+postgres:
+  acls:
+   - ['local', 'all', 'postgres', 'peer']
+   - ['local', 'pwyf_tracker', 'pwyf_tracker', 'peer']
+   - ['local', 'all', 'all', 'md5']
+   - ['host', 'all', 'all', '0.0.0.0/0', 'md5']

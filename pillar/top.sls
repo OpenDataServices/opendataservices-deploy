@@ -46,6 +46,11 @@ base:
     - json_data_ferret_dev5
     - private.json_data_ferret_dev5
 
+  'pwyf-index-2022-test':
+     - postgres_pillar
+     - private.pwyf_tracker_original
+     - pwyf_tracker_original
+
   'analysis-1':
      - postgres_pillar
      - private.analysis1

@@ -52,6 +52,11 @@ dokku-live-2: dokku-live-2.dokku.opendataservices.uk0.bigv.io
 #  https://github.com/open-contracting/deploy
 #  https://github.com/open-contracting/deploy-pillar-private
 #  https://github.com/open-contracting/deploy-salt-private
+#
+# PWYF Servers
+
+pwyf-index-2022-test: 92.243.17.104
+
 
 # Analysis Servers
 

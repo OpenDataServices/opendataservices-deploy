@@ -128,6 +128,10 @@ base:
   'dokku*':
     - prometheus-client-standalone
     - dokku
+  
+  'pwyf-index-2022-test':
+    - pwyf-tracker-original
+    - postgres
 
   'analysis-*':
     - prometheus-client-standalone
