@@ -1,7 +1,7 @@
 name: Test Live 360 CoVE
 on:
   schedule:
-    - cron: '5 * * * *'
+    - cron: '0 1 * * *'
 
 jobs:
   build:
