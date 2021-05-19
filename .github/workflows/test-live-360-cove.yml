@@ -15,7 +15,7 @@ jobs:
         architecture: x64
     - run: git clone https://github.com/threesixtygiving/dataquality.git
     - run: pip install -r requirements_cove.txt && pip install -r requirements_dev.txt
-    - run: cd cove && CUSTOM_SERVER_URL=https://dataquality.threesixtygiving.org/ DJANGO_SETTINGS_MODULE=cove_project.settings py.test cove_360/tests_functional.py
+    - run: cd ./dataquality/cove && CUSTOM_SERVER_URL=https://dataquality.threesixtygiving.org/ DJANGO_SETTINGS_MODULE=cove_project.settings py.test cove_360/tests_functional.py
     - name: notify
       if: failure()
       # This is pipped to /dev/null otherwise a lot of info is returned that does not need to be made public
