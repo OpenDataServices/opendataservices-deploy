@@ -104,15 +104,6 @@ install-composer:
       - user
       - group
 
-/home/{{ user }}/www:
-  file.directory:
-    - name: /home/{{ user }}/www
-    - dir_mode: 755
-    - file_mode: 644
-    - recurse:
-      - mode
-
-
 
 {{ apache('matomo.conf',
     name='matomo.conf',
@@ -140,27 +131,44 @@ piwik:
     - require:
       - pkg: mysql-server
 
+# Give PHP more resources
 /etc/php/7.4/apache2/conf.d/99matomo.ini:
   file.managed:
     - source: salt://matomo/php-apache-conf.ini
 
+# Cron - add entry
 /etc/cron.d/matomo:
   file.managed:
     - source: salt://matomo/cron
 
+# Make sure cron user can write to log file
 /home/matomo/cron-matomo.log:
   file.managed:
     - user: www-data
     - group: www-data
+
+# File permissions in app
+# Need generally open for web server to read, then some specific locations need more.
+/home/{{ user }}/www:
+  file.directory:
+    - name: /home/{{ user }}/www
+    - dir_mode: 755
+    - file_mode: 644
+    - recurse:
+      - mode
 
 /home/matomo/www/piwik/matomo.js:
   file.managed:
     - user: www-data
     - group: www-data
     - mode: 664
+    - require:
+      - file: /home/{{ user }}/www
 
 /home/matomo/www/piwik/piwik.js:
   file.managed:
     - user: www-data
     - group: www-data
     - mode: 664
+    - require:
+      - file: /home/{{ user }}/www
