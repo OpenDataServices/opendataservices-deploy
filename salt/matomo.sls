@@ -95,6 +95,15 @@ install-composer:
       - user
       - group
 
+# GeoIP Database is saved here
+/home/{{ user }}/www/piwik/misc:
+  file.directory:
+    - user: www-data
+    - group: www-data
+    - recurse:
+      - user
+      - group
+
 /home/{{ user }}/www:
   file.directory:
     - name: /home/{{ user }}/www

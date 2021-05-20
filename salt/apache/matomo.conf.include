@@ -20,6 +20,9 @@ DocumentRoot /home/matomo/www
 <Location "/piwik/tmp">
     Require all denied
 </Location>
+<Location "/piwik/misc">
+    Require all denied
+</Location>
 <Location "/piwik/.git">
     Require all denied
 </Location>
