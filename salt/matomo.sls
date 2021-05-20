@@ -10,14 +10,19 @@ include:
   - apache
   - letsencrypt
 
+{% from 'lib.sls' import createuser, apache %}
+
+{% set user = 'matomo' %}
+{{ createuser(user) }}
+
 
 # Download Matomo from the git repository but pick a tag for a stable release
-# The target is /var/www/html/piwik/.
-# It is NOT /var/www/html/matomo/ because then we would have to change all clients to send data to /matomo and not /piwik
+# The target is /home/{{ user }}/www/piwik/.
+# It is NOT /home/{{ user }}/www/matomo/ because then we would have to change all clients to send data to /matomo and not /piwik
 https://github.com/matomo-org/matomo.git:
   git.latest:
     - rev: 4.3.0
-    - target: /var/www/html/piwik/
+    - target: /home/{{ user }}/www/piwik/
     - submodules: True
 # Upstream matomo routinely rewrites history in their git repo, so we'll set
 # this permanently
@@ -67,13 +72,13 @@ install-composer:
       - cmd: get-composer
 
 # Install piwik's dependencies
-/var/www/html/piwik/:
+/home/{{ user }}/www/piwik/:
   composer.installed:
     - no_dev: true
     - require:
       - cmd: install-composer
 
-/var/www/html/piwik/tmp:
+/home/{{ user }}/www/piwik/tmp:
   file.directory:
     - user: www-data
     - group: www-data
@@ -82,7 +87,7 @@ install-composer:
     #- require:
     #  - git: https://github.com/piwik/piwik.git
 
-/var/www/html/piwik/config:
+/home/{{ user }}/www/piwik/config:
   file.directory:
     - user: www-data
     - group: www-data
@@ -90,7 +95,20 @@ install-composer:
       - user
       - group
 
+/home/{{ user }}/www:
+  file.directory:
+    - name: /home/{{ user }}/www
+    - dir_mode: 755
+    - file_mode: 644
+    - recurse:
+      - mode
 
+
+
+{{ apache('matomo.conf',
+    name='matomo.conf',
+    servername='mon.opendataservices.coop',
+    https='yes') }}
 
 # This is needed so salt Mysql operations can work
 python3-mysqldb:
