@@ -143,3 +143,15 @@ piwik:
   file.managed:
     - user: www-data
     - group: www-data
+
+/home/matomo/www/piwik/matomo.js:
+  file.managed:
+    - user: www-data
+    - group: www-data
+    - mode: 664
+
+/home/matomo/www/piwik/piwik.js:
+  file.managed:
+    - user: www-data
+    - group: www-data
+    - mode: 664
