@@ -134,3 +134,12 @@ piwik:
 /etc/php/7.4/apache2/conf.d/99matomo.ini:
   file.managed:
     - source: salt://matomo/php-apache-conf.ini
+
+/etc/cron.d/matomo:
+  file.managed:
+    - source: salt://matomo/cron
+
+/home/matomo/cron-matomo.log:
+  file.managed:
+    - user: www-data
+    - group: www-data

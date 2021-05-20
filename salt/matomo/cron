@@ -1,0 +1,2 @@
+MAILTO="code@opendataservices.coop"
+0 * * * * www-data /usr/bin/php /home/matomo/www/piwik/console core:archive --url=https://mon.opendataservices.coop/piwik/ > /home/matomo/cron-matomo.log
