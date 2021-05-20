@@ -112,3 +112,7 @@ piwik:
     - user: piwik
     - require:
       - pkg: mysql-server
+
+/etc/php/7.4/apache2/conf.d/99matomo.ini:
+  file.managed:
+    - source: salt://matomo/php-apache-conf.ini
