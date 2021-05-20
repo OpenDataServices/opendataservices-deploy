@@ -44,6 +44,10 @@ base:
     - prometheus-client-apache
     - icinga2-satellite
 
+  'matomo1':
+    - prometheus-client-apache
+    - matomo
+
   # STAGING
 
   'cove-staging':
@@ -148,4 +152,6 @@ base:
     - prometheus-client-standalone
     - dokku
     - openactive-conformance-services
+
+
 
