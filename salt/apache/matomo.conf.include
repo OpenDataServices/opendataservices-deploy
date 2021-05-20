@@ -14,6 +14,19 @@ DocumentRoot /home/matomo/www
     Require all granted
 </Directory>
 
+<Location "/piwik/config/config.ini.php">
+    Require all denied
+</Location>
+<Location "/piwik/tmp">
+    Require all denied
+</Location>
+<Location "/piwik/.git">
+    Require all denied
+</Location>
+<Location "/piwik/lang/en.json">
+    Require all denied
+</Location>
+
 # Available loglevels: trace8, ..., trace1, debug, info, notice, warn,
 # error, crit, alert, emerg.
 # It is also possible to configure the loglevel for particular
