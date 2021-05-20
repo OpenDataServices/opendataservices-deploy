@@ -39,6 +39,8 @@ php-deps:
       - php-mysql
       - php-cli
       - php-zip
+      - php-xml
+      - php-mbstring
       - libapache2-mod-php
 
 
