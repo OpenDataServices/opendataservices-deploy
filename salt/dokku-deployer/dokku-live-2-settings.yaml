@@ -12,5 +12,6 @@ repositories:
     # dokku storage:mount standards-lab /var/lib/dokku/data/storage/standards-lab/projects_dir:/projects_dir
     # dokku proxy:ports-add standards-lab http:80:80
     # dokku ps:scale standards-lab web=1 worker=1
+    # dokku git:set standards-lab keep-git-dir true
     # dokku domains:add standards-lab standards-lab.dokkulive2.ods.mobi
     # TODO add live domain after we move site, remove temp domain, enable lets encrypt
