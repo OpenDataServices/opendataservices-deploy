@@ -9,6 +9,7 @@ repositories:
       - dokku redis:link $APP_NAME $APP_NAME
       - dokku storage:mount $APP_NAME /var/lib/dokku/data/storage/$APP_NAME/projects_dir:/projects_dir
       - dokku proxy:ports-add $APP_NAME http:80:80
+      - dokku git:set $APP_NAME keep-git-dir true
       - dokku ps:scale $APP_NAME web=1 worker=1
     teardown_dokku_commands:
       - dokku redis:unlink $APP_NAME $APP_NAME
