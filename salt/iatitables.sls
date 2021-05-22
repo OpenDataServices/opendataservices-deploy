@@ -64,6 +64,12 @@ iatitables-pip:
     - source: salt://private/env/iatitables.env
     - template: jinja
 
+/etc/cron.daily/iatitables:
+  file.managed:
+    - source: salt://iati-misc/iatitables
+    - mode: 755
+    - template: jinja
+
 
 /etc/systemd/system/iati-datasette.service:
   file.managed:
