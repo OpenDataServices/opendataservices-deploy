@@ -11,6 +11,7 @@
 #
 # enable plugins
 #   dokku plugin:install https://github.com/dokku/dokku-redis.git redis
+#   dokku plugin:install https://github.com/dokku/dokku-letsencrypt.git
 #
 #
 # For the deployer app:
