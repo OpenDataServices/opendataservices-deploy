@@ -21,12 +21,14 @@ include:
 # It is NOT /home/{{ user }}/www/matomo/ because then we would have to change all clients to send data to /matomo and not /piwik
 https://github.com/matomo-org/matomo.git:
   git.latest:
-    - rev: 4.3.0
+    - rev: 4.3.1
     - target: /home/{{ user }}/www/piwik/
     - submodules: True
 # Upstream matomo routinely rewrites history in their git repo, so we'll set
 # this permanently
     - force_fetch: True
+# Other salt commands change permissions, and that shows up as git changes. So force_reset
+    - force_reset: True
 
 
 # Database
