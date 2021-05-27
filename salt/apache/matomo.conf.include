@@ -45,3 +45,6 @@ CustomLog ${APACHE_LOG_DIR}/access.log combined
 # following line enables the CGI configuration for this host only
 # after it has been globally disabled with "a2disconf".
 #Include conf-available/serve-cgi-bin.conf
+
+Alias /.well-known/acme-challenge/ /var/www/html/.well-known/acme-challenge/
+
