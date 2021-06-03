@@ -48,11 +48,7 @@ remoteip:
 
 {% set extracontext %}
 djangodir: {{ djangodir }}
-{% if grains['osrelease'] == '16.04' %}
-uwsgi_port: null
-{% else %}
 uwsgi_port: {{ uwsgi_port }}
-{% endif %}
 branch: {{ branch }}
 app: {{ app }}
 bare_name: {{ name }}

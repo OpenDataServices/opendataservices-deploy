@@ -12,16 +12,10 @@ caddy-pkgrepo:
 iatitables-deps:
     pkg.installed:
       - pkgs:
-        {% if grains['osrelease'] == '18.04' or grains['osrelease'] == '16.04' %}
-        - python-pip
-        - python-virtualenv
-        {% endif %}
-        {% if grains['osrelease'] == '20.04' %}
         - python3-pip
         - python3-virtualenv
         - gcc
         - libxslt1-dev
-        {% endif %}
         - git
         - python3-dev
         - sqlite3

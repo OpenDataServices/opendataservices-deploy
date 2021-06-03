@@ -12,20 +12,14 @@ include:
 
 org-ids-deps:
     apache_module.enabled:
-      - name: proxy {% if grains['osrelease'] == '20.04' %}proxy_uwsgi{% endif %}
+      - name: proxy proxy_uwsgi
       - watch_in:
         - service: apache2
     pkg.installed:
       - pkgs:
         - libapache2-mod-proxy-uwsgi
-{% if grains['osrelease'] == '18.04' or grains['osrelease'] == '16.04' %}
-        - python-pip
-        - python-virtualenv
-{% endif %}
-{% if grains['osrelease'] == '20.04' %}
         - python3-pip
         - python3-virtualenv
-{% endif %}
         - uwsgi-plugin-python3
         - python3-dev
       - watch_in:
@@ -44,11 +38,7 @@ org-ids-deps:
 djangodir: {{ djangodir }}
 branch: {{ branch }}
 bare_name: {{ name }}
-{% if grains['osrelease'] == '18.04' or grains['osrelease'] == '16.04' %}
-uwsgi_port: null
-{% else %}
 uwsgi_port: {{ uwsgi_port }}
-{% endif %}
 {% endset %}
 
 {{ apache(user+'.conf',
@@ -74,37 +64,6 @@ uwsgi_port: {{ uwsgi_port }}
     - watch_in:
       - service: uwsgi
 
-{% if grains['osrelease'] == '18.04' or grains['osrelease'] == '16.04' %}
-# Install the latest version of pip first
-# This is necessary to download linux wheels, which avoids building C code
-{{ djangodir }}.ve/-pip:
-  virtualenv.managed:
-    - name: {{ djangodir }}.ve/
-    - python: /usr/bin/python3
-    - user: {{ user }}
-    - system_site_packages: False
-    - pip_pkgs: pip==8.1.2
-    - require:
-      - pkg: org-ids-deps
-      - git: {{ giturl }}{{ djangodir }}
-
-# Then install the rest of our requirements
-{{ djangodir }}.ve/:
-  virtualenv.managed:
-    - python: /usr/bin/python3
-    - user: {{ user }}
-    - system_site_packages: False
-    - requirements: {{ djangodir }}requirements.txt
-    - require:
-      - virtualenv: {{ djangodir }}.ve/-pip
-      - file: set_lc_all # required to avoid unicode errors for the "schema" library
-    - watch_in:
-      - service: apache2
-
-
-{% endif %}
-
-{% if grains['osrelease'] == '20.04' %}
 # Then install the rest of our requirements
 {{ djangodir }}.ve/:
   virtualenv.managed:
@@ -128,8 +87,6 @@ uwsgi_port: {{ uwsgi_port }}
     - onchanges:
       - git: {{ giturl }}{{ djangodir }}
 
-{% endif %}
-
 migrate-{{name}}:
   cmd.run:
     - name: . .ve/bin/activate; python manage.py migrate --noinput
@@ -137,9 +94,7 @@ migrate-{{name}}:
     - cwd: {{ djangodir }}
     - require:
       - virtualenv: {{ djangodir }}.ve/
-{% if grains['osrelease'] == '20.04' %}
       - cmd: {{ djangodir }}orgs-ids-install-python-packages
-{% endif %}
     - onchanges:
       - git: {{ giturl }}{{ djangodir }}
 
@@ -150,9 +105,7 @@ migrate-{{name}}:
 #    - cwd: {{ djangodir }}
 #    - require:
 #      - virtualenv: {{ djangodir }}.ve/
-#{% if grains['osrelease'] == '20.04' %}
 #      - cmd: {{ djangodir }}orgs-ids-install-python-packages
-#{% endif %}
 #    - onchanges:
 #      - git: {{ giturl }}{{ djangodir }}
 
@@ -163,9 +116,7 @@ collectstatic-{{name}}:
     - cwd: {{ djangodir }}
     - require:
       - virtualenv: {{ djangodir }}.ve/
-{% if grains['osrelease'] == '20.04' %}
       - cmd: {{ djangodir }}orgs-ids-install-python-packages
-{% endif %}
     - onchanges:
       - git: {{ giturl }}{{ djangodir }}
 
