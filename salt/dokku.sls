@@ -12,6 +12,7 @@
 # enable plugins
 #   dokku plugin:install https://github.com/dokku/dokku-redis.git redis
 #   dokku plugin:install https://github.com/dokku/dokku-letsencrypt.git
+#   dokku letsencrypt:cron-job --add
 #
 #
 # For the deployer app:
