@@ -1,0 +1,10 @@
+[Unit]
+Description=IATI Datastore uWSGI instance
+After=network.target
+[Service]
+User={{ user }}
+Group={{ user }}
+WorkingDirectory={{ codedir }}
+ExecStart={{ codedir }}/worker.sh
+[Install]
+WantedBy=multi-user.target

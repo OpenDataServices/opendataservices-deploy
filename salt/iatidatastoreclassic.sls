@@ -37,7 +37,7 @@ iatidatastoreclassic-deps:
         - service: uwsgi
 
 
-{% macro iatidatastoreclassic(name, giturl, branch, codedir, webserverdir, user, uwsgi_port, secret_key, https, servername, postgres_name, postgres_user, postgres_password ) %}
+{% macro iatidatastoreclassic(name, giturl, branch, codedir, webserverdir, user, uwsgi_port, https, servername, postgres_name, postgres_user, postgres_password ) %}
 
 # Code folder & virtual env & Python Libs
 
@@ -80,6 +80,25 @@ iatidatastoreclassic-deps:
     - name: . .ve/bin/activate; pip install -r requirements.txt
     - user: {{ user }}
     - cwd: {{ codedir }}
+    - require:
+      - virtualenv: {{ codedir }}.ve/
+
+{{ codedir }}/wsgi.py:
+  file.managed:
+    - source: salt://iatidatastoreclassic/wsgi.py
+    - require:
+      - virtualenv: {{ codedir }}.ve/
+
+{{ codedir }}/env.sh:
+  file.managed:
+    - source: salt://iatidatastoreclassic/env.sh
+    - user: {{ user }}
+    - group: {{ user }}
+    - template: jinja
+    - context:
+        postgres_user: {{ postgres_user }}
+        postgres_password: {{ postgres_password }}
+        postgres_name: {{ postgres_name }}
     - require:
       - virtualenv: {{ codedir }}.ve/
 
@@ -128,7 +147,6 @@ iatidatastoreclassic-database-schema-{{ name }}:
 {% set extracontext %}
 user: {{ user }}
 uwsgi_port: {{ uwsgi_port }}
-secret_key: {{ secret_key }}
 codedir: {{ codedir }}
 webserverdir: {{ webserverdir }}
 allowed_hosts: {{ servername }}
@@ -148,6 +166,50 @@ postgres_name: {{ postgres_name }}
     extracontext=extracontext,
     port=uwsgi_port) }}
 
+# CRON
+
+cron-{{ name }}:
+  cron.present:
+    - name: cd {{ codedir }}; . .ve/bin/activate; source env.sh; iati crawler download-and-update
+    - identifier: IATIDATASTORE{{ name }}DOWNLOADANDUPDATE
+    - user: {{ user }}}
+    - minute: 0
+    - hour: 4
+
+# Worker
+
+
+{{ codedir }}/worker.sh:
+  file.managed:
+    - source: salt://iatidatastoreclassic/worker.sh
+    - user: {{ user }}
+    - group: {{ user }}
+    - mode: 0755
+    - require:
+      - virtualenv: {{ codedir }}.ve/
+
+
+/etc/systemd/system/iatidatastoreclassic-{{ name }}.service:
+  file.managed:
+    - source: salt://iatidatastoreclassic/iati-datastore.service
+    - template: jinja
+    - context:
+        user: {{ user }}
+        codedir: {{ codedir }}
+        postgres_user: {{ postgres_user }}
+        postgres_password: {{ postgres_password }}
+        postgres_name: {{ postgres_name }}
+    - require:
+      - file: {{ codedir }}/worker.sh
+
+{{name }}-service-running:
+  service.running:
+    - name: iatidatastoreclassic-{{ name }}
+    - enable: True
+    - reload: True
+    - requires:
+      - file: /etc/systemd/system/{{ name }}.service
+
 {% endmacro %}
 
 {% set defaultgiturl = 'https://github.com/codeforIATI/iati-datastore.git' %}
@@ -163,8 +225,7 @@ postgres_name: {{ postgres_name }}
     branch=pillar.iatidatastoreclassic.gitbranch if 'gitbranch' in pillar.iatidatastoreclassic else 'main',
     codedir='/home/'+user+'/iatidatastoreclassic/',
     webserverdir='/home/'+user+'/iatidatastoreclassic-web/',
-    uwsgi_port=pillar.iatidatastoreclassic.uwsgi_port if 'uwsgi_port' in pillar.iatidatastoreclassic else 3031,
-    secret_key=pillar.iatidatastoreclassic.secret_key if 'secret_key' in pillar.iatidatastoreclassic else 'do-NOT-use-me-in-production',
+    uwsgi_port=pillar.iatidatastoreclassic.uwsgi_port if 'uwsgi_port' in pillar.iatidatastoreclassic else 3032,
     servername=pillar.iatidatastoreclassic.servername if 'servername' in pillar.iatidatastoreclassic else 'datastore.iati.opendataservices.coop',
     https=pillar.iatidatastoreclassic.https if 'https' in pillar.iatidatastoreclassic else 'no',
     postgres_name='iatidatastoreclassic',
