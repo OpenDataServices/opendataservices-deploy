@@ -115,6 +115,7 @@ base:
 
   'iatidatastoreclassic1':
     - prometheus-client-standalone
+    - iatidatastoreclassic
 
 
 

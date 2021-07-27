@@ -1,8 +1,17 @@
 # Ubuntu 20 LTS only!
+#
+# Hetzner Oddness: After first install, postgres does not create it's own cluster!
+# Manually run: pg_createcluster 12 main
+# Then restart to make sure it is picked up correctly
+#
+# Also: Need to run apt-get install language-pack-en
+# (Can we just add this to core.sls  - this should be fine on all servers?)
+#
+
 
 {% from 'lib.sls' import createuser, apache, uwsgi, removeapache, removeuwsgi %}
 
-{% set user = 'iatidsc' %}
+{% set user = 'iatidatastoreclassic' %}
 {{ createuser(user) }}
 
 

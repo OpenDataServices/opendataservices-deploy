@@ -70,3 +70,8 @@ base:
 
   'matomo*':
      - private.matomo_pillar
+
+  'iatidatastoreclassic1':
+    - private.iatidatastoreclassic_pillar
+
+
