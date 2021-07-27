@@ -113,5 +113,8 @@ base:
     - dokku
     - openactive-conformance-services
 
+  'iatidatastoreclassic1':
+    - prometheus-client-standalone
+
 
 
