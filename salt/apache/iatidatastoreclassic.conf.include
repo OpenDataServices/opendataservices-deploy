@@ -26,3 +26,13 @@
         <Location "/.well-known/acme-challenge">
                 ProxyPass !
         </Location>
+
+        <Location "/docs">
+                ProxyPass !
+        </Location>
+
+        Alias /docs/ {{codedir}}/iati_datastore/iatilib/frontend/docs/dirhtml/
+
+        <Directory {{codedir}}/iati_datastore/iatilib/frontend/docs/dirhtml/>
+                Require all granted
+        </Directory>

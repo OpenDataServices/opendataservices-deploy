@@ -37,6 +37,7 @@ iatidatastoreclassic-deps:
         - postgresql-12
         - libpq-dev
         - gcc
+        - make
         - libxml2-dev
         - libxslt1-dev
         - libevent-dev
@@ -141,6 +142,16 @@ iatidatastoreclassic-database-schema-{{ name }}:
       - postgres_database: iatidatastoreclassic-database-exists-{{ name }}
 
 # Redis - nothing to set up here.
+
+# Docs
+
+iatidatastoreclassic-docs-{{ name }}:
+  cmd.run:
+    - name: . .ve/bin/activate; iati build-docs
+    - user: {{ user }}
+    - cwd: {{ codedir }}
+    - require:
+      - cmd: {{ codedir }}install-python-packages
 
 
 # A Directory for web server to use
