@@ -47,6 +47,23 @@ iatidatastoreclassic-deps:
         - service: uwsgi
 
 
+iatidatastoreclassic-deps-nodejs-1:
+  cmd.run:
+    - name: curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+    - user: root
+    - creates: /etc/apt/sources.list.d/nodesource.list
+    - require:
+      - pkg: iatidatastoreclassic-deps
+
+
+iatidatastoreclassic-deps-nodejs-2:
+    pkg.installed:
+      - pkgs:
+        - nodejs
+      - require:
+        - cmd: iatidatastoreclassic-deps-nodejs-1
+
+
 {% macro iatidatastoreclassic(name, giturl, branch, codedir, webserverdir, user, uwsgi_port, https, servername, postgres_name, postgres_user, postgres_password ) %}
 
 # Code folder & virtual env & Python Libs
@@ -152,6 +169,20 @@ iatidatastoreclassic-docs-{{ name }}:
     - cwd: {{ codedir }}
     - require:
       - cmd: {{ codedir }}install-python-packages
+
+
+# Frontpage
+
+iatidatastoreclassic-frontpage-{{ name }}:
+  cmd.run:
+    - name: . .ve/bin/activate; iati build-query-builder --deploy-url http{% if https == 'yes' %}s{% endif %}://{{ servername }}
+    - user: {{ user }}
+    - cwd: {{ codedir }}
+    - env:
+      - IATI_DATASTORE_DATABASE_URL: 'postgresql://{{ postgres_user }}:{{ postgres_password }}@localhost/{{ postgres_name }}'
+    - require:
+      - cmd: {{ codedir }}install-python-packages
+      - cmd: iatidatastoreclassic-database-schema-{{ name }}
 
 
 # A Directory for web server to use
