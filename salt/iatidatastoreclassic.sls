@@ -223,7 +223,7 @@ cron-{{ name }}:
   cron.present:
     - name: cd {{ codedir }}; . .ve/bin/activate; source env.sh; iati crawler download-and-update
     - identifier: IATIDATASTORE{{ name }}DOWNLOADANDUPDATE
-    - user: {{ user }}}
+    - user: {{ user }}
     - minute: 0
     - hour: 4
 
