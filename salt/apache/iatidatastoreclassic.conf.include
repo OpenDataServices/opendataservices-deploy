@@ -6,7 +6,7 @@
         {{ banner }}
 
         <Location "/">
-                ProxyPass uwsgi://127.0.0.1:{{ uwsgi_port }}/
+                ProxyPass uwsgi://127.0.0.1:{{ uwsgi_port }}/ timeout={{ uwsgi_harakiri + 15 }}
         </Location>
 
         {% if pillar.dev_robots_txt %}
