@@ -63,6 +63,14 @@ iatidatastoreclassic-deps-nodejs-2:
       - require:
         - cmd: iatidatastoreclassic-deps-nodejs-1
 
+/etc/postgresql/12/main/conf.d/iatidatastoreclassic.conf:
+  file.managed:
+    - source: salt://iatidatastoreclassic/postgres.conf
+    - template: jinja
+    - context:
+        shared_buffers: {{ pillar.iatidatastoreclassic.postgres_shared_buffers if 'postgres_shared_buffers' in pillar.iatidatastoreclassic else '16GB' }}
+    - require:
+      - pkg: iatidatastoreclassic-deps
 
 {% macro iatidatastoreclassic(name, giturl, branch, codedir, webserverdir, user, uwsgi_port, https, servername, postgres_name, postgres_user, postgres_password , uwsgi_as_limit, uwsgi_harakiri) %}
 
