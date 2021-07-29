@@ -1,0 +1,24 @@
+name: Link Checking Monthly
+on:
+  schedule:
+    - cron: '0 1 1 * *'
+
+jobs:
+  link_checking_monthly:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+        architecture: x64
+    - run: pip install pylinkvalidator
+    - run: pylinkvalidate.py -O https://opendataservices.coop/
+    - name: notify
+      if: failure()
+      # This is pipped to /dev/null otherwise a lot of info is returned that does not need to be made public
+      run: |
+        echo '<issue><project_id>code</project_id><subject>Broken links found</subject><description>See https://github.com/OpenDataServices/opendataservices-deploy/actions</description><assigned_to_id>27</assigned_to_id></issue>' | \
+        curl -X POST -H 'Content-type: text/xml' -H 'X-Redmine-API-Key: ${{ secrets.PLANIO_USER_KEY }}' \
+        -H 'Accept: text/xml' -d @- https://opendataservices.plan.io/projects/code/issues.xml > /dev/null
