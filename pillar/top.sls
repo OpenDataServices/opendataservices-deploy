@@ -72,6 +72,6 @@ base:
      - private.matomo_pillar
 
   'iatidatastoreclassic1':
-    - private.iatidatastoreclassic_pillar
+    - private.iatidatastoreclassic1_pillar
 
 
