@@ -73,5 +73,6 @@ base:
 
   'iatidatastoreclassic1':
     - private.iatidatastoreclassic1_pillar
+    - iatidatastoreclassic1_pillar
 
 

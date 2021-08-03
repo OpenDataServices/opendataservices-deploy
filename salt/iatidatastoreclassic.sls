@@ -19,7 +19,7 @@ include:
   - core
   - apache
   - uwsgi
-{% if 'https' in pillar.cove %}  - letsencrypt{% endif %}
+  - letsencrypt
 
 
 iatidatastoreclassic-deps:
