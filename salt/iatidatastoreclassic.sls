@@ -183,7 +183,7 @@ iatidatastoreclassic-docs-{{ name }}:
 
 iatidatastoreclassic-frontpage-{{ name }}:
   cmd.run:
-    - name: . .ve/bin/activate; iati build-query-builder --deploy-url http{% if https == 'yes' %}s{% endif %}://{{ servername }}
+    - name: . .ve/bin/activate; iati build-query-builder --deploy-url http{% if https == 'yes' or https == 'force'  %}s{% endif %}://{{ servername }}
     - user: {{ user }}
     - cwd: {{ codedir }}
     - env:
