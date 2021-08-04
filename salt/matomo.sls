@@ -133,15 +133,50 @@ piwik:
     - require:
       - pkg: mysql-server
 
+/home/{{ user }}/.my.cnf:
+  file.managed:
+    - source: salt://matomo/my.cnf
+    - mode: 600
+    - user: {{ user }}
+    - group: {{ user }}
+    - template: jinja
+    - context:
+        mysql_password: {{ pillar.piwik.mysql_password }}
+
 # Give PHP more resources
 /etc/php/7.4/apache2/conf.d/99matomo.ini:
   file.managed:
     - source: salt://matomo/php-apache-conf.ini
 
+# Backups
+/home/{{ user }}/backups:
+  file.directory:
+    - name: /home/{{ user }}/backups
+    - user: {{ user }}
+    - group: {{ user }}
+    - dir_mode: 700
+    - file_mode: 600
+    - recurse:
+      - mode
+
+/home/{{user}}/backup.sh:
+  file.managed:
+    - source: salt://matomo/backup.sh
+    - mode: 700
+    - user: {{ user }}
+    - group: {{ user }}
+    - template: jinja
+    - context:
+        user: {{ user }}
+        mysql_password: {{ pillar.piwik.mysql_password }}
+
 # Cron - add entry
 /etc/cron.d/matomo:
   file.managed:
     - source: salt://matomo/cron
+    - template: jinja
+    - context:
+        user: {{ user }}
 
 # Make sure cron user can write to log file
 /home/matomo/cron-matomo.log:
