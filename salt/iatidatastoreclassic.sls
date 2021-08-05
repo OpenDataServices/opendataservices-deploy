@@ -24,7 +24,7 @@ include:
 
 iatidatastoreclassic-deps:
     apache_module.enabled:
-      - name: proxy proxy_uwsgi
+      - name: proxy proxy_uwsgi rewrite
       - watch_in:
         - service: apache2
     pkg.installed:
@@ -218,7 +218,16 @@ uwsgi_harakiri: {{ uwsgi_harakiri }}
 uwsgi_workers: {{ uwsgi_workers }}
 uwsgi_max_requests: {{ uwsgi_max_requests }}
 uwsgi_reload_on_as: {{ uwsgi_reload_on_as }}
+extra_apache_include_file: /etc/apache2/sites-available/{{ name }}.conf.private.include
 {% endset %}
+
+/etc/apache2/sites-available/{{ name }}.conf.private.include:
+  file.managed:
+    - source: salt://private/iatidatastoreclassic/apache.conf
+    - template: jinja
+    - context:
+        {{ extracontext | indent(8) }}
+
 
 {{ apache('iatidatastoreclassic.conf',
     name=name+'.conf',

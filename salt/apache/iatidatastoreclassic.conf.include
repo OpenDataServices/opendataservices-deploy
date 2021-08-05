@@ -54,3 +54,4 @@
                 Require all granted
         </Directory>
 
+        Include {{ extra_apache_include_file }}
