@@ -69,10 +69,11 @@ iatidatastoreclassic-deps-nodejs-2:
     - template: jinja
     - context:
         shared_buffers: {{ pillar.iatidatastoreclassic.postgres_shared_buffers if 'postgres_shared_buffers' in pillar.iatidatastoreclassic else '16GB' }}
+        max_connections: {{ pillar.iatidatastoreclassic.postgres_max_connections if 'postgres_max_connections' in pillar.iatidatastoreclassic else 150 }}
     - require:
       - pkg: iatidatastoreclassic-deps
 
-{% macro iatidatastoreclassic(name, giturl, branch, codedir, webserverdir, user, uwsgi_port, https, servername, postgres_name, postgres_user, postgres_password , uwsgi_as_limit, uwsgi_harakiri) %}
+{% macro iatidatastoreclassic(name, giturl, branch, codedir, webserverdir, user, uwsgi_port, https, servername, postgres_name, postgres_user, postgres_password , uwsgi_as_limit, uwsgi_harakiri, uwsgi_workers, uwsgi_max_requests, uwsgi_reload_on_as) %}
 
 # Code folder & virtual env & Python Libs
 
@@ -214,6 +215,9 @@ postgres_password: {{ postgres_password }}
 postgres_name: {{ postgres_name }}
 uwsgi_as_limit: {{ uwsgi_as_limit }}
 uwsgi_harakiri: {{ uwsgi_harakiri }}
+uwsgi_workers: {{ uwsgi_workers }}
+uwsgi_max_requests: {{ uwsgi_max_requests }}
+uwsgi_reload_on_as: {{ uwsgi_reload_on_as }}
 {% endset %}
 
 {{ apache('iatidatastoreclassic.conf',
@@ -293,6 +297,9 @@ cron-{{ name }}:
     postgres_user='iatidatastoreclassic',
     postgres_password=pillar.iatidatastoreclassic.postgres_password if 'postgres_password' in pillar.iatidatastoreclassic else 'do-NOT-use-me-in-production',
     user=user,
+    uwsgi_workers=pillar.iatidatastoreclassic.uwsgi_workers if 'uwsgi_workers' in pillar.iatidatastoreclassic else '100',
+    uwsgi_max_requests=pillar.iatidatastoreclassic.uwsgi_max_requests if 'uwsgi_max_requests' in pillar.iatidatastoreclassic else '1024',
+    uwsgi_reload_on_as=pillar.iatidatastoreclassic.uwsgi_reload_on_as if 'uwsgi_reload_on_as' in pillar.iatidatastoreclassic else '250',
     uwsgi_as_limit=pillar.iatidatastoreclassic.uwsgi_as_limit if 'uwsgi_as_limit' in pillar.iatidatastoreclassic else '2048',
     uwsgi_harakiri=pillar.iatidatastoreclassic.uwsgi_harakiri if 'uwsgi_harakiri' in pillar.iatidatastoreclassic else '1200'
     ) }}
