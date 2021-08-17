@@ -117,5 +117,7 @@ base:
     - prometheus-client-standalone
     - iatidatastoreclassic
 
-
+  'epds1':
+    - prometheus-client-standalone
+    - epds
 
