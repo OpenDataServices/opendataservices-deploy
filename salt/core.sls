@@ -6,6 +6,8 @@ git:
   pkg.installed
 python-apt: # required for salt to interact with apt
   pkg.installed
+language-pack-en: # installed by default on some server providers but not others
+  pkg.installed
 # Useful commands for people logging into the servers
 useful-shell-commands:
   pkg.installed:
@@ -136,6 +138,13 @@ MAILTO_root:
     - name: MAILTO
     - value: code@opendataservices.coop
     - user: root
+
+
+## Locales
+
+uk_locale:
+  locale.present:
+    - name: en_GB.UTF-8
 
 set_lc_all:
   file.append:
