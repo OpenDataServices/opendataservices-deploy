@@ -244,7 +244,7 @@ cron-{{ name }}:
     - identifier: IATIDATASTORE{{ name }}DOWNLOADANDUPDATE
     - user: {{ user }}
     - minute: 0
-    - hour: 4
+    - hour: 12,23
 
 # Worker
 
