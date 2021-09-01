@@ -120,4 +120,5 @@ base:
   'epds1':
     - prometheus-client-standalone
     - epds
+    - postgres
 

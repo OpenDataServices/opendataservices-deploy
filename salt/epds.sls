@@ -27,9 +27,6 @@ epds-deps:
         - python3-pip
         - python3-virtualenv
         - uwsgi-plugin-python3
-        - postgresql-12
-        - postgresql-12-postgis-3
-        - postgresql-12-postgis-3-scripts
         - libpq-dev
         - gcc
         - make

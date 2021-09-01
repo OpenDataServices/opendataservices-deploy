@@ -75,4 +75,7 @@ base:
     - private.iatidatastoreclassic1_pillar
     - iatidatastoreclassic1_pillar
 
+  'epds1':
+    - postgres_pillar
+    - private.epds
 
