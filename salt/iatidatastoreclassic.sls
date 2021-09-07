@@ -69,7 +69,7 @@ iatidatastoreclassic-deps-nodejs-2:
     - require:
       - pkg: iatidatastoreclassic-deps
 
-{% macro iatidatastoreclassic(name, giturl, branch, codedir, webserverdir, user, uwsgi_port, https, servername, postgres_name, postgres_user, postgres_password , uwsgi_as_limit, uwsgi_harakiri, uwsgi_workers, uwsgi_max_requests, uwsgi_reload_on_as) %}
+{% macro iatidatastoreclassic(name, giturl, branch, codedir, webserverdir, user, uwsgi_port, https, servername, postgres_name, postgres_user, postgres_password , uwsgi_as_limit, uwsgi_harakiri, uwsgi_workers, uwsgi_max_requests, uwsgi_reload_on_as, sentry_dsn, sentry_traces_sample_rate) %}
 
 # Code folder & virtual env & Python Libs
 
@@ -131,6 +131,8 @@ iatidatastoreclassic-deps-nodejs-2:
         postgres_user: {{ postgres_user }}
         postgres_password: {{ postgres_password }}
         postgres_name: {{ postgres_name }}
+        sentry_dsn: {{ sentry_dsn }}
+        sentry_traces_sample_rate: {{ sentry_traces_sample_rate }}
     - require:
       - virtualenv: {{ codedir }}.ve/
 
@@ -215,6 +217,8 @@ uwsgi_workers: {{ uwsgi_workers }}
 uwsgi_max_requests: {{ uwsgi_max_requests }}
 uwsgi_reload_on_as: {{ uwsgi_reload_on_as }}
 extra_apache_include_file: /etc/apache2/sites-available/{{ name }}.conf.private.include
+sentry_dsn: {{ sentry_dsn }}
+sentry_traces_sample_rate: {{ sentry_traces_sample_rate }}
 {% endset %}
 
 /etc/apache2/sites-available/{{ name }}.conf.private.include:
@@ -306,5 +310,7 @@ cron-{{ name }}:
     uwsgi_max_requests=pillar.iatidatastoreclassic.uwsgi_max_requests if 'uwsgi_max_requests' in pillar.iatidatastoreclassic else '1024',
     uwsgi_reload_on_as=pillar.iatidatastoreclassic.uwsgi_reload_on_as if 'uwsgi_reload_on_as' in pillar.iatidatastoreclassic else '250',
     uwsgi_as_limit=pillar.iatidatastoreclassic.uwsgi_as_limit if 'uwsgi_as_limit' in pillar.iatidatastoreclassic else '2048',
-    uwsgi_harakiri=pillar.iatidatastoreclassic.uwsgi_harakiri if 'uwsgi_harakiri' in pillar.iatidatastoreclassic else '1200'
+    uwsgi_harakiri=pillar.iatidatastoreclassic.uwsgi_harakiri if 'uwsgi_harakiri' in pillar.iatidatastoreclassic else '1200',
+    sentry_dsn=pillar.iatidatastoreclassic.sentry_dsn if 'sentry_dsn' in pillar.iatidatastoreclassic else '',
+    sentry_traces_sample_rate=pillar.iatidatastoreclassic.sentry_traces_sample_rate if 'sentry_traces_sample_rate' in pillar.iatidatastoreclassic else '0.0'
     ) }}
