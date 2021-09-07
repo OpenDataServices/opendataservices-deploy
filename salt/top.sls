@@ -108,11 +108,6 @@ base:
   'analysis-2':
     - iatitables
 
-  'oa1':
-    - prometheus-client-standalone
-    - dokku
-    - openactive-conformance-services
-
   'iatidatastoreclassic1':
     - prometheus-client-standalone
     - iatidatastoreclassic
