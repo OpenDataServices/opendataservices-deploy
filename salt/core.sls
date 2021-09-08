@@ -61,22 +61,10 @@ ssh:
       - file: /etc/ssh/sshd_config
 
 # Install authorized SSH public keys from the pillar
-root_authorized_keys_file:
-  file.managed:
-    - name: /root/.ssh/authorized_keys
-    - contents_pillar: authorized_keys
-    - makedirs: True
-
-{% if 'extra_authorized_keys' in pillar %}
-
-root_authorized_keys_file_append:
-  file.append:
-    - name: /root/.ssh/authorized_keys
-    - text: {{ salt['pillar.get']('extra_authorized_keys') | yaml_encode }}
-    - require:
-      - file: root_authorized_keys_file
-
-{% endif %}
+root_authorized_keys:
+  ssh_auth.manage:
+    - user: root
+    - ssh_keys: {{ (salt['pillar.get']('authorized_keys') + salt['pillar.get']('extra_authorized_keys', []))|yaml }}
 
 # Don't need and don't want RPC portmapper:
 rpcbind:

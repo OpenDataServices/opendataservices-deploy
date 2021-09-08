@@ -19,38 +19,12 @@
     - order: 1
     - shell: /bin/bash
 
-{% if user+'_authorized_keys' in pillar %}
-
-# Install authorized SSH public keys.  Keys will be installed from both
-# pillar.<user>_authorized_keys and pillar.authorized_keys
-
-{{ user }}_user_ssh_dir:
-  file.directory:
-    - name: /home/{{ user }}/.ssh
+{{ user }}_authorized_keys:
+  ssh_auth.manage:
     - user: {{ user }}
-    - group: users
-    - mode: 700
+    - ssh_keys: {{ (salt['pillar.get']('authorized_keys') + salt['pillar.get'](user+'_authorized_keys', []) + salt['pillar.get']('extra_authorized_keys', []))|yaml }}
     - require:
       - user: {{ user }}_user_exists
-
-{{ user }}_user_ssh_userkeys:
-  file.managed:
-    - name: /home/{{ user }}/.ssh/authorized_keys
-    - contents_pillar: {{ user }}_authorized_keys
-    - user: {{ user }}
-    - group: users
-    - mode: 644
-    - require:
-      - file: {{ user }}_user_ssh_dir
-
-{{ user }}_user_ssh_rootkeys:
-  file.append:
-    - name: /home/{{ user }}/.ssh/authorized_keys
-    - text: {{ salt['pillar.get']('authorized_keys') | yaml_encode }}
-    - require:
-      - file: {{ user }}_user_ssh_userkeys
-
-{% endif %}
 
 {% endmacro %}
 
