@@ -11,6 +11,15 @@
 {{ createuser(user) }}
 
 
+{% set user_logs = 'iatidatastoreclassic_logs' %}
+{{ createuser(user_logs) }}
+
+add_{{ user_logs }}_to_group_adm:
+  group.present:
+    - name: adm
+    - addusers:
+      - {{ user_logs }}
+
 include:
   - core
   - apache
@@ -75,6 +84,17 @@ iatidatastoreclassic-deps-nodejs-2:
     - template: jinja
     - context:
         user: {{ user }}
+
+install_matomo_import_script:
+  git.latest:
+    - name: https://github.com/OpenDataServices/iati-data-store-classic-matomo-import.git
+    - rev: main
+    - target: /home/{{ user_logs }}/matomo-import
+    - user: {{ user_logs }}
+    - force_fetch: True
+    - force_reset: True
+    - require:
+      - pkg: git
 
 {% macro iatidatastoreclassic(name, giturl, branch, codedir, webserverdir, user, uwsgi_port, https, servername, postgres_name, postgres_user, postgres_password , uwsgi_as_limit, uwsgi_harakiri, uwsgi_workers, uwsgi_max_requests, uwsgi_reload_on_as, sentry_dsn, sentry_traces_sample_rate) %}
 
@@ -201,7 +221,7 @@ iatidatastoreclassic-frontpage-{{ name }}:
       - cmd: iatidatastoreclassic-database-schema-{{ name }}
 
 
-# A Directory for web server to use
+# A Directory for web server to serve
 
 {{ webserverdir }}:
   file.directory:
@@ -212,6 +232,7 @@ iatidatastoreclassic-frontpage-{{ name }}:
 # UWSGI & Apache
 
 {% set extracontext %}
+iatidatastoreclassic_name: {{ name }}
 user: {{ user }}
 uwsgi_port: {{ uwsgi_port }}
 codedir: {{ codedir }}

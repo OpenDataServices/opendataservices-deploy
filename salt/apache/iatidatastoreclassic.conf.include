@@ -55,3 +55,7 @@
         </Directory>
 
         Include {{ extra_apache_include_file }}
+
+        ErrorLog /var/log/apache2/{{ iatidatastoreclassic_name }}_error.log
+        LogFormat "%{REQUEST_SCHEME}x://%v %h %t \"%r\" %>s %O \"%{Referer}i\" \"%{User-Agent}i\"" extended
+        CustomLog /var/log/apache2/{{ iatidatastoreclassic_name }}_access.log extended
