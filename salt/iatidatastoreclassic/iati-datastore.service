@@ -1,5 +1,5 @@
 [Unit]
-Description=IATI Datastore uWSGI instance
+Description=IATI Datastore Worker
 After=network.target
 [Service]
 User={{ user }}
