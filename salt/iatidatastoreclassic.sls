@@ -187,6 +187,8 @@ iatidatastoreclassic-frontpage-{{ name }}:
     - cwd: {{ codedir }}
     - env:
       - IATI_DATASTORE_DATABASE_URL: 'postgresql://{{ postgres_user }}:{{ postgres_password }}@localhost/{{ postgres_name }}'
+      # Disable telemetry or command can freeze on a "Y/N?" prompt
+      - NUXT_TELEMETRY_DISABLED: 1
     - require:
       - cmd: {{ codedir }}install-python-packages
       - cmd: iatidatastoreclassic-database-schema-{{ name }}
