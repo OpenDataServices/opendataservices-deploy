@@ -303,6 +303,18 @@ cron-{{ name }}:
         name: {{ name }}
         user: {{ user }}
 
+# Misc
+
+# Fix permissions in a code dir.
+# Saw a bug where a egg-info directory was created in here as root, and then subsequent pip install's failed
+{{ codedir }}fix-iati-datastore-permissions:
+  cmd.run:
+    - name: chown -R {{ user }}:{{ user }} iati_datastore
+    - user: root
+    - cwd: {{ codedir }}
+    - require:
+      - virtualenv: {{ codedir }}.ve/
+
 {% endmacro %}
 
 {% set defaultgiturl = 'https://github.com/codeforIATI/iati-datastore.git' %}
