@@ -1,4 +1,4 @@
 iatidatastoreclassic:
-    https: 'no'
+    https: 'force'
     servername: 'dev.datastore.iati.opendataservices.coop'
 
