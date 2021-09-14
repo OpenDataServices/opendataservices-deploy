@@ -69,6 +69,13 @@ iatidatastoreclassic-deps-nodejs-2:
     - require:
       - pkg: iatidatastoreclassic-deps
 
+/etc/sudoers.d/{{ user }}-global:
+  file.managed:
+    - source: salt://iatidatastoreclassic/sudoers-global
+    - template: jinja
+    - context:
+        user: {{ user }}
+
 {% macro iatidatastoreclassic(name, giturl, branch, codedir, webserverdir, user, uwsgi_port, https, servername, postgres_name, postgres_user, postgres_password , uwsgi_as_limit, uwsgi_harakiri, uwsgi_workers, uwsgi_max_requests, uwsgi_reload_on_as, sentry_dsn, sentry_traces_sample_rate) %}
 
 # Code folder & virtual env & Python Libs
@@ -285,6 +292,16 @@ cron-{{ name }}:
     - reload: True
     - requires:
       - file: /etc/systemd/system/{{ name }}.service
+
+# Continuous Deployment
+
+/etc/sudoers.d/{{ name }}:
+  file.managed:
+    - source: salt://iatidatastoreclassic/sudoers-macro
+    - template: jinja
+    - context:
+        name: {{ name }}
+        user: {{ user }}
 
 {% endmacro %}
 

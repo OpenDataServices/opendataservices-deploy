@@ -1,0 +1,2 @@
+# Let {{ user }} restart worker
+{{ user }}   ALL=(root) NOPASSWD: /bin/systemctl restart iatidatastoreclassic-{{ name }}
