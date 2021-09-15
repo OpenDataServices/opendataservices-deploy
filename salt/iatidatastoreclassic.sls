@@ -85,18 +85,70 @@ iatidatastoreclassic-deps-nodejs-2:
     - context:
         user: {{ user }}
 
+# Matomo Import Script
+
+{% set matomo_import_code_dir = '/home/' +  user_logs + '/matomo-import' %}
+{% set matomo_import_logs_dir = '/home/' +  user_logs + '/logs' %}
+{% set matomo_import_git_url = 'https://github.com/OpenDataServices/iati-data-store-classic-matomo-import.git' %}
+
 install_matomo_import_script:
   git.latest:
-    - name: https://github.com/OpenDataServices/iati-data-store-classic-matomo-import.git
+    - name: {{ matomo_import_git_url }}
     - rev: main
-    - target: /home/{{ user_logs }}/matomo-import
+    - target: {{ matomo_import_code_dir }}
     - user: {{ user_logs }}
     - force_fetch: True
     - force_reset: True
     - require:
       - pkg: git
 
-{% macro iatidatastoreclassic(name, giturl, branch, codedir, webserverdir, user, uwsgi_port, https, servername, postgres_name, postgres_user, postgres_password , uwsgi_as_limit, uwsgi_harakiri, uwsgi_workers, uwsgi_max_requests, uwsgi_reload_on_as, sentry_dsn, sentry_traces_sample_rate) %}
+{{ matomo_import_code_dir }}/.ve/:
+  virtualenv.managed:
+    - python: /usr/bin/python3
+    - user: {{ user_logs }}
+    - system_site_packages: False
+    - require:
+      - pkg: iatidatastoreclassic-deps
+      - git: install_matomo_import_script
+
+# Fix permissions in virtual env
+{{ matomo_import_code_dir }}-fix-ve-permissions:
+  cmd.run:
+    - name: chown -R {{ user_logs }}:{{ user_logs }} .ve
+    - user: root
+    - cwd: {{ matomo_import_code_dir }}
+    - require:
+      - virtualenv: {{ matomo_import_code_dir }}/.ve/
+
+# This should ideally be in virtualenv.managed but we get an error if we do that
+{{ matomo_import_code_dir }}-install-python-packages:
+  cmd.run:
+    - name: . .ve/bin/activate; pip install -r requirements.txt
+    - user: {{ user_logs }}
+    - cwd: {{ matomo_import_code_dir }}
+    - require:
+      - pkg: iatidatastoreclassic-deps
+      - virtualenv: {{ matomo_import_code_dir }}/.ve/
+
+
+# A logs directory to store output of processing cron
+{{ matomo_import_logs_dir }}:
+  file.directory:
+    - user: {{ user_logs }}
+    - group: {{ user_logs }}
+    - makedirs: True
+
+# Logrotate logs directory for matomo import
+/etc/logrotate.d/iatidatastoreclassic-logs:
+  file.managed:
+    - source: salt://iatidatastoreclassic/logslogrotate
+    - user: root
+    - template: jinja
+    - context:
+        matomo_import_logs_dir: {{ matomo_import_logs_dir }}
+        user_logs: {{ user_logs }}
+
+{% macro iatidatastoreclassic(name, giturl, branch, codedir, webserverdir, user, uwsgi_port, https, servername, postgres_name, postgres_user, postgres_password , uwsgi_as_limit, uwsgi_harakiri, uwsgi_workers, uwsgi_max_requests, uwsgi_reload_on_as, sentry_dsn, sentry_traces_sample_rate, matomo_host, matomo_siteid, matomo_token) %}
 
 # Code folder & virtual env & Python Libs
 
@@ -280,6 +332,18 @@ cron-{{ name }}:
     - minute: 0
     - hour: 6,12,18,23
 
+{% if matomo_host %}
+
+cron-matomo-{{ name }}:
+  cron.present:
+    - name: cd {{ matomo_import_code_dir }}; . .ve/bin/activate; python3 matomo-import.py /var/log/apache2/{{ name }}_access.log.1 {{ matomo_host }} {{ matomo_token }} {{ matomo_siteid }} >> {{ matomo_import_logs_dir }}/matomo-import-{{ name }}.log 2>&1
+    - identifier: IATIDATASTORE{{ name }}MATOMOIMPORT
+    - user: {{ user_logs }}
+    - minute: 0
+    - hour: 2
+
+{% endif %}
+
 # Worker
 
 
@@ -364,5 +428,8 @@ cron-{{ name }}:
     uwsgi_as_limit=pillar.iatidatastoreclassic.uwsgi_as_limit if 'uwsgi_as_limit' in pillar.iatidatastoreclassic else '2048',
     uwsgi_harakiri=pillar.iatidatastoreclassic.uwsgi_harakiri if 'uwsgi_harakiri' in pillar.iatidatastoreclassic else '1200',
     sentry_dsn=pillar.iatidatastoreclassic.sentry_dsn if 'sentry_dsn' in pillar.iatidatastoreclassic else '',
-    sentry_traces_sample_rate=pillar.iatidatastoreclassic.sentry_traces_sample_rate if 'sentry_traces_sample_rate' in pillar.iatidatastoreclassic else '0.0'
+    sentry_traces_sample_rate=pillar.iatidatastoreclassic.sentry_traces_sample_rate if 'sentry_traces_sample_rate' in pillar.iatidatastoreclassic else '0.0',
+    matomo_host=pillar.iatidatastoreclassic.matomo_host if 'matomo_host' in pillar.iatidatastoreclassic else '',
+    matomo_siteid=pillar.iatidatastoreclassic.matomo_siteid if 'matomo_siteid' in pillar.iatidatastoreclassic else '',
+    matomo_token=pillar.iatidatastoreclassic.matomo_token if 'matomo_token' in pillar.iatidatastoreclassic else '',
     ) }}
