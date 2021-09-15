@@ -148,6 +148,13 @@ install_matomo_import_script:
         matomo_import_logs_dir: {{ matomo_import_logs_dir }}
         user_logs: {{ user_logs }}
 
+
+# Apache - keep logs for longer
+/etc/logrotate.d/apache2:
+  file.replace:
+    - pattern: rotate \d+
+    - repl: rotate 90
+
 {% macro iatidatastoreclassic(name, giturl, branch, codedir, webserverdir, user, uwsgi_port, https, servername, postgres_name, postgres_user, postgres_password , uwsgi_as_limit, uwsgi_harakiri, uwsgi_workers, uwsgi_max_requests, uwsgi_reload_on_as, sentry_dsn, sentry_traces_sample_rate, matomo_host, matomo_siteid, matomo_token) %}
 
 # Code folder & virtual env & Python Libs
