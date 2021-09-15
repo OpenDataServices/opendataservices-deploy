@@ -7,10 +7,18 @@
 
 {% from 'lib.sls' import createuser, apache, uwsgi, removeapache, removeuwsgi %}
 
+include:
+  - core
+  - apache
+  - uwsgi
+  - letsencrypt
+
+##################################################################### Normal User
+
 {% set user = 'iatidatastoreclassic' %}
 {{ createuser(user) }}
 
-
+##################################################################### Logging User with special access
 {% set user_logs = 'iatidatastoreclassic_logs' %}
 {{ createuser(user_logs) }}
 
@@ -20,12 +28,7 @@ add_{{ user_logs }}_to_group_adm:
     - addusers:
       - {{ user_logs }}
 
-include:
-  - core
-  - apache
-  - uwsgi
-  - letsencrypt
-
+##################################################################### Ubuntu Dependencies
 
 iatidatastoreclassic-deps:
     apache_module.enabled:
@@ -51,6 +54,7 @@ iatidatastoreclassic-deps:
         - service: apache2
         - service: uwsgi
 
+##################################################################### NodeJS
 
 iatidatastoreclassic-deps-nodejs-1:
   cmd.run:
@@ -68,6 +72,8 @@ iatidatastoreclassic-deps-nodejs-2:
       - require:
         - cmd: iatidatastoreclassic-deps-nodejs-1
 
+##################################################################### Postgres Server Tuning
+
 /etc/postgresql/12/main/conf.d/iatidatastoreclassic.conf:
   file.managed:
     - source: salt://iatidatastoreclassic/postgres.conf
@@ -78,6 +84,8 @@ iatidatastoreclassic-deps-nodejs-2:
     - require:
       - pkg: iatidatastoreclassic-deps
 
+##################################################################### Continuous Deployment needs sudo
+
 /etc/sudoers.d/{{ user }}-global:
   file.managed:
     - source: salt://iatidatastoreclassic/sudoers-global
@@ -85,10 +93,9 @@ iatidatastoreclassic-deps-nodejs-2:
     - context:
         user: {{ user }}
 
-# Matomo Import Script
+##################################################################### Matomo Import Script
 
 {% set matomo_import_code_dir = '/home/' +  user_logs + '/matomo-import' %}
-{% set matomo_import_logs_dir = '/home/' +  user_logs + '/logs' %}
 {% set matomo_import_git_url = 'https://github.com/OpenDataServices/iati-data-store-classic-matomo-import.git' %}
 
 install_matomo_import_script:
@@ -130,6 +137,9 @@ install_matomo_import_script:
       - pkg: iatidatastoreclassic-deps
       - virtualenv: {{ matomo_import_code_dir }}/.ve/
 
+##################################################################### Matomo Import Logs
+
+{% set matomo_import_logs_dir = '/home/' +  user_logs + '/logs' %}
 
 # A logs directory to store output of processing cron
 {{ matomo_import_logs_dir }}:
@@ -155,9 +165,11 @@ install_matomo_import_script:
     - pattern: rotate \d+
     - repl: rotate 90
 
+##################################################################### Macro to install app
+
 {% macro iatidatastoreclassic(name, giturl, branch, codedir, webserverdir, user, uwsgi_port, https, servername, postgres_name, postgres_user, postgres_password , uwsgi_as_limit, uwsgi_harakiri, uwsgi_workers, uwsgi_max_requests, uwsgi_reload_on_as, sentry_dsn, sentry_traces_sample_rate, matomo_host, matomo_siteid, matomo_token) %}
 
-# Code folder & virtual env & Python Libs
+###################### Code folder & virtual env & Python Libs & more
 
 {{ giturl }}{{ codedir }}:
   git.latest:
@@ -201,12 +213,14 @@ install_matomo_import_script:
     - require:
       - virtualenv: {{ codedir }}.ve/
 
+# WSGI file for uWSGI to use
 {{ codedir }}/wsgi.py:
   file.managed:
     - source: salt://iatidatastoreclassic/wsgi.py
     - require:
       - virtualenv: {{ codedir }}.ve/
 
+# An ENV file - used by worker, cron and more
 {{ codedir }}/env.sh:
   file.managed:
     - source: salt://iatidatastoreclassic/env.sh
@@ -223,7 +237,7 @@ install_matomo_import_script:
       - virtualenv: {{ codedir }}.ve/
 
 
-# Database
+######################  Database
 
 iatidatastoreclassic-database-user-{{ name }}:
   postgres_user.present:
@@ -251,9 +265,9 @@ iatidatastoreclassic-database-schema-{{ name }}:
       - cmd: {{ codedir }}install-python-packages
       - postgres_database: iatidatastoreclassic-database-exists-{{ name }}
 
-# Redis - nothing to set up here.
+######################  Redis - nothing to set up here.
 
-# Docs
+######################  Docs
 
 iatidatastoreclassic-docs-{{ name }}:
   cmd.run:
@@ -264,7 +278,7 @@ iatidatastoreclassic-docs-{{ name }}:
       - cmd: {{ codedir }}install-python-packages
 
 
-# Frontpage
+######################  Frontpage
 
 iatidatastoreclassic-frontpage-{{ name }}:
   cmd.run:
@@ -280,15 +294,14 @@ iatidatastoreclassic-frontpage-{{ name }}:
       - cmd: iatidatastoreclassic-database-schema-{{ name }}
 
 
-# A Directory for web server to serve
+######################  UWSGI & Apache
 
+#  A Directory for web server to serve
 {{ webserverdir }}:
   file.directory:
     - user: www-data
     - group: www-data
     - makedirs: True
-
-# UWSGI & Apache
 
 {% set extracontext %}
 iatidatastoreclassic_name: {{ name }}
@@ -329,7 +342,7 @@ sentry_traces_sample_rate: {{ sentry_traces_sample_rate }}
     extracontext=extracontext,
     port=uwsgi_port) }}
 
-# CRON
+###################### Cron
 
 cron-{{ name }}:
   cron.present:
@@ -351,7 +364,7 @@ cron-matomo-{{ name }}:
 
 {% endif %}
 
-# Worker
+###################### Worker
 
 
 {{ codedir }}/worker.sh:
@@ -385,7 +398,7 @@ cron-matomo-{{ name }}:
     - requires:
       - file: /etc/systemd/system/{{ name }}.service
 
-# Continuous Deployment
+###################### Continuous Deployment needs sudo
 
 /etc/sudoers.d/{{ name }}:
   file.managed:
@@ -395,7 +408,7 @@ cron-matomo-{{ name }}:
         name: {{ name }}
         user: {{ user }}
 
-# Misc
+###################### Misc
 
 # Fix permissions in a code dir.
 # Saw a bug where a egg-info directory was created in here as root, and then subsequent pip install's failed
@@ -408,6 +421,8 @@ cron-matomo-{{ name }}:
       - virtualenv: {{ codedir }}.ve/
 
 {% endmacro %}
+
+##################################################################### Run Macro Once for app
 
 {% set defaultgiturl = 'https://github.com/codeforIATI/iati-datastore.git' %}
 
