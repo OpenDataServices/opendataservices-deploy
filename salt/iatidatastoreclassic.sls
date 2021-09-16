@@ -164,6 +164,9 @@ install_matomo_import_script:
   file.replace:
     - pattern: rotate \d+
     - repl: rotate 90
+    # If you have backups, they must be a file extension that logrotate will not try and include.
+    # Otherwise logrotate will detect duplicate apache configs and crash
+    - backup: False
 
 ##################################################################### Macro to install app
 
