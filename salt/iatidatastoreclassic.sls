@@ -79,6 +79,7 @@ iatidatastoreclassic-deps-nodejs-2:
     - source: salt://iatidatastoreclassic/postgres.conf
     - template: jinja
     - context:
+        log_min_duration_statement: {{ pillar.iatidatastoreclassic.postgres_log_min_duration_statement if 'postgres_log_min_duration_statement' in pillar.iatidatastoreclassic else '-1' }}
         shared_buffers: {{ pillar.iatidatastoreclassic.postgres_shared_buffers if 'postgres_shared_buffers' in pillar.iatidatastoreclassic else '16GB' }}
         max_connections: {{ pillar.iatidatastoreclassic.postgres_max_connections if 'postgres_max_connections' in pillar.iatidatastoreclassic else 150 }}
     - require:
