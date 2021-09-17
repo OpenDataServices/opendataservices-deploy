@@ -236,6 +236,9 @@ install_matomo_import_script:
         postgres_name: {{ postgres_name }}
         sentry_dsn: {{ sentry_dsn }}
         sentry_traces_sample_rate: {{ sentry_traces_sample_rate }}
+        matomo_host: {{ matomo_host }}
+        matomo_siteid: {{ matomo_siteid }}
+        matomo_token: {{ matomo_token }}
     - require:
       - virtualenv: {{ codedir }}.ve/
 
@@ -324,6 +327,9 @@ uwsgi_reload_on_as: {{ uwsgi_reload_on_as }}
 extra_apache_include_file: /etc/apache2/sites-available/{{ name }}.conf.private.include
 sentry_dsn: {{ sentry_dsn }}
 sentry_traces_sample_rate: {{ sentry_traces_sample_rate }}
+matomo_host: {{ matomo_host }}
+matomo_siteid: {{ matomo_siteid }}
+matomo_token: {{ matomo_token }}
 {% endset %}
 
 /etc/apache2/sites-available/{{ name }}.conf.private.include:
