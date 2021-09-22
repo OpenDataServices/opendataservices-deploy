@@ -404,9 +404,17 @@ cron-matomo-{{ name }}:
   service.running:
     - name: iatidatastoreclassic-{{ name }}
     - enable: True
-    - reload: True
     - requires:
       - file: /etc/systemd/system/{{ name }}.service
+
+# I can't find the option in "service.running" to always restart, so run as a command instead.
+{{name }}-service-restart:
+  cmd.run:
+    - name: systemctl restart iatidatastoreclassic-iatidatastoreclassic.service
+    - require:
+      - cmd: {{ codedir }}install-python-packages
+      - cmd: iatidatastoreclassic-database-schema-{{ name }}
+      - service: {{name }}-service-running
 
 ###################### Continuous Deployment needs sudo
 
