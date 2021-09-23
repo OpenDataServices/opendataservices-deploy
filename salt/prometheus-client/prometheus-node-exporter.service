@@ -7,7 +7,7 @@ After=network-online.target
 User={{ user }}
 Group={{ user }}
 Type=simple
-ExecStart=/home/{{ user }}/node_exporter-{{ pillar.prometheus.node_exporter_version }}.linux-amd64/node_exporter --web.listen-address=localhost:9157
+ExecStart=/home/{{ user }}/node_exporter-{{ pillar.prometheus.node_exporter_version }}.linux-amd64/node_exporter --collector.systemd --web.listen-address=localhost:9157
 
 [Install]
 WantedBy=multi-user.target
