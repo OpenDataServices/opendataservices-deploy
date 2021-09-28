@@ -42,9 +42,6 @@ extra_cove_branches: # remove the [] (empty list) if you re-add some values belo
   - name: 360-additional-check-dates
     app: cove_360
     uwsgi_port: 4004
-  - name: org-ref-section
-    app: cove_iati
-    uwsgi_port: 4005
 
 
 # Do NOT just delete branches from extra_cove_branches above! Instead add them to old_cove_branches!
@@ -81,10 +78,10 @@ old_cove_branches: #[] # remove the [] (empty list) if you re-add some values be
     app: cove_iati
   - name: flattentool-342-last-modified-does-not-convert
     app: cove_iati
-    uwsgi_port: 4001
   - name: flattentool-342-last-modified-does-not-convert-360
     app: cove_360
-    uwsgi_port: 4003
+  - name: org-ref-section
+    app: cove_iati
 
 # Add a new branch with the name of the branch, and increment the port number.
 # Currently adding a new port number requires a manual uwsgi restart (ie. the
