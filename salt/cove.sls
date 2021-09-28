@@ -105,6 +105,17 @@ schema_url_ocds: null
       - user
       - mode
 
+# IATI Cove needs a cache directory.
+# The format of the cache files may change between library releases, so clear cache out on every deploy.
+# (This will also create then delete the .gitkeep file on every deploy, but that shouldn't matter)
+{{ djangodir }}/requests_cache_dir:
+  file.directory:
+    - user: {{ user }}
+    - dir_mode: 755
+    - clean: True
+    - require:
+      - git: {{ giturl }}{{ djangodir }}
+
 {{ djangodir }}.ve/:
   virtualenv.managed:
     - python: /usr/bin/python3
