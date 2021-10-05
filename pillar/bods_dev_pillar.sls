@@ -7,7 +7,8 @@ cove:
     site_id: '22'
     dimension_map: 'file_type=1,page_type=2,form_name=3,language=4,exit_language=5'
   giturl: 'https://github.com/openownership/cove-bods.git'
-  gitbranch: 'master'
+  # Temp while https://github.com/openownership/cove-bods/pull/75 is being reviewed
+  gitbranch: '56-more-errors'
   allowedhosts: '.default.opendataservices.uk0.bigv.io,dev.datareview.openownership.org'
   ocds_redirect: False
   larger_uwsgi_limits: True
