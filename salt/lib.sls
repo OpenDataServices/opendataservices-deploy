@@ -91,7 +91,7 @@
           # I think this may be adding some extra overhead, but for our
           # dev site this shouldn't be noticeable.
           AddOutputFilterByType INFLATE;SUBSTITUTE;DEFLATE text/html
-          Substitute "s|<body([^>]*)>|<body$1><div style=\"background-color:red; color: black; width: 100%; text-align: center; font-weight: bold; position: fixed; right: 0; left: 0; z-index: 1031\">{{ pillar.banner_message }}</div>|i"
+          Substitute "s|<body([^>]*)>|<body$1><div style=\"background-color:#9E2A00; color: white; width: 100%; text-align: center; font-weight: bold; position: fixed; right: 0; left: 0; z-index: 1031\">{{ pillar.banner_message }}</div>|i"
         {% else %}
         banner: ''
       {% endif %}
