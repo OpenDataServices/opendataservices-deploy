@@ -35,7 +35,6 @@ oroi-9:     oroi-9.docker.opendataservices.uk0.bigv.io
 
 # Dokku Dev
 # (Please edit the config files in salt/dokku-deployer if you change stuff -  even just a comment is great!)
-dokku1:     dokku1.dokku.opendataservices.uk0.bigv.io
 dokku-dev-2: dokku-dev-2.dokku.opendataservices.uk0.bigv.io
 
 # Dokku Live

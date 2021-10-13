@@ -1,5 +1,0 @@
-repositories:
-  - id: test-dokku-jekyll
-    url: https://github.com/OpenDataServices/test-dokku-jekyll
-    all_branches: true
-    app_name_format: test-dokku-jekyll-{branch_name}

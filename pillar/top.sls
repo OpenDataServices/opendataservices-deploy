@@ -59,9 +59,6 @@ base:
     - oa1_pillar
     - private.openactive_conformance_services_private
 
-  'dokku1':
-    - dokku1_pillar
-
   'dokku-dev-2':
     - dokku_dev_2_pillar
 
