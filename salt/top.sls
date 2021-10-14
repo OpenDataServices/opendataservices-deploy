@@ -120,4 +120,5 @@ base:
     - prometheus-client-standalone
     - epds
     - postgres
+    - dokku
 

@@ -1,0 +1,16 @@
+repositories:
+  - id: epds-search
+    url: https://github.com/OpenDataServices/epds-search
+    branches:
+        - main
+    app_name_format: epds-search
+    setup_dokku_commands:
+      - dokku apps:create epds-search
+      - dokku config:set $APP_NAME ALLOWED_HOSTS=epds.dev.opendataservices.coop
+      - dokku plugin:install https://github.com/dokku/dokku-elasticsearch.git elasticsearch
+      - dokku plugin:install https://github.com/dokku/dokku-postgres.git postgres
+      - dokku postgres:create epdssearch_db
+      - dokku postgres:link epdssearch_db epds-search
+      - dokku elasticsearch:create epdssearch_idx
+      - dokku elasticsearch:link epdssearch_idx epds-search
+        # See epds-search README for further instructions

@@ -79,4 +79,5 @@ base:
   'epds1':
     - postgres_pillar
     - private.epds
+    - dokku_epds_dev
 
