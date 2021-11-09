@@ -50,7 +50,7 @@ base:
   'pwyf-index-2022-live':
      - postgres_pillar
      - private.pwyf_tracker_original
-     - pwyf_tracker_original
+     - pwyf_tracker_2022
 
   'analysis-1':
      - postgres_pillar
