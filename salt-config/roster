@@ -56,7 +56,7 @@ dokku-live-2: dokku-live-2.dokku.opendataservices.uk0.bigv.io
 # PWYF Servers
 
 pwyf-index-2022-test: 92.243.17.104
-
+pwyf-index-2022-live: 92.243.20.23
 
 # Analysis Servers
 

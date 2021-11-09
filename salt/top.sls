@@ -97,6 +97,10 @@ base:
     - pwyf-tracker-original
     - postgres
 
+  'pwyf-index-2022-live':
+    - pwyf-tracker-2022
+    - postgres
+
   'analysis-*':
     - prometheus-client-standalone
     - users
