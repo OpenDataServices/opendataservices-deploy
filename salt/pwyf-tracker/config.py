@@ -31,12 +31,12 @@ IATIUPDATES_URL = "http://2018tracker.publishwhatyoufund.org/iatiupdates/api/pac
 
 REMOVE_RESULTS = True
 
-INTRO_HTML = 'Data collection for the <a href="http://www.publishwhatyoufund.org/the-index/">2020 Aid Transparency Index</a> has now started. We will release more detailed information in April 2020 when the Aid Transparency Index will be launched. Results and analysis for previous years is available in the <a href="http://ati.publishwhatyoufund.org/" target="_blank">2018 Index</a>.'
+INTRO_HTML = 'Data collection for the <a href="https://www.publishwhatyoufund.org/2021/08/2022-aid-transparency-index-which-organisations-will-we-assess/">2022 Aid Transparency Index</a> has now started. We will release more detailed information in April 2022 when the Aid Transparency Index will be launched. Results and analysis for previous years is available in the <a href="http://publishwhatyoufund.org/the-index/2020" target="_blank">2020 Index</a>.'
 
 # INTRO_HTML = 'Data collection for the <a href="http://www.publishwhatyoufund.org/the-index/">2018 Aid Transparency Index</a> has now started. We will release more detailed information in June 2018 when the Aid Transparency Index will be launched. Results and analysis for previous years is available in the <a href="http://ati.publishwhatyoufund.org/" target="_blank">2016 Index</a>.'
 
-ATI_YEAR = "2020"
-PREVIOUS_ATI_YEAR = "2018"
+ATI_YEAR = "2022"
+PREVIOUS_ATI_YEAR = "2020"
 
 basedir = dirname(abspath(__file__))
 IATI_DATA_PATH = join(basedir, 'dq', 'data')
