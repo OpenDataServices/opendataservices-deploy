@@ -10,6 +10,7 @@ base:
      - live_pillar
      - private.live_pillar
   'live4':
+     - live4_pillar
      - private.org-ids-datatig_pillar
   '*live-iati*':
      - iati_live_pillar
@@ -75,6 +76,9 @@ base:
   'iatidatastoreclassic-dev-1':
     - private.iatidatastoreclassic_dev_1_pillar
     - iatidatastoreclassic_dev_1_pillar
+
+  'dev7':
+    - dev7_pillar
 
   'epds1':
     - postgres_pillar

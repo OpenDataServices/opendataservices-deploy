@@ -13,6 +13,7 @@ base:
     - opendataservices-website
     - cove-opendataservices-coop
     - icinga2-satellite
+    - domain-redirects
 
   'live5':
     - prometheus-client-apache
@@ -51,6 +52,7 @@ base:
     - temp
     - os4d
     - org-ids
+    - domain-redirects
 
   'cove*dev*':
     - cove
