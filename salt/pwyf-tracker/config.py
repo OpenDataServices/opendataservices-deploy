@@ -18,7 +18,7 @@ SAMPLING_DB_FILENAME = join(realpath(dirname(__file__)), 'dq', 'sample_work', 's
 
 SECRET_KEY = "{{ secret_key }}"
 
-INDICATOR_GROUP = u"2018index"
+INDICATOR_GROUP = u"2022index"
 
 CODELIST_API = u"https://reference.iatistandard.org/{version}/codelists/downloads/clv2"
 
