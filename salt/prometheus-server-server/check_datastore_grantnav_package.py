@@ -9,7 +9,7 @@ package_url = "http://store.data.threesixtygiving.org/grantnav_packages/latest_g
 
 
 def send_alert(text):
-    to = os.environ.get("TO", "servers@opendataservices.coop")
+    to = os.environ.get("TO", "inbox+opendataservices+443f+threesixtygiving-app-alerts@plan.io")
     from_ = os.environ.get("FROM", "servers@opendataservices.coop")
 
     header = "To:%s\nFrom:%s\nSubject:WARNING: 360G Datastore Data Package issue\n" % (to, from_)
