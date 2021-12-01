@@ -1,10 +1,10 @@
-name: Link Checking Monthly
+name: Link Checking Quarterly 
 on:
   schedule:
-    - cron: '0 1 1 * *'
+    - cron: '0 1 1 2,5,8,11 *'
 
 jobs:
-  link_checking_monthly:
+  link_checking_quarterly:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
