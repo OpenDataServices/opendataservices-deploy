@@ -19,6 +19,6 @@ jobs:
       if: failure()
       # This is pipped to /dev/null otherwise a lot of info is returned that does not need to be made public
       run: |
-        echo '<issue><project_id>comms</project_id><subject>Broken links found</subject><description>See https://github.com/OpenDataServices/opendataservices-deploy/actions</description><assigned_to_id>58</assigned_to_id></issue>' | \
+        echo '<issue><project_id>comms</project_id><subject>Broken links found (Weekly check)</subject><description>See https://github.com/OpenDataServices/opendataservices-deploy/actions</description><assigned_to_id>58</assigned_to_id></issue>' | \
         curl -X POST -H 'Content-type: text/xml' -H 'X-Redmine-API-Key: ${{ secrets.PLANIO_USER_KEY }}' \
         -H 'Accept: text/xml' -d @- https://opendataservices.plan.io/projects/code/issues.xml > /dev/null
