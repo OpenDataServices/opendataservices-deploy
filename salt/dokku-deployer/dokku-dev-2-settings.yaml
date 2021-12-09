@@ -15,3 +15,12 @@ repositories:
       - dokku redis:unlink $APP_NAME $APP_NAME
       - dokku redis:destroy $APP_NAME -f
       # TODO remove files on disk.
+
+  - id: coop-website
+    url: https://github.com/OpenDataServices/coop-website
+    get_repository_by_ssh: true
+    app_name_format: coop-website-{branch_name}
+    all_branches: true
+    setup_dokku_commands:
+      - dokku config:set $APP_NAME ALLOWED_HOSTS=.ods.mobi
+      - dokku http-auth:on $APP_NAME {{ pillar.htpasswd_username }} {{ pillar.htpasswd_password }}
