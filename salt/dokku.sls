@@ -9,12 +9,6 @@
 #   dokku domains:remove-global dokkuX.dokku.opendataservices.uk0.bigv.io
 #   dokku domains:add-global dokkuX.ods.mobi
 #
-# enable plugins
-#   dokku plugin:install https://github.com/dokku/dokku-redis.git redis
-#   dokku plugin:install https://github.com/dokku/dokku-letsencrypt.git
-#   dokku letsencrypt:cron-job --add
-#
-#
 # For the deployer app:
 #
 # dokku apps:create deployer
@@ -37,6 +31,12 @@
 #  dokku git:sync --build deployer https://github.com/OpenDataServices/dokku-branch-deployer.git main
 # (Can't put this is Salt as it has an interacive prompt I can't work out how to avoid)
 #
+#
+# Setup the deployer app in our Prometheus server so we get alerts if it goes down.
+#   See:
+#   salt/private/prometheus-server-blackbox/conf-blackbox.yml
+#   salt/private/prometheus-server-server/conf-prometheus.yml
+
 
 #--- Install Dokku from scratch
 
@@ -72,12 +72,40 @@ installdokku:
 {% endif %}
 
 #--- Install Some Plugins we like
+# We can't have - require: - cmd: installdokku here as if Dokku is already installed, that state won't exist
 
 {% if not salt['file.directory_exists' ]('/var/lib/dokku/plugins/enabled/letsencrypt') %}
 
 letsencrypt_plugin:
   cmd.run:
-    - name: dokku plugin:install https://github.com/dokku/dokku-letsencrypt.git
+    - name: dokku plugin:install https://github.com/dokku/dokku-letsencrypt.git && dokku letsencrypt:cron-job --add
+    - runas: root
+
+{% endif %}
+
+{% if not salt['file.directory_exists' ]('/var/lib/dokku/plugins/enabled/http-auth') %}
+
+http_auth_plugin:
+  cmd.run:
+    - name: dokku plugin:install https://github.com/dokku/dokku-http-auth.git
+    - runas: root
+
+{% endif %}
+
+{% if not salt['file.directory_exists' ]('/var/lib/dokku/plugins/enabled/redis') %}
+
+redis_plugin:
+  cmd.run:
+    - name: dokku plugin:install https://github.com/dokku/dokku-redis.git redis
+    - runas: root
+
+{% endif %}
+
+{% if not salt['file.directory_exists' ]('/var/lib/dokku/plugins/enabled/postgres') %}
+
+postgres_plugin:
+  cmd.run:
+    - name: dokku plugin:install https://github.com/dokku/dokku-postgres.git postgres
     - runas: root
 
 {% endif %}
