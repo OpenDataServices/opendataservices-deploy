@@ -23,4 +23,5 @@ repositories:
     all_branches: true
     setup_dokku_commands:
       - dokku config:set $APP_NAME ALLOWED_HOSTS=.ods.mobi
+      - dokku proxy:ports-set $APP_NAME http:80:80
       - dokku http-auth:on $APP_NAME {{ pillar.htpasswd_username }} {{ pillar.htpasswd_password }}
