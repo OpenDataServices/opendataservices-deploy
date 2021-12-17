@@ -64,11 +64,9 @@ git@github.com:OpenDataServices/coop-website.git:
 build_coop_website:
     cmd.run:
         # Reason for mkdir: https://github.com/jekyll/jekyll/issues/7591
-        - name: mkdir -p .jekyll-cache _site && docker run --rm --label=jekyll --volume=/home/{{ user }}/website/:/srv/jekyll jekyll/jekyll:stable jekyll build && chown -R opendataservices:opendataservices _site/
+        - name: mkdir -p .jekyll-cache _site && docker run --rm --label=jekyll --env TZ=Europe/London  --volume=/home/{{ user }}/website/:/srv/jekyll jekyll/jekyll:stable jekyll build && chown -R opendataservices:opendataservices _site/
         - cwd: /home/{{ user }}/website/
         - runas: root
-        - env:
-           - TZ: 'Europe/London'
         - require:
           - git: git@github.com:OpenDataServices/coop-website.git
 
