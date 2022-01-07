@@ -5,7 +5,7 @@ import smtplib
 import requests
 from datetime import datetime
 
-package_url = "http://store.data.threesixtygiving.org/grantnav_packages/latest_grantnav_data.tar.gz"
+package_url = "https://store.data.threesixtygiving.org/grantnav_packages/latest_grantnav_data.tar.gz"
 
 
 def send_alert(text):
