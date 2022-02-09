@@ -1,0 +1,9 @@
+# vi: ft=apache
+
+    {% set documentroot='/home/datatig/real-staticsite-demos/out/' %}
+    DocumentRoot {{ documentroot }}
+    DirectoryIndex index.html
+
+    <Directory {{ documentroot }}>
+        Require all granted
+    </Directory>
