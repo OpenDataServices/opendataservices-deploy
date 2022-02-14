@@ -22,20 +22,19 @@ pwyf-dqt-deps:
       - cron
       - virtualenv
       - libapache2-mod-proxy-uwsgi
-      - uwsgi-plugin-python3
       - redis-server
       # See uWSGI comment ^
       - build-essential
-      - python3-dev
+      - python3.7
+      - python3.7-venv
+      - python3.7-dev
     - watch_in:
       - service: apache2
-      - service: uwsgi
 
   apache_module.enabled:
     - name: proxy proxy_uwsgi
     - watch_in:
       - service: apache2
-      - service: uwsgi
 
 # redis should start up after being installed but this will verify
 # If redis fails with redis-server.service: Can't open PID file this may
@@ -68,7 +67,7 @@ redis-server:
 
 /home/{{ pillar.pwyf_dqt.user }}/{{ pillar.pwyf_dqt.checkout_dir }}/.ve:
   virtualenv.managed:
-    - python: /usr/bin/python3
+    - python: /usr/bin/python3.7
     - user: {{ pillar.pwyf_dqt.user }}
     - system_site_packages: False
     - requirements: /home/{{ pillar.pwyf_dqt.user }}/{{ pillar.pwyf_dqt.checkout_dir }}/requirements.txt
@@ -153,6 +152,31 @@ pwyf_dqt_celery:
     - require:
       - /etc/systemd/system/pwyf_dqt_celery.service
       - /var/log/pwyf_dqt_celery
+
+#uWSGI
+
+/etc/systemd/system/pwyf-uwsgi-dqt.service:
+  file.managed:
+    - source: salt://systemd/pwyf-uwsgi-dqt.service
+    - template: jinja
+    - context:
+      ve_bin: /home/{{ pillar.pwyf_dqt.user }}/{{ pillar.pwyf_dqt.checkout_dir }}/.ve/bin/activate
+      user: {{ pillar.pwyf_dqt.user }}
+
+/var/log/uwsgi-dqt:
+  file.directory:
+    - makedirs: True
+    - user: {{ pillar.pwyf_dqt.user }}
+    - group: {{ pillar.pwyf_dqt.user }}
+
+pwyf-uwsgi-dqt:
+  service:
+    - running
+    - enable: True
+    - reload: True
+    - require:
+      - /etc/systemd/system/pwyf-uwsgi-dqt.service
+      - /var/log/uwsgi-dqt
 
 ##### Cron jobs
 

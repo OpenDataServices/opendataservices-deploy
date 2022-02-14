@@ -125,3 +125,8 @@ base:
     - postgres
     - dokku
 
+  # PWYF
+
+  'pwyf-dqt':
+    - pwyf-dqt
+    - prometheus-client-apache

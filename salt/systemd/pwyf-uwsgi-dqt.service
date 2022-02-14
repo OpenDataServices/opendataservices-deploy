@@ -1,0 +1,15 @@
+[Unit]
+Description=DQT uWSGI app
+After=syslog.target
+
+[Service]
+ExecStart=/home/dqt/data-quality-tester/.ve/bin/uwsgi \
+        --ini /etc/uwsgi/apps-available/pwyf-dqt.ini \
+        --socket /var/run/uwsgi/app/pwyf-dqt/socket
+User=dqt
+Group=dqt
+Restart=on-failure
+KillSignal=SIGQUIT
+Type=notify
+StandardError=syslog
+NotifyAccess=all
