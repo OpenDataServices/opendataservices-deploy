@@ -1,10 +1,15 @@
+#
+# The first time you install it this won't build any content, so links will 404.
+# Either just wait for the cron to activate, or log in and run /home/datatig/build-real-staticsite-demos.sh as the datatig user by hand.
+#
+
 {% from 'lib.sls' import createuser, apache %}
 
 include:
   - apache
   - letsencrypt
 
-
+# This is hard coded in some places, sorry
 {% set user="datatig" %}
 
 {{ createuser(user) }}
@@ -38,18 +43,20 @@ include:
     - require:
       - virtualenv: /home/{{ user }}/real-staticsite-demos/.ve/
 
-# Build now
-build-{{ user }}-real-staticsite-demos:
-  cmd.run:
-    - name: "git pull && source .ve/bin/activate && pip3 install -U git+https://github.com/DataTig/DataTig.git@main#egg=datatig && ./build.sh"
-    - user: "{{ user }}"
-    - cwd: /home/{{ user }}/real-staticsite-demos
-    - require:
-      - virtualenv: /home/{{ user }}/real-staticsite-demos/.ve/
+/home/{{user}}/build-real-staticsite-demos.sh:
+  file.managed:
+    - source: salt://datatig-real-static-site-demos/build.sh
+    - mode: 700
+    - user: {{ user }}
+    - group: {{ user }}
+    - template: jinja
+    - context:
+        user: {{ user }}
 
 # Cron for building regularly
-cd /home/{{ user }}/real-staticsite-demos; git pull; source ve/bin/activate; pip3 install -U git+https://github.com/DataTig/DataTig.git@main#egg=datatig; ./build.sh:
+datatig-real-static-site-demos-cron:
   cron.present:
+    - name: "/home/{{ user }}/build-real-staticsite-demos.sh >  /home/{{ user }}/real-staticsite-demos.log 2>&1"
     - identifier: DATATIG_REAL_STATIC_SITE_DEMOS
     - user: {{ user }}
     - minute: 0
