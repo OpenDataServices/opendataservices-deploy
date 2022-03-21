@@ -11,7 +11,7 @@ cove:
   allowedhosts: '.iati.cove.opendataservices.coop'
   larger_uwsgi_limits: True
   uwsgi_as_limit: 31500
-  uwsgi_harakiri: 7200
+  uwsgi_harakiri: 36000
   app: cove_iati
   https: 'force'
   # A uwsgi_port is needed to make cove-live-iati-2 work
