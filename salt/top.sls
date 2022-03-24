@@ -83,9 +83,6 @@ base:
 
   # OTHERS
 
-  'snapshotter':
-    - icinga2-satellite
-    - prometheus-client-apache
 
   'backups':
     - icinga2-satellite
