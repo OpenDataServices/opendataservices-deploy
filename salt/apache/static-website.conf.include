@@ -1,0 +1,12 @@
+# vi: ft=apache
+
+    DocumentRoot /home/{{ user }}/{{ directory }}
+    DirectoryIndex index.html
+
+    <Directory /home/{{ user }}/{{ directory }}>
+        Require all granted
+        Options Indexes
+    </Directory>
+
+    #ErrorLog /var/log/apache2/{{ name }}_error.log
+    #CustomLog /var/log/apache2/{{ name }}_access.log extended

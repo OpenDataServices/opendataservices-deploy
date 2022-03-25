@@ -111,10 +111,12 @@ base:
   'iatidatastoreclassic1':
     - prometheus-client-standalone
     - iatidatastoreclassic
+    #- static-website
 
   'iatidatastoreclassic-dev-1':
     - prometheus-client-standalone
     - iatidatastoreclassic
+    - static-website
 
   'epds1':
     - prometheus-client-standalone
