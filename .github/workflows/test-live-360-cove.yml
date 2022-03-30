@@ -14,7 +14,7 @@ jobs:
         python-version: 3.8
         architecture: x64
     - run: git clone https://github.com/threesixtygiving/dataquality.git
-    - run: cd ./dataquality/ && pip install -r requirements_cove.txt && pip install -r requirements_dev.txt
+    - run: cd ./dataquality/ && pip install -r requirements_cove_dev.txt
     - run: cd ./dataquality/cove && CUSTOM_SERVER_URL=https://dataquality.threesixtygiving.org/ DJANGO_SETTINGS_MODULE=cove_project.settings py.test cove_360/tests_functional.py
     - name: notify
       if: failure()
