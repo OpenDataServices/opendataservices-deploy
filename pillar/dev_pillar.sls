@@ -13,8 +13,8 @@ cove:
     dimension_map: 'file_type=2,page_type=3,form_name=4,language=5,exit_language=6'
   ocds_redirect: False
   larger_uwsgi_limits: True
-  uwsgi_as_limit: 1800
-  uwsgi_harakiri: 300
+  uwsgi_as_limit: 3800
+  uwsgi_harakiri: 36000
   apache_uwsgi_timeout: 360
   app: cove_iati
   iati: True
@@ -39,9 +39,9 @@ old_extra_org_ids_branches: [] # remove the [] (empty list) if you re-add some v
 cove_url: http://cove.cove-live-ocds.default.opendataservices.uk0.bigv.io/
 automatic_reboot: 'true'
 extra_cove_branches: # remove the [] (empty list) if you re-add some values below
-  - name: 360-additional-check-dates
-    app: cove_360
-    uwsgi_port: 4004
+  - name: cache-explore
+    app: cove_iati
+    uwsgi_port: 4005
 
 
 # Do NOT just delete branches from extra_cove_branches above! Instead add them to old_cove_branches!
@@ -82,6 +82,8 @@ old_cove_branches: #[] # remove the [] (empty list) if you re-add some values be
     app: cove_360
   - name: org-ref-section
     app: cove_iati
+  - name: 360-additional-check-dates
+    app: cove_360
 
 # Add a new branch with the name of the branch, and increment the port number.
 # Currently adding a new port number requires a manual uwsgi restart (ie. the
