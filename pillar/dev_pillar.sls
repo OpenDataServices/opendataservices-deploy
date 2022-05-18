@@ -39,7 +39,7 @@ old_extra_org_ids_branches: [] # remove the [] (empty list) if you re-add some v
 cove_url: http://cove.cove-live-ocds.default.opendataservices.uk0.bigv.io/
 automatic_reboot: 'true'
 extra_cove_branches: # remove the [] (empty list) if you re-add some values below
-  - name: cache-explore
+  - name: merge-indicator
     app: cove_iati
     uwsgi_port: 4005
 
@@ -84,6 +84,8 @@ old_cove_branches: #[] # remove the [] (empty list) if you re-add some values be
     app: cove_iati
   - name: 360-additional-check-dates
     app: cove_360
+  - name: cache-explore
+    app: cove_iati
 
 # Add a new branch with the name of the branch, and increment the port number.
 # Currently adding a new port number requires a manual uwsgi restart (ie. the
