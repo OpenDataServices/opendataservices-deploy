@@ -141,7 +141,7 @@ schema_url_ocds: null
 {{ djangodir }}install-python-packages:
   cmd.run:
     - name: . .ve/bin/activate; pip install -r requirements{{ '_iati' if app=='cove_iati' else '' }}.txt
-    - user: {{ user }}
+    - runas: {{ user }}
     - cwd: {{ djangodir }}
     - require:
       - virtualenv: {{ djangodir }}.ve/
