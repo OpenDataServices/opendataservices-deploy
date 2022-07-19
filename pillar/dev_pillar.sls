@@ -20,7 +20,7 @@ cove:
   iati: True
   uwsgi_port: 3008
 org_ids:
-  default_branch: 'update-requirements'
+  default_branch: 'update-requirements-django'
   server_name: 'dev.org-id.guide'
   https: 'no'
   uwsgi_port: 3502
