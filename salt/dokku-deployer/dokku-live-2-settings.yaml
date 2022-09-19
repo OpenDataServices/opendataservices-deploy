@@ -6,3 +6,10 @@ repositories:
     app_name_format: standards-lab
     # Commands to set up this app:
     # See https://standards-lab.readthedocs.io/en/latest/admin/dokku.html
+
+
+# Also on this server, but not run by the deployer:
+# - golabteam26, temp Sept 2022, see https://github.com/INDIGO-Initiative/indigo-2022-09-hackandlearn-team-26
+
+
+
