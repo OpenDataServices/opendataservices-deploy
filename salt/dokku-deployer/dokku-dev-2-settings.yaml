@@ -28,3 +28,4 @@ repositories:
 
 # Also on this server, but not run by the deployer:
 # - pwyf-wee-datasette (https://github.com/pwyf/pwyf-wee-datasette)
+# - gc-demo-datasette (https://github.com/OpenDataServices/gc-demo-datasette)
