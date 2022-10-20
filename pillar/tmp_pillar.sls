@@ -8,7 +8,7 @@ domain_prefix: 'tmp2.'
 banner_message: 'This is a temporary site with highly experimental features. Proceed at your own risk.'
 cove:
   piwik:
-    url: '//mon.opendataservices.coop/piwik/'
+    url: '//mon.opendataservices.coop/'
     site_id: '1' 
     dimension_map: 'file_type=2,page_type=3,form_name=4,language=5,exit_language=6'
   ocds_redirect: False

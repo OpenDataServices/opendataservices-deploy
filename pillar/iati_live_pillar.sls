@@ -3,7 +3,7 @@ default_branch: 'master'
 cove:
   gitbranch: live
   piwik:
-    url: '//mon.opendataservices.coop/piwik/'
+    url: '//mon.opendataservices.coop/'
     site_id: '18' 
     dimension_map: 'file_type=1,page_type=2,form_name=3,language=4,exit_language=5'
   iati: True

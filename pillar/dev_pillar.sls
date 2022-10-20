@@ -8,7 +8,7 @@ banner_message: 'This is a development site with experimental features. Do not r
 cove:
   gitbranch: live
   piwik:
-    url: '//mon.opendataservices.coop/piwik/'
+    url: '//mon.opendataservices.coop/'
     site_id: '1' 
     dimension_map: 'file_type=2,page_type=3,form_name=4,language=5,exit_language=6'
   ocds_redirect: False
@@ -25,7 +25,7 @@ org_ids:
   https: 'no'
   uwsgi_port: 3502
   piwik:
-    url: '//mon.opendataservices.coop/piwik/'
+    url: '//mon.opendataservices.coop/'
     site_id: 'XXX' 
 extra_org_ids_branches: [] # remove the [] (empty list) if you re-add some values below
 #  - name: test-branch
