@@ -66,9 +66,6 @@ base:
   'dokku-live-2':
     - dokku_live_2_pillar
 
-  'matomo*':
-     - private.matomo_pillar
-
   'iatidatastoreclassic1':
     - private.iatidatastoreclassic1_pillar
     - iatidatastoreclassic1_pillar

@@ -30,10 +30,6 @@ base:
   'cove-live-bods':
     - prometheus-client-apache
 
-  'matomo1':
-    - prometheus-client-apache
-    - matomo
-
   # STAGING
 
   'cove-staging':
