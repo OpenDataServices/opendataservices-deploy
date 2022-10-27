@@ -40,7 +40,6 @@ base:
 
   'dev5':
     - prometheus-client-apache
-    - json-data-ferret
     - opendataservices-website
 
   'dev7':

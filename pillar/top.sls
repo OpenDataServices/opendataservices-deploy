@@ -39,10 +39,6 @@ base:
   '*dev-bods*':
      - bods_dev_pillar
 
-  'dev5':
-    - json_data_ferret_dev5
-    - private.json_data_ferret_dev5
-
   'pwyf-index-2022-test':
      - postgres_pillar
      - private.pwyf_tracker_original
