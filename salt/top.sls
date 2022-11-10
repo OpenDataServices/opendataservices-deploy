@@ -49,6 +49,8 @@ base:
     - org-ids
     - domain-redirects
     - datatig-real-static-site-demos
+    # Manually added f500 datasette site 10/11/22 (needed for next weeks, 
+    # but not big deal it over-written)
 
   'cove*dev*':
     - cove
