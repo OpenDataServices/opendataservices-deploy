@@ -27,5 +27,4 @@ repositories:
       - dokku http-auth:on $APP_NAME {{ pillar.htpasswd_username }} {{ pillar.htpasswd_password }}
 
 # Also on this server, but not run by the deployer:
-# - pwyf-wee-datasette (https://github.com/pwyf/pwyf-wee-datasette)
 # - gc-demo-datasette (https://github.com/OpenDataServices/gc-demo-datasette)
