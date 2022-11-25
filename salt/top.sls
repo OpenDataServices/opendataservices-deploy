@@ -109,11 +109,13 @@ base:
     - prometheus-client-standalone
     - iatidatastoreclassic
     - static-website
+    - iaticdfdbackend
 
   'iatidatastoreclassic-dev-1':
     - prometheus-client-standalone
     - iatidatastoreclassic
     - static-website
+    - iaticdfdbackend
 
   'epds1':
     - prometheus-client-standalone

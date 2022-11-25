@@ -65,10 +65,14 @@ base:
   'iatidatastoreclassic1':
     - private.iatidatastoreclassic1_pillar
     - iatidatastoreclassic1_pillar
+    - private.iaticdfdbackend1_pillar
+    - iaticdfdbackend1_pillar
 
   'iatidatastoreclassic-dev-1':
     - private.iatidatastoreclassic_dev_1_pillar
     - iatidatastoreclassic_dev_1_pillar
+    - private.iaticdfdbackend_dev_1_pillar
+    - iaticdfdbackend_dev_1_pillar
 
   'dev7':
     - dev7_pillar
