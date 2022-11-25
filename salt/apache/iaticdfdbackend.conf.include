@@ -1,0 +1,49 @@
+# vi: ft=apache
+
+
+        DocumentRoot {{ webserverdir }}
+
+        {{ banner }}
+
+        <Location "/">
+                ProxyPass uwsgi://127.0.0.1:{{ uwsgi_port }}/ timeout={{ uwsgi_harakiri + 15 }}
+        </Location>
+
+        {% if pillar.dev_robots_txt %}
+        Alias /robots.txt "/var/www/html/robots.txt"
+        <Location "/robots.txt">
+                ProxyPass !
+                Order allow,deny
+                Allow from all
+                SetHandler None
+        </Location>
+        {% endif %}
+
+        <Directory {{ webserverdir }}>
+                Require all granted
+        </Directory>
+
+        <Location "/.well-known/acme-challenge">
+                ProxyPass !
+        </Location>
+
+        <Location "/docs">
+                ProxyPass !
+        </Location>
+
+        <Location "/error">
+                ProxyPass !
+        </Location>
+
+        ErrorDocument 404 /error/404.html
+        ErrorDocument 500 /error/5xx.html
+        ErrorDocument 501 /error/5xx.html
+        ErrorDocument 502 /error/5xx.html
+        ErrorDocument 503 /error/5xx.html
+        ErrorDocument 504 /error/5xx.html
+
+        Include {{ extra_apache_include_file }}
+
+        ErrorLog /var/log/apache2/{{ iaticdfdbackend_name }}_error.log
+        LogFormat "%{REQUEST_SCHEME}x://%v %h %t \"%r\" %>s %O \"%{Referer}i\" \"%{User-Agent}i\"" extended
+        CustomLog /var/log/apache2/{{ iaticdfdbackend_name }}_access.log extended
