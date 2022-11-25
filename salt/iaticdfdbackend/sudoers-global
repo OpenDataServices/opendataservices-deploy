@@ -1,0 +1,2 @@
+# Let {{ user }} restart uwsgi
+{{ user }}   ALL=(root) NOPASSWD:  /etc/init.d/uwsgi
