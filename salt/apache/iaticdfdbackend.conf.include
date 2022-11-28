@@ -27,14 +27,6 @@
                 ProxyPass !
         </Location>
 
-        <Location "/docs">
-                ProxyPass !
-        </Location>
-
-        <Location "/error">
-                ProxyPass !
-        </Location>
-
         ErrorDocument 404 /error/404.html
         ErrorDocument 500 /error/5xx.html
         ErrorDocument 501 /error/5xx.html

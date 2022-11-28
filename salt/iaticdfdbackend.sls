@@ -18,16 +18,6 @@ include:
 {% set user = 'iaticdfdbackend' %}
 {{ createuser(user) }}
 
-##################################################################### Logging User with special access
-{% set user_logs = 'iaticdfdbackend_logs' %}
-{{ createuser(user_logs) }}
-
-add_{{ user_logs }}_to_group_adm:
-  group.present:
-    - name: adm
-    - addusers:
-      - {{ user_logs }}
-
 ##################################################################### Ubuntu Dependencies
 
 iaticdfdbackend-deps:
@@ -41,7 +31,6 @@ iaticdfdbackend-deps:
         - python3-pip
         - python3-virtualenv
         - uwsgi-plugin-python3
-        #- redis-server
         - postgresql-12
         - libpq-dev
         - gcc
@@ -112,15 +101,20 @@ iaticdfdbackend-deps:
       - virtualenv: {{ codedir }}.ve/
 
 # Remove file
-{{ codedir }}/wsgi.py:
-  cmd.run:
-    - name: . .ve/bin/activate; rm wsgi.py
-    - user: {{ user }}
-    - cwd: {{ codedir }}
-    - require:
-      - virtualenv: {{ codedir }}.ve/
+#{{ codedir }}/wsgi.py:
+#  cmd.run:
+#    - name: . .ve/bin/activate; rm wsgi.py
+#    - user: {{ user }}
+#    - cwd: {{ codedir }}
+#    - require:
+#      - virtualenv: {{ codedir }}.ve/
 
-# An ENV file - used by worker, cron and more
+# Remove file which causes circular import issue
+{{ codedir }}/wsgi.py:
+  file.absent:
+    - name: {{ codedir }}/wsgi.py
+
+# An ENV file - for sentry ???
 {{ codedir }}/env.sh:
   file.managed:
     - source: salt://iaticdfdbackend/env.sh
@@ -128,9 +122,6 @@ iaticdfdbackend-deps:
     - group: {{ user }}
     - template: jinja
     - context:
-        postgres_user: {{ postgres_user }}
-        postgres_password: {{ postgres_password }}
-        postgres_name: {{ postgres_name }}
         sentry_dsn: {{ sentry_dsn }}
         sentry_traces_sample_rate: {{ sentry_traces_sample_rate }}
     - require:
