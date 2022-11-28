@@ -100,20 +100,6 @@ iaticdfdbackend-deps:
     - require:
       - virtualenv: {{ codedir }}.ve/
 
-# Remove file
-#{{ codedir }}/wsgi.py:
-#  cmd.run:
-#    - name: . .ve/bin/activate; rm wsgi.py
-#    - user: {{ user }}
-#    - cwd: {{ codedir }}
-#    - require:
-#      - virtualenv: {{ codedir }}.ve/
-
-# Remove file which causes circular import issue
-{{ codedir }}/wsgi.py:
-  file.absent:
-    - name: {{ codedir }}/wsgi.py
-
 # An ENV file - for sentry ???
 {{ codedir }}/env.sh:
   file.managed:

@@ -1,4 +1,4 @@
 iaticdfdbackend:
-    https: 'certonly'
+    https: 'force'
     servername: 'cdfd.iati.opendataservices.coop'
 
