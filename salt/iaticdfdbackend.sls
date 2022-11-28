@@ -167,8 +167,6 @@ iaticdfdbackend-database-exists-{{ name }}:
       - pkg: iaticdfdbackend-deps
       - postgres_user: iaticdfdbackend-database-user-{{ name }}
 
-######################  Redis - nothing to set up here.
-
 ######################  UWSGI & Apache
 
 #  A Directory for web server to serve
