@@ -28,3 +28,4 @@ repositories:
 
 # Also on this server, but not run by the deployer:
 # - gc-demo-datasette (https://github.com/OpenDataServices/gc-demo-datasette)
+# - iati-flattener-datasette-dev (https://opendataservices.plan.io/issues/33520#note-7)
