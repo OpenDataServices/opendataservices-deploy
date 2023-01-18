@@ -77,6 +77,9 @@ base:
   'dev7':
     - dev7_pillar
 
+  'dev8':
+    - dev8_pillar
+
   'epds1':
     - postgres_pillar
     - private.epds

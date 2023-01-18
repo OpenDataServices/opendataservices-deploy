@@ -52,6 +52,17 @@ base:
     # Manually added f500 datasette site 10/11/22 (needed for next weeks, 
     # but not big deal it over-written)
 
+
+  'dev8':
+    - prometheus-client-apache
+    - opendataservices-website
+    - temp
+    - os4d
+    - org-ids
+    - domain-redirects
+    - datatig-real-static-site-demos
+
+
   'cove*dev*':
     - cove
     - icinga2-satellite

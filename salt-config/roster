@@ -4,6 +4,7 @@
 #   dev:
 dev5:                dev5.default.opendataservices.uk0.bigv.io
 dev7:                dev7.default.opendataservices.uk0.bigv.io
+dev8:                93.93.130.136
 cove-dev-4:          cove-dev-4.default.opendataservices.uk0.bigv.io
 cove-dev-bods:       cove-dev-bods.default.opendataservices.uk0.bigv.io
 iatidatastoreclassic-dev-1:   65.21.202.47
