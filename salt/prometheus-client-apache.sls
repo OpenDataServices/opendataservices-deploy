@@ -81,4 +81,9 @@ prometheus-client-apache-password:
     - mode: 0644
     - replace: False
 
+prometheus-client-apache-password-directory-permissions:
+  file.directory:
+    - name: /home/{{ user }}
+    - mode: 0755
+
 
