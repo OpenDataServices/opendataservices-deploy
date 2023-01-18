@@ -4,7 +4,7 @@
 # Core packages that almost all our software will depend on
 git:
   pkg.installed
-{% if grains['osrelease'] == '18.04' or grains['osrelease'] == '20.04' %}#}
+{% if grains['osrelease'] == '18.04' or grains['osrelease'] == '20.04' %}
 python-apt: # required for salt to interact with apt
   pkg.installed
 {% endif %}
