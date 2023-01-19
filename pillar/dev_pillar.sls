@@ -109,3 +109,7 @@ opendataservices_website:
 
 
 os4d_apache_https: "no"
+
+cove_opendataservices_coop:
+  servername: 'dev.staticcove.opendataservices.coop'
+  https: 'no'

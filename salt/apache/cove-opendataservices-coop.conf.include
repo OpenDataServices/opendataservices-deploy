@@ -8,3 +8,11 @@
 
     Redirect /360 https://dataquality.threesixtygiving.org
     Redirect /ocds https://standard.open-contracting.org/review
+
+    {% if pillar.dev_robots_txt %}
+    Alias /robots.txt "/var/www/html/robots.txt"
+    <Location "/robots.txt">
+            Order allow,deny
+            Allow from all
+    </Location>
+    {% endif %}

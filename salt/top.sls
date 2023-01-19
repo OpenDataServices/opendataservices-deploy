@@ -56,6 +56,7 @@ base:
   'dev8':
     - prometheus-client-apache
     - opendataservices-website
+    - cove-opendataservices-coop
     - temp
     - org-ids
     - domain-redirects

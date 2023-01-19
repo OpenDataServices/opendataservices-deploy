@@ -1,7 +1,7 @@
 {% from 'lib.sls' import createuser, apache %}
 
 {% set user = 'coveodscoop' %}
-{{ createuser(user) }}
+{{ createuser(user, world_readable_home_dir='yes') }}
 
 /home/{{ user }}/web:
   git.latest:
@@ -22,8 +22,8 @@ webdir: /home/{{ user }}/web
 {{ apache(
 'cove-opendataservices-coop.conf',
 name='cove-opendataservices-coop.conf',
-servername='cove.opendataservices.coop',
+servername=pillar.cove_opendataservices_coop.servername,
 serveraliases=[],
-https='yes',
+https=pillar.cove_opendataservices_coop.https,
 extracontext=extracontext,
 ) }}

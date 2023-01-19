@@ -22,3 +22,7 @@ opendataservices_website:
     default_branch: 'live'
 
 os4d_apache_https: "force"
+
+cove_opendataservices_coop:
+  servername: 'cove.opendataservices.coop'
+  https: 'yes'
