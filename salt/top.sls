@@ -22,6 +22,9 @@ base:
 
   'live6':
     - prometheus-client-apache
+    - cove-opendataservices-coop
+    - opendataservices-website
+    - domain-redirects
 
   'cove*live*':
     - cove

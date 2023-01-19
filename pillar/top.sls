@@ -12,6 +12,8 @@ base:
   'live4':
      - live4_pillar
      - private.org-ids-datatig_pillar
+  'live6':
+     - live6_pillar
   '*live-iati*':
      - iati_live_pillar
   '*staging*':
