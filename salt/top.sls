@@ -20,6 +20,9 @@ base:
     - os4d
     - org-ids
 
+  'live6':
+    - prometheus-client-apache
+
   'cove*live*':
     - cove
     - icinga2-satellite

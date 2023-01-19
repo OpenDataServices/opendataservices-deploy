@@ -12,6 +12,7 @@ iatidatastoreclassic-dev-1:   65.21.202.47
 #   live:
 live4:                    live4.default.opendataservices.uk0.bigv.io
 live5:                    live5.default.opendataservices.uk0.bigv.io
+live6:                    odsclive6.vs.mythic-beasts.com
 # Prometheus on mon-4 is using IP based whitelisting for sending emails - if we move server/IP that will need attention.
 mon-4:                    mon-4.default.opendataservices.uk0.bigv.io
 cove-live-iati-2:         cove-live-iati-2.default.opendataservices.uk0.bigv.io
