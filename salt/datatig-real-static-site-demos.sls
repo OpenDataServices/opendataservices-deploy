@@ -12,7 +12,8 @@ include:
 # This is hard coded in some places, sorry
 {% set user="datatig" %}
 
-{{ createuser(user) }}
+{{ createuser(user, world_readable_home_dir='yes') }}
+
 
 /home/{{ user }}/real-staticsite-demos:
   git.latest:

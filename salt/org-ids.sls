@@ -1,7 +1,7 @@
 {% from 'lib.sls' import createuser, apache, uwsgi, removeapache, removeuwsgi %}
 
 {% set user = 'org-ids' %}
-{{ createuser(user) }}
+{{ createuser(user, world_readable_home_dir='yes') }}
 
 {% set giturl = 'https://github.com/OpenDataServices/org-ids.git' %}
 

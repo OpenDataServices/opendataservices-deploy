@@ -10,7 +10,7 @@
 # Therefore, most of our main salt formulas will begin by defining a user.
 #-----------------------------------------------------------------------
 
-{% macro createuser(user) %}
+{% macro createuser(user, world_readable_home_dir='') %}
 
 {{ user }}_user_exists:
   user.present:
@@ -50,6 +50,13 @@
     - require:
       - file: {{ user }}_user_ssh_userkeys
 
+{% endif %}
+
+{% if world_readable_home_dir == 'yes' %}
+user-{{ user }}-home-directory-permissions:
+  file.directory:
+    - name: /home/{{ user }}
+    - mode: 0755
 {% endif %}
 
 {% endmacro %}
