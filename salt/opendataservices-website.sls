@@ -14,7 +14,7 @@ rewrite:
 
 # Create a user for this piece of work, see lib.sls for more info
 {% set user = 'opendataservices' %}
-{{ createuser(user) }}
+{{ createuser(user, world_readable_home_dir='yes') }}
 
 /home/{{ user }}/.ssh/config:
   file.managed:
