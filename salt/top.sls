@@ -57,7 +57,6 @@ base:
     - prometheus-client-apache
     - opendataservices-website
     - temp
-    - os4d
     - org-ids
     - domain-redirects
     - datatig-real-static-site-demos
