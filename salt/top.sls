@@ -8,13 +8,6 @@ base:
 
   # LIVE
 
-  'live4':
-    - prometheus-client-apache
-    - opendataservices-website
-    - cove-opendataservices-coop
-    - icinga2-satellite
-    - domain-redirects
-
   'live5':
     - prometheus-client-apache
     - os4d
@@ -43,10 +36,6 @@ base:
     - icinga2-satellite
 
   # DEVELOPMENT
-
-  'dev5':
-    - prometheus-client-apache
-    - opendataservices-website
 
   'dev7':
     - prometheus-client-apache
