@@ -81,6 +81,13 @@ letsencrypt_plugin:
     - name: dokku plugin:install https://github.com/dokku/dokku-letsencrypt.git && dokku letsencrypt:cron-job --add
     - runas: root
 
+{% else %}
+
+letsencrypt_plugin:
+  cmd.run:
+    - name: dokku plugin:update letsencrypt
+    - runas: root
+
 {% endif %}
 
 {% if not salt['file.directory_exists' ]('/var/lib/dokku/plugins/enabled/http-auth') %}
@@ -88,6 +95,13 @@ letsencrypt_plugin:
 http_auth_plugin:
   cmd.run:
     - name: dokku plugin:install https://github.com/dokku/dokku-http-auth.git
+    - runas: root
+
+{% else %}
+
+http_auth_plugin:
+  cmd.run:
+    - name: dokku plugin:update http-auth
     - runas: root
 
 {% endif %}
@@ -99,6 +113,13 @@ redis_plugin:
     - name: dokku plugin:install https://github.com/dokku/dokku-redis.git redis
     - runas: root
 
+{% else %}
+
+redis_plugin:
+  cmd.run:
+    - name: dokku plugin:update redis
+    - runas: root
+
 {% endif %}
 
 {% if not salt['file.directory_exists' ]('/var/lib/dokku/plugins/enabled/postgres') %}
@@ -106,6 +127,13 @@ redis_plugin:
 postgres_plugin:
   cmd.run:
     - name: dokku plugin:install https://github.com/dokku/dokku-postgres.git postgres
+    - runas: root
+
+{% else %}
+
+postgres_plugin:
+  cmd.run:
+    - name: dokku plugin:update postgres
     - runas: root
 
 {% endif %}
