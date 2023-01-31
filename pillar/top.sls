@@ -11,6 +11,8 @@ base:
      - private.live_pillar
   'live6':
      - live6_pillar
+     - org-ids_pillar
+     - private.org-ids_pillar
   '*live-iati*':
      - iati_live_pillar
   '*staging*':
@@ -24,10 +26,6 @@ base:
      - private.mon_pillar
   'backups':
      - backups_pillar
-
-  'live5':
-     - org-ids_pillar
-     - private.org-ids_pillar
 
   'tmp2':
      - tmp_pillar

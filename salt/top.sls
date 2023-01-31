@@ -11,13 +11,13 @@ base:
   'live5':
     - prometheus-client-apache
     - os4d
-    - org-ids
 
   'live6':
     - prometheus-client-apache
     - cove-opendataservices-coop
     - opendataservices-website
     - domain-redirects
+    - org-ids
 
   'cove*live*':
     - cove
@@ -78,8 +78,8 @@ base:
 
   # MONITORING
 
-  # Prometheus on mon-4 is using IP allow-listing for sending emails from our gmail - if we move server/IP that will need attention.
-  'mon-4':
+  # Prometheus on mon-5 is using IP allow-listing for sending emails from our gmail - if we move server/IP that will need attention.
+  'mon-5':
     - prometheus-server
     - prometheus-client-apache
 
