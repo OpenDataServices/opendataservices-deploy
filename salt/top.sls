@@ -82,7 +82,6 @@ base:
   'mon-4':
     - prometheus-server
     - prometheus-client-apache
-    - private.360G-datatester
 
   # OTHERS
 
