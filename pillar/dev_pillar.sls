@@ -113,3 +113,8 @@ os4d_apache_https: "no"
 cove_opendataservices_coop:
   servername: 'dev.staticcove.opendataservices.coop'
   https: 'no'
+
+os4d_static:
+  servername: 'dev.os4d.opendataservices.coop'
+  https: 'no'
+  branch: 'live'

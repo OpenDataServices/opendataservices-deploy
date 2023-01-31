@@ -56,6 +56,7 @@ base:
     - org-ids
     - domain-redirects
     - datatig-real-static-site-demos
+    - os4d-static
 
 
   'cove*dev*':

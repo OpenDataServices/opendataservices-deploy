@@ -1,0 +1,20 @@
+# vi: ft=apache
+
+    {% set documentroot='/home/os4dstatic/web/files/' %}
+    DocumentRoot {{ documentroot }}
+    DirectoryIndex index.html
+
+    <Directory {{ documentroot }}>
+        Require all granted
+        RedirectMatch 404 .git
+    </Directory>
+
+    {{ banner }}
+
+    {% if pillar.dev_robots_txt %}
+    Alias /robots.txt "/var/www/html/robots.txt"
+    <Location "/robots.txt">
+            Order allow,deny
+            Allow from all
+    </Location>
+    {% endif %}
