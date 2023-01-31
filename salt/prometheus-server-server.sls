@@ -12,7 +12,7 @@ prometheus-server-deps:
         - curl
 
 {% set user = 'prometheus-server' %}
-{{ createuser(user) }}
+{{ createuser(user, world_readable_home_dir='yes') }}
 
 ########### Get binary
 
