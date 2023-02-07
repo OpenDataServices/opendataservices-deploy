@@ -26,3 +26,8 @@ os4d_apache_https: "force"
 cove_opendataservices_coop:
   servername: 'cove.opendataservices.coop'
   https: 'yes'
+
+os4d_static:
+  servername: 'os4d.opendataservices.coop'
+  https: 'force'
+  branch: 'live'

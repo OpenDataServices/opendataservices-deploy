@@ -18,6 +18,7 @@ base:
     - opendataservices-website
     - domain-redirects
     - org-ids
+    - os4d-static
 
   'cove*live*':
     - cove
