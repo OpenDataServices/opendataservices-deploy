@@ -29,13 +29,12 @@ oroi-proxy: oroi-proxy.docker.opendataservices.uk0.bigv.io
 oroi-8:     oroi-8.docker.opendataservices.uk0.bigv.io
 
 # Dokku Dev
-# (Please edit the config files in salt/dokku-deployer if you change stuff -  even just a comment is great!)
 dokku-dev-2: dokku-dev-2.dokku.opendataservices.uk0.bigv.io
+dokku-dev-3: odscdokkudev3.vs.mythic-beasts.com
 
 # Dokku Live
-# (Please edit the config files in salt/dokku-deployer if you change stuff -  even just a comment is great!)
-# (But these are LIVE so be very careful with them!)
 dokku-live-2: dokku-live-2.dokku.opendataservices.uk0.bigv.io
+dokku-live-3: odscdokkulive3.vs.mythic-beasts.com
 
 #  We have moved all 360 boxes to new deploy repositories!
 #  https://github.com/ThreeSixtyGiving/threesixtygiving-deploy
