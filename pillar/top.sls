@@ -71,9 +71,6 @@ base:
     - private.iaticdfdbackend_dev_1_pillar
     - iaticdfdbackend_dev_1_pillar
 
-  'dev7':
-    - dev7_pillar
-
   'dev8':
     - dev8_pillar
 

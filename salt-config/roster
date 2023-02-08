@@ -2,14 +2,12 @@
 
 # opendataservices boxes
 #   dev:
-dev7:                dev7.default.opendataservices.uk0.bigv.io
 dev8:                odscdev8.vs.mythic-beasts.com
 cove-dev-4:          cove-dev-4.default.opendataservices.uk0.bigv.io
 cove-dev-bods:       cove-dev-bods.default.opendataservices.uk0.bigv.io
 iatidatastoreclassic-dev-1:   65.21.202.47
 
 #   live:
-live5:                    live5.default.opendataservices.uk0.bigv.io
 live6:                    odsclive6.vs.mythic-beasts.com
 # Prometheus on mon-5 is using IP based whitelisting for sending emails - if we move server/IP that will need attention.
 mon-5:                    odscmon5.vs.mythic-beasts.com
