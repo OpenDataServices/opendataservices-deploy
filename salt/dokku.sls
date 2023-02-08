@@ -110,3 +110,17 @@ postgres_plugin:
     - runas: root
 
 {% endif %}
+
+
+{% if 'vs.mythic-beasts.com' in grains['fqdn'] %}
+
+# On Mythic Beasts was seeing an error where containers only got IPv6 DNS servers and then they couldn't see anything on the internet
+# Fixed by explicitly telling Docker to use Google DNS
+# TODO this should restart docker before it takes affect, for now letting manual restart or server restart do it
+
+/etc/docker/daemon.json:
+    file.managed:
+        - source: salt://dokku/docker-daemon-with-google-dns.json
+        - makedirs: True
+
+{% endif %}
