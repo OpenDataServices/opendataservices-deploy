@@ -124,3 +124,15 @@ postgres_plugin:
         - makedirs: True
 
 {% endif %}
+
+{% if grains['lsb_distrib_release']=='22.04' %}
+
+# Without this the HTTP auth plugin won't work as nginx can't see the passwd file
+# https://github.com/dokku/dokku-http-auth/issues/15
+user-dokku-home-directory-permissions:
+  file.directory:
+    - name: /home/dokku
+    - mode: 0755
+
+{% endif %}
+
