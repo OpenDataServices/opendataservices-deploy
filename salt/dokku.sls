@@ -111,6 +111,21 @@ postgres_plugin:
 
 {% endif %}
 
+# Dokkusd only needed on dev servers currently - it's one use is to clear out old branches
+{% if 'dev' in grains['fqdn'] %}
+{% if not salt['file.directory_exists' ]('/var/lib/dokku/plugins/enabled/dokkusd') %}
+
+dokkusd_plugin:
+  cmd.run:
+    - name: dokku plugin:install https://github.com/OpenDataServices/dokkusd-plugin.git  --name dokkusd
+    - runas: root
+
+{% else %}
+
+# should be update, but that is failing at the moment TODO sort out
+
+{% endif %}
+{% endif %}
 
 {% if 'vs.mythic-beasts.com' in grains['fqdn'] %}
 
