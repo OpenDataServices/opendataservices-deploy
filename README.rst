@@ -12,7 +12,7 @@ This repository is public, but some salt states rely on private information e.g.
 Using salt-ssh
 --------------
 
-Note: the instructions here assume a recent version of Salt. Although many Linux distributions now package salt in the default repositories, the packages are likely to be out of date. It's recommended to install the most recent version of salt from http://docs.saltstack.com/en/latest/topics/installation/
+Make sure you run the version of salt that is specified in the requirements.in file. You can make a python virtual environment and install requirements.txt, or use another method.
 
 This repository contains a `Saltfile` which ensures that salt-ssh files from this directory will pick up the config in `salt-config`. Any extra configuration you want to do should be done in this directory, and not `/etc/salt`. Also, to make use of this, all salt commands must be run from the root directory of this repository.
 

@@ -105,7 +105,7 @@ opendataservices_website:
     serveraliases: ['www.dev.opendataservices.coop']
     # Now we have no standard "dev" branch. So normally we'll just deploy the live branch to the server.
     # But if there is a pull request that we want to show, you can change the branch here temporarily to the branch of the pull request.
-    default_branch: '2023-01-20'
+    default_branch: 'live'
 
 
 os4d_apache_https: "no"
