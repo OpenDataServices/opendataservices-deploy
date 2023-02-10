@@ -201,6 +201,31 @@ sentry_traces_sample_rate: {{ sentry_traces_sample_rate }}
     extracontext=extracontext,
     port=uwsgi_port) }}
 
+
+###################### Cron
+
+cron-{{ name }}:
+  cron.present:
+    - name: cd {{ codedir }}; . .ve/bin/activate; ./update.sh
+    - identifier: IATICDFDBACKEND{{ name }}DOWNLOADANDUPDATE
+    - user: {{ user }}
+    - minute: 23
+    - hour: 1
+
+
+###################### Update
+
+
+{{ codedir }}/update.sh:
+  file.managed:
+    - source: salt://iaticdfdbackend/update.sh
+    - user: {{ user }}
+    - group: {{ user }}
+    - mode: 0755
+    - require:
+      - virtualenv: {{ codedir }}.ve/
+
+
 {% endmacro %}
 
 ##################################################################### Run Macro Once for app
