@@ -33,7 +33,6 @@ dokku-dev-2: dokku-dev-2.dokku.opendataservices.uk0.bigv.io
 dokku-dev-3: odscdokkudev3.vs.mythic-beasts.com
 
 # Dokku Live
-dokku-live-2: dokku-live-2.dokku.opendataservices.uk0.bigv.io
 dokku-live-3: odscdokkulive3.vs.mythic-beasts.com
 
 #  We have moved all 360 boxes to new deploy repositories!

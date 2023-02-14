@@ -56,9 +56,6 @@ base:
   'dokku-dev-2':
     - dokku_dev_2_pillar
 
-  'dokku-live-2':
-    - dokku_live_2_pillar
-
   'iatidatastoreclassic1':
     - private.iatidatastoreclassic1_pillar
     - iatidatastoreclassic1_pillar
