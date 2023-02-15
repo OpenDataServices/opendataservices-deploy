@@ -62,6 +62,10 @@ base:
     - private.iaticdfdbackend1_pillar
     - iaticdfdbackend1_pillar
 
+  'iaticountrydata1':
+    - private.iaticdfdbackend1_pillar
+    - iaticdfdbackend1_pillar
+
   'iatidatastoreclassic-dev-1':
     - private.iatidatastoreclassic_dev_1_pillar
     - iatidatastoreclassic_dev_1_pillar

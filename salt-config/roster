@@ -17,6 +17,8 @@ backups:                  backups.backups.opendataservices.uk0.bigv.io
 iati-misc:                iati-misc.default.opendataservices.uk0.bigv.io
 iatidatastoreclassic1:    65.21.198.37
 epds1:                    65.21.225.158
+iaticountrydata1:         213.133.100.183
+
 
 # declared. (Was Open Register of Interests (oroi))
 # Mostly this server is not managed with salt, for install steps see
