@@ -53,9 +53,6 @@ base:
     - oa1_pillar
     - private.openactive_conformance_services_private
 
-  'dokku-dev-2':
-    - dokku_dev_2_pillar
-
   'iatidatastoreclassic1':
     - private.iatidatastoreclassic1_pillar
     - iatidatastoreclassic1_pillar

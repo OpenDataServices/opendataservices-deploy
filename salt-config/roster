@@ -31,7 +31,6 @@ oroi-proxy: oroi-proxy.docker.opendataservices.uk0.bigv.io
 oroi-8:     oroi-8.docker.opendataservices.uk0.bigv.io
 
 # Dokku Dev
-dokku-dev-2: dokku-dev-2.dokku.opendataservices.uk0.bigv.io
 dokku-dev-3: odscdokkudev3.vs.mythic-beasts.com
 dokku-bods-dev-1: odscdokkubodsdev1.vs.mythic-beasts.com
 
