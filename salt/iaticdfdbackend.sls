@@ -212,6 +212,15 @@ cron-{{ name }}:
     - minute: 23
     - hour: 1
 
+###################### Database Migrations and data load
+
+{{ codedir }}-database-setup-and-migrations:
+  cmd.run:
+    - name: . .ve/bin/activate; flask setup-codelists ; flask db upgrade
+    - user: {{ user }}
+    - cwd: {{ codedir }}
+    - require:
+      - virtualenv: {{ codedir }}.ve/
 
 ###################### Update
 
