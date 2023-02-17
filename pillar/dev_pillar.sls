@@ -20,7 +20,7 @@ cove:
   iati: True
   uwsgi_port: 3008
 org_ids:
-  default_branch: 'live'
+  default_branch: '2022-02-17'
   server_name: 'dev.org-id.guide'
   https: 'no'
   uwsgi_port: 3502
