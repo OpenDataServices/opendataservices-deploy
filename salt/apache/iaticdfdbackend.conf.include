@@ -37,6 +37,7 @@
 
         <Directory {{ codedir }}/output/web>
                 Require all granted
+                Header set Access-Control-Allow-Origin "*"
         </Directory>
 
         # Misc

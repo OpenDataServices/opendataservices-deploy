@@ -22,7 +22,7 @@ include:
 
 iaticdfdbackend-deps:
     apache_module.enabled:
-      - name: proxy proxy_uwsgi rewrite
+      - name: proxy proxy_uwsgi rewrite headers
       - watch_in:
         - service: apache2
     pkg.installed:
