@@ -27,6 +27,20 @@
                 ProxyPass !
         </Location>
 
+        # Server static files the app creates direct by apache
+
+        <Location "/output/web">
+                ProxyPass !
+        </Location>
+
+        Alias /output/web {{ codedir }}/output/web
+
+        <Directory {{ codedir }}/output/web>
+                Require all granted
+        </Directory>
+
+        # Misc
+
         ErrorDocument 404 /error/404.html
         ErrorDocument 500 /error/5xx.html
         ErrorDocument 501 /error/5xx.html
