@@ -96,7 +96,6 @@ base:
     - prometheus-client-standalone
     - iatidatastoreclassic
     - static-website
-    - iaticdfdbackend
 
   'iaticountrydata1':
     - prometheus-client-standalone
