@@ -1,6 +1,0 @@
-#!/bin/sh
-
-cd /mnt/HC_Volume_11340881
-curl https://iati.fra1.digitaloceanspaces.com/iati.db.gz  | gunzip > iati.db
-mv iati.db /home/iatitables/datasette
-systemctl restart iati-datasette

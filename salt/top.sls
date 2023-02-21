@@ -54,11 +54,6 @@ base:
      - cove_dev_redirects
 
 
-  'iati-misc':
-    - iati-misc
-    - prometheus-client-apache
-#    - icinga2-satellite
-
   'oroi*':
     # Mostly not managed with salt, see the roster for more information.
     - docker-workarounds
