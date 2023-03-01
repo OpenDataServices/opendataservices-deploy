@@ -31,11 +31,6 @@ base:
      - tmp_pillar
      - private.dev_pillar
 
-  '*live-bods*':
-     - bods_live_pillar
-  '*dev-bods*':
-     - bods_dev_pillar
-
   'pwyf-index-2022-test':
      - postgres_pillar
      - private.pwyf_tracker_original
