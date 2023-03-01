@@ -140,7 +140,7 @@ schema_url_ocds: null
 # This should ideally be in virtualenv.managed but we get an error if we do that
 {{ djangodir }}install-python-packages:
   cmd.run:
-    - name: . .ve/bin/activate; pip install -r requirements{{ '_iati' if app=='cove_iati' else '' }}.txt
+    - name: . .ve/bin/activate; pip install -r requirements.txt
     - runas: {{ user }}
     - cwd: {{ djangodir }}
     - require:
