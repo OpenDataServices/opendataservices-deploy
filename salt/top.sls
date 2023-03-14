@@ -56,6 +56,9 @@ base:
     # Mostly not managed with salt, see the roster for more information.
     - docker-workarounds
 
+  'lillorgid1':
+    - prometheus-client-standalone
+
   # MONITORING
 
   # Prometheus on mon-5 is using IP allow-listing for sending emails from our gmail - if we move server/IP that will need attention.

@@ -4,6 +4,7 @@
 #   dev:
 dev8:                odscdev8.vs.mythic-beasts.com
 iatidatastoreclassic-dev-1:   65.21.202.47
+lillorgid1:               20.77.126.95
 
 #   live:
 live6:                    odsclive6.vs.mythic-beasts.com
@@ -13,7 +14,6 @@ backups:                  backups.backups.opendataservices.uk0.bigv.io
 iatidatastoreclassic1:    65.21.198.37
 epds1:                    65.21.225.158
 iaticountrydata1:         213.133.100.183
-
 
 # declared. (Was Open Register of Interests (oroi))
 # Mostly this server is not managed with salt, for install steps see
