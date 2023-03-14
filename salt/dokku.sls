@@ -61,6 +61,11 @@ letsencrypt_plugin:
     - name: dokku plugin:update letsencrypt
     - runas: root
 
+letsencrypt_plugin_cron:
+  cmd.run:
+    - name: dokku letsencrypt:cron-job  --add
+    - runas: root
+
 {% endif %}
 
 {% if not salt['file.directory_exists' ]('/var/lib/dokku/plugins/enabled/http-auth') %}
