@@ -24,6 +24,8 @@ base:
   'mon*':
      - mon_pillar
      - private.mon_pillar
+  'lillorgid1*':
+     - private.lillorgid
   'backups':
      - backups_pillar
 

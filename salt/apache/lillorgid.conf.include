@@ -1,0 +1,25 @@
+# vi: ft=apache
+
+        DocumentRoot {{ webserverdir }}
+
+        {{ banner }}
+
+        <Location "/">
+                ProxyPass uwsgi://127.0.0.1:{{ uwsgi_port }}/
+        </Location>
+
+        <Directory {{ webserverdir }}>
+                Require all granted
+        </Directory>
+
+        <Location "/.well-known/acme-challenge">
+                ProxyPass !
+        </Location>
+
+        <Location "/static">
+                ProxyPass !
+        </Location>
+
+        ErrorLog /var/log/apache2/{{ lillorgid_name }}_error.log
+        LogFormat "%{REQUEST_SCHEME}x://%v %h %t \"%r\" %>s %O \"%{Referer}i\" \"%{User-Agent}i\"" extended
+        CustomLog /var/log/apache2/{{ lillorgid_name }}_access.log extended
