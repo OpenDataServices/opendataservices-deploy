@@ -31,7 +31,7 @@ lillorgid-deps:
 {{ createuser(user, world_readable_home_dir='yes') }}
 
 
-{% macro lillorgid(name, giturl, branch, codedir, webserverdir, user, uwsgi_port, servername, https, azure_postgres_connection_string) %}
+{% macro lillorgid(name, giturl, branch, codedir, webserverdir, user, uwsgi_port, servername, https, solr_url, solr_lists_core, solr_data_core) %}
 
 
 {{ giturl }}{{ codedir }}:
@@ -95,7 +95,9 @@ codedir: {{ codedir }}
 lillorgid_name: {{ name }}
 uwsgi_port: {{ uwsgi_port }}
 webserverdir: {{ webserverdir }}
-azure_postgres_connection_string: {{ azure_postgres_connection_string }}
+solr_url: {{ solr_url }}
+solr_lists_core: {{ solr_lists_core }}
+solr_data_core: {{ solr_data_core }}
 {% endset %}
 
 {{ apache('lillorgid.conf',
@@ -122,5 +124,7 @@ azure_postgres_connection_string: {{ azure_postgres_connection_string }}
     uwsgi_port=3032,
     servername='lill.org-id.guide',
     https='no',
-    azure_postgres_connection_string=pillar.lillorgid.azure_postgres_connection_string
+    solr_url=pillar.lillorgid.solr_url,
+    solr_lists_core=pillar.lillorgid.solr_lists_core,
+    solr_data_core=pillar.lillorgid.solr_data_core
        ) }}

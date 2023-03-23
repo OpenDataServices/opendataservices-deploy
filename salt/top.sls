@@ -58,7 +58,8 @@ base:
 
   'lillorgid1':
     - prometheus-client-standalone
-    - lillorgid
+    - lillorgid-solrserver
+    - lillorgid-webapp
 
   # MONITORING
 
