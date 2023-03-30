@@ -51,7 +51,6 @@ base:
 
 
   'backups':
-    - icinga2-satellite
     - prometheus-client-apache
     - backups
 
