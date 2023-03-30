@@ -13,11 +13,7 @@ base:
      - live6_pillar
      - org-ids_pillar
      - private.org-ids_pillar
-  '*live-iati*':
-     - iati_live_pillar
-  '*staging*':
-     - staging_pillar
-     - private.staging_pillar
+
   '*dev*':
      - dev_pillar
      - private.dev_pillar
@@ -28,10 +24,6 @@ base:
      - private.lillorgid
   'backups':
      - backups_pillar
-
-  'tmp2':
-     - tmp_pillar
-     - private.dev_pillar
 
   'pwyf-index-2022-test':
      - postgres_pillar

@@ -16,19 +16,8 @@ base:
     - org-ids
     - os4d-static
 
-  'cove*live*':
-    - cove
-    - icinga2-satellite
-
-  'cove-live-iati-2':
-    - prometheus-client-apache
-
-
   # STAGING
 
-  'cove-staging':
-    - cove
-    - icinga2-satellite
 
   # DEVELOPMENT
 
@@ -41,16 +30,6 @@ base:
     - domain-redirects
     - datatig-real-static-site-demos
     - os4d-static
-
-
-  'cove*dev*':
-    - cove
-    - icinga2-satellite
-    - prometheus-client-apache
-
-  'cove-dev*':
-     - cove_dev_redirects
-
 
   'oroi*':
     # Mostly not managed with salt, see the roster for more information.
