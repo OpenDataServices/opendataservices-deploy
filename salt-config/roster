@@ -23,9 +23,7 @@ iaticountrydata1:         213.133.100.183
 # Here's where the live/dev urls that are behind the proxy are set:
 # https://github.com/OpenDataServices/oroi-deploy/blob/master/oroi-proxy/docker-compose.yml#L9-L10
 oroi-proxy: oroi-proxy.docker.opendataservices.uk0.bigv.io
-# Mostly these servers are not managed with salt, for install steps see
-# https://github.com/OpenDataServices/oroi-deploy/blob/master/README.md#live-deploy-docker-stack
-oroi-8:     oroi-8.docker.opendataservices.uk0.bigv.io
+
 
 # Dokku Dev
 dokku-dev-3: odscdokkudev3.vs.mythic-beasts.com
