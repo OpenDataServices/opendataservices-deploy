@@ -137,3 +137,8 @@ set_lc_all:
   file.append:
     - text: 'LC_ALL="en_GB.UTF-8"'
     - name: /etc/default/locale
+
+create_root_ssh_key:
+  cmd.run:
+    - name: ssh-keygen -t ed25519 -C "root@{{ grains.id }}" -N '' -f /root/.ssh/id_ed25519
+    - creates: /root/.ssh/id_ed25519
