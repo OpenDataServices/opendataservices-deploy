@@ -6,9 +6,6 @@ dev8:                odscdev8.vs.mythic-beasts.com
 iatidatastoreclassic-dev-1:   65.21.202.47
 lillorgid1:               20.77.126.95
 
-# A temp server - so only core is done via salt. The app is done by hand.
-mattermosttest:          odscmattermosttest.vs.mythic-beasts.com
-
 #   live:
 live6:                    odsclive6.vs.mythic-beasts.com
 # Prometheus on mon-5 is using IP based whitelisting for sending emails - if we move server/IP that will need attention.
