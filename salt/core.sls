@@ -142,3 +142,30 @@ create_root_ssh_key:
   cmd.run:
     - name: ssh-keygen -t ed25519 -C "root@{{ grains.id }}" -N '' -f /root/.ssh/id_ed25519
     - creates: /root/.ssh/id_ed25519
+
+## Directory Backups
+
+# To use, add a private pillar for one server only with config like this:
+#
+#backup_directory:
+#  -  directory: /etc
+#     ssh_host: server.net
+#     ssh_user: user
+#
+# directory should be an absolute path with a slash at the start and none at the end
+#
+# Before use, you need to manually:
+# - Add the servers ssh public key to the backup accounts .ssh/authorized_keys
+# - Make a SSH connection and accept the SSH fingerprint
+
+{% for backup_directory in pillar.backup_directory %}
+
+backup_directory{{ backup_directory.directory | replace("/", "_") }}:
+  cron.present:
+    - name: ssh {{ backup_directory.ssh_user }}@{{ backup_directory.ssh_host }} mkdir -p {{ grains.id }}{{ backup_directory.directory }};  rsync -a {{ backup_directory.directory }}/* {{ backup_directory.ssh_user }}@{{ backup_directory.ssh_host }}:{{ grains.id }}{{ backup_directory.directory }}/
+    - identifier: backup_directory{{ backup_directory.directory | replace("/", "_") }}
+    - user: root
+    - minute: 0
+    - hour: {{ loop.index }}
+
+{% endfor %}

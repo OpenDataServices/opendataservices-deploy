@@ -60,6 +60,7 @@ base:
 
   'dev8':
     - dev8_pillar
+    - private.dev8_pillar
 
   'epds1':
     - postgres_pillar
