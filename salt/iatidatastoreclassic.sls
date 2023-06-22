@@ -360,7 +360,7 @@ cron-{{ name }}:
     - identifier: IATIDATASTORE{{ name }}DOWNLOADANDUPDATE
     - user: {{ user }}
     - minute: 0
-    - hour: 6,12,18,23
+    - hour: 6
 
 {% if matomo_host %}
 
