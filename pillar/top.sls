@@ -67,3 +67,10 @@ base:
     - private.epds
     - dokku_epds_dev
 
+
+  'dokku-bods-live-1':
+    - private.server_dokku_bods_live_1_pillar
+
+  'dokku-bods-dev-1':
+    - private.server_dokku_bods_dev_1_pillar
+
