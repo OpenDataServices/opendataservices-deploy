@@ -35,10 +35,6 @@ base:
     # Mostly not managed with salt, see the roster for more information.
     - docker-workarounds
 
-  'lillorgid1':
-    - prometheus-client-standalone
-    - lillorgid-solrserver
-    - lillorgid-webapp
 
   # MONITORING
 
