@@ -162,7 +162,7 @@ create_root_ssh_key:
 
 backup_directory{{ backup_directory.directory | replace("/", "_") }}:
   cron.present:
-    - name: ssh {{ backup_directory.ssh_user }}@{{ backup_directory.ssh_host }} mkdir -p {{ grains.id }}{{ backup_directory.directory }};  rsync -a {{ backup_directory.directory }}/* {{ backup_directory.ssh_user }}@{{ backup_directory.ssh_host }}:{{ grains.id }}{{ backup_directory.directory }}/
+    - name: ssh {{ backup_directory.ssh_user }}@{{ backup_directory.ssh_host }} mkdir -p {{ grains.id }}{{ backup_directory.directory }};  rsync -a --delete {{ backup_directory.directory }}/* {{ backup_directory.ssh_user }}@{{ backup_directory.ssh_host }}:{{ grains.id }}{{ backup_directory.directory }}/
     - identifier: backup_directory{{ backup_directory.directory | replace("/", "_") }}
     - user: root
     - minute: 0
