@@ -136,6 +136,16 @@ iaticdfdbackend-deps:
     - require:
       - virtualenv: {{ codedir }}.ve/
 
+######################  Logs
+
+/home/{{ user }}/logs-{{ name }}:
+  file.directory:
+    - makedirs: True
+    - user: {{ user }}
+    - group: {{ user }}
+    - requires:
+      - user: {{ user }}_user_exists
+
 ######################  Database
 
 iaticdfdbackend-database-user-{{ name }}:
@@ -206,7 +216,7 @@ sentry_traces_sample_rate: {{ sentry_traces_sample_rate }}
 
 cron-{{ name }}:
   cron.present:
-    - name: cd {{ codedir }}; . .ve/bin/activate; ./update.sh
+    - name: cd {{ codedir }}; . .ve/bin/activate; ./update.sh > /home/{{ user }}/logs-{{ name }}/$(date +\%Y\%m\%d).log 2>&1
     - identifier: IATICDFDBACKEND{{ name }}DOWNLOADANDUPDATE
     - user: {{ user }}
     - minute: 23
