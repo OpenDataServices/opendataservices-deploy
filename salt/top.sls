@@ -31,10 +31,6 @@ base:
     - datatig-real-static-site-demos
     - os4d-static
 
-  'oroi*':
-    # Mostly not managed with salt, see the roster for more information.
-    - docker-workarounds
-
 
   # MONITORING
 
