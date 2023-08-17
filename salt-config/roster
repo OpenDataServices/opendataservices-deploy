@@ -17,6 +17,7 @@ iaticountrydata1:         213.133.100.183
 # Dokku Dev
 dokku-dev-3: odscdokkudev3.vs.mythic-beasts.com
 dokku-bods-dev-1: odscdokkubodsdev1.vs.mythic-beasts.com
+dokku-rdls-dev-1: odscdokkurdlsdev1.vs.mythic-beasts.com
 
 # Dokku Live
 dokku-live-3: odscdokkulive3.vs.mythic-beasts.com
