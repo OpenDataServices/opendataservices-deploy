@@ -22,6 +22,7 @@ dokku-rdls-dev-1: odscdokkurdlsdev1.vs.mythic-beasts.com
 # Dokku Live
 dokku-live-3: odscdokkulive3.vs.mythic-beasts.com
 dokku-bods-live-1: odscdokkubodslive1.vs.mythic-beasts.com
+dokku-rdls-live-1: odscdokkurdlslive1.vs.mythic-beasts.com
 
 #  We have moved all 360 boxes to new deploy repositories!
 #  https://github.com/ThreeSixtyGiving/threesixtygiving-deploy
