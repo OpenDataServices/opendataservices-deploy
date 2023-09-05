@@ -1,8 +1,6 @@
 #
-# For Ubuntu:
-#  * 18 LTS - Yes.
-#  * 16 LTS - Not tested, but should be fine.
-#  * 14 LTS - No - this uses Systemd and 14 does not have that.
+# Sets up Prometheus Client on a server as standalone service
+# Does not interfere with anything else running on port 80 or 443
 #
 
 {% from 'lib.sls' import createuser %}

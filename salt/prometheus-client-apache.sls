@@ -1,8 +1,8 @@
 #
-# For Ubuntu:
-#  * 18 LTS - Yes.
-#  * 16 LTS - Not tested, but should be fine.
-#  * 14 LTS - No - this uses Systemd and 14 does not have that.
+# Sets up Prometheus Client on a server as a normal apache website
+#
+# Needs a DNS entry directly pointing to server; not suitable if that does not exist
+# Not suitable if the server can't run Apache on ports 80 and 443 for whatever reason (because of what else is running on it?)
 #
 
 {% from 'lib.sls' import createuser, apache %}
