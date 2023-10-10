@@ -1,11 +1,6 @@
 # Values used only on the live servers
 default_branch: 'live'
 
-opendataservices_website:
-    https: 'force'
-    servername: 'opendataservices.coop'
-    serveraliases: ['www.opendataservices.coop']
-    default_branch: 'live'
 
 os4d_apache_https: "force"
 

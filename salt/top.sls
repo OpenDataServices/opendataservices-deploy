@@ -11,7 +11,6 @@ base:
   'live6':
     - prometheus-client-apache
     - cove-opendataservices-coop
-    - opendataservices-website
     - domain-redirects
     - org-ids
     - os4d-static
@@ -23,7 +22,6 @@ base:
 
   'dev8':
     - prometheus-client-apache
-    - opendataservices-website
     - cove-opendataservices-coop
     - temp
     - org-ids
