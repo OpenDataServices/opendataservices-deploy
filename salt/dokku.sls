@@ -116,6 +116,22 @@ postgres_plugin:
 
 {% endif %}
 
+{% if not salt['file.directory_exists' ]('/var/lib/dokku/plugins/enabled/redirect') %}
+
+redirect_plugin:
+  cmd.run:
+    - name: dokku plugin:install https://github.com/dokku/dokku-redirect.git redirect
+    - runas: root
+
+{% else %}
+
+redirect_plugin:
+  cmd.run:
+    - name: dokku plugin:update redirect
+    - runas: root
+
+{% endif %}
+
 # Dokkusd only needed on dev servers currently - it's one use is to clear out old branches
 {% if 'dev' in grains['fqdn'] %}
 {% if not salt['file.directory_exists' ]('/var/lib/dokku/plugins/enabled/dokkusd') %}
