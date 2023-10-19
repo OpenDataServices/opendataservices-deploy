@@ -13,6 +13,8 @@ backups:                  backups.backups.opendataservices.uk0.bigv.io
 iatidatastoreclassic1:    65.21.198.37
 iaticountrydata1:         213.133.100.183
 
+# AfDB Dev
+afdbdev1:                 odscafdbdev1.vs.mythic-beasts.com
 
 # Dokku Dev
 dokku-dev-3: odscdokkudev3.vs.mythic-beasts.com
