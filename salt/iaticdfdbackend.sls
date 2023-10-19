@@ -39,6 +39,7 @@ iaticdfdbackend-deps:
         - libxslt1-dev
         - libevent-dev
         - python3-dev
+        - zip
       - watch_in:
         - service: apache2
         - service: uwsgi
