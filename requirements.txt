@@ -36,12 +36,10 @@ pyyaml==6.0
     # via salt-ssh
 pyzmq==25.0.0
     # via salt-ssh
-requests==2.28.2
+requests==2.31.0
     # via salt-ssh
 salt-ssh==3002.9
     # via -r requirements.in
-tomli==2.0.1
-    # via build
 urllib3==1.26.14
     # via requests
 wheel==0.38.4
