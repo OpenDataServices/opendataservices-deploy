@@ -40,7 +40,7 @@ dokku-rdls-live-1: odscdokkurdlslive1.vs.mythic-beasts.com
 # PWYF Servers
 
 pwyf-index-2022-test: 92.243.17.104
-
+pwyf-index-2022-live: 92.243.20.23
 
 # Analysis Servers
 
