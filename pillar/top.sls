@@ -36,6 +36,11 @@ base:
      - private.pwyf_tracker
      - pwyf_tracker_2022
 
+  'pwyf-tracker2024-dev':
+     - postgres_pillar
+     - private.pwyf_tracker
+     - pwyf_tracker_2024_dev
+
   'analysis-1':
      - postgres_pillar
      - private.analysis1

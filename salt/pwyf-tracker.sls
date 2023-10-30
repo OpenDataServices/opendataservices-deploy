@@ -96,13 +96,23 @@ bare_name: {{ name }}
     - python: /usr/bin/python3
     - user: {{ user }}
     - system_site_packages: False
-    - requirements: {{ flaskdir }}requirements.txt
     - require:
       - pkg: pwyf_tracker-deps
       - git: {{ giturl }}{{ flaskdir }}
       - file: set_lc_all # required to avoid unicode errors for the "schema" library
     - watch_in:
       - service: apache2
+
+# THIS SHOULD IDEALLY BE IN virtualenv.managed BUT WE GET A PERMISSION ERROR IF WE DO THAT
+install-python-packages:
+  cmd.run:
+    - name: . .ve/bin/activate; pip install -r requirements.txt
+    - user: {{ user }}
+    - cwd: {{ flaskdir }}
+    - require:
+      - virtualenv: {{ flaskdir }}.ve/
+    - onchanges:
+      - git: {{ giturl }}{{ flaskdir }}
 
 {{ flaskdir }}/config.py:
   file.managed:
@@ -115,19 +125,16 @@ bare_name: {{ name }}
 {{ flaskdir }}/dq/data:
   file.directory:
     - user: {{ user }}
-    - source: salt://pwyf-tracker/config.py
     - makedirs: True
 
 {{ flaskdir }}/dq/sample_work:
   file.directory:
     - user: {{ user }}
-    - source: salt://pwyf-tracker/config.py
     - makedirs: True
 
 {{ flaskdir }}/dq/results:
   file.directory:
     - user: {{ user }}
-    - source: salt://pwyf-tracker/config.py
     - makedirs: True
 
 {% endmacro %}
@@ -140,7 +147,7 @@ MAILTO:
 {{ pwyf_tracker(
     name='pwyf_tracker_original',
     giturl=giturl,
-    branch='2022tracker-dev',
+    branch='main',
     flaskdir='/home/'+user+'/pwyf_tracker/',
     uwsgi_port=3032,
     servername=pillar.pwyf_tracker.servername if 'servername' in pillar.pwyf_tracker else None,
