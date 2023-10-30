@@ -48,12 +48,12 @@ base:
     - prometheus-client-standalone
     - dokku
   
-  'pwyf-index-2022-test':
-    - pwyf-tracker-original
+  'pwyf-index-2022-*':
+    - pwyf-tracker-2022
     - postgres
 
-  'pwyf-index-2022-live':
-    - pwyf-tracker-2022
+  'pwyf-tracker2024-*':
+    - pwyf-tracker
     - postgres
 
   'analysis-*':

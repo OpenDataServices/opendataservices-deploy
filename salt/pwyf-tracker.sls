@@ -1,15 +1,3 @@
-# After the initial install of this state, run on the server:
-#   sudo su pwyf_tracker
-#   cd ~/pwyf_tracker/
-#   export PATH="$HOME/.local/bin:$PATH"
-#   pipenv run flask createsuperuser
-#   # ^ with user admin and password from private pillar
-#   pipenv run flask setup orgs import_data/uk_aid_review_organisations.csv
-#   pipenv run flask iati download
-#   pipenv run flask iati import
-#   pipenv run flask iati test
-# See https://github.com/pwyf/aid-transparency-tracker/blob/master/README.rst for more info.
-#
 {% from 'lib.sls' import createuser, apache, uwsgi %}
 
 {% set user = 'pwyf_tracker' %}
@@ -24,7 +12,7 @@ include:
   - core
   - apache
   - uwsgi
-  - postgres10
+
 {% if 'https' in pillar.pwyf_tracker %}  - letsencrypt{% endif %}
 
 pwyf_tracker-deps:
@@ -35,9 +23,9 @@ pwyf_tracker-deps:
     pkg.installed:
       - pkgs:
         - libapache2-mod-proxy-uwsgi
-        - python-pip
+        - python3-pip
+        - python3-virtualenv
         - uwsgi-plugin-python3
-        - npm
       - watch_in:
         - service: apache2
         - service: uwsgi
@@ -55,23 +43,11 @@ remoteip:
       - watch_in:
         - service: apache2
 
-pipenv:
-  pip.installed:
-    - user: {{ user }}
-    - require:
-      - pkg: pwyf_tracker-deps
-
-pwyf_tracker:
-  postgres_user.present:
-    - password: {{ pillar.pwyf_tracker.postgres.pwyf_tracker.password }}
-
-  postgres_database.present: []
 
 {% macro pwyf_tracker(name, giturl, branch, flaskdir, user, uwsgi_port, servername=None) %}
 
-
 {% set extracontext %}
-site_url: {{ pillar.pwyf_tracker.site_url }}
+secret_key: {{ pillar.pwyf_tracker.secret_key }}
 flaskdir: {{ flaskdir }}
 {% if grains['osrelease'] == '16.04' %}{# or grains['osrelease'] == '18.04' %}#}
 uwsgi_port: null
@@ -82,21 +58,19 @@ branch: {{ branch }}
 bare_name: {{ name }}
 {% endset %}
 
-{% if 'https' in pillar.pwyf_tracker %}
 {{ apache(user+'.conf',
     name=name+'.conf',
     extracontext=extracontext,
-    servername=servername if servername else branch+'.'+grains.fqdn,
-    serveraliases=[ branch+'.'+grains.fqdn ] if servername else [],
+    servername=servername,
     https=pillar.pwyf_tracker.https) }}
-{% else %}
-{{ apache(user+'.conf',
-    name=name+'.conf',
-    servername=servername if servername else 'default',
-    extracontext=extracontext) }}
-{% endif %}
 
-{{ uwsgi(user+'.ini',
+{# apache(user+'.dev.conf',
+    name=name+'.dev.conf',
+    extracontext=extracontext,
+    servername=pillar.pwyf_tracker.devname,
+    https=pillar.pwyf_tracker.https) #}
+
+{{ uwsgi('pwyf-tracker.ini',
     name=name+'.ini',
     extracontext=extracontext,
     port=uwsgi_port) }}
@@ -105,74 +79,57 @@ bare_name: {{ name }}
   git.latest:
     - name: {{ giturl }}
     - rev: {{ branch }}
+    - branch: {{ branch }}
     - target: {{ flaskdir }}
     - user: {{ user }}
     - force_fetch: True
     - force_reset: True
+    - force_checkout: True
     - submodules: True
     - require:
       - pkg: git
     - watch_in:
       - service: uwsgi
 
-{{ flaskdir }}/.env:
+{{ flaskdir }}.ve/:
+  virtualenv.managed:
+    - python: /usr/bin/python3
+    - user: {{ user }}
+    - system_site_packages: False
+    - requirements: {{ flaskdir }}requirements.txt
+    - require:
+      - pkg: pwyf_tracker-deps
+      - git: {{ giturl }}{{ flaskdir }}
+      - file: set_lc_all # required to avoid unicode errors for the "schema" library
+    - watch_in:
+      - service: apache2
+
+{{ flaskdir }}/config.py:
   file.managed:
-    - source: salt://env/pwyf_tracker.env
+    - user: {{ user }}
+    - source: salt://pwyf-tracker/config.py
     - template: jinja
     - context:
         {{ extracontext | indent(8) }}
 
-pipenv sync:
-  cmd.run:
-    - runas: {{ user }}
-    - cwd: {{ flaskdir }}
-    - require:
-      - file: {{ flaskdir }}/.env
-      - pkg: pwyf_tracker-deps
-      - pip: pipenv
-      - git: {{ giturl }}{{ flaskdir }}
-      - file: set_lc_all # required to avoid unicode errors for the "schema" library
-    - watch_in:
-      - service: apache2
-    - onchanges:
-      - git: {{ giturl }}{{ flaskdir }}
-    - env:
-      - PIPENV_VENV_IN_PROJECT: 'True'
+{{ flaskdir }}/dq/data:
+  file.directory:
+    - user: {{ user }}
+    - source: salt://pwyf-tracker/config.py
+    - makedirs: True
 
-npm install:
-  cmd.run:
-    - runas: {{ user }}
-    - cwd: {{ flaskdir }}
-    - require:
-      - pkg: pwyf_tracker-deps
-      - git: {{ giturl }}{{ flaskdir }}
-      - file: set_lc_all # required to avoid unicode errors for the "schema" library
-    - watch_in:
-      - service: apache2
-    - onchanges:
-      - git: {{ giturl }}{{ flaskdir }}
+{{ flaskdir }}/dq/sample_work:
+  file.directory:
+    - user: {{ user }}
+    - source: salt://pwyf-tracker/config.py
+    - makedirs: True
 
-npm run build:
-  cmd.run:
-    - runas: {{ user }}
-    - cwd: {{ flaskdir }}
-    - require:
-      - cmd: npm install
-    - watch_in:
-      - service: apache2
-    - onchanges:
-      - git: {{ giturl }}{{ flaskdir }}
+{{ flaskdir }}/dq/results:
+  file.directory:
+    - user: {{ user }}
+    - source: salt://pwyf-tracker/config.py
+    - makedirs: True
 
-pipenv run flask db upgrade:
-  cmd.run:
-    - runas: {{ user }}
-    - cwd: {{ flaskdir }}
-    - require:
-      - file: {{ flaskdir }}/.env
-      - postgres_user: pwyf_tracker
-      - postgres_database: pwyf_tracker
-    - watch_in:
-      - service: apache2
 {% endmacro %}
 
 MAILTO:
@@ -181,13 +138,14 @@ MAILTO:
     - user: pwyf_tracker
 
 {{ pwyf_tracker(
-    name='pwyf_tracker',
+    name='pwyf_tracker_original',
     giturl=giturl,
-    branch='master',
+    branch='2022tracker-dev',
     flaskdir='/home/'+user+'/pwyf_tracker/',
     uwsgi_port=3032,
     servername=pillar.pwyf_tracker.servername if 'servername' in pillar.pwyf_tracker else None,
     user=user) }}
+
 
 {#
 {% if 'extra_pwyf_tracker_branches' in pillar %}
