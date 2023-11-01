@@ -81,3 +81,6 @@ base:
     - iatidatastoreclassic
     - static-website
     - iaticdfdbackend
+
+  'afdbdev1':
+    - prometheus-client-standalone
