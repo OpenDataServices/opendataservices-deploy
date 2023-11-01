@@ -84,3 +84,4 @@ base:
 
   'afdbdev1':
     - prometheus-client-standalone
+    - afdb
