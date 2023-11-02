@@ -9,7 +9,6 @@ iatidatastoreclassic-dev-1:   65.21.202.47
 live6:                    odsclive6.vs.mythic-beasts.com
 # Prometheus on mon-5 is using IP based whitelisting for sending emails - if we move server/IP that will need attention.
 mon-5:                    odscmon5.vs.mythic-beasts.com
-backups:                  backups.backups.opendataservices.uk0.bigv.io
 iatidatastoreclassic1:    65.21.198.37
 iaticountrydata1:         213.133.100.183
 
