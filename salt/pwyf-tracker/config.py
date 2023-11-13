@@ -1,44 +1,43 @@
 from os.path import abspath, dirname, join, realpath
+from urllib.parse import urlparse
 
-
-BROKER_HOST = "localhost"
-BROKER_PORT = 5672
-BROKER_VHOST = "/"
-BROKER_USER = "guest"
-BROKER_PASSWORD = "guest"
 
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2:///pwyf_tracker'
+database_uri_parsed = urlparse(SQLALCHEMY_DATABASE_URI)
 DATABASE_INFO = {
-    'database': 'pwyf_tracker'
+    "user": database_uri_parsed.username,
+    "password": database_uri_parsed.password,
+    "database": database_uri_parsed.path[1:],
+    "host": database_uri_parsed.hostname,
+    "port": database_uri_parsed.port,
 }
-
-DATA_STORAGE_DIR = join(realpath(dirname(__file__)), 'dq', 'data')
-SAMPLING_DB_FILENAME = join(realpath(dirname(__file__)), 'dq', 'sample_work', 'sample_work.db')
+SAMPLING_DB_FILENAME = join(realpath(dirname(__file__)), 'sample_work.db')
 
 SECRET_KEY = "{{ secret_key }}"
 
-INDICATOR_GROUP = u"2022index"
+INDICATOR_GROUP = u"2024index"
 
 CODELIST_API = u"https://reference.iatistandard.org/{version}/codelists/downloads/clv2"
 
-SETUP_ORGS = ['dfid', 'fco', 'beis', 'dhsc', 'defra_transparency', 'dwp', 'ukmod']
+ORG_FREQUENCY_API_URL = "http://publishingstats.iatistandard.org/timeliness_frequency.csv"
+IATIUPDATES_URL = "http://tracker.publishwhatyoufund.org/iatiupdates/api/package/hash/"
 
-# SETUP_PKG_COUNTER = 10
-
-ORG_FREQUENCY_API_URL = "http://dashboard.iatistandard.org/timeliness_frequency.csv"
-IATIUPDATES_URL = "http://2018tracker.publishwhatyoufund.org/iatiupdates/api/package/hash/"
-
+# if this is set to False, don't be surprised if your database
+# becomes ludicrously huge. Heed my words.
 REMOVE_RESULTS = True
 
-INTRO_HTML = 'Data collection for the <a href="https://www.publishwhatyoufund.org/2021/08/2022-aid-transparency-index-which-organisations-will-we-assess/">2022 Aid Transparency Index</a> has now started. We will release more detailed information in April 2022 when the Aid Transparency Index will be launched. Results and analysis for previous years is available in the <a href="http://publishwhatyoufund.org/the-index/2020" target="_blank">2020 Index</a>.'
+INTRO_HTML = 'Data collection for the <a href="https://www.publishwhatyoufund.org/2023/08/who-will-be-assessed-in-the-2024-aid-transparency-index/">2024 Aid Transparency Index</a> has now started. We will release more detailed information in May 2024 when the Aid Transparency Index will be launched. Results and analysis for previous years is available in the <a href="https://www.publishwhatyoufund.org/the-index/2022/" target="_blank">2022 Index</a>.'
 
-# INTRO_HTML = 'Data collection for the <a href="http://www.publishwhatyoufund.org/the-index/">2018 Aid Transparency Index</a> has now started. We will release more detailed information in June 2018 when the Aid Transparency Index will be launched. Results and analysis for previous years is available in the <a href="http://ati.publishwhatyoufund.org/" target="_blank">2016 Index</a>.'
-
-ATI_YEAR = "2022"
-PREVIOUS_ATI_YEAR = "2020"
+ATI_YEAR = '2024'
+PREVIOUS_ATI_YEAR = '2022'
 
 basedir = dirname(abspath(__file__))
-IATI_DATA_PATH = join(basedir, 'dq', 'data')
-IATI_RESULT_PATH = join(basedir, 'dq', 'results')
+IATI_DATA_PATH = join(basedir, 'data')
+IATI_RESULT_PATH = join(basedir, 'results')
+
+# For local development, the creation of the admin user can be automated by using these config variables
+# Use with the --admin-from-config flag of the `flask setup` command
+# APP_ADMIN_USERNAME = "admin"
+# APP_ADMIN_PASSWORD = "admin"
 

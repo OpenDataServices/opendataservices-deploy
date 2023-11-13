@@ -1,3 +1,7 @@
+# After installing this server for the first time, you must run the steps from
+# `flask setup` onwards on:
+# https://github.com/pwyf/aid-transparency-tracker/#installation
+
 {% from 'lib.sls' import createuser, apache, uwsgi %}
 
 {% set user = 'pwyf_tracker' %}
@@ -122,17 +126,17 @@ install-python-packages:
     - context:
         {{ extracontext | indent(8) }}
 
-{{ flaskdir }}/dq/data:
+{{ flaskdir }}//data:
   file.directory:
     - user: {{ user }}
     - makedirs: True
 
-{{ flaskdir }}/dq/sample_work:
+{{ flaskdir }}/sample_work:
   file.directory:
     - user: {{ user }}
     - makedirs: True
 
-{{ flaskdir }}/dq/results:
+{{ flaskdir }}/results:
   file.directory:
     - user: {{ user }}
     - makedirs: True

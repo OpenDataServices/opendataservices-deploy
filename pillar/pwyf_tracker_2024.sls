@@ -1,5 +1,5 @@
 pwyf_tracker:
-  servername: 2024tracker-dev.publishwhatyoufund.org
+  servername: 2024tracker.publishwhatyoufund.org
   database_url: 'postgresql+psycopg2:///pwyf_tracker'
   https: 'force'
 postgres:
