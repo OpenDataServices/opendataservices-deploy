@@ -3,7 +3,7 @@ from urllib.parse import urlparse
 
 
 SQLALCHEMY_TRACK_MODIFICATIONS = False
-SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2:///pwyf_tracker'
+SQLALCHEMY_DATABASE_URI = '{{ pillar.pwyf_tracker.database_url }}'
 database_uri_parsed = urlparse(SQLALCHEMY_DATABASE_URI)
 DATABASE_INFO = {
     "user": database_uri_parsed.username,
