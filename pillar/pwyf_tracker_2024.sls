@@ -2,6 +2,7 @@ pwyf_tracker:
   servername: 2024tracker.publishwhatyoufund.org
   database_url: 'postgresql+psycopg2:///pwyf_tracker'
   https: 'force'
+  branch: 'main'
 postgres:
   acls:
    - ['local', 'all', 'postgres', 'peer']

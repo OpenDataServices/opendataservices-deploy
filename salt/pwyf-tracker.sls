@@ -151,7 +151,7 @@ MAILTO:
 {{ pwyf_tracker(
     name='pwyf_tracker_original',
     giturl=giturl,
-    branch='main',
+    branch=pillar.pwyf_tracker.branch if 'branch' in pillar.pwyf_tracker else 'main',
     flaskdir='/home/'+user+'/pwyf_tracker/',
     uwsgi_port=3032,
     servername=pillar.pwyf_tracker.servername if 'servername' in pillar.pwyf_tracker else None,
