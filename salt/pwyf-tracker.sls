@@ -172,3 +172,21 @@ MAILTO:
 {% endfor %}
 {% endif %}
 #}
+
+
+/home/{{ user }}/backups:
+  file.directory:
+    - user: {{ user }}
+    - makedirs: True
+
+/home/{{ user }}/backup.sh:
+  file.managed:
+    - user: {{ user }}
+    - source: salt://pwyf-tracker/backup.sh
+    - mode: '0755'
+  cron.present:
+    - identifier: BACKUP
+    - user: {{ user }}
+    - minute: 1 
+    - hour: 1
+
