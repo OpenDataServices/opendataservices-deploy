@@ -1,6 +1,6 @@
 #!/bin/bash
 
-pg_dump pwyf_tracker > ~/backups/backup_$(date +"%F").sql
+pg_dump {{ pillar.pwyf_tracker.database_url.split("/")[-1] }} > ~/backups/backup_$(date +"%F").sql
 
 sqlite3 /home/pwyf_tracker/pwyf_tracker/sample_work.db ".backup '/home/pwyf_tracker/backups/sample_work_backup_$(date +"%F").db'"
 
