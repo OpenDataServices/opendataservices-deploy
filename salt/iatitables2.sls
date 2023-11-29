@@ -55,6 +55,8 @@ iatitable-deps-yarn:
 {% set postgres_name = pillar.iatitables.postgres_name if 'postgres_name' in pillar.iatitables else 'iatitables' %}
 {% set postgres_user = pillar.iatitables.postgres_user if 'postgres_user' in pillar.iatitables else 'iatitables' %}
 {% set postgres_password = pillar.iatitables.postgres_password if 'postgres_password' in pillar.iatitables else '1234' %}
+{% set web_servername = pillar.iatitables.web_servername if 'web_servername' in pillar.iatitables else 'iatitables.opendataservices.coop' %}
+{% set web_https =  pillar.iatitables.web_https if 'web_https' in pillar.iatitables else 'no' %}
 {% set data_servername = pillar.iatitables.data_servername if 'data_servername' in pillar.iatitables else 'data.iatitables.opendataservices.coop' %}
 {% set data_https =  pillar.iatitables.data_https if 'data_https' in pillar.iatitables else 'no' %}
 {% set datasette_servername = pillar.iatitables.datasette_servername if 'datasette_servername' in pillar.iatitables else 'datasette.iatitables.opendataservices.coop' %}
@@ -146,6 +148,16 @@ install_iatitables:
         NODE_OPTIONS: "--openssl-legacy-provider"
     - require:
       - git: install_iatitables
+
+{% set extracontext %}
+webserverdir: {{ app_code_dir }}/site/dist
+{% endset %}
+
+{{ apache('iatitables-web.conf',
+    name='iatitables-web.conf',
+    extracontext=extracontext,
+    servername=web_servername ,
+    https=web_https) }}
 
 ######################  Log Dir
 
