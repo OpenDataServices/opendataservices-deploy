@@ -39,16 +39,16 @@ iatitable-deps-yarn:
     - user: root
     - creates: /usr/bin/yarn
     - require:
-        - cmd: iatitable-deps-nodejs-2
+        - pkg: iatitable-deps-nodejs-2
 
 ##################################################################### Normal User
 
 {% set user = 'iatitables' %}
-{{ createuser(user) }}
+{{ createuser(user, world_readable_home_dir='yes') }}
 
 ##################################################################### Macro to install app
 
-{% macro iatitables(gitbranch, user, postgres_name, postgres_user, postgres_password) %}
+{% macro iatitables(name, gitbranch, user, postgres_name, postgres_user, postgres_password, data_servername, data_https) %}
 
 ######################  Working Dir
 
@@ -119,6 +119,42 @@ install_iatitables:
     - require:
       - virtualenv: {{ app_code_dir }}/.ve/
 
+
+###################### Website contents
+
+{{ app_code_dir }}-build-website:
+  cmd.run:
+    - name: yarn install; yarn build
+    - user: {{ user }}
+    - cwd: {{ app_code_dir }}/site
+    - env:
+        NODE_OPTIONS: "--openssl-legacy-provider"
+    - require:
+      - git: install_iatitables
+
+
+######################  Web Data Dir
+
+{% set web_data_dir = '/home/' +  user + '/web_data' %}
+
+{{ web_data_dir }}:
+  file.directory:
+    - user: {{ user }}
+    - group: {{ user }}
+    - makedirs: True
+
+{% set extracontext %}
+webserverdir: {{ web_data_dir }}
+{% endset %}
+
+{{ apache('iatitables-data.conf',
+    name=name+'.conf',
+    extracontext=extracontext,
+    servername=data_servername ,
+    https=data_https) }}
+
+######################  Runner
+
 {{ app_code_dir }}/runner.py:
   file.managed:
     - source: salt://iatitables/runner.py
@@ -129,16 +165,17 @@ install_iatitables:
         dir: {{ working_dir }}
         db_url: postgresql://{{ postgres_user }}:{{ postgres_password }}@localhost/{{ postgres_name }}
 
-
-###################### Website contents
-
-{{ app_code_dir }}-build-website:
-  cmd.run:
-    - name: yarn install; yarn build
+{{ app_code_dir }}/runner.sh:
+  file.managed:
+    - source: salt://iatitables/runner.sh
+    - template: jinja
     - user: {{ user }}
-    - cwd: {{ app_code_dir }}/site
-    - require:
-      - git: install_iatitables
+    - mode: 0755
+    - context:
+        app_dir: {{ app_code_dir }}
+        working_dir: {{ working_dir }}
+        web_data_dir: {{ web_data_dir }}
+
 
 
 {% endmacro %}
@@ -147,9 +184,12 @@ install_iatitables:
 
 
 {{ iatitables(
+    name=pillar.iatitables.name if 'name' in pillar.iatitables else 'iatitables',
     gitbranch=pillar.iatitables.gitbranch if 'gitbranch' in pillar.iatitables else 'main',
     user=user,
     postgres_name=pillar.iatitables.postgres_name if 'postgres_name' in pillar.iatitables else 'iatitables',
     postgres_user=pillar.iatitables.postgres_user if 'postgres_user' in pillar.iatitables else 'iatitables',
     postgres_password=pillar.iatitables.postgres_password if 'postgres_password' in pillar.iatitables else '1234',
+    data_servername=pillar.iatitables.data_servername if 'data_servername' in pillar.iatitables else 'data.iatitables.opendataservices.coop',
+    data_https=pillar.iatitables.data_https if 'data_https' in pillar.iatitables else 'no',
     ) }}

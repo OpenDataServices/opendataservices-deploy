@@ -1,0 +1,6 @@
+
+        DocumentRoot {{ webserverdir }}
+
+        <Directory {{ webserverdir }}>
+                Require all granted
+        </Directory>
