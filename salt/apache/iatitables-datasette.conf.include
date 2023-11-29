@@ -1,0 +1,12 @@
+
+    <Location "/">
+
+        ProxyPass http://localhost:8080/
+
+    </Location>
+
+    <Location "/.well-known/acme-challenge">
+            ProxyPass !
+            Require all granted
+    </Location>
+

@@ -13,6 +13,10 @@ include:
 ###################### Dependencies
 
 iatitable-deps:
+    apache_module.enabled:
+      - name: proxy proxy_http
+      - watch_in:
+        - service: apache2
     pkg.installed:
       - pkgs:
         - python3-pip
@@ -53,9 +57,13 @@ iatitable-deps-yarn:
 {% set postgres_password = pillar.iatitables.postgres_password if 'postgres_password' in pillar.iatitables else '1234' %}
 {% set data_servername = pillar.iatitables.data_servername if 'data_servername' in pillar.iatitables else 'data.iatitables.opendataservices.coop' %}
 {% set data_https =  pillar.iatitables.data_https if 'data_https' in pillar.iatitables else 'no' %}
+{% set datasette_servername = pillar.iatitables.datasette_servername if 'datasette_servername' in pillar.iatitables else 'datasette.iatitables.opendataservices.coop' %}
+{% set datasette_https =  pillar.iatitables.datasette_https if 'datasette_https' in pillar.iatitables else 'no' %}
+{% set datasette_secret =  pillar.iatitables.datasette_secret if 'datasette_secret' in pillar.iatitables else 'abc123' %} # Don't use on prod!
 {% set working_dir = '/home/' +  user + '/working_data' %}
 {% set app_code_dir = '/home/' +  user + '/iatitables' %}
 {% set web_data_dir = '/home/' +  user + '/web_data' %}
+{% set datasette_dir = '/home/' +  user + '/datasette' %}
 
 ###################### Normal User
 
@@ -162,7 +170,7 @@ webserverdir: {{ web_data_dir }}
 {% endset %}
 
 {{ apache('iatitables-data.conf',
-    name='iatitables.conf',
+    name='iatitables-data.conf',
     extracontext=extracontext,
     servername=data_servername ,
     https=data_https) }}
@@ -220,9 +228,68 @@ webserverdir: {{ web_data_dir }}
       - user: {{ user }}_user_exists
       - file: /etc/systemd/system/iatitables-run.service
 
+######################  Datasette
+
+{{ datasette_dir }}/.ve/:
+  virtualenv.managed:
+    - python: /usr/bin/python3
+    - user: {{ user }}
+    - system_site_packages: False
+    - require:
+        - user: {{ user }}_user_exists
+
+# Fix permissions in virtual env
+{{ datasette_dir }}-fix-ve-permissions:
+  cmd.run:
+    - name: chown -R {{ user }}:{{ user }} .ve
+    - user: root
+    - cwd: {{ datasette_dir }}
+    - require:
+      - virtualenv: {{ datasette_dir }}/.ve/
+
+# This should ideally be in virtualenv.managed but we get an error if we do that
+{{ datasette_dir }}-install-python-packages:
+  cmd.run:
+    - name: . .ve/bin/activate; pip install datasette==0.64.5 datasette-vega==0.6.2
+    - user: {{ user }}
+    - cwd: {{ datasette_dir }}
+    - require:
+      - virtualenv: {{ datasette_dir }}/.ve/
+
+
+{{ datasette_dir }}/iatitables-datasette.env:
+  file.managed:
+    - source: salt://iatitables/iatitables-datasette.env
+    - template: jinja
+    - context:
+        secret: {{ datasette_secret }}
+    - require:
+      - virtualenv: {{ datasette_dir }}/.ve/
+
+/etc/systemd/system/iatitables-datasette.service:
+  file.managed:
+    - source: salt://iatitables/iatitables-datasette.service
+    - template: jinja
+    - context:
+        user: {{ user }}
+        datasette_dir: {{ datasette_dir }}
+        web_data_dir: {{ web_data_dir }}
+    - requires:
+      - user: {{ user }}_user_exists
+
+{% set extracontext %}
+{% endset %}
+
+{{ apache('iatitables-datasette.conf',
+    name='iatitables-datasette.conf',
+    extracontext=extracontext,
+    servername=datasette_servername ,
+    https=datasette_https) }}
+
+######################  Systemd final setup
+
 setup_iatitables_service:
   cmd.run:
-    - name: systemctl daemon-reload ; systemctl enable iatitables-run.timer  ; systemctl start iatitables-run.timer
+    - name: systemctl daemon-reload ; systemctl enable iatitables-run.timer  ; systemctl start iatitables-run.timer ; systemctl enable iatitables-datasette.service ;  systemctl start iatitables-datasette.service
     - requires:
       - file: /etc/systemd/system/iatitables-run.timer
-
