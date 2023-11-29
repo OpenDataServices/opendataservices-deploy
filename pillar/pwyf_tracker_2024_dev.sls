@@ -3,6 +3,8 @@ pwyf_tracker:
   database_url: 'postgresql+psycopg2:///pwyf_tracker_live_copy_3'
   https: 'force'
   branch: 'main'
+  brightbox_backup:
+    subdir: 2024tracker-dev
 postgres:
   acls:
    - ['local', 'all', 'postgres', 'peer']

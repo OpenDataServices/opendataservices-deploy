@@ -30,6 +30,7 @@ pwyf_tracker-deps:
         - python3-pip
         - python3-virtualenv
         - uwsgi-plugin-python3
+        - sqlite3
       - watch_in:
         - service: apache2
         - service: uwsgi
@@ -184,6 +185,7 @@ MAILTO:
     - user: {{ user }}
     - source: salt://pwyf-tracker/backup.sh
     - mode: '0755'
+    - template: jinja
   cron.present:
     - identifier: BACKUP
     - user: {{ user }}
