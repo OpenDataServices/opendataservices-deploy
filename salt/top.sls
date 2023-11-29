@@ -86,3 +86,7 @@ base:
     - prometheus-client-standalone
     - docker
     - afdb
+
+  'iatitables1':
+    - prometheus-client-standalone
+    - iatitables2

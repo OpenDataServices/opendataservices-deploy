@@ -102,3 +102,7 @@ base:
   'dokku-live-3':
     - private.server_dokku_live_3_pillar
 
+  'iatitables1':
+    - server_iatitables1_pillar
+    - private.server_iatitables1_pillar
+
