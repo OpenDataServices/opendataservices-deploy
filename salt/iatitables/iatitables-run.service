@@ -1,0 +1,8 @@
+[Unit]
+Description=IATI tables service
+
+[Service]
+ExecStart={{ app_code_dir }}/runner-with-logging.sh
+Type=oneshot
+User={{ user }}
+Group={{ user }}

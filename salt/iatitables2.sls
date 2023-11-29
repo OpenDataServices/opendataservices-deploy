@@ -1,13 +1,16 @@
-
+#
+# There is no Macro - this can only be installed once per server.
+# It needs so many resources we would never be doing that anyway!
+#
 
 {% from 'lib.sls' import createuser, apache %}
-
 
 include:
   - core
   - apache
   - letsencrypt
 
+###################### Dependencies
 
 iatitable-deps:
     pkg.installed:
@@ -41,18 +44,24 @@ iatitable-deps-yarn:
     - require:
         - pkg: iatitable-deps-nodejs-2
 
-##################################################################### Normal User
+###################### Vars
 
 {% set user = 'iatitables' %}
+{% set gitbranch = pillar.iatitables.gitbranch if 'gitbranch' in pillar.iatitables else 'main' %}
+{% set postgres_name = pillar.iatitables.postgres_name if 'postgres_name' in pillar.iatitables else 'iatitables' %}
+{% set postgres_user = pillar.iatitables.postgres_user if 'postgres_user' in pillar.iatitables else 'iatitables' %}
+{% set postgres_password = pillar.iatitables.postgres_password if 'postgres_password' in pillar.iatitables else '1234' %}
+{% set data_servername = pillar.iatitables.data_servername if 'data_servername' in pillar.iatitables else 'data.iatitables.opendataservices.coop' %}
+{% set data_https =  pillar.iatitables.data_https if 'data_https' in pillar.iatitables else 'no' %}
+{% set working_dir = '/home/' +  user + '/working_data' %}
+{% set app_code_dir = '/home/' +  user + '/iatitables' %}
+{% set web_data_dir = '/home/' +  user + '/web_data' %}
+
+###################### Normal User
+
 {{ createuser(user, world_readable_home_dir='yes') }}
 
-##################################################################### Macro to install app
-
-{% macro iatitables(name, gitbranch, user, postgres_name, postgres_user, postgres_password, data_servername, data_https) %}
-
 ######################  Working Dir
-
-{% set working_dir = '/home/' +  user + '/data' %}
 
 {{ working_dir }}:
   file.directory:
@@ -79,8 +88,6 @@ iatitable-deps-yarn:
 
 
 ###################### App
-
-{% set app_code_dir = '/home/' +  user + '/iatitables' %}
 
 install_iatitables:
   git.latest:
@@ -132,10 +139,17 @@ install_iatitables:
     - require:
       - git: install_iatitables
 
+######################  Log Dir
+
+{% set logs_dir = '/home/' +  user + '/logs' %}
+
+{{ logs_dir }}:
+  file.directory:
+    - user: {{ user }}
+    - group: {{ user }}
+    - makedirs: True
 
 ######################  Web Data Dir
-
-{% set web_data_dir = '/home/' +  user + '/web_data' %}
 
 {{ web_data_dir }}:
   file.directory:
@@ -148,7 +162,7 @@ webserverdir: {{ web_data_dir }}
 {% endset %}
 
 {{ apache('iatitables-data.conf',
-    name=name+'.conf',
+    name='iatitables.conf',
     extracontext=extracontext,
     servername=data_servername ,
     https=data_https) }}
@@ -176,20 +190,39 @@ webserverdir: {{ web_data_dir }}
         working_dir: {{ working_dir }}
         web_data_dir: {{ web_data_dir }}
 
+{{ app_code_dir }}/runner-with-logging.sh:
+  file.managed:
+    - source: salt://iatitables/runner-with-logging.sh
+    - template: jinja
+    - user: {{ user }}
+    - mode: 0755
+    - context:
+        app_dir: {{ app_code_dir }}
+        logs_dir: {{ logs_dir }}
 
+/etc/systemd/system/iatitables-run.service:
+  file.managed:
+    - source: salt://iatitables/iatitables-run.service
+    - template: jinja
+    - context:
+        user: {{ user }}
+        app_code_dir: {{ app_code_dir }}
+    - requires:
+      - user: {{ user }}_user_exists
 
-{% endmacro %}
+/etc/systemd/system/iatitables-run.timer:
+  file.managed:
+    - source: salt://iatitables/iatitables-run.timer
+    - template: jinja
+    - context:
+        user: {{ user }}
+    - requires:
+      - user: {{ user }}_user_exists
+      - file: /etc/systemd/system/iatitables-run.service
 
-##################################################################### Run Macro Once for app
+setup_iatitables_service:
+  cmd.run:
+    - name: systemctl daemon-reload ; systemctl enable iatitables-run.timer  ; systemctl start iatitables-run.timer
+    - requires:
+      - file: /etc/systemd/system/iatitables-run.timer
 
-
-{{ iatitables(
-    name=pillar.iatitables.name if 'name' in pillar.iatitables else 'iatitables',
-    gitbranch=pillar.iatitables.gitbranch if 'gitbranch' in pillar.iatitables else 'main',
-    user=user,
-    postgres_name=pillar.iatitables.postgres_name if 'postgres_name' in pillar.iatitables else 'iatitables',
-    postgres_user=pillar.iatitables.postgres_user if 'postgres_user' in pillar.iatitables else 'iatitables',
-    postgres_password=pillar.iatitables.postgres_password if 'postgres_password' in pillar.iatitables else '1234',
-    data_servername=pillar.iatitables.data_servername if 'data_servername' in pillar.iatitables else 'data.iatitables.opendataservices.coop',
-    data_https=pillar.iatitables.data_https if 'data_https' in pillar.iatitables else 'no',
-    ) }}

@@ -1,0 +1,11 @@
+[Unit]
+Description=IATI tables timer
+
+[Timer]
+Unit=iatitables-run.service
+OnCalendar=*-*-* 01:00:00
+AccuracySec=1m
+Persistent=false
+
+[Install]
+WantedBy=timers.target
