@@ -24,7 +24,6 @@ iatitable-deps:
         - postgresql
         - sqlite3
         - zip
-        - s3cmd
 
 
 iatitable-deps-nodejs-1:
