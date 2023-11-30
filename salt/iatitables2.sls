@@ -128,9 +128,10 @@ install_iatitables:
       - virtualenv: {{ app_code_dir }}/.ve/
 
 # This should ideally be in virtualenv.managed but we get an error if we do that
+# Must install via setup! https://github.com/codeforIATI/iati-tables/issues/9
 {{ app_code_dir }}-install-python-packages:
   cmd.run:
-    - name: . .ve/bin/activate; pip install -r requirements.txt
+    - name: . .ve/bin/activate; pip install -e .
     - user: {{ user }}
     - cwd: {{ app_code_dir }}
     - require:
