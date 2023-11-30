@@ -1,2 +1,2 @@
-salt-ssh==3002.9
+salt==3006.4
 pip-tools
