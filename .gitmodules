@@ -4,4 +4,4 @@
     branch = v0.41.5
 [submodule "formulas/users-formula"]
 	path = formulas/users-formula
-	url = git@github.com:saltstack-formulas/users-formula.git
+	url = https://github.com/saltstack-formulas/users-formula

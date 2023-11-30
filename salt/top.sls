@@ -54,7 +54,7 @@ base:
 
   'pwyf-tracker2024-*':
     - pwyf-tracker
-    #- postgres
+    - postgres
 
   'analysis-*':
     - prometheus-client-standalone
