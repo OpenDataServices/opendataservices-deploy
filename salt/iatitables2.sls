@@ -14,7 +14,7 @@ include:
 
 iatitable-deps:
     apache_module.enabled:
-      - name: proxy proxy_http
+      - name: proxy proxy_http headers
       - watch_in:
         - service: apache2
     pkg.installed:
@@ -139,6 +139,27 @@ install_iatitables:
 
 ###################### Website contents
 
+{{ app_code_dir }}/fix_website_links.sh:
+  file.managed:
+    - source: salt://iatitables/fix_website_links.sh
+    - template: jinja
+    - user: {{ user }}
+    - mode: 0755
+    - context:
+        data_url: http{% if data_https == 'yes' or data_https == 'force' %}s{% endif %}://{{ data_servername }}
+        datasette_url: http{% if datasette_https == 'yes' or datasette_https == 'force' %}s{% endif %}://{{ datasette_servername }}
+        template_dir: {{ app_code_dir }}/site/src/views
+    - require:
+      - git: install_iatitables
+
+run_fix_website_links:
+  cmd.run:
+    - name: ./fix_website_links.sh
+    - user: {{ user }}
+    - cwd: {{ app_code_dir }}
+    - require:
+      - file: {{ app_code_dir }}/fix_website_links.sh
+
 {{ app_code_dir }}-build-website:
   cmd.run:
     - name: yarn install; yarn build
@@ -147,7 +168,7 @@ install_iatitables:
     - env:
         NODE_OPTIONS: "--openssl-legacy-provider"
     - require:
-      - git: install_iatitables
+        - cmd: run_fix_website_links
 
 {% set extracontext %}
 webserverdir: {{ app_code_dir }}/site/dist

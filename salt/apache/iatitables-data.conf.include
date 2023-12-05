@@ -8,3 +8,6 @@
         ErrorLog /var/log/apache2/iatitables_data_error.log
         LogFormat "%{REQUEST_SCHEME}x://%v %h %t \"%r\" %>s %O \"%{Referer}i\" \"%{User-Agent}i\"" extended
         CustomLog /var/log/apache2/iatitables_data_access.log extended
+
+        # Our website loads stats.json so CORS needs to allow that
+        Header set Access-Control-Allow-Origin "*"
