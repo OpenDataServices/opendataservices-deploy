@@ -29,7 +29,7 @@ iatitable-deps:
 iatitable-deps-nodejs-1:
   cmd.run:
     - name: curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-    - user: root
+    - runas: root
     - creates: /etc/apt/sources.list.d/nodesource.list
 
 iatitable-deps-nodejs-2:
@@ -42,7 +42,7 @@ iatitable-deps-nodejs-2:
 iatitable-deps-yarn:
   cmd.run:
     - name: npm install -g yarn
-    - user: root
+    - runas: root
     - creates: /usr/bin/yarn
     - require:
         - pkg: iatitable-deps-nodejs-2
@@ -80,20 +80,24 @@ iatitable-deps-yarn:
 
 ######################  Database
 
-#iatitables-database-user-{{ postgres_user }}:
-#  postgres_user.present:
-#    - name: {{ postgres_user }}
-#    - password: {{ postgres_password }}
-# TODO Does this set password properly?????
+iatitables-database-user-{{ postgres_user }}:
+  postgres_user.present:
+    - name: {{ postgres_user }}
 
+# You should be able to pass password to postgres_user.present apparently but that doesn't work. So set the password ourselves.
+iatitables-user-password-{{ postgres_name }}:
+  cmd.run:
+    - name: "psql -c \"alter user {{ postgres_name }} with password '{{ postgres_password }}'\""
+    - runas: postgres
+    - require:
+      - postgres_user: iatitables-database-user-{{ postgres_user }}
 
-#iatitables-database-exists-{{ postgres_name }}:
-#  postgres_database.present:
-#    - name: {{ postgres_name }}
-#    - owner: {{ postgres_user }}
-#    - require:
-#      - postgres_user: iatitables-database-user-{{ postgres_user }}
-
+iatitables-database-exists-{{ postgres_name }}:
+  postgres_database.present:
+    - name: {{ postgres_name }}
+    - owner: {{ postgres_user }}
+    - require:
+      - postgres_user: iatitables-database-user-{{ postgres_user }}
 
 
 ###################### App
@@ -121,7 +125,7 @@ install_iatitables:
 {{ app_code_dir }}-fix-ve-permissions:
   cmd.run:
     - name: chown -R {{ user }}:{{ user }} .ve
-    - user: root
+    - runas: root
     - cwd: {{ app_code_dir }}
     - require:
       - virtualenv: {{ app_code_dir }}/.ve/
@@ -131,7 +135,7 @@ install_iatitables:
 {{ app_code_dir }}-install-python-packages:
   cmd.run:
     - name: . .ve/bin/activate; pip install -e .
-    - user: {{ user }}
+    - runas: {{ user }}
     - cwd: {{ app_code_dir }}
     - require:
       - virtualenv: {{ app_code_dir }}/.ve/
@@ -155,7 +159,7 @@ install_iatitables:
 run_fix_website_links:
   cmd.run:
     - name: ./fix_website_links.sh
-    - user: {{ user }}
+    - runas: {{ user }}
     - cwd: {{ app_code_dir }}
     - require:
       - file: {{ app_code_dir }}/fix_website_links.sh
@@ -163,7 +167,7 @@ run_fix_website_links:
 {{ app_code_dir }}-build-website:
   cmd.run:
     - name: yarn install; yarn build
-    - user: {{ user }}
+    - runas: {{ user }}
     - cwd: {{ app_code_dir }}/site
     - env:
         NODE_OPTIONS: "--openssl-legacy-provider"
@@ -276,7 +280,7 @@ webserverdir: {{ web_data_dir }}
 {{ datasette_dir }}-fix-ve-permissions:
   cmd.run:
     - name: chown -R {{ user }}:{{ user }} .ve
-    - user: root
+    - runas: root
     - cwd: {{ datasette_dir }}
     - require:
       - virtualenv: {{ datasette_dir }}/.ve/
@@ -285,7 +289,7 @@ webserverdir: {{ web_data_dir }}
 {{ datasette_dir }}-install-python-packages:
   cmd.run:
     - name: . .ve/bin/activate; pip install datasette==0.64.5 datasette-vega==0.6.2
-    - user: {{ user }}
+    - runas: {{ user }}
     - cwd: {{ datasette_dir }}
     - require:
       - virtualenv: {{ datasette_dir }}/.ve/
