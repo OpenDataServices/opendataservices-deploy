@@ -197,7 +197,6 @@ webserverdir: {{ web_data_dir }}
     - context:
         processes: 1
         dir: {{ working_dir }}
-        db_url: postgresql://{{ postgres_user }}:{{ postgres_password }}@localhost/{{ postgres_name }}
 
 {{ app_code_dir }}/runner.sh:
   file.managed:
@@ -209,6 +208,8 @@ webserverdir: {{ web_data_dir }}
         app_dir: {{ app_code_dir }}
         working_dir: {{ working_dir }}
         web_data_dir: {{ web_data_dir }}
+        dir: {{ working_dir }}
+        db_url: postgresql://{{ postgres_user }}:{{ postgres_password }}@localhost/{{ postgres_name }}
 
 {{ app_code_dir }}/runner-with-logging.sh:
   file.managed:
