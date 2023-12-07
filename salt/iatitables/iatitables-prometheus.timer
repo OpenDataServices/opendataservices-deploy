@@ -1,0 +1,10 @@
+[Unit]
+Description=IATI Tables prometheus timer
+
+[Timer]
+Unit=iatitables-prometheus.service
+OnCalendar=hourly
+Persistent=false
+
+[Install]
+WantedBy=timers.target

@@ -324,10 +324,41 @@ webserverdir: {{ web_data_dir }}
     servername=datasette_servername ,
     https=datasette_https) }}
 
+############## Prometheus (we expect a prometheus client to be installed on the same machine)
+
+/home/{{ user }}/prometheus:
+  file.recurse:
+    - source: salt://iatitables/prometheus
+    - user: {{ user }}
+    - group: {{ user }}
+
+/home/{{ user }}/prometheus/venv:
+  virtualenv.manage:
+    - user: {{ user }}
+    - requirements: /home/{{ user }}/prometheus/requirements.txt
+
+/etc/systemd/system/iatitables-prometheus.service:
+  file.managed:
+    - source: salt://iatitables/iatitables-prometheus.service
+    - template: jinja
+    - context:
+        user: {{ user }}
+    - requires:
+      - user: {{ user }}_user_exists
+
+/etc/systemd/system/iatitables-prometheus.timer:
+  file.managed:
+    - source: salt://iatitables/iatitables-prometheus.timer
+    - template: jinja
+    - context:
+        user: {{ user }}
+    - requires:
+      - user: {{ user }}_user_exists
+
 ######################  Systemd final setup
 
 setup_iatitables_service:
   cmd.run:
-    - name: systemctl daemon-reload ; systemctl enable iatitables-run.timer  ; systemctl start iatitables-run.timer ; systemctl enable iatitables-datasette.service ;  systemctl start iatitables-datasette.service
+    - name: systemctl daemon-reload ; systemctl enable iatitables-run.timer  ; systemctl start iatitables-run.timer ; systemctl enable iatitables-datasette.service ;  systemctl start iatitables-datasette.service; systemctl enable iatitables-prometheus.timer  ; systemctl start iatitables-prometheus.timer
     - requires:
       - file: /etc/systemd/system/iatitables-run.timer

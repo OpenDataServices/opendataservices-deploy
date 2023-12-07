@@ -1,0 +1,14 @@
+[Unit]
+Description=IATI Tables prometheus service
+
+[Service]
+ExecStart=/home/{{ user }}/prometheus/venv/bin/python /home/{{ user }}/prometheus/prometheus.py
+Type=oneshot
+User={{ user }}
+Group={{ user }}
+Environment=OUTPUT_FILENAME=/home/prometheus-client/textfile_directory/iatitables.prom
+Environment=LATEST_LOG_FILE_IN_DIRECTORIES=/home/{{ user }}/logs
+
+[Install]
+WantedBy=multi-user.target
+
