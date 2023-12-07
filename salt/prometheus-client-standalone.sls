@@ -13,7 +13,17 @@ prometheus-client-deps:
         - curl
 
 {% set user = 'prometheus-client' %}
-{{ createuser(user) }}
+{{ createuser(user, world_readable_home_dir='yes') }}
+
+########### Textfile collector location
+/home/{{ user }}/textfile_directory:
+  file.directory:
+    - makedirs: True
+    - user: {{ user }}
+    - group: {{ user }}
+    - dir_mode: 777
+    - requires:
+      - user: {{ user }}_user_exists
 
 ########### Get binary
 
