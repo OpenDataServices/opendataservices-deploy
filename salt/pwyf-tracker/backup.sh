@@ -8,3 +8,7 @@ X_AUTH_TOKEN=$(curl -I -H "x-auth-user: {{ pillar.pwyf_tracker.brightbox_backup.
 for f in ~/backups/*$(date +"%F")*; do
     curl -I -T $f -X PUT -H "x-auth-token: $X_AUTH_TOKEN" https://orbit.brightbox.com/v1/acc-7ufuy/pwyf-tracker-backups/{{ pillar.pwyf_tracker.brightbox_backup.subdir }}/$(basename $f)
 done
+
+{% if pillar.pwyf_tracker.prune_backups %}
+find /home/pwyf_tracker/backups/sample_work_backup_* -mtime +2 -type f | xargs rm
+{% endif %}

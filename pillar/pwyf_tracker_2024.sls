@@ -5,6 +5,8 @@ pwyf_tracker:
   branch: 'main'
   brightbox_backup:
     subdir: 2024tracker
+  prune_backups:
+    false
 postgres:
   acls:
    - ['local', 'all', 'postgres', 'peer']
