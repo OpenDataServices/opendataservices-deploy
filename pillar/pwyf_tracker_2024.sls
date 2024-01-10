@@ -7,6 +7,8 @@ pwyf_tracker:
     subdir: 2024tracker
   prune_backups:
     false
+prometheus:
+  client_fqdn: xvm-162-76.dc0.ghst.net
 postgres:
   acls:
    - ['local', 'all', 'postgres', 'peer']

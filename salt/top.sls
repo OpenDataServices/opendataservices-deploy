@@ -53,6 +53,7 @@ base:
     - postgres
 
   'pwyf-tracker2024-*':
+    - prometheus-client-apache
     - pwyf-tracker
     - postgres
 
