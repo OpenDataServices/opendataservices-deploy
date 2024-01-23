@@ -134,7 +134,7 @@ install_iatitables:
 # Must install via setup! https://github.com/codeforIATI/iati-tables/issues/9
 {{ app_code_dir }}-install-python-packages:
   cmd.run:
-    - name: . .ve/bin/activate; pip install -e .
+    - name: . .ve/bin/activate; pip install -r requirements.txt
     - runas: {{ user }}
     - cwd: {{ app_code_dir }}
     - require:
