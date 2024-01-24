@@ -1,9 +1,9 @@
 iatitables:
     gitbranch: main
     data_servername: 'data.iati-tables.codeforiati.org'
-    data_https: 'no'
+    data_https: 'force'
     datasette_servername: 'datasette.codeforiati.org'
-    datasette_https: 'no'
+    datasette_https: 'force'
     web_servername: 'iati-tables.codeforiati.org'
-    web_https: 'no'
+    web_https: 'force'
 
