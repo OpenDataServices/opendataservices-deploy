@@ -10,3 +10,5 @@ WORKING_DIR={{working_dir}} ./run.sh
 {% for file in files %}
 mv {{ working_dir }}/{{ file }}  {{ web_data_dir }}/{{ file }}
 {% endfor %}
+
+cat {{ web_data_dir }}/metadata.json >> {{ web_data_dir }}/successful_runs.txt
