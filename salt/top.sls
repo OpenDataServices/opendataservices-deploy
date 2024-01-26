@@ -91,3 +91,7 @@ base:
   'iatitables1':
     - prometheus-client-standalone
     - iatitables2
+
+  'iatidatadump1':
+    - prometheus-client-standalone
+    - iatidatadump
