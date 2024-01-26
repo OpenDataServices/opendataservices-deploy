@@ -1,0 +1,8 @@
+[Unit]
+Description=IATI data dump service
+
+[Service]
+ExecStart=/home/{{ user }}/runner-with-logging.sh
+Type=oneshot
+User={{ user }}
+Group={{ user }}

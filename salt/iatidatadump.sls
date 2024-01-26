@@ -124,6 +124,25 @@ install_iatidatadump:
         user: {{ user }}
         logs_dir: {{ logs_dir }}
 
+/etc/systemd/system/iatidatadump-run.service:
+  file.managed:
+    - source: salt://iatidatadump/iatidatadump-run.service
+    - template: jinja
+    - context:
+        user: {{ user }}
+        app_code_dir: {{ app_code_dir }}
+    - requires:
+      - user: {{ user }}_user_exists
+
+/etc/systemd/system/iatidatadump-run.timer:
+  file.managed:
+    - source: salt://iatidatadump/iatidatadump-run.timer
+    - template: jinja
+    - context:
+        user: {{ user }}
+    - requires:
+      - user: {{ user }}_user_exists
+      - file: /etc/systemd/system/iatidatadump-run.service
 
 ######################  Web Data Dir
 
@@ -142,3 +161,12 @@ webserverdir: {{ web_data_dir }}
     extracontext=extracontext,
     servername=data_servername ,
     https=data_https) }}
+
+
+######################  Systemd final setup
+
+setup_iatidatadump_service:
+  cmd.run:
+    - name: systemctl daemon-reload ; systemctl enable iatidatadump-run.timer  ; systemctl start iatidatadump-run.timer
+    - requires:
+      - file: /etc/systemd/system/iatidatadump-run.timer
