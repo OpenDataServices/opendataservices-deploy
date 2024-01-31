@@ -2,7 +2,7 @@ pwyf_tracker:
   servername: 2024tracker.publishwhatyoufund.org
   database_url: 'postgresql+psycopg2:///pwyf_tracker'
   https: 'force'
-  branch: 'max-points-bug'
+  branch: 'main'
   brightbox_backup:
     subdir: 2024tracker
   prune_backups:
