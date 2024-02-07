@@ -61,12 +61,12 @@ base:
     - prometheus-client-standalone
     - users
 
-  'analysis-1':
-    - ocdsdata
-    - postgres
+#  'analysis-1':
+#    - ocdsdata
+#    - postgres
 
-  'analysis-2':
-    - iatitables
+#  'analysis-2':
+#    - iatitables
 
   'iatidatastoreclassic1':
     - prometheus-client-standalone

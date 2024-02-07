@@ -47,8 +47,8 @@ pwyf-tracker2024-live: 95.142.162.76
 
 # Analysis Servers
 
-analysis-1: 95.216.225.116 
-analysis-2: 65.21.63.230
+#analysis-1: 95.216.225.116
+#analysis-2: 65.21.63.230
 
 
 
