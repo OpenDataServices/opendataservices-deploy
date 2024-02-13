@@ -168,8 +168,6 @@ run_fix_website_links:
     - name: yarn install; yarn build
     - runas: {{ user }}
     - cwd: {{ app_code_dir }}/site
-    - env:
-        NODE_OPTIONS: "--openssl-legacy-provider"
     - require:
         - cmd: run_fix_website_links
 
