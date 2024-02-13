@@ -142,34 +142,17 @@ install_iatitables:
 
 ###################### Website contents
 
-{{ app_code_dir }}/fix_website_links.sh:
-  file.managed:
-    - source: salt://iatitables/fix_website_links.sh
-    - template: jinja
-    - user: {{ user }}
-    - mode: 0755
-    - context:
-        data_url: http{% if data_https == 'yes' or data_https == 'force' %}s{% endif %}://{{ data_servername }}
-        datasette_url: http{% if datasette_https == 'yes' or datasette_https == 'force' %}s{% endif %}://{{ datasette_servername }}
-        template_dir: {{ app_code_dir }}/site/src/views
-    - require:
-      - git: install_iatitables
-
-run_fix_website_links:
-  cmd.run:
-    - name: ./fix_website_links.sh
-    - runas: {{ user }}
-    - cwd: {{ app_code_dir }}
-    - require:
-      - file: {{ app_code_dir }}/fix_website_links.sh
-
 {{ app_code_dir }}-build-website:
   cmd.run:
     - name: yarn install; yarn build
     - runas: {{ user }}
     - cwd: {{ app_code_dir }}/site
     - require:
-        - cmd: run_fix_website_links
+        - git: install_iatitables
+    - env:
+        VUE_APP_DATA_URL: http{% if data_https == 'yes' or data_https == 'force' %}s{% endif %}://{{ data_servername }}
+        VUE_APP_DATASETTE_URL: http{% if datasette_https == 'yes' or datasette_https == 'force' %}s{% endif %}://{{ datasette_servername }}
+        VUE_APP_COLAB_URL: "https://colab.research.google.com/drive/15Ahauin2YgloaFEwiGjqbnv7L91xNUua"
 
 {% set extracontext %}
 webserverdir: {{ app_code_dir }}/site/dist
