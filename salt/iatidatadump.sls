@@ -36,6 +36,10 @@ iatitable-deps:
 {% set logs_dir = '/home/' +  user + '/logs' %}
 {% set data_servername = 'data.iati-data-dump.opendataservices.coop' %}
 {% set data_https =  'force' %}
+{% set gist_metadata_id = pillar.iatidatadump.gist_metadata_id if 'gist_metadata_id' in pillar.iatidatadump else '' %}
+{% set gist_errors_id = pillar.iatidatadump.gist_errors_id if 'gist_errors_id' in pillar.iatidatadump else '' %}
+{% set gist_github_token = pillar.iatidatadump.gist_github_token if 'gist_github_token' in pillar.iatidatadump else '' %}
+
 
 ###################### Normal User
 
@@ -98,6 +102,16 @@ install_iatidatadump:
 
 ######################  Runner
 
+/home/{{ user }}/make_gist_data.py:
+  file.managed:
+    - source: salt://iatidatadump/make_gist_data.py
+    - template: jinja
+    - user: {{ user }}
+    - context:
+        working_dir: {{ working_dir }}
+    - requires:
+      - user: {{ user }}_user_exists
+
 /home/{{ user }}/runner.sh:
   file.managed:
     - source: salt://iatidatadump/runner.sh
@@ -110,6 +124,11 @@ install_iatidatadump:
         web_data_dir: {{ web_data_dir }}
         user: {{ user }}
         logs_dir: {{ logs_dir }}
+        gist_metadata_id: "{{ gist_metadata_id }}"
+        gist_errors_id: "{{ gist_errors_id }}"
+        gist_github_token: "{{ gist_github_token }}"
+    - requires:
+      - user: {{ user }}_user_exists
 
 /home/{{ user }}/runner-with-logging.sh:
   file.managed:
@@ -123,6 +142,9 @@ install_iatidatadump:
         web_data_dir: {{ web_data_dir }}
         user: {{ user }}
         logs_dir: {{ logs_dir }}
+    - requires:
+      - user: {{ user }}_user_exists
+
 
 /etc/systemd/system/iatidatadump-run.service:
   file.managed:

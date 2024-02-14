@@ -106,3 +106,6 @@ base:
     - server_iatitables1_pillar
     - private.server_iatitables1_pillar
 
+  'iatidatadump1':
+    - private.server_iatidatadump1_pillar
+
