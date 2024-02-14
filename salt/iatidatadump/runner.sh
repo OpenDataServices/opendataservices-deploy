@@ -6,7 +6,7 @@ cd {{ app_dir }}
 source .ve/bin/activate
 WORKING_DIR={{working_dir}} ./run.sh
 
-python3 make_gist_data.py
+python3 /home/{{ user }}/make_gist_data.py
 
 {% set files = ["data.zip", "errors.txt", "metadata.json"] %}
 {% for file in files %}
