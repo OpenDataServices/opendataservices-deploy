@@ -1,6 +1,7 @@
 
     <Location "/">
 
+        ProxyPreserveHost On
         ProxyPass http://localhost:8080/
 
     </Location>
