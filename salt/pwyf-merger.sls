@@ -26,7 +26,7 @@ pwyf-merger-deps:
       # See uWSGI comment ^
       - build-essential
       - python3-dev
-      - python-pip
+      - python3-pip
     - watch_in:
       - service: apache2
       - service: uwsgi
@@ -60,19 +60,29 @@ pwyf-merger-deps:
     - python: /usr/bin/python3
     - user: {{ pillar.pwyf_merger.user }}
     - system_site_packages: False
-    - requirements: /home/{{ pillar.pwyf_merger.user }}/{{ pillar.pwyf_merger.checkout_dir }}/requirements.txt
     - require:
+      - git: /home/{{ pillar.pwyf_merger.user }}/{{ pillar.pwyf_merger.checkout_dir }}
+
+# THIS SHOULD IDEALLY BE IN virtualenv.managed BUT WE GET A PERMISSION ERROR IF WE DO THAT
+pwyf_merger_install-python-packages:
+  cmd.run:
+    - name: . .ve/bin/activate; pip install -r requirements.txt
+    - user: {{ pillar.pwyf_merger.user }}
+    - cwd: /home/{{ pillar.pwyf_merger.user }}/{{ pillar.pwyf_merger.checkout_dir }}/
+    - require:
+      - virtualenv: /home/{{ pillar.pwyf_merger.user }}/{{ pillar.pwyf_merger.checkout_dir }}/.ve
+    - onchanges:
       - git: /home/{{ pillar.pwyf_merger.user }}/{{ pillar.pwyf_merger.checkout_dir }}
 
 ##### Flask app setup
 ## Flask config
 
-default_config:
+pwyf_merger_default_config:
   file.copy:
     - source: /home/{{ pillar.pwyf_merger.user }}/{{ pillar.pwyf_merger.checkout_dir }}/config.py.tmpl
     - name: /home/{{ pillar.pwyf_merger.user }}/{{ pillar.pwyf_merger.checkout_dir }}/default_config.py
 
-new_config:
+pwyf_merger_new_config:
   file.managed:
     - name: /home/{{ pillar.pwyf_merger.user }}/{{ pillar.pwyf_merger.checkout_dir }}/config.py
     - source: salt://pwyf-merger/config.py
@@ -84,8 +94,9 @@ new_config:
     - require:
       - default_config
 
-{{ pillar.pwyf_merger.static_dir }}:
+pwyf_merger_static_dir:
   file.directory:
+    - name: {{ pillar.pwyf_merger.static_dir }}
     - user: {{ pillar.pwyf_merger.user }}
     - group: www-data
     - mode: 755
@@ -111,7 +122,7 @@ setup_merger_assets:
     - mode: 755
     - makedirs: True
 
-clean_up_cron:
+pwyf_merger_clean_up_cron:
   cron.present:
     - name: cd /home/{{ pillar.pwyf_merger.user}}/{{ pillar.pwyf_merger.checkout_dir }} ; . ./.ve/bin/activate ; FLASK_APP=ActivityMerger/__init__.py flask flush-data
     - user: {{ pillar.pwyf_merger.user }}

@@ -46,6 +46,12 @@ base:
      - private.pwyf_tracker
      - pwyf_tracker_2024
 
+  'pwyf-dqt':
+     - pwyf_dqt_pillar
+     - private.pwyf_dqt_pillar
+     - pwyf_merger_pillar
+     - private.pwyf_merger_pillar
+
   'analysis-1':
      - postgres_pillar
      - private.analysis1

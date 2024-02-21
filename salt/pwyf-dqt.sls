@@ -71,8 +71,18 @@ redis-server:
     - python: /usr/bin/python3
     - user: {{ pillar.pwyf_dqt.user }}
     - system_site_packages: False
-    - requirements: /home/{{ pillar.pwyf_dqt.user }}/{{ pillar.pwyf_dqt.checkout_dir }}/requirements.txt
     - require:
+      - git: /home/{{ pillar.pwyf_dqt.user }}/{{ pillar.pwyf_dqt.checkout_dir }}
+
+# THIS SHOULD IDEALLY BE IN virtualenv.managed BUT WE GET A PERMISSION ERROR IF WE DO THAT
+install-python-packages:
+  cmd.run:
+    - name: . .ve/bin/activate; pip install -r requirements.txt
+    - user: {{ pillar.pwyf_dqt.user }}
+    - cwd: /home/{{ pillar.pwyf_dqt.user }}/{{ pillar.pwyf_dqt.checkout_dir }}/
+    - require:
+      - virtualenv: /home/{{ pillar.pwyf_dqt.user }}/{{ pillar.pwyf_dqt.checkout_dir }}/.ve
+    - onchanges:
       - git: /home/{{ pillar.pwyf_dqt.user }}/{{ pillar.pwyf_dqt.checkout_dir }}
 
 ##### Flask app setup

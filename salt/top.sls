@@ -1,4 +1,4 @@
-# top.sls defines which states should be installed onto which servers
+#Gkkkkkkktop.sls defines which states should be installed onto which servers
 # and is used by the state.highstate command (see README)
 
 base:
@@ -56,6 +56,10 @@ base:
     - prometheus-client-apache
     - pwyf-tracker
     - postgres
+
+  'pwyf-dqt':
+    - pwyf-dqt
+    - pwyf-merger
 
   'analysis-*':
     - prometheus-client-standalone
