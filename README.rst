@@ -1,6 +1,13 @@
 Open Data Services Co-Operative deployment git repository
 =========================================================
 
+This is repository has been replaced by a new private one at https://github.com/OpenDataServices/deploy, and will now be archived.
+
+This was done because keeping public and private repositories synced was a hassle, and we don't think this public repo was useful to anyone outside the organisation.
+
+Old README:
+^^^^^^^^^^^
+
 This repository is used to track files relating to deploying code etc. to Open Data Services Co-operative's servers. More general information about our development and deployment approach can be found in our developer docs at https://github.com/OpenDataServices/developer-docs
 
 Mostly it contains files designed for use with the salt deployment tool. http://saltstack.com/
